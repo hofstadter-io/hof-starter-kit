@@ -6,6 +6,5 @@ TARFILE=hof-starter-kit--$1.tar.gz
 tar -cz -f $TARFILE \
   README.md \
   LICENSE \
-  design \
   dsl
 
