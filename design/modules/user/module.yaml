@@ -1,0 +1,30 @@
+module:
+  name: User
+
+  storage:
+    sql:
+      orm:
+        knex:
+          enabled: true
+
+  types:
+    - type.modules.user.User
+    - type.modules.user.Profile
+
+  authz:
+    resource: '[user,admin:user,owner:user]'
+    subresources:
+      - 'settings'
+      - 'profile'
+    roles:
+      - super
+      - admin
+      - user
+    scopes:
+      super:
+        - 'admin:*/*'
+      admin:
+        - 'admin:[user,iam]*/*'
+      user:
+        - 'user[,:profile]/[list,view]'
+        - 'owner:*/*'
