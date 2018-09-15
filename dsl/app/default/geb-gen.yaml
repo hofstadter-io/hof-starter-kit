@@ -1,0 +1,15 @@
+name: "default"
+about: "Top-level files for apps"
+version: "0.0.1"
+language: multiple
+type: "app"
+
+template-configs:
+
+  - name: once-files
+    field: "."
+    unless: disabled
+
+
+
+
