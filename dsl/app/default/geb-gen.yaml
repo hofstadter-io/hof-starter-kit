@@ -11,5 +11,13 @@ template-configs:
     unless: disabled
 
 
+static-files:
+
+  - name: all
+    field: "."
+    unless: disabled
+    files:
+    - "**/*"
+
 
 
