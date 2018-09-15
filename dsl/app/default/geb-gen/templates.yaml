@@ -7,6 +7,4 @@ template-configs:
 
     - in: package.json
       out: package.json
-    - in: yarn.lock
-      out: yarn.lock
 
