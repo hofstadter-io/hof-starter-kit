@@ -1,0 +1,44 @@
+name: "default"
+
+template-configs:
+
+  - name: once-files
+    templates:
+
+    - in: .babelrc
+      out: .babelrc
+    - in: .babelrc.native
+      out: .babelrc.native
+
+    - in: .dockerignore
+      out: .dockerignore
+    - in: .gitignore
+      out: .gitignore
+    - in: .eslintignore
+      out: .eslintignore
+    - in: .eslintrc
+      out: .eslintrc
+    - in: .eslintrc.base.json
+      out: .eslintrc.base.json
+
+    - in: lerna.json
+      out: lerna.json
+
+    - in: .env
+      out: .env
+    - in: Procfile
+      out: Procfile
+
+    - in: tsconfig.json
+      out: tsconfig.json
+    - in: tslint.json
+      out: tslint.json
+
+    - in: typings.d.ts
+      out: typings.d.ts
+    - in: typings/typings.d.ts
+      out: typings/typings.d.ts
+
+    - in: settings.js
+      out: settings.js
+

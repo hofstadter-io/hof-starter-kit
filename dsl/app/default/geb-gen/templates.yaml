@@ -1,0 +1,12 @@
+name: "default"
+
+template-configs:
+
+  - name: once-files
+    templates:
+
+    - in: package.json
+      out: package.json
+    - in: yarn.lock
+      out: yarn.lock
+
