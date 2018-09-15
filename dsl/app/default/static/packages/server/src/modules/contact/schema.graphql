@@ -1,0 +1,16 @@
+# Payload for contact Mutation
+type ContactPayload {
+  errors: [FieldError!]
+}
+
+extend type Mutation {
+  # Send contact us info
+  contact(input: ContactInput!): ContactPayload!
+}
+
+# Input for addPost Mutation
+input ContactInput {
+  name: String!
+  email: String!
+  content: String!
+}

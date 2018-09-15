@@ -22,7 +22,7 @@
     "eslint": "eslint --fix --ext js --ext jsx --ext json .",
     "tslint": "tslint --fix -p tsconfig.json -c tslint.json",
     "lint": "yarn eslint && yarn tslint",
-    "seed": "lerna run --scope=storage seed --stream",
+    "seed": "lerna run --scope=server seed --stream",
     "exp-publish": "lerna run --scope=mobile exp-publish --stream",
     "watch": "spin watch",
     "precommit": "lint-staged",
