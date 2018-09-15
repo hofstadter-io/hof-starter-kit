@@ -6,4 +6,4 @@ steps:
   args: ['-c', './package.sh $TAG_NAME']
 
 - name: gcr.io/cloud-builders/gsutil
-  args: ['cp', 'hof-dsl-fullstack-kit--$TAG_NAME.tar.gz', 'gs://hof-io--studios-internal/hof-dsl-fullstack-kit/hof-dsl-fullstack-kit--$TAG_NAME.tar.gz']
+  args: ['cp', 'hof-starter-kit--$TAG_NAME.tar.gz', 'gs://hof-io--studios-internal/hof-starter-kit/hof-starter-kit--$TAG_NAME.tar.gz']
