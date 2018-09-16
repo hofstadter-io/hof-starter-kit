@@ -30,7 +30,7 @@ const config = {
     reactHotLoader: false,
     defines: {
       __DEV__: process.env.NODE_ENV !== 'production',
-      __API_URL__: '"{{DslContext.package-name}}.live.hofstadter.io/graphql"'
+      __API_URL__: '"https://{{DslContext.package-name}}.live.hofstadter.io/graphql"'
     },
     webpackConfig: {
       devServer: {
