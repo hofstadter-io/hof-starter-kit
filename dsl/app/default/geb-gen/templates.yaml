@@ -8,3 +8,6 @@ template-configs:
     - in: package.json
       out: package.json
 
+    - in: config/app.js
+      out: config/app.js
+

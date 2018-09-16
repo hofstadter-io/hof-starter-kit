@@ -11,7 +11,7 @@
     ".cache"
   ],
   "scripts": {
-    "build": "lerna run build --stream",
+    "build": "lerna run build --stream --scope=server && lerna run build --stream --scope=client",
     "clean": "lerna run clean --stream",
     "exp": "yarn --cwd packages/mobile exp",
     "start": "lerna run --scope=server start --stream",

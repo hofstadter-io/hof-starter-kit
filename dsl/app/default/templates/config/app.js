@@ -1,5 +1,5 @@
 export default {
-  name: 'Apollo Starter Kit',
+  name: '{{DslContext.name}}',
   logging: {
     level: ['production'].indexOf(process.env.NODE_ENV) < 0 ? 'debug' : 'info',
     debugSQL: false,
@@ -9,3 +9,4 @@ export default {
   // Use this protocol handler for Linux: https://github.com/sysgears/vscode-handler
   stackFragmentFormat: 'vscode://file/{0}:{1}:{2}'
 };
+
