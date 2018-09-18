@@ -1,3 +1,4 @@
+{{#with DslContext as |APP|}}
 const url = require('url');
 
 const config = {
@@ -7,8 +8,11 @@ const config = {
       stack: ['web'],
       openBrowser: false,
       dllExcludes: ['bootstrap'],
+    {{#if (eq APP.mode "live")}}
       webpackDevProtocol: "https",
       webpackDevHost: "{{DslContext.package-name}}.live.hofstadter.io",
+      webpackDevPort: 443,
+    {{/if}}
       defines: {
         __CLIENT__: true
       },
@@ -30,10 +34,18 @@ const config = {
     ssr: true,
     webpackDll: true,
     reactHotLoader: false,
+    {{#if (eq APP.mode "live")}}
+    sourceMap: false,
+    {{/if}}
     defines: {
       __DEV__: process.env.NODE_ENV !== 'production',
-      __API_URL__: '"https://{{DslContext.package-name}}.live.hofstadter.io/graphql"'
-        // __API_URL__: '"/graphql"'
+    {{#if (eq APP.mode "live")}}
+      __API_URL__: '"https://{{APP.package-name}}.live.hofstadter.io/graphql"'
+    {{else if (eq APP.mode "prod")}}
+      __API_URL__: '"https://{{APP.package-name}}.hofstadter.io/graphql"'
+    {{else}}
+      __API_URL__: '"/graphql"'
+    {{/if}}
     },
     webpackConfig: {
       devServer: {
@@ -57,3 +69,4 @@ const extraDefines = {
 config.options.defines = Object.assign(config.options.defines, extraDefines);
 
 module.exports = config;
+{{/with}}

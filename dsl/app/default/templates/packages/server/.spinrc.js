@@ -26,12 +26,21 @@ const config = {
     reactHotLoader: false,
     persistGraphQL: false,
     frontendRefreshOnBackendChange: true,
+    {{#if (eq APP.mode "live")}}
+    sourceMap: false,
+    {{/if}}
     defines: {
       __DEV__: process.env.NODE_ENV !== 'production',
       __SERVER_PORT__: 8080,
       __API_URL__: '"/graphql"', // Use full URL if API is external, e.g. https://example.com/graphql
-      __WEBSITE_URL__: '"https://{{DslContext.package-name}}.live.hofstadter.io"'
-    }
+    {{#if (eq APP.mode "live")}}
+      __WEBSITE_URL__: '"https://{{APP.package-name}}.live.hofstadter.io/graphql"'
+    {{else if (eq APP.mode "prod")}}
+      __WEBSITE_URL__: '"https://{{APP.package-name}}.hofstadter.io/graphql"'
+    {{else}}
+      __WEBSITE_URL__: '"http://localhost:3000"'
+    {{/if}}
+    },
   }
 };
 
@@ -39,7 +48,7 @@ config.options.devProxy = config.options.ssr;
 
 if (process.env.NODE_ENV === 'production') {
   config.options.defines.__SERVER_PORT__ = 8080;
-  config.options.defines.__WEBSITE_URL__ = '"https://{{DslContext.name}}.hofstadter.io"';
+  config.options.defines.__WEBSITE_URL__ = '"https://{{DslContext.package-name}}.hofstadter.io"';
   // Generating source maps for production will slowdown compilation for roughly 25%
   config.options.sourceMap = false;
 }
