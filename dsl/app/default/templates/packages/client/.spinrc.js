@@ -7,6 +7,8 @@ const config = {
       stack: ['web'],
       openBrowser: false,
       dllExcludes: ['bootstrap'],
+      webpackDevProtocol: "https",
+      webpackDevHost: "{{DslContext.package-name}}.live.hofstadter.io",
       defines: {
         __CLIENT__: true
       },
@@ -30,16 +32,11 @@ const config = {
     reactHotLoader: false,
     defines: {
       __DEV__: process.env.NODE_ENV !== 'production',
-    // __API_URL__: '"https://{{DslContext.package-name}}.live.hofstadter.io/graphql"'
-      __API_URL__: '"/graphql"'
+      __API_URL__: '"https://{{DslContext.package-name}}.live.hofstadter.io/graphql"'
+        // __API_URL__: '"/graphql"'
     },
     webpackConfig: {
-      entry: {
-        index: ['webpack-dev-server/client?https://{{DslContext.package-name}}.live.hofstadter.io/']
-      },
       devServer: {
-        public: '"https://{{DslContext.package-name}}.live.hofstadter.io/graphql"',
-        host: '0.0.0.0',
         disableHostCheck: true
       }
     }
