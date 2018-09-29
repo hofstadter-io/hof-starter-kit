@@ -11,11 +11,11 @@
   "env": {
     "live": {
       "compact": true,
-      "presets": [["minify", { "mangle": true }]]
+      "presets": [["minify", { "mangle": false }]]
     },
     "production": {
       "compact": true,
-      "presets": [["minify", { "mangle": true }]]
+      "presets": [["minify", { "mangle": false }]]
     },
     "jest": {
       "presets": ["react", "env", "stage-0"]

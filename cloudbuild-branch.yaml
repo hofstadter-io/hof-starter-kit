@@ -1,0 +1,12 @@
+steps:
+
+# using their curl image because it's already on the cloudbuilder machine
+- name: gcr.io/cloud-builders/curl
+  entrypoint: 'bash'
+  args: ['-c', './package.sh $BRANCH_NAME']
+
+- name: gcr.io/cloud-builders/gsutil
+  args: ['cp', 'hof-starter-kit--$BRANCH_NAME.tar.gz', 'gs://hof-io--studios-internal/hof-starter-kit/hof-starter-kit--$BRANCH_NAME.tar.gz']
+
+- name: gcr.io/cloud-builders/gsutil
+  args: ['cp', 'hof-starter-kit--$BRANCH_NAME:$SHORT_SHA.tar.gz', 'gs://hof-io--studios-internal/hof-starter-kit/hof-starter-kit--$BRANCH_NAME:$SHORT_SHA.tar.gz']
