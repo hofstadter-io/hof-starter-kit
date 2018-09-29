@@ -1,3 +1,4 @@
+{{#with DslContext as |APP|}}
 const url = require('url');
 
 const config = {
@@ -26,18 +27,30 @@ const config = {
     reactHotLoader: false,
     persistGraphQL: false,
     frontendRefreshOnBackendChange: true,
+
     {{#if (eq APP.mode "live")}}
+    minify: true,
     sourceMap: false,
+    {{else if (eq APP.mode "prod")}}
+    minify: true,
+    sourceMap: false,
+    {{else}}
+    minify: false,
+    sourceMap: true,
     {{/if}}
+
     defines: {
-      __DEV__: process.env.NODE_ENV !== 'production',
       __SERVER_PORT__: 8080,
+
       __API_URL__: '"/graphql"', // Use full URL if API is external, e.g. https://example.com/graphql
     {{#if (eq APP.mode "live")}}
-      __WEBSITE_URL__: '"https://{{APP.package-name}}.live.hofstadter.io/graphql"'
+      __DEV__: false,
+      __WEBSITE_URL__: '"https://{{APP.package-name}}.live.hofstadter.io"'
     {{else if (eq APP.mode "prod")}}
-      __WEBSITE_URL__: '"https://{{APP.package-name}}.hofstadter.io/graphql"'
+      __DEV__: false,
+      __WEBSITE_URL__: '"https://{{APP.package-name}}.hofstadter.io"'
     {{else}}
+      __DEV__: process.env.NODE_ENV !== 'production',
       __WEBSITE_URL__: '"http://localhost:3000"'
     {{/if}}
     },
@@ -45,13 +58,6 @@ const config = {
 };
 
 config.options.devProxy = config.options.ssr;
-
-if (process.env.NODE_ENV === 'production') {
-  config.options.defines.__SERVER_PORT__ = 8080;
-  config.options.defines.__WEBSITE_URL__ = '"https://{{DslContext.package-name}}.hofstadter.io"';
-  // Generating source maps for production will slowdown compilation for roughly 25%
-  config.options.sourceMap = false;
-}
 
 const extraDefines = {
   __SSR__: config.options.ssr,
@@ -62,3 +68,4 @@ const extraDefines = {
 config.options.defines = Object.assign(config.options.defines, extraDefines);
 
 module.exports = config;
+{{/with}}

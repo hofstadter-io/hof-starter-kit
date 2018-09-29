@@ -34,18 +34,31 @@ const config = {
     ssr: true,
     webpackDll: true,
     reactHotLoader: false,
+
     {{#if (eq APP.mode "live")}}
+    minify: true,
     sourceMap: false,
+    {{else if (eq APP.mode "prod")}}
+    minify: true,
+    sourceMap: false,
+    {{else}}
+    minify: false,
+    sourceMap: true,
     {{/if}}
+
     defines: {
-      __DEV__: process.env.NODE_ENV !== 'production',
+
     {{#if (eq APP.mode "live")}}
+      __DEV__: false,
       __API_URL__: '"https://{{APP.package-name}}.live.hofstadter.io/graphql"'
     {{else if (eq APP.mode "prod")}}
+      __DEV__: false,
       __API_URL__: '"https://{{APP.package-name}}.hofstadter.io/graphql"'
     {{else}}
+      __DEV__: process.env.NODE_ENV !== 'production',
       __API_URL__: '"/graphql"'
     {{/if}}
+
     },
     webpackConfig: {
       devServer: {
@@ -56,11 +69,6 @@ const config = {
 };
 
 config.options.devProxy = config.options.ssr;
-
-if (process.env.NODE_ENV === 'production') {
-  // Generating source maps for production will slowdown compilation for roughly 25%
-  config.options.sourceMap = false;
-}
 
 const extraDefines = {
   __SSR__: config.options.ssr
