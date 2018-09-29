@@ -9,4 +9,4 @@ steps:
   args: ['cp', 'hof-starter-kit--$BRANCH_NAME.tar.gz', 'gs://hof-io--studios-internal/hof-starter-kit/hof-starter-kit--$BRANCH_NAME.tar.gz']
 
 - name: gcr.io/cloud-builders/gsutil
-  args: ['cp', 'hof-starter-kit--$BRANCH_NAME:$SHORT_SHA.tar.gz', 'gs://hof-io--studios-internal/hof-starter-kit/hof-starter-kit--$BRANCH_NAME:$SHORT_SHA.tar.gz']
+  args: ['cp', 'gs://hof-io--studios-internal/hof-starter-kit/hof-starter-kit--$BRANCH_NAME.tar.gz', 'gs://hof-io--studios-internal/hof-starter-kit/hof-starter-kit--$BRANCH_NAME:$SHORT_SHA.tar.gz']
