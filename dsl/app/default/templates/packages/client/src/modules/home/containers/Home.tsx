@@ -17,7 +17,7 @@ import translate, { TranslateFunction } from '../../../i18n';
         }
       ]}
     />
-    <h1>Welcome to {{DslContext.name}}</h1>
+    <h1>Welcome to {{DslContext.title}}</h1>
   </PageLayout>
 );
  export default translate('home')(Home);
