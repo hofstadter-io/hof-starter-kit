@@ -1,0 +1,10 @@
+name: "default"
+
+template-configs:
+
+  - name: once-files
+    templates:
+
+    - in: packages/client/src/modules/common/components/web/ui-bootstrap/components/NavBar.jsx
+      out: packages/client/src/modules/common/components/web/ui-bootstrap/components/NavBar.jsx
+

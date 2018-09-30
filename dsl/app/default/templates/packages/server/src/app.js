@@ -42,7 +42,9 @@ if (!isApiExternal) {
 
 // Workaround: this middleware should be because playground calls next func
 // See: https://github.com/prisma/graphql-playground/issues/557
-app.get('/graphql', () => {});
+if (__DEV__) {
+    app.get('/graphql', () => {});
+}
 
 app.use((...args) => websiteMiddleware(...args));
 

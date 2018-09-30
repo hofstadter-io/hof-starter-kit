@@ -1,3 +1,4 @@
+{{#with DslContext as |APP|}}
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Container, Navbar, Nav, NavItem } from 'reactstrap';
@@ -17,6 +18,7 @@ const NavBar = () => (
 
       <Nav className="justify-content-end">
         {modules.navItemsRight}
+        {{#if (and (ne APP.mode "live") (ne APP.mode "prod"))}}
         {__DEV__ && (
           <NavItem>
             <a href="/graphql" className="nav-link">
@@ -24,9 +26,11 @@ const NavBar = () => (
             </a>
           </NavItem>
         )}
+        {{/if}}
       </Nav>
     </Container>
   </Navbar>
 );
 
 export default NavBar;
+{{/with}}
