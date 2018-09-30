@@ -15,3 +15,14 @@ template-configs:
       out: packages/client/.spinrc.js
     - in: packages/server/.spinrc.js
       out: packages/server/.spinrc.js
+
+    - in: packages/client/src/modules/home/index.tsx
+      out: packages/client/src/modules/home/index.tsx
+    - in: packages/client/src/modules/home/containers/Home.tsx
+      out: packages/client/src/modules/home/containers/Home.tsx
+    - in: packages/client/src/modules/home/locales/index.js
+      out: packages/client/src/modules/home/locales/index.js
+    - in: packages/client/src/modules/home/locales/en/translations.json
+      out: packages/client/src/modules/home/locales/en/translations.json
+    - in: packages/client/src/modules/home/locales/ru/translations.json
+      out: packages/client/src/modules/home/locales/ru/translations.json

@@ -1,5 +1,5 @@
 export default {
-  name: '{{DslContext.name}}',
+  name: '{{DslContext.title}}',
   logging: {
     level: ['production'].indexOf(process.env.NODE_ENV) < 0 ? 'debug' : 'info',
     debugSQL: false,
