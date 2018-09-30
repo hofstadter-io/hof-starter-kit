@@ -50,7 +50,7 @@
     "url": "{{{APP.bugs}}}"
   },
   "homepage": "{{{APP.homepage}}}",
-  "keywords": {{{json APP.keywords}}},
+  "keywords": [],
   "author": "{{{APP.author}}}",
   "license": "{{{APP.license}}}",
   "workspaces": [
