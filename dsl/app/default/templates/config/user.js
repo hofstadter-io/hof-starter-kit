@@ -25,27 +25,27 @@ export default {
     },
     facebook: {
       enabled: {{OAUTH.facebook}},
-      clientID: process.env.FACEBOOK_CLIENTID,
-      clientSecret: process.env.FACEBOOK_CLIENTSECRET,
+      clientID: process.env.FACEBOOK_CLIENTID || "blah",
+      clientSecret: process.env.FACEBOOK_CLIENTSECRET || "blah",
       scope: ['email'],
       profileFields: ['id', 'emails', 'displayName']
     },
     github: {
       enabled: {{OAUTH.github}},
-      clientID: process.env.GITHUB_CLIENTID,
-      clientSecret: process.env.GITHUB_CLIENTSECRET,
+      clientID: process.env.GITHUB_CLIENTID || "blah",
+      clientSecret: process.env.GITHUB_CLIENTSECRET || "blah",
       scope: ['user:email']
     },
     linkedin: {
       enabled: {{OAUTH.linkedin}},
-      clientID: process.env.LINKEDIN_CLIENTID,
-      clientSecret: process.env.LINKEDIN_CLIENTSECRET,
+      clientID: process.env.LINKEDIN_CLIENTID || "blah",
+      clientSecret: process.env.LINKEDIN_CLIENTSECRET || "blah",
       scope: ['r_emailaddress', 'r_basicprofile']
     },
     google: {
       enabled: {{OAUTH.google}},
-      clientID: process.env.GOOGLE_CLIENTID,
-      clientSecret: process.env.GOOGLE_CLIENTSECRET,
+      clientID: process.env.GOOGLE_CLIENTID || "blah",
+      clientSecret: process.env.GOOGLE_CLIENTSECRET || "blah",
       scope: ['https://www.googleapis.com/auth/userinfo.email', 'https://www.googleapis.com/auth/userinfo.profile']
     }
   }
