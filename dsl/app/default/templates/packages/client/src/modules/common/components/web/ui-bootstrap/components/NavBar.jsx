@@ -6,6 +6,8 @@ import { Container, Navbar, Nav, NavItem } from 'reactstrap';
 import modules from '../../../../../../modules';
 import settings from '../../../../../../../../../settings';
 
+// App mode: {{APP.mode}}
+
 const NavBar = () => (
   <Navbar color="faded" light>
     <Container>

@@ -1,3 +1,4 @@
+{{#with DslContext as |APP|}}
 import express from 'express';
 import path from 'path';
 
@@ -40,11 +41,13 @@ if (!isApiExternal) {
   });
 }
 
+{{#if (and (ne APP.mode "live") (ne APP.mode "prod"))}}
 // Workaround: this middleware should be because playground calls next func
 // See: https://github.com/prisma/graphql-playground/issues/557
 if (__DEV__) {
     app.get('/graphql', () => {});
 }
+{{/with}}
 
 app.use((...args) => websiteMiddleware(...args));
 
@@ -65,3 +68,4 @@ if (module.hot) {
 }
 
 export default app;
+{{/with}}
