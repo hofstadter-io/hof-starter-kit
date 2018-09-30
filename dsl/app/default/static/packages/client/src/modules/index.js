@@ -1,7 +1,7 @@
 import defaultRouter from './defaultRouter';
 import i18n from './i18n';
-// import counter from './counter';
 import home from './home';
+import counter from './counter';
 import post from './post';
 import upload from './upload';
 import user from './user';
@@ -15,7 +15,7 @@ import Feature from './connector';
 
 export default new Feature(
   defaultRouter,
-  // counter,
+  counter,
   home,
   post,
   upload,
