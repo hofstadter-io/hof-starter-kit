@@ -37,10 +37,10 @@ const config = {
     reactHotLoader: false,
 
     {{#if (eq APP.mode "live")}}
-    minify: false,
-    sourceMap: true,
+    minify: true,
+    sourceMap: false,
     {{else if (eq APP.mode "prod")}}
-    minify: false,
+    minify: true,
     sourceMap: false,
     {{else}}
     minify: false,
