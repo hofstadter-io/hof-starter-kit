@@ -50,7 +50,7 @@ const config = {
     defines: {
 
     {{#if (eq APP.mode "live")}}
-      __DEV__: false,
+      __DEV__: true,
       __API_URL__: '"https://{{APP.package-name}}.live.hofstadter.io/graphql"'
     {{else if (eq APP.mode "prod")}}
       __DEV__: false,

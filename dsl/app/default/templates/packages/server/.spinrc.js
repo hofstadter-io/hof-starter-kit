@@ -44,7 +44,7 @@ const config = {
 
       __API_URL__: '"/graphql"', // Use full URL if API is external, e.g. https://example.com/graphql
     {{#if (eq APP.mode "live")}}
-      __DEV__: false,
+      __DEV__: true,
       __WEBSITE_URL__: '"https://{{APP.package-name}}.live.hofstadter.io"'
     {{else if (eq APP.mode "prod")}}
       __DEV__: false,
