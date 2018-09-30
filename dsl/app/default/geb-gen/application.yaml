@@ -1,0 +1,15 @@
+name: "default"
+
+template-configs:
+
+  - name: once-files
+    templates:
+
+    - in: package.json
+      out: package.json
+
+    - in: packages/client/.spinrc.js
+      out: packages/client/.spinrc.js
+    - in: packages/server/.spinrc.js
+      out: packages/server/.spinrc.js
+

@@ -5,17 +5,6 @@ template-configs:
   - name: once-files
     templates:
 
-    - in: package.json
-      out: package.json
-
-    - in: config/app.js
-      out: config/app.js
-
-    - in: packages/client/.spinrc.js
-      out: packages/client/.spinrc.js
-    - in: packages/server/.spinrc.js
-      out: packages/server/.spinrc.js
-
     - in: packages/client/src/modules/home/index.tsx
       out: packages/client/src/modules/home/index.tsx
     - in: packages/client/src/modules/home/containers/Home.tsx
@@ -26,3 +15,4 @@ template-configs:
       out: packages/client/src/modules/home/locales/en/translations.json
     - in: packages/client/src/modules/home/locales/ru/translations.json
       out: packages/client/src/modules/home/locales/ru/translations.json
+
