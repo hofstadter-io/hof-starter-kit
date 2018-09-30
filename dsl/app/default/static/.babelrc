@@ -9,10 +9,6 @@
   ],
   "only": ["*.jsx", "*.js"],
   "env": {
-    "live": {
-      "compact": true,
-      "presets": [["minify", { "mangle": false }]]
-    },
     "production": {
       "compact": true,
       "presets": [["minify", { "mangle": false }]]

@@ -21,7 +21,8 @@ const config = {
   },
   options: {
     stack: ['apollo', 'react', 'styled-components', 'css', 'sass', 'less', 'es6', 'js', 'ts', 'webpack', 'i18next'],
-    cache: '../../.cache',
+    // cache: '../../.cache',
+    cache: false,
     ssr: true,
     webpackDll: true,
     reactHotLoader: false,
@@ -41,8 +42,8 @@ const config = {
 
     defines: {
       __SERVER_PORT__: 8080,
-
       __API_URL__: '"/graphql"', // Use full URL if API is external, e.g. https://example.com/graphql
+
     {{#if (eq APP.mode "live")}}
       __DEV__: true,
       __WEBSITE_URL__: '"https://{{APP.package-name}}.live.hofstadter.io"'
