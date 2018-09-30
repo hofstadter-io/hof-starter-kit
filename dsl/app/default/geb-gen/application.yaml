@@ -14,5 +14,5 @@ template-configs:
       out: packages/server/.spinrc.js
 
 
-    - in: packages/server/server/app.js
-      out: packages/server/server/app.js
+    - in: packages/server/src/app.js
+      out: packages/server/src/app.js
