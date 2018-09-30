@@ -30,16 +30,17 @@ const config = {
   },
   options: {
     stack: ['apollo', 'react', 'styled-components', 'css', 'sass', 'less', 'es6', 'ts', 'webpack', 'i18next'],
-    cache: '../../.cache',
+    // cache: '../../.cache',
+    cache: false,
     ssr: true,
     webpackDll: true,
     reactHotLoader: false,
 
     {{#if (eq APP.mode "live")}}
-    minify: true,
-    sourceMap: false,
+    minify: false,
+    sourceMap: true,
     {{else if (eq APP.mode "prod")}}
-    minify: true,
+    minify: false,
     sourceMap: false,
     {{else}}
     minify: false,

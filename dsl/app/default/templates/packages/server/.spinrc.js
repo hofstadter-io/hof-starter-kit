@@ -29,8 +29,8 @@ const config = {
     frontendRefreshOnBackendChange: true,
 
     {{#if (eq APP.mode "live")}}
-    minify: true,
-    sourceMap: false,
+    minify: false,
+    sourceMap: true,
     {{else if (eq APP.mode "prod")}}
     minify: true,
     sourceMap: false,
