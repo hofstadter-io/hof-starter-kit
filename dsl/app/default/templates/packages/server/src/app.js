@@ -41,7 +41,8 @@ if (!isApiExternal) {
   });
 }
 
-{{#if (and (ne APP.mode "live") (ne APP.mode "prod"))}}
+{{#if (or (eq APP.mode "live") (eq APP.mode "prod"))}}
+{{else}}
 // Workaround: this middleware should be because playground calls next func
 // See: https://github.com/prisma/graphql-playground/issues/557
 if (__DEV__) {

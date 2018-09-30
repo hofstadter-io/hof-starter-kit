@@ -20,7 +20,9 @@ const NavBar = () => (
 
       <Nav className="justify-content-end">
         {modules.navItemsRight}
-        {{#if (and (ne APP.mode "live") (ne APP.mode "prod"))}}
+
+        {{#if (or (eq APP.mode "live") (eq APP.mode "prod"))}}
+        {{else}}
         {__DEV__ && (
           <NavItem>
             <a href="/graphql" className="nav-link">
@@ -29,6 +31,7 @@ const NavBar = () => (
           </NavItem>
         )}
         {{/if}}
+
       </Nav>
     </Container>
   </Navbar>
