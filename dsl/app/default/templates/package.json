@@ -50,7 +50,7 @@
     "url": "{{{APP.bugs}}}"
   },
   "homepage": "{{{APP.homepage}}}",
-  "keywords": [],
+  "keywords": {{{json APP.keywords}}},
   "author": "{{{APP.author}}}",
   "license": "{{{APP.license}}}",
   "workspaces": [
@@ -67,7 +67,6 @@
     "logo": "https://opencollective.com/opencollective/logo.txt"
   },
   "devDependencies": {
-    {{#if APP.extra-dev-dependencis}}{{{json APP.extra-dev-dependencies}}},{{/if}}
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.0.3",
@@ -130,12 +129,10 @@
     "shelljs": "^0.8.1"
   },
   "optionalDependencies": {
-    {{#if APP.extra-optional-dependencis}}{{{json APP.extra-optional-dependencies}}},{{/if}}
     "dotenv": "^6.0.0",
     "lodash": "^4.17.4"
   },
   "dependencies": {
-    {{#if APP.extra-dependencis}}{{{json APP.extra-dependencies}}},{{/if}}
     "opencollective": "^1.0.3",
     "spinjs": "^0.4.162"
   },
