@@ -47,7 +47,7 @@ if (!isApiExternal) {
 if (__DEV__) {
     app.get('/graphql', () => {});
 }
-{{/with}}
+{{/if}}
 
 app.use((...args) => websiteMiddleware(...args));
 
