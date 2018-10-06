@@ -9,6 +9,8 @@ template-configs:
       out: config/app.js
     - in: config/analytics.js
       out: config/analytics.js
+    - in: config/i18n.js
+      out: config/i18n.js
     - in: config/user.js
       out: config/user.js
 

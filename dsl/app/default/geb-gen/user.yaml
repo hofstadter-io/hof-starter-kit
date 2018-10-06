@@ -1,0 +1,10 @@
+name: "default"
+
+template-configs:
+
+  - name: once-files
+    templates:
+
+    - in: config/app.js
+      out: config/app.js
+

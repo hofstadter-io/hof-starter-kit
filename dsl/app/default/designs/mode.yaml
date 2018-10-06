@@ -1,0 +1,15 @@
+app:
+  name: {{DslContext.name}}
+
+  # HOF_ENV '{{env.HOF_ENV}}'
+{{#if env}}
+{{#if (eq env.HOF_ENV "")}}
+  mode: live
+{{else}}
+  mode: {{env.HOF_ENV}}
+{{/if}}
+{{else}}
+  mode: live
+{{/if}}
+
+

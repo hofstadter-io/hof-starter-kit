@@ -19,5 +19,13 @@ static-files:
     files:
     - "**/*"
 
+dependencies:
+  designs:
+    - name: once-files
+      field: "."
+      templates:
+        - in: mode.yaml
+          out: mode.yaml
+
 
 
