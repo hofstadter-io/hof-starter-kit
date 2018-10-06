@@ -13,3 +13,54 @@ template-configs:
     - in: packages/server/src/modules/user/resolvers.js
       out: packages/server/src/modules/user/resolvers.js
 
+    # client files
+
+    - in: packages/client/src/modules/user/resolvers/index.jsx
+      out: packages/client/src/modules/user/resolvers/index.jsx
+
+    - in: packages/client/src/modules/user/graphql/Profile.graphql
+      out: packages/client/src/modules/user/graphql/Profile.graphql
+
+    - in: packages/client/src/modules/user/components/ProfileView.web.jsx
+      out: packages/client/src/modules/user/components/ProfileView.web.jsx
+    - in: packages/client/src/modules/user/components/ProfileView.native.jsx
+      out: packages/client/src/modules/user/components/ProfileView.native.jsx
+    - in: packages/client/src/modules/user/components/RegisterForm.jsx
+      out: packages/client/src/modules/user/components/RegisterForm.jsx
+    - in: packages/client/src/modules/user/components/RegisterForm.web.jsx
+      out: packages/client/src/modules/user/components/RegisterForm.web.jsx
+    - in: packages/client/src/modules/user/components/RegisterView.jsx
+      out: packages/client/src/modules/user/components/RegisterView.jsx
+    - in: packages/client/src/modules/user/components/RegisterView.web.jsx
+      out: packages/client/src/modules/user/components/RegisterView.web.jsx
+    - in: packages/client/src/modules/user/components/UserAddView.jsx
+      out: packages/client/src/modules/user/components/UserAddView.jsx
+    - in: packages/client/src/modules/user/components/UserAddView.web.jsx
+      out: packages/client/src/modules/user/components/UserAddView.web.jsx
+    - in: packages/client/src/modules/user/components/UserEditView.jsx
+      out: packages/client/src/modules/user/components/UserEditView.jsx
+    - in: packages/client/src/modules/user/components/UserEditView.web.jsx
+      out: packages/client/src/modules/user/components/UserEditView.web.jsx
+    - in: packages/client/src/modules/user/components/UserForm.jsx
+      out: packages/client/src/modules/user/components/UserForm.jsx
+    - in: packages/client/src/modules/user/components/UserForm.web.jsx
+      out: packages/client/src/modules/user/components/UserForm.web.jsx
+    - in: packages/client/src/modules/user/components/UsersFilterView.jsx
+      out: packages/client/src/modules/user/components/UsersFilterView.jsx
+    - in: packages/client/src/modules/user/components/UsersFilterView.web.jsx
+      out: packages/client/src/modules/user/components/UsersFilterView.web.jsx
+    - in: packages/client/src/modules/user/components/UsersListView.jsx
+      out: packages/client/src/modules/user/components/UsersListView.jsx
+    - in: packages/client/src/modules/user/components/UsersListView.web.jsx
+      out: packages/client/src/modules/user/components/UsersListView.web.jsx
+
+    - in: packages/client/src/modules/user/containers/Profile.jsx
+      out: packages/client/src/modules/user/containers/Profile.jsx
+    - in: packages/client/src/modules/user/containers/Register.jsx
+      out: packages/client/src/modules/user/containers/Register.jsx
+    - in: packages/client/src/modules/user/containers/UserAdd.jsx
+      out: packages/client/src/modules/user/containers/UserAdd.jsx
+    - in: packages/client/src/modules/user/containers/UserEdit.jsx
+      out: packages/client/src/modules/user/containers/UserEdit.jsx
+    - in: packages/client/src/modules/user/containers/UserOperations.js
+      out: packages/client/src/modules/user/containers/UserOperations.js
