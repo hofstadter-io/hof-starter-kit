@@ -1,0 +1,15 @@
+name: "default"
+
+template-configs:
+
+  - name: once-files
+    templates:
+
+    # server files
+    - in: packages/server/src/modules/user/schema.graphql
+      out: packages/server/src/modules/user/schema.graphql
+    - in: packages/server/src/modules/user/sql.js
+      out: packages/server/src/modules/user/sql.js
+    - in: packages/server/src/modules/user/resolvers.js
+      out: packages/server/src/modules/user/resolvers.js
+
