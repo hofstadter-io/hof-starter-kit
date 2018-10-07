@@ -19,6 +19,17 @@ static-files:
     files:
     - "**/*"
 
+user-files:
+  - name: all
+    field: "."
+    unless: disabled
+    prefix: "user-files"
+    files:
+    - "custom/**/*"
+    - "pages/**/*"
+    - "seeds/**/*"
+    - "translations/**/*"
+
 dependencies:
   designs:
     - name: once-files
