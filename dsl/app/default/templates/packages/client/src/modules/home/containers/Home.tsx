@@ -1,6 +1,9 @@
 import React from 'react';
 import Helmet from 'react-helmet';
- import { PageLayout } from '../../common/components/web';
+
+import * as RS from 'reactstrap'
+
+import { PageLayout } from '../../common/components/web';
 import settings from '../../../../../../settings';
 import translate, { TranslateFunction } from '../../../i18n';
  interface HomeProps {
@@ -17,7 +20,9 @@ import translate, { TranslateFunction } from '../../../i18n';
         }
       ]}
     />
-    <h1>Welcome to {{DslContext.title}}</h1>
+    <div>
+      {{{file "pages/home.html"}}}
+    </div>
   </PageLayout>
 );
  export default translate('home')(Home);
