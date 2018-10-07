@@ -103,15 +103,16 @@ export default pubsub => ({
               const encodedToken = Buffer.from(emailToken).toString('base64');
               const url = `${__WEBSITE_URL__}/confirmation/${encodedToken}`;
               mailer.sendMail({
-                from: `${settings.app.name} <${process.env.EMAIL_USER}>`,
+                from: `${settings.app.name} <${settings.mailer.sender}>`,
                 to: user.email,
                 subject: 'Your account has been created',
                 html: `<p>Hi, ${user.username}!</p>
                 <p>Welcome to ${settings.app.name}. Please click the following link to confirm your email:</p>
                 <p><a href="${url}">${url}</a></p>
-                <p>Below are your login information</p>
-                <p>Your email is: ${user.email}</p>
-                <p>Your password is: ${input.password}</p>`
+                <br>
+                <p>Thanks!</p>
+                <p>the ${settings.app.name} team</p>
+                  `
               });
             });
           }

@@ -86,6 +86,7 @@
     "lerna": "^2.5.1",
     "lint-staged": "^7.0.4",
     "lodash": "^4.17.4",
+    "nodemailer-mailgun-transport": "^1.4.0",
     "minilog": "^3.1.0",
     "nodemailer": "^4.4.1",
     "passport": "^0.4.0",

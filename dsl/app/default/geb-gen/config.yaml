@@ -11,6 +11,8 @@ template-configs:
       out: config/analytics.js
     - in: config/i18n.js
       out: config/i18n.js
+    - in: config/mailer.js
+      out: config/mailer.js
     - in: config/user.js
       out: config/user.js
 
