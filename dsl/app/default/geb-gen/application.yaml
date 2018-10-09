@@ -16,3 +16,9 @@ template-configs:
 
     - in: packages/server/src/app.js
       out: packages/server/src/app.js
+
+
+    - in: packages/client/src/modules/index.js
+      out: packages/client/src/modules/index.js
+    - in: packages/server/src/modules/index.ts
+      out: packages/server/src/modules/index.ts

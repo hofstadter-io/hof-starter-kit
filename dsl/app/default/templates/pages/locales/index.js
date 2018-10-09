@@ -3,3 +3,4 @@
 * https://github.com/alienfast/i18next-loader#option-2-use-with-import-syntax
 */
 export default {};
+

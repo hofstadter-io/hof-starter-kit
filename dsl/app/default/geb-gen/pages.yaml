@@ -1,0 +1,28 @@
+name: "default"
+
+template-configs:
+
+  - name: once-files
+    templates:
+
+      - in: pages/connector.tsx
+        out: packages/client/src/modules/pages/index.tsx
+
+  - name: pages
+    field: "pages"
+    templates:
+
+      - in: pages/index.tsx
+        out: packages/client/src/modules/pages/{{name}}/index.tsx
+      - in: pages/containers/page.tsx
+        out: packages/client/src/modules/pages/{{name}}/containers/{{camelT name}}.tsx
+
+      - in: pages/locales/index.js
+        out: packages/client/src/modules/pages/{{name}}/locales/index.js
+
+  - name: translations
+    field: "pages.[:].translations"
+    templates:
+
+      - in: pages/locales/translations.json
+        out: packages/client/src/modules/pages/{{parent}}/locales/{{name}}/translations.json

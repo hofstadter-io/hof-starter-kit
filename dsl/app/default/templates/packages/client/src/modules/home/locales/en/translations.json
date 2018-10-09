@@ -1,6 +1,0 @@
-{
-  "hello": "Hello",
-  "title": "Home",
-  "meta": "{{DslContext.name}} Home page",
-  "loading": "Loading..."
-}
