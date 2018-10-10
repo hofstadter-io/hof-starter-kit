@@ -46,10 +46,10 @@ const config = {
 
     {{#if (eq APP.mode "live")}}
       __DEV__: true,
-      __WEBSITE_URL__: '"https://{{APP.package-name}}.live.hofstadter.io"'
+      __WEBSITE_URL__: '"https://{{APP.name}}.live.hofstadter.io"'
     {{else if (eq APP.mode "prod")}}
       __DEV__: false,
-      __WEBSITE_URL__: '"https://{{APP.package-name}}.hofstadter.io"'
+      __WEBSITE_URL__: '"https://{{APP.name}}.hofstadter.io"'
     {{else}}
       __DEV__: process.env.NODE_ENV !== 'production',
       __WEBSITE_URL__: '"http://localhost:3000"'

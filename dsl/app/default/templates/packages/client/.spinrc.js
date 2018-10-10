@@ -10,7 +10,7 @@ const config = {
       dllExcludes: ['bootstrap'],
     {{#if (eq APP.mode "live")}}
       webpackDevProtocol: "https",
-      webpackDevHost: "{{DslContext.package-name}}.live.hofstadter.io",
+      webpackDevHost: "{{DslContext.name}}.live.hofstadter.io",
       webpackDevPort: 443,
     {{/if}}
       defines: {
@@ -51,10 +51,10 @@ const config = {
 
     {{#if (eq APP.mode "live")}}
       __DEV__: true,
-      __API_URL__: '"https://{{APP.package-name}}.live.hofstadter.io/graphql"'
+      __API_URL__: '"https://{{APP.name}}.live.hofstadter.io/graphql"'
     {{else if (eq APP.mode "prod")}}
       __DEV__: false,
-      __API_URL__: '"https://{{APP.package-name}}.hofstadter.io/graphql"'
+      __API_URL__: '"https://{{APP.name}}.hofstadter.io/graphql"'
     {{else}}
       __DEV__: process.env.NODE_ENV !== 'production',
       __API_URL__: '"/graphql"'

@@ -1,6 +1,6 @@
 {{#with DslContext as |APP|}}
 {
-  "name": "{{{APP.package-name}}}",
+  "name": "{{{APP.name}}}",
   "private": true,
   "version": "{{{APP.version}}}",
   "engines": {
@@ -63,7 +63,7 @@
   },
   "collective": {
     "type": "opencollective",
-    "url": "https://opencollective.com/{{{APP.package-name}}}",
+    "url": "https://opencollective.com/{{{APP.name}}}",
     "logo": "https://opencollective.com/opencollective/logo.txt"
   },
   "devDependencies": {
