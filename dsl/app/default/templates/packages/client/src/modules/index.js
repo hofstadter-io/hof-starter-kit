@@ -3,8 +3,10 @@ import i18n from './i18n';
 
 import user from './user';
 
-import pages from './pages';
 import contact from './contact';
+
+import layout from './layout';
+import pages from './pages';
 import pageNotFound from './pageNotFound';
 import './favicon';
 
@@ -16,6 +18,7 @@ export default new Feature(
   user,
 
   contact,
+
   pages,
   pageNotFound,
   i18n

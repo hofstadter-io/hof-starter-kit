@@ -1,0 +1,21 @@
+name: "default"
+
+template-configs:
+
+  - name: once-files
+    templates:
+
+    - in: packages/client/src/modules/common/components/web/ui-bootstrap/components/PageLayout.jsx
+      out: packages/client/src/modules/common/components/web/ui-bootstrap/components/PageLayout.jsx
+
+    - in: packages/client/src/modules/layout/index.tsx
+      out: packages/client/src/modules/layout/index.tsx
+    - in: pages/locales/index.js
+      out: packages/client/src/modules/layout/navbar/locales/index.js
+
+  - name: navbar-translations
+    field: "layout.navbar.translations"
+    templates:
+
+      - in: pages/locales/translations.json
+        out: packages/client/src/modules/layout/navbar/locales/{{name}}/translations.json

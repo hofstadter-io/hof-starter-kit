@@ -9,7 +9,7 @@ import { MenuItem, LanguagePicker } from '../../modules/common/components/web';
 import modules from '../';
 import settings from '../../../../../settings';
 
-const I18nProvider = ({ i18n, children }) => {
+export const I18nProvider = ({ i18n, children }) => {
   for (const localization of modules.localizations) {
     for (const lang of Object.keys(localization.resources)) {
       i18n.addResourceBundle(
@@ -90,3 +90,5 @@ export default new Feature(
       }
     : {}
 );
+
+export const I18n = i18n;
