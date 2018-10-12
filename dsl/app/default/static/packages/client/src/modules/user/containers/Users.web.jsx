@@ -4,10 +4,11 @@ import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { compose } from 'react-apollo';
 
+import { PageLayout } from '../../layout/page';
 import settings from '../../../../../../settings';
 import translate from '../../../i18n';
 import UsersFilterView from '../components/UsersFilterView';
-import { Button, PageLayout } from '../../common/components/web';
+import { Button } from '../../common/components/web';
 import UsersListView from '../components/UsersListView';
 import withSubscription from './withSubscription';
 import {

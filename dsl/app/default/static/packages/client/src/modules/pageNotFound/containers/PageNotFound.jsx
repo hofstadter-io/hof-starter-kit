@@ -5,7 +5,8 @@ import Helmet from 'react-helmet';
 import styled from 'styled-components';
 
 import translate from '../../../i18n';
-import { PageLayout, Button } from '../../common/components/web';
+import { Button } from '../../common/components/web';
+import { PageLayout } from '../../layout/page';
 import settings from '../../../../../../settings';
 
 const Section = styled.section`

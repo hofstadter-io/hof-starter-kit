@@ -5,7 +5,7 @@ import Helmet from 'react-helmet';
 import translate from '../../../i18n';
 import ForgotPasswordForm from '../components/ForgotPasswordForm';
 import { LayoutCenter } from '../../common/components';
-import { PageLayout } from '../../common/components/web';
+import { PageLayout } from '../../layout/page';
 
 import settings from '../../../../../../settings';
 

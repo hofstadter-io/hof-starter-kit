@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import { Container, Navbar, Nav, NavItem } from 'reactstrap';
 
-import { MenuItem } from '../../../common/components/web';
-
 import translate from '../../../../i18n';
 import modules from '../../../../modules';
 import settings from '../../../../../../../settings';
+
+import { IfLoggedIn, IfNofLoggedIn } from '../../../user';
 
 class NavBar extends React.Component {
   public static propTypes = {
@@ -24,17 +24,19 @@ class NavBar extends React.Component {
               {settings.app.name}
             </NavLink>
 
-            <MenuItem>
-              <NavLink to="/about" className="nav-link">
-                {t('about')}
+            <IfLoggedIn key="/users" role="admin">
+              <NavLink to="/users" className="nav-link">
+                {t('users')}
               </NavLink>
-            </MenuItem>
+            </IfLoggedIn>
 
-            <MenuItem>
-              <NavLink to="/contact" className="nav-link">
-                {t('contact')}
-              </NavLink>
-            </MenuItem>
+            <NavLink to="/about" className="nav-link">
+              {t('about')}
+            </NavLink>
+
+            <NavLink to="/contact" className="nav-link">
+              {t('contact')}
+            </NavLink>
           </Nav>
 
           <Nav className="justify-content-end">

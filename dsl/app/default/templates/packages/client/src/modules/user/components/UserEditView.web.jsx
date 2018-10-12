@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
-import { PageLayout } from '../../common/components/web';
+import { PageLayout } from '../../layout/page';
 
 import UserForm from './UserForm';
 import settings from '../../../../../../settings';

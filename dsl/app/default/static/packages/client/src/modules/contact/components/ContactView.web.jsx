@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 
 import { LayoutCenter } from '../../common/components';
-import { PageLayout } from '../../common/components/web';
+import { PageLayout } from '../../layout/page';
 import ContactForm from './ContactForm';
 import settings from '../../../../../../settings';
 

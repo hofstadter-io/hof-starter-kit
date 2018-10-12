@@ -4,7 +4,8 @@ import Helmet from 'react-helmet';
 
 import translate from '../../../i18n';
 import { LayoutCenter } from '../../common/components';
-import { PageLayout, Card, CardGroup, CardTitle, CardText } from '../../common/components/web';
+import { Card, CardGroup, CardTitle, CardText } from '../../common/components/web';
+import { PageLayout } from '../../layout/page';
 
 import LoginForm from './LoginForm';
 import settings from '../../../../../../settings';
