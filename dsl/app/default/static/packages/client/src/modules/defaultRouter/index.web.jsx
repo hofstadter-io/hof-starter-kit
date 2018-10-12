@@ -3,7 +3,7 @@ import { Switch } from 'react-router-dom';
 
 import modules from '..';
 
-import Feature from '../connector';
+import Feature from '../ClientModule';
 
 const routerFactory = () => <Switch>{modules.routes}</Switch>;
 

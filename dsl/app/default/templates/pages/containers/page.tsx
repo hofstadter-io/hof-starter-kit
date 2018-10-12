@@ -5,7 +5,7 @@ import Helmet from 'react-helmet';
 import * as RS from 'reactstrap'
 import settings from '../../../../../../../settings';
 
-import { PageLayout } from '../../../common/components/web';
+import { PageLayout } from '../../../layout/page';
 import translate, { TranslateFunction } from '../../../../i18n';
 
 interface {{camelT PAGE.name}}Props {

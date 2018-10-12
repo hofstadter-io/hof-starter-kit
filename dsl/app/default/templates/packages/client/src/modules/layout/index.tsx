@@ -1,7 +1,6 @@
-import Feature from '../connector';
+import ClientModule from '../ClientModule';
 
-import navbar from './navbar/locales';
+import navbar from './navbar';
+import footer from './footer';
 
-export default new Feature({
-  localization: { ns: 'navbar', navbar }
-});
+export default new ClientModule(navbar, footer);

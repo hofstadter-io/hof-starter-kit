@@ -4,12 +4,12 @@ import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { reactI18nextModule, I18nextProvider } from 'react-i18next';
 
-import Feature from '../connector';
+import Feature from '../ClientModule';
 import { MenuItem, LanguagePicker } from '../../modules/common/components/web';
 import modules from '../';
 import settings from '../../../../../settings';
 
-export const I18nProvider = ({ i18n, children }) => {
+const I18nProvider = ({ i18n, children }) => {
   for (const localization of modules.localizations) {
     for (const lang of Object.keys(localization.resources)) {
       i18n.addResourceBundle(
@@ -50,14 +50,16 @@ if (__CLIENT__) {
 
 i18n.use(reactI18nextModule).init(I18N_CONFIG);
 
-const langPicker = {};
-if (settings.i18n.enabled && settings.i18n.langPickerRender) {
-  langPicker.navItemRight = (
-    <MenuItem key="languagePicker" style={{ display: 'flex', alignItems: 'center' }}>
-      <LanguagePicker i18n={i18n} />
-    </MenuItem>
-  );
-}
+const langPicker =
+  settings.i18n.enabled && settings.i18n.langPickerRender
+    ? new Feature({
+        navItemRight: [
+          <MenuItem key="languagePicker" className="menu-center">
+            <LanguagePicker i18n={i18n} />
+          </MenuItem>
+        ]
+      })
+    : undefined;
 
 class RootComponent extends React.Component {
   constructor(props) {
@@ -85,7 +87,7 @@ export default new Feature(
     ? {
         data: { i18n: true },
         // eslint-disable-next-line react/display-name
-        rootComponentFactory: req => <RootComponent req={req} />,
+        rootComponentFactory: [req => <RootComponent req={req} />],
         ...langPicker
       }
     : {}

@@ -1,4 +1,4 @@
-import Feature from '../connector';
+import Feature from '../ClientModule';
 {{#with DslContext as |APP|}}
 
 {{#each APP.pages as |PAGE|}}

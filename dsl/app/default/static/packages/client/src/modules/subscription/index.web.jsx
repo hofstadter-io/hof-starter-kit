@@ -11,7 +11,7 @@ import { IfLoggedIn, AuthRoute } from '../user';
 import reducers from './reducers';
 import settings from '../../../../../settings';
 import resources from './locales';
-import Feature from '../connector';
+import Feature from '../ClientModule';
 
 const NavLinkWithI18n = translate('subscription')(({ t }) => (
   <NavLink to="/subscribers-only" className="nav-link" activeClassName="active">
@@ -27,15 +27,13 @@ export default new Feature({
         <SubscriberRoute exact path="/update-card" component={UpdateCard} />
       ]
     : [],
-  navItem: settings.subscription.enabled ? (
+  navItem: settings.subscription.enabled ? [
     <IfLoggedIn role="user">
       <MenuItem key="/subscribers-only">
         <NavLinkWithI18n />
       </MenuItem>
     </IfLoggedIn>
-  ) : (
-    []
-  ),
+  ] : [],
   reducer: { subscription: reducers },
   scriptsInsert:
     settings.subscription.enabled && settings.subscription.stripeSecretKey ? 'https://js.stripe.com/v3/' : undefined,

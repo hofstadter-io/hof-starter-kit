@@ -10,10 +10,11 @@ import pages from './pages';
 import pageNotFound from './pageNotFound';
 import './favicon';
 
-import Feature from './connector';
+import ClientModule from './ClientModule';
 
-export default new Feature(
+export default new ClientModule(
   defaultRouter,
+  layout,
 
   user,
 

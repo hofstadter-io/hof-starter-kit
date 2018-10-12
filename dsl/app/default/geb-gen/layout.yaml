@@ -5,17 +5,44 @@ template-configs:
   - name: once-files
     templates:
 
-    - in: packages/client/src/modules/common/components/web/ui-bootstrap/components/PageLayout.jsx
-      out: packages/client/src/modules/common/components/web/ui-bootstrap/components/PageLayout.jsx
-
     - in: packages/client/src/modules/layout/index.tsx
       out: packages/client/src/modules/layout/index.tsx
+
+    - in: packages/client/src/modules/layout/page/index.tsx
+      out: packages/client/src/modules/layout/page/index.tsx
+    - in: packages/client/src/modules/layout/page/containers/PageLayoutModules.tsx
+      out: packages/client/src/modules/layout/page/containers/PageLayoutModules.tsx
+    - in: packages/client/src/modules/layout/page/containers/PageLayoutStatic.tsx
+      out: packages/client/src/modules/layout/page/containers/PageLayoutStatic.tsx
+
+    - in: packages/client/src/modules/layout/navbar/index.tsx
+      out: packages/client/src/modules/layout/navbar/index.tsx
+    - in: packages/client/src/modules/layout/navbar/containers/NavBarModules.tsx
+      out: packages/client/src/modules/layout/navbar/containers/NavBarModules.tsx
+    - in: packages/client/src/modules/layout/navbar/containers/NavBarStatic.tsx
+      out: packages/client/src/modules/layout/navbar/containers/NavBarStatic.tsx
+
+    - in: packages/client/src/modules/layout/footer/index.tsx
+      out: packages/client/src/modules/layout/footer/index.tsx
+    - in: packages/client/src/modules/layout/footer/containers/Footer.tsx
+      out: packages/client/src/modules/layout/footer/containers/Footer.tsx
+
     - in: pages/locales/index.js
       out: packages/client/src/modules/layout/navbar/locales/index.js
+    - in: pages/locales/index.js
+      out: packages/client/src/modules/layout/footer/locales/index.js
+
 
   - name: navbar-translations
     field: "layout.navbar.translations"
     templates:
-
       - in: pages/locales/translations.json
         out: packages/client/src/modules/layout/navbar/locales/{{name}}/translations.json
+
+  - name: footer-translations
+    field: "layout.footer.translations"
+    templates:
+      - in: pages/locales/translations.json
+        out: packages/client/src/modules/layout/footer/locales/{{name}}/translations.json
+
+

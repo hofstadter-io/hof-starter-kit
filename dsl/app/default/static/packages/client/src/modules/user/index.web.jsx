@@ -18,7 +18,7 @@ import ResetPassword from './containers/ResetPassword';
 
 import { AuthRoute, IfLoggedIn, IfNotLoggedIn, withLoadedUser, withLogout } from './containers/Auth';
 
-import Feature from '../connector';
+import Feature from '../ClientModule';
 
 const ProfileName = withLoadedUser(
   ({ currentUser }) => (currentUser ? currentUser.fullName || currentUser.username : null)
@@ -100,8 +100,8 @@ export default new Feature(access, {
       </MenuItem>
     </IfNotLoggedIn>
   ],
-  resolver: resolvers,
-  localization: { ns: 'user', resources },
+  resolver: [resolvers],
+  localization: [{ ns: 'user', resources }],
   // eslint-disable-next-line react/display-name
-  rootComponentFactory: req => (req ? <CookiesProvider cookies={req.universalCookies} /> : <CookiesProvider />)
+  rootComponentFactory: [req => (req ? <CookiesProvider cookies={req.universalCookies} /> : <CookiesProvider />)]
 });

@@ -5,7 +5,7 @@ import translate from '../../i18n';
 import { MenuItem } from '../../modules/common/components/web';
 import Contact from './containers/Contact';
 import resources from './locales';
-import Feature from '../connector';
+import Feature from '../ClientModule';
 
 const NavLinkWithI18n = translate('contact')(({ t }) => (
   <NavLink to="/contact" className="nav-link" activeClassName="active">
@@ -13,11 +13,11 @@ const NavLinkWithI18n = translate('contact')(({ t }) => (
   </NavLink>
 ));
 export default new Feature({
-  route: <Route exact path="/contact" component={Contact} />,
-  navItem: (
+  route: [<Route exact path="/contact" component={Contact} />],
+  navItem: [
     <MenuItem key="/contact">
       <NavLinkWithI18n />
     </MenuItem>
-  ),
-  localization: { ns: 'contact', resources }
+  ],
+  localization: [{ ns: 'contact', resources }]
 });
