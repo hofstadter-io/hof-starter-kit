@@ -5,13 +5,9 @@ import styled from 'styled-components';
 import translate, { TranslateFunction } from '../../../../i18n';
 import settings from '../../../../../../../settings';
 
-const footerHeight = '40px';
-
 const FooterStyled = styled.footer`
-  margin-top: 10px;
-  line-height: ${footerHeight};
-  height: ${footerHeight};
-`;
+{{{file DslContext.layout.footer.style}}}
+`
 
 class Footer extends React.Component {
   public static propTypes = {
@@ -21,7 +17,7 @@ class Footer extends React.Component {
   public render() {
     const { t } = this.props;
     return (
-      <FooterStyled className="d-flex flex-shrink-0 justify-content-center">
+      <FooterStyled id="styled-footer" className="d-flex flex-shrink-0 justify-content-center">
         <span>
           &copy; {new Date().getFullYear()}. {settings.app.name}. - {t('footer.hello')}
         </span>

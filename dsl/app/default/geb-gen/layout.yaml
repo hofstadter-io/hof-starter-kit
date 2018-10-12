@@ -5,6 +5,9 @@ template-configs:
   - name: once-files
     templates:
 
+    - in: packages/client/src/modules/common/components/web/ui-bootstrap/styles/styles.scss
+      out: packages/client/src/modules/common/components/web/ui-bootstrap/styles/styles.scss
+
     - in: packages/client/src/modules/layout/index.tsx
       out: packages/client/src/modules/layout/index.tsx
 
@@ -24,8 +27,10 @@ template-configs:
 
     - in: packages/client/src/modules/layout/footer/index.tsx
       out: packages/client/src/modules/layout/footer/index.tsx
-    - in: packages/client/src/modules/layout/footer/containers/Footer.tsx
-      out: packages/client/src/modules/layout/footer/containers/Footer.tsx
+    - in: packages/client/src/modules/layout/footer/containers/FooterDefault.tsx
+      out: packages/client/src/modules/layout/footer/containers/FooterDefault.tsx
+    - in: packages/client/src/modules/layout/footer/containers/FooterCustom.tsx
+      out: packages/client/src/modules/layout/footer/containers/FooterCustom.tsx
 
     - in: pages/locales/index.js
       out: packages/client/src/modules/layout/navbar/locales/index.js

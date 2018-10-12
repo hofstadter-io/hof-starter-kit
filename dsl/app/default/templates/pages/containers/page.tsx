@@ -1,12 +1,17 @@
 {{#with RepeatedContext as |PAGE|}}
 import React from 'react';
 import Helmet from 'react-helmet';
+import styled from 'styled-components';
 
 import * as RS from 'reactstrap'
 import settings from '../../../../../../../settings';
 
 import { PageLayout } from '../../../layout/page';
 import translate, { TranslateFunction } from '../../../../i18n';
+
+const PageStyled = styled.div`
+{{{file PAGE.style}}}
+`
 
 interface {{camelT PAGE.name}}Props {
   t: TranslateFunction;
@@ -22,11 +27,11 @@ interface {{camelT PAGE.name}}Props {
         }
       ]}
     />
-    <div>
+    <PageStyled>
       {{#each PAGE.files as |FILE|}}
       {{{file FILE}}}
       {{/each}}
-    </div>
+    </PageStyled>
   </PageLayout>
 );
 
