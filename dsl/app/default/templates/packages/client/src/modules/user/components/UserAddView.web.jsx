@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { PageLayout } from '../../layout/page';
@@ -7,6 +8,11 @@ import { PageLayout } from '../../layout/page';
 import UserForm from './UserForm';
 import settings from '../../../../../../settings';
 import translate from '../../../i18n';
+
+const PageStyled = styled.div`
+{{#each DslContext.builtin-pages as |PAGE|}}
+{{#if (eq PAGE.name "user-add")}}{{{file PAGE.style}}}{{/if}}{{/each}}
+`
 
 class UserAddView extends React.PureComponent {
   static propTypes = {
@@ -49,18 +55,22 @@ class UserAddView extends React.PureComponent {
     return (
       <PageLayout>
         {this.renderMetaData(t)}
-        <Link id="back-button" to="/users">
-          Back
-        </Link>
-        <h2>
-          {t('userEdit.form.titleCreate')} {t('userEdit.form.title')}
-        </h2>
-        <UserForm
-          onSubmit={this.props.onSubmit}
-          initialValues={ {} }
-          shouldDisplayRole={true}
-          shouldDisplayActive={true}
-        />
+        <PageStyled>
+          <div id="user-add-page">
+            <Link id="back-button" to="/users">
+              Back
+            </Link>
+            <h2>
+              {t('userEdit.form.titleCreate')} {t('userEdit.form.title')}
+            </h2>
+            <UserForm
+              onSubmit={this.props.onSubmit}
+              initialValues={ {} }
+              shouldDisplayRole={true}
+              shouldDisplayActive={true}
+            />
+          </div>
+        </PageStyled>
       </PageLayout>
     );
   }

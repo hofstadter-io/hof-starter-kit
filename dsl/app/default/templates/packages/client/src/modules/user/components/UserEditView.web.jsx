@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { PageLayout } from '../../layout/page';
@@ -7,6 +8,11 @@ import { PageLayout } from '../../layout/page';
 import UserForm from './UserForm';
 import settings from '../../../../../../settings';
 import translate from '../../../i18n';
+
+const PageStyled = styled.div`
+{{#each DslContext.builtin-pages as |PAGE|}}
+{{#if (eq PAGE.name "user-edit")}}{{{file PAGE.style}}}{{/if}}{{/each}}
+`
 
 class UserEditView extends React.PureComponent {
   static propTypes = {
@@ -48,7 +54,11 @@ class UserEditView extends React.PureComponent {
       return (
         <PageLayout>
           {this.renderMetaData(t)}
-          <div className="text-center">{t('userEdit.loadMsg')}</div>
+          <PageStyled>
+            <div id="user-edit-page">
+              <div className="text-center">{t('userEdit.loadMsg')}</div>
+            </div>
+          </PageStyled>
         </PageLayout>
       );
     } else {
@@ -56,18 +66,22 @@ class UserEditView extends React.PureComponent {
       return (
         <PageLayout>
           {this.renderMetaData(t)}
-          <Link id="back-button" to={user && user.role === 'admin' ? '/users' : '/profile'}>
-            Back
-          </Link>
-          <h2>
-            {t('userEdit.form.titleEdit')} {t('userEdit.form.title')}
-          </h2>
-          <UserForm
-            onSubmit={this.props.onSubmit}
-            shouldDisplayRole={isNotSelf}
-            shouldDisplayActive={isNotSelf}
-            initialValues={user}
-          />
+          <PageStyled>
+            <div id="user-edit-page">
+              <Link id="back-button" to={user && user.role === 'admin' ? '/users' : '/profile'}>
+                Back
+              </Link>
+              <h2>
+                {t('userEdit.form.titleEdit')} {t('userEdit.form.title')}
+              </h2>
+              <UserForm
+                onSubmit={this.props.onSubmit}
+                shouldDisplayRole={isNotSelf}
+                shouldDisplayActive={isNotSelf}
+                initialValues={user}
+              />
+            </div>
+          </PageStyled>
         </PageLayout>
       );
     }

@@ -10,6 +10,10 @@ template-configs:
       - in: pages/locales/index.js
         out: packages/client/src/modules/contact/locales/index.js
 
+      # builtin-pages, for [style]
+      - in: packages/client/src/modules/contact/components/ContactView.web.jsx
+        out: packages/client/src/modules/contact/components/ContactView.web.jsx
+
   - name: pages
     field: "pages"
     templates:

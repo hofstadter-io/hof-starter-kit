@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 
@@ -10,6 +11,11 @@ import { Card, CardGroup, CardTitle, CardText } from '../../common/components/we
 import { PageLayout } from '../../layout/page';
 
 import settings from '../../../../../../settings';
+
+const PageStyled = styled.div`
+{{#each DslContext.builtin-pages as |PAGE|}}
+{{#if (eq PAGE.name "profile")}}{{{file PAGE.style}}}{{/if}}{{/each}}
+`
 
 const renderMetaData = t => {
   return (
@@ -30,51 +36,63 @@ const ProfileView = ({ currentUserLoading, currentUser, t }) => {
     return (
       <PageLayout>
         {renderMetaData(t)}
-        <div className="text-center">{t('profile.loadMsg')}</div>
+        <PageStyled>
+          <div id="profile-page">
+            <div className="text-center">{t('profile.loadMsg')}</div>
+          </div>
+        </PageStyled>
       </PageLayout>
     );
   } else if (currentUser) {
     return (
       <PageLayout>
         {renderMetaData(t)}
-        <LayoutCenter>
-          <h1 className="text-center">{t('profile.card.title')}</h1>
-          <Card>
-            <CardGroup>
-              <CardTitle>{t('profile.card.group.name')}:</CardTitle>
-              <CardText>{currentUser.username}</CardText>
-            </CardGroup>
-            <CardGroup>
-              <CardTitle>{t('profile.card.group.email')}:</CardTitle>
-              <CardText>{currentUser.email}</CardText>
-            </CardGroup>
-            <CardGroup>
-              <CardTitle>{t('profile.card.group.role')}:</CardTitle>
-              <CardText>{currentUser.role}</CardText>
-            </CardGroup>
-            {currentUser.profile &&
-              currentUser.profile.fullName && (
+        <PageStyled>
+          <div id="profile-page">
+            <LayoutCenter>
+              <h1 className="text-center">{t('profile.card.title')}</h1>
+              <Card>
                 <CardGroup>
-                  <CardTitle>{t('profile.card.group.full')}:</CardTitle>
-                  <CardText>{currentUser.profile.fullName}</CardText>
+                  <CardTitle>{t('profile.card.group.name')}:</CardTitle>
+                  <CardText>{currentUser.username}</CardText>
                 </CardGroup>
-              )}
-            {settings.subscription.enabled && <SubscriptionProfile />}
-          </Card>
-          <Link
-            className="mt-2 btn user-link"
-            to={ { pathname: `/users/${currentUser.id}`, state: { from: 'profile' } } }
-          >
-            {t('profile.editProfileText')}
-          </Link>
-        </LayoutCenter>
+                <CardGroup>
+                  <CardTitle>{t('profile.card.group.email')}:</CardTitle>
+                  <CardText>{currentUser.email}</CardText>
+                </CardGroup>
+                <CardGroup>
+                  <CardTitle>{t('profile.card.group.role')}:</CardTitle>
+                  <CardText>{currentUser.role}</CardText>
+                </CardGroup>
+                {currentUser.profile &&
+                  currentUser.profile.fullName && (
+                    <CardGroup>
+                      <CardTitle>{t('profile.card.group.full')}:</CardTitle>
+                      <CardText>{currentUser.profile.fullName}</CardText>
+                    </CardGroup>
+                  )}
+                {settings.subscription.enabled && <SubscriptionProfile />}
+              </Card>
+              <Link
+                className="mt-2 btn user-link"
+                to={ { pathname: `/users/${currentUser.id}`, state: { from: 'profile' } } }
+              >
+                {t('profile.editProfileText')}
+              </Link>
+            </LayoutCenter>
+          </div>
+        </PageStyled>
       </PageLayout>
     );
   } else {
     return (
       <PageLayout>
         {renderMetaData(t)}
-        <h2>{t('profile.errorMsg')}</h2>
+        <PageStyled>
+          <div id="profile-page">
+            <h2>{t('profile.errorMsg')}</h2>
+          </div>
+        </PageStyled>
       </PageLayout>
     );
   }

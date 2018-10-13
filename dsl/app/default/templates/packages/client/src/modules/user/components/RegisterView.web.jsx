@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import Helmet from 'react-helmet';
 
 import translate from '../../../i18n';
@@ -8,6 +9,11 @@ import { LayoutCenter } from '../../common/components';
 import { PageLayout } from '../../layout/page';
 
 import settings from '../../../../../../settings';
+
+const PageStyled = styled.div`
+{{#each DslContext.builtin-pages as |PAGE|}}
+{{#if (eq PAGE.name "register")}}{{{file PAGE.style}}}{{/if}}{{/each}}
+`
 
 class RegisterView extends React.PureComponent {
   static propTypes = {
@@ -47,10 +53,14 @@ class RegisterView extends React.PureComponent {
     return (
       <PageLayout>
         {this.renderMetaData(t)}
-        <LayoutCenter>
-          <h1 className="text-center">{t('reg.form.title')}</h1>
-          <RegisterForm onSubmit={this.onSubmit} />
-        </LayoutCenter>
+        <PageStyled>
+          <div id="register-page">
+            <LayoutCenter>
+              <h1 className="text-center">{t('reg.form.title')}</h1>
+              <RegisterForm onSubmit={this.onSubmit} />
+            </LayoutCenter>
+          </div>
+        </PageStyled>
       </PageLayout>
     );
   }

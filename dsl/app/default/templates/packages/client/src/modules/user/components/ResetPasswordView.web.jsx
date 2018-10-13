@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import Helmet from 'react-helmet';
 
 import translate from '../../../i18n';
@@ -7,6 +8,11 @@ import ResetPasswordForm from '../components/ResetPasswordForm';
 import { PageLayout } from '../../layout/page';
 
 import settings from '../../../../../../settings';
+
+const PageStyled = styled.div`
+{{#each DslContext.builtin-pages as |PAGE|}}
+{{#if (eq PAGE.name "reset-password")}}{{{file PAGE.style}}}{{/if}}{{/each}}
+`
 
 class ResetPasswordView extends React.Component {
   static propTypes = {
@@ -55,8 +61,12 @@ class ResetPasswordView extends React.Component {
     return (
       <PageLayout>
         {renderMetaData()}
-        <h1>{t('resetPass.form.title')}</h1>
-        <ResetPasswordForm onSubmit={this.onSubmit(resetPassword)} />
+        <PageStyled>
+          <div id="reset-password-page">
+            <h1>{t('resetPass.form.title')}</h1>
+            <ResetPasswordForm onSubmit={this.onSubmit(resetPassword)} />
+          </div>
+        </PageStyled>
       </PageLayout>
     );
   }

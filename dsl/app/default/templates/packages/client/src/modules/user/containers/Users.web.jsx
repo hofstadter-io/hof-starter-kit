@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { compose } from 'react-apollo';
@@ -19,6 +20,11 @@ import {
   withUsersState,
   updateUsersState
 } from './UserOperations';
+
+const PageStyled = styled.div`
+{{#each DslContext.builtin-pages as |PAGE|}}
+{{#if (eq PAGE.name "user-list")}}{{{file PAGE.style}}}{{/if}}{{/each}}
+`
 
 class Users extends React.Component {
   constructor(props) {
@@ -50,14 +56,18 @@ class Users extends React.Component {
     return (
       <PageLayout>
         {this.renderMetaData()}
-        <h2>{this.props.t('users.list.title')}</h2>
-        <Link to="/users/new">
-          <Button color="primary">{this.props.t('users.btn.add')}</Button>
-        </Link>
-        <hr />
-        <UsersFilterView {...this.props} />
-        <hr />
-        <UsersListView {...this.props} />
+        <PageStyled>
+          <div id="user-list-page">
+            <h2>{this.props.t('users.list.title')}</h2>
+            <Link to="/users/new">
+              <Button color="primary">{this.props.t('users.btn.add')}</Button>
+            </Link>
+            <hr />
+            <UsersFilterView {...this.props} />
+            <hr />
+            <UsersListView {...this.props} />
+          </div>
+        </PageStyled>
       </PageLayout>
     );
   }

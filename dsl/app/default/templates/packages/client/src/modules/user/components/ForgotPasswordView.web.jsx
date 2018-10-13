@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import Helmet from 'react-helmet';
 
 import translate from '../../../i18n';
@@ -8,6 +9,11 @@ import { LayoutCenter } from '../../common/components';
 import { PageLayout } from '../../layout/page';
 
 import settings from '../../../../../../settings';
+
+const PageStyled = styled.div`
+{{#each DslContext.builtin-pages as |PAGE|}}
+{{#if (eq PAGE.name "forget-password")}}{{{file PAGE.style}}}{{/if}}{{/each}}
+`
 
 class ForgotPasswordView extends React.Component {
   static propTypes = {
@@ -53,8 +59,12 @@ class ForgotPasswordView extends React.Component {
       <PageLayout>
         {renderMetaData()}
         <LayoutCenter>
-          <h1 className="text-center">{t('forgotPass.form.title')}</h1>
-          <ForgotPasswordForm onSubmit={this.onSubmit({ forgotPassword, t })} sent={this.state.sent} />
+          <PageStyled>
+            <div id="forgot-password-page">
+              <h1 className="text-center">{t('forgotPass.form.title')}</h1>
+              <ForgotPasswordForm onSubmit={this.onSubmit({ forgotPassword, t })} sent={this.state.sent} />
+            </div>
+          </PageStyled>
         </LayoutCenter>
       </PageLayout>
     );

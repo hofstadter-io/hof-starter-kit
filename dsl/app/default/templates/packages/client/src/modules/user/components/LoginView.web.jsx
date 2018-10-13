@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import Helmet from 'react-helmet';
 
 import translate from '../../../i18n';
@@ -9,6 +10,11 @@ import { PageLayout } from '../../layout/page';
 
 import LoginForm from './LoginForm';
 import settings from '../../../../../../settings';
+
+const PageStyled = styled.div`
+{{#each DslContext.builtin-pages as |PAGE|}}
+{{#if (eq PAGE.name "login")}}{{{file PAGE.style}}}{{/if}}{{/each}}
+`
 
 class LoginView extends React.PureComponent {
   static propTypes = {
@@ -51,10 +57,14 @@ class LoginView extends React.PureComponent {
     return (
       <PageLayout>
         {renderMetaData()}
-        <LayoutCenter>
-          <h1 className="text-center">{t('login.form.title')}</h1>
-          <LoginForm onSubmit={this.onSubmit(login)} />
-        </LayoutCenter>
+        <PageStyled>
+          <div id="login-page">
+            <LayoutCenter>
+              <h1 className="text-center">{t('login.form.title')}</h1>
+              <LoginForm onSubmit={this.onSubmit(login)} />
+            </LayoutCenter>
+          </div>
+        </PageStyled>
       </PageLayout>
     );
   }
