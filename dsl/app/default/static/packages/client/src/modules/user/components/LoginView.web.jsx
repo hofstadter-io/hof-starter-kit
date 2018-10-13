@@ -54,15 +54,6 @@ class LoginView extends React.PureComponent {
         <LayoutCenter>
           <h1 className="text-center">{t('login.form.title')}</h1>
           <LoginForm onSubmit={this.onSubmit(login)} />
-          <hr />
-          <Card>
-            <CardGroup>
-              <CardTitle>{t('login.cardTitle')}:</CardTitle>
-              <CardText>admin@example.com:admin123</CardText>
-              <CardText>user@example.com:user1234</CardText>
-              {settings.subscription.enabled && <CardText>subscriber@example.com:subscriber</CardText>}
-            </CardGroup>
-          </Card>
         </LayoutCenter>
       </PageLayout>
     );
