@@ -68,6 +68,25 @@ const UserForm = ({ values, handleSubmit, error, setFieldValue, t, shouldDisplay
         name="{{camel FIELD.name}}"
         component={RenderField}
         type="text"
+        {{#if (eq FIELD.type "string")}}
+        type="text"
+        {{else if (eq FIELD.type "text")}}
+        type="text"
+        {{else if (eq FIELD.type "json")}}
+        type="textarea"
+        {{else if (eq FIELD.type "boolean")}}
+        type="checkbox"
+        {{else if (eq FIELD.type "integer")}}
+        type="number"
+        {{else if (eq FIELD.type "decimal")}}
+        type="number"
+        {{else if (eq FIELD.type "date")}}
+        type="date"
+        {{else if (eq FIELD.type "time")}}
+        type="time"
+        {{else if (eq FIELD.type "datetime")}}
+        type="datetime"
+        {{/if}}
         label={t('userEdit.form.field.{{camel FIELD.name}}')}
         value={ profile.{{camel FIELD.name}} }
         onChange={value => setFieldValue('profile', { ...profile, {{camel FIELD.name}}: value })}
