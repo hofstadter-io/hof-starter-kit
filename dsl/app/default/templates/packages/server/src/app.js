@@ -1,16 +1,16 @@
-{{#with DslContext as |APP|}}
 import express from 'express';
 import path from 'path';
 
 import { isApiExternal } from './net';
 import modules from './modules';
+import graphiqlMiddleware from './middleware/graphiql';
 import websiteMiddleware from './middleware/website';
 import createApolloServer from './graphql';
 import errorMiddleware from './middleware/error';
 
 const app = express();
 
-for (const applyBeforeware of modules.beforewares) {
+for (const applyBeforeware of modules.beforeware) {
   applyBeforeware(app);
 }
 
@@ -22,7 +22,7 @@ const corsOptions = {
   origin: true
 };
 
-for (const applyMiddleware of modules.middlewares) {
+for (const applyMiddleware of modules.middleware) {
   applyMiddleware(app);
 }
 
@@ -41,14 +41,10 @@ if (!isApiExternal) {
   });
 }
 
-{{#if (or (eq APP.mode "live") (eq APP.mode "prod"))}}
-{{else}}
 // Workaround: this middleware should be because playground calls next func
 // See: https://github.com/prisma/graphql-playground/issues/557
-if (__DEV__) {
-    app.get('/graphql', () => {});
-}
-{{/if}}
+app.get('/graphql', () => {});
+app.get('/graphiql', (...args) => graphiqlMiddleware(...args));
 
 app.use((...args) => websiteMiddleware(...args));
 
@@ -69,4 +65,3 @@ if (module.hot) {
 }
 
 export default app;
-{{/with}}
