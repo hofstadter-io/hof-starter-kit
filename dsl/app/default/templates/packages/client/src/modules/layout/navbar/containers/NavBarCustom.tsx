@@ -9,6 +9,10 @@ import settings from '../../../../../../../settings';
 
 import { IfLoggedIn, IfNofLoggedIn } from '../../../user';
 
+const NavBarStyled = styled.div`
+{{{file DslContext.layout.navbar.style}}}
+`
+
 class NavBar extends React.Component {
   public static propTypes = {
     t: PropTypes.func
@@ -17,7 +21,11 @@ class NavBar extends React.Component {
   public render() {
     const { t } = this.props;
     return (
-      {{{file DslContext.layout.navbar.file}}}
+      <NavBarStyled>
+        <div id="styled-navbar">
+          {{{file DslContext.layout.navbar.file}}}
+        </div>
+      </NavBarStyled>
     );
   }
 }

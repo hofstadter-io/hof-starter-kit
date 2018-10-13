@@ -50,47 +50,49 @@ class NavBar extends React.Component {
     const { t } = this.props;
     return (
       <NavBarStyled>
-        <Navbar id="navbar">
-          <Container>
-            <Nav>
-              <NavLink to="/" className="navbar-brand">
-                {settings.app.name}
-              </NavLink>
-
-              <IfLoggedIn key="/users" role="admin">
-                <NavLink to="/users" className="nav-link">
-                  {t('users')}
+        <div id="styled-navbar">
+          <Navbar>
+            <Container>
+              <Nav>
+                <NavLink to="/" className="navbar-brand">
+                  {settings.app.name}
                 </NavLink>
-              </IfLoggedIn>
 
-              <NavLink to="/about" className="nav-link">
-                {t('about')}
-              </NavLink>
+                <IfLoggedIn key="/users" role="admin">
+                  <NavLink to="/users" className="nav-link">
+                    {t('users')}
+                  </NavLink>
+                </IfLoggedIn>
 
-              <NavLink to="/contact" className="nav-link">
-                {t('contact')}
-              </NavLink>
-            </Nav>
-
-            <Nav className="justify-content-end">
-              <IfLoggedIn key="/profile">
-                <NavLink to="/profile" className="nav-link" activeClassName="active">
-                  <ProfileName />
+                <NavLink to="/about" className="nav-link">
+                  {t('about')}
                 </NavLink>
-              </IfLoggedIn>
-              <IfLoggedIn key="/logout">
-                <LogoutLink t={t}/>
-              </IfLoggedIn>
-              <IfNotLoggedIn key="/login">
-                <NavLink to="/login" className="nav-link" activeClassName="active">
-                  {t('signin')}
-                </NavLink>
-              </IfNotLoggedIn>
 
-              <LanguagePicker i18n={i18n} />
-            </Nav>
-          </Container>
-        </Navbar>
+                <NavLink to="/contact" className="nav-link">
+                  {t('contact')}
+                </NavLink>
+              </Nav>
+
+              <Nav className="justify-content-end">
+                <IfLoggedIn key="/profile">
+                  <NavLink to="/profile" className="nav-link" activeClassName="active">
+                    <ProfileName />
+                  </NavLink>
+                </IfLoggedIn>
+                <IfLoggedIn key="/logout">
+                  <LogoutLink t={t}/>
+                </IfLoggedIn>
+                <IfNotLoggedIn key="/login">
+                  <NavLink to="/login" className="nav-link" activeClassName="active">
+                    {t('signin')}
+                  </NavLink>
+                </IfNotLoggedIn>
+
+                <LanguagePicker i18n={i18n} />
+              </Nav>
+            </Container>
+          </Navbar>
+        </div>
       </NavbarStyled>
     );
   }
