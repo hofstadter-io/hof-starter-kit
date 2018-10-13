@@ -1,5 +1,6 @@
 fragment UserProfileInfo on UserProfile {
-  firstName
-  lastName
+  {{#each DslContext.user.profile.fields as |FIELD|}}
+  {{camel FIELD.name}}
+  {{/each}}
   fullName
 }

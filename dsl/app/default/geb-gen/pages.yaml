@@ -7,6 +7,8 @@ template-configs:
 
       - in: pages/connector.tsx
         out: packages/client/src/modules/pages/index.tsx
+      - in: pages/locales/index.js
+        out: packages/client/src/modules/contact/locales/index.js
 
   - name: pages
     field: "pages"
@@ -16,7 +18,6 @@ template-configs:
         out: packages/client/src/modules/pages/{{name}}/index.tsx
       - in: pages/containers/page.tsx
         out: packages/client/src/modules/pages/{{name}}/containers/{{camelT name}}.tsx
-
       - in: pages/locales/index.js
         out: packages/client/src/modules/pages/{{name}}/locales/index.js
 
@@ -26,3 +27,16 @@ template-configs:
 
       - in: pages/locales/translations.json
         out: packages/client/src/modules/pages/{{parent}}/locales/{{name}}/translations.json
+
+  - name: builtin-pages
+    field: "builtin-pages"
+    templates:
+      - in: pages/locales/index.js
+        out: packages/client/src/modules/{{name}}/locales/index.js
+
+  - name: builtin-pages-translations
+    field: "builtin-pages.[:].translations"
+    templates:
+
+      - in: pages/locales/translations.json
+        out: packages/client/src/modules/{{parent}}/locales/{{name}}/translations.json

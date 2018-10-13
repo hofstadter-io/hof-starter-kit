@@ -15,8 +15,6 @@ export async function seed(knex, Promise) {
     'auth_linkedin'
   ]);
 
-  console.log("users:", users);
-
   for (let user of users) {
     var id = await returnId(knex('user')).insert({
       username: user.username,
@@ -26,11 +24,9 @@ export async function seed(knex, Promise) {
       is_active: user.is_active
     });
 
-    await returnId(knex('user_profile')).insert({
-      user_id: id,
-      first_name: user.first_name,
-      last_name: user.last_name
-    });
+    user.profile.user_id = id[0];
+
+    await returnId(knex('user_profile')).insert(user.profile);
   }
 
 }

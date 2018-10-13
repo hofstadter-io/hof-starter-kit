@@ -69,3 +69,17 @@ template-configs:
       out: packages/client/src/modules/user/containers/UserEdit.jsx
     - in: packages/client/src/modules/user/containers/UserOperations.js
       out: packages/client/src/modules/user/containers/UserOperations.js
+
+
+    # translations
+    - in: pages/locales/index.js
+      out: packages/client/src/modules/user/locales/index.js
+
+  # translation files
+  - name: users-translations
+    field: "user.translations"
+    templates:
+
+    - in: pages/locales/translations.json
+      out: packages/client/src/modules/user/locales/{{name}}/translations.json
+

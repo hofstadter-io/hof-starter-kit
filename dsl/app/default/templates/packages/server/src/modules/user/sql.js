@@ -6,6 +6,7 @@ import bcrypt from 'bcryptjs';
 import knex from '../../sql/connector';
 import { returnId } from '../../sql/helpers';
 
+{{#with DslContext.user.profile as |PROFILE|}}
 // Actual query fetching and transformation in DB
 class User {
   async getUsers(orderBy, filter) {
@@ -16,8 +17,9 @@ class User {
         'u.role',
         'u.is_active',
         'u.email',
-        'up.first_name',
-        'up.last_name',
+        {{#each PROFILE.fields as |FIELD|}}
+        'up.{{snake FIELD.name}}',
+        {{/each}}
         'ca.serial',
         'fa.fb_id',
         'fa.display_name AS fbDisplayName',
@@ -83,8 +85,9 @@ class User {
           'u.role',
           'u.is_active',
           'u.email',
-          'up.first_name',
-          'up.last_name',
+          {{#each PROFILE.fields as |FIELD|}}
+          'up.{{snake FIELD.name}}',
+          {{/each}}
           'ca.serial',
           'fa.fb_id',
           'fa.display_name AS fbDisplayName',
@@ -111,14 +114,15 @@ class User {
     return camelizeKeys(
       await knex
         .select(
-          'u.id',
           'u.username',
           'u.password_hash',
           'u.role',
           'u.is_active',
           'u.email',
-          'up.first_name',
-          'up.last_name'
+          {{#each PROFILE.fields as |FIELD|}}
+          'up.{{snake FIELD.name}}',
+          {{/each}}
+          'u.id'
         )
         .from('user AS u')
         .where('u.id', '=', id)
@@ -130,7 +134,17 @@ class User {
   async getUserWithSerial(serial) {
     return camelizeKeys(
       await knex
-        .select('u.id', 'u.username', 'u.role', 'u.is_active', 'ca.serial', 'up.first_name', 'up.last_name')
+        .select(
+          'u.username',
+          'u.password_hash',
+          'u.role',
+          'u.is_active',
+          'u.email',
+          {{#each PROFILE.fields as |FIELD|}}
+          'up.{{snake FIELD.name}}',
+          {{/each}}
+          'u.id'
+        )
         .from('user AS u')
         .leftJoin('auth_certificate AS ca', 'ca.user_id', 'u.id')
         .leftJoin('user_profile AS up', 'up.user_id', 'u.id')
@@ -243,14 +257,15 @@ class User {
     return camelizeKeys(
       await knex
         .select(
-          'u.id',
           'u.username',
           'u.password_hash',
           'u.role',
           'u.is_active',
           'u.email',
-          'up.first_name',
-          'up.last_name'
+          {{#each PROFILE.fields as |FIELD|}}
+          'up.{{snake FIELD.name}}',
+          {{/each}}
+          'u.id'
         )
         .from('user AS u')
         .leftJoin('user_profile AS up', 'up.user_id', 'u.id')
@@ -263,15 +278,16 @@ class User {
     return camelizeKeys(
       await knex
         .select(
-          'u.id',
           'u.username',
           'u.role',
           'u.is_active',
           'fa.fb_id',
           'u.email',
           'u.password_hash',
-          'up.first_name',
-          'up.last_name'
+          {{#each PROFILE.fields as |FIELD|}}
+          'up.{{snake FIELD.name}}',
+          {{/each}}
+          'u.id'
         )
         .from('user AS u')
         .leftJoin('auth_facebook AS fa', 'fa.user_id', 'u.id')
@@ -286,15 +302,16 @@ class User {
     return camelizeKeys(
       await knex
         .select(
-          'u.id',
           'u.username',
           'u.role',
           'u.is_active',
           'lna.ln_id',
           'u.email',
           'u.password_hash',
-          'up.first_name',
-          'up.last_name'
+          {{#each PROFILE.fields as |FIELD|}}
+          'up.{{snake FIELD.name}}',
+          {{/each}}
+          'u.id'
         )
         .from('user AS u')
         .leftJoin('auth_linkedin AS lna', 'lna.user_id', 'u.id')
@@ -309,15 +326,16 @@ class User {
     return camelizeKeys(
       await knex
         .select(
-          'u.id',
           'u.username',
           'u.role',
           'u.is_active',
           'gha.gh_id',
           'u.email',
           'u.password_hash',
-          'up.first_name',
-          'up.last_name'
+          {{#each PROFILE.fields as |FIELD|}}
+          'up.{{snake FIELD.name}}',
+          {{/each}}
+          'u.id'
         )
         .from('user AS u')
         .leftJoin('auth_github AS gha', 'gha.user_id', 'u.id')
@@ -332,15 +350,16 @@ class User {
     return camelizeKeys(
       await knex
         .select(
-          'u.id',
           'u.username',
           'u.role',
           'u.is_active',
           'ga.google_id',
           'u.email',
           'u.password_hash',
-          'up.first_name',
-          'up.last_name'
+          {{#each PROFILE.fields as |FIELD|}}
+          'up.{{snake FIELD.name}}',
+          {{/each}}
+          'u.id'
         )
         .from('user AS u')
         .leftJoin('auth_google AS ga', 'ga.user_id', 'u.id')
@@ -354,7 +373,17 @@ class User {
   async getUserByUsername(username) {
     return camelizeKeys(
       await knex
-        .select('u.id', 'u.username', 'u.role', 'u.is_active', 'u.email', 'up.first_name', 'up.last_name')
+        .select(
+          'u.username',
+          'u.password_hash',
+          'u.role',
+          'u.is_active',
+          'u.email',
+          {{#each PROFILE.fields as |FIELD|}}
+          'up.{{snake FIELD.name}}',
+          {{/each}}
+          'u.id'
+        )
         .from('user AS u')
         .where('u.username', '=', username)
         .leftJoin('user_profile AS up', 'up.user_id', 'u.id')
@@ -366,14 +395,15 @@ class User {
     return camelizeKeys(
       await knex
         .select(
-          'u.id',
           'u.username',
           'u.password_hash',
           'u.role',
           'u.is_active',
           'u.email',
-          'up.first_name',
-          'up.last_name'
+          {{#each PROFILE.fields as |FIELD|}}
+          'up.{{snake FIELD.name}}',
+          {{/each}}
+          'u.id'
         )
         .from('user AS u')
         .where('u.username', '=', usernameOrEmail)
@@ -383,6 +413,7 @@ class User {
     );
   }
 }
+{{/with}}
 const userDAO = new User();
 
 export default userDAO;

@@ -16,7 +16,11 @@ class UserEdit extends React.Component {
 
     let userValues = pick(values, ['username', 'email', 'role', 'isActive', 'password']);
 
-    userValues['profile'] = pick(values.profile, ['firstName', 'lastName']);
+    userValues['profile'] = pick(values.profile, [
+      {{#each DslContext.user.profile.fields as |FIELD|}}
+      '{{camel FIELD.name}}'{{#unless @last}},{{/unless}}
+      {{/each}}
+    ]);
 
     userValues = UserFormatter.trimExtraSpaces(userValues);
 

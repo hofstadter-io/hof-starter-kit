@@ -49,12 +49,12 @@ export default pubsub => ({
     }
   },
   UserProfile: {
-    firstName(obj) {
-      return obj.firstName;
+    {{#each DslContext.user.profile.fields as |FIELD|}}
+    {{camel FIELD.name}}(obj) {
+      return obj.{{camel FIELD.name}};
     },
-    lastName(obj) {
-      return obj.lastName;
-    },
+    {{/each}}
+
     fullName(obj) {
       if (obj.firstName && obj.lastName) {
         return `${obj.firstName} ${obj.lastName}`;

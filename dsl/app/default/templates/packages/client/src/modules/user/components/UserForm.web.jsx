@@ -63,22 +63,17 @@ const UserForm = ({ values, handleSubmit, error, setFieldValue, t, shouldDisplay
           checked={isActive}
         />
       )}
+      {{#each DslContext.user.profile.fields as |FIELD|}}
       <Field
-        name="firstName"
+        name="{{camel FIELD.name}}"
         component={RenderField}
         type="text"
-        label={t('userEdit.form.field.firstName')}
-        value={profile.firstName}
-        onChange={value => setFieldValue('profile', { ...profile, firstName: value })}
+        label={t('userEdit.form.field.{{camel FIELD.name}}')}
+        value={ profile.{{camel FIELD.name}} }
+        onChange={value => setFieldValue('profile', { ...profile, {{camel FIELD.name}}: value })}
       />
-      <Field
-        name="lastName"
-        component={RenderField}
-        type="text"
-        label={t('userEdit.form.field.lastName')}
-        value={profile.lastName}
-        onChange={value => setFieldValue('profile', { ...profile, lastName: value })}
-      />
+      {{/each}}
+
       {settings.user.auth.certificate.enabled && (
         <Field
           name="serial"
