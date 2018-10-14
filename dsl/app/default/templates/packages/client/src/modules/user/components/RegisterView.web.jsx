@@ -5,8 +5,8 @@ import Helmet from 'react-helmet';
 
 import translate from '../../../i18n';
 import RegisterForm from '../components/RegisterForm';
-import { LayoutCenter } from '../../common/components';
 import { PageLayout } from '../../layout/page';
+import { Container } from '../../common/components/web';
 
 import settings from '../../../../../../settings';
 
@@ -55,10 +55,10 @@ class RegisterView extends React.PureComponent {
         {this.renderMetaData(t)}
         <PageStyled>
           <div id="register-page">
-            <LayoutCenter>
+            <Container>
               <h1 className="text-center">{t('reg.form.title')}</h1>
               <RegisterForm onSubmit={this.onSubmit} />
-            </LayoutCenter>
+            </Container>
           </div>
         </PageStyled>
       </PageLayout>

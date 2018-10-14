@@ -7,11 +7,13 @@ import { LayoutCenter } from '../../common/components';
 import { PageLayout } from '../../layout/page';
 import ContactForm from './ContactForm';
 import settings from '../../../../../../settings';
+import { Container } from '../../common/components/web';
 
 const PageStyled = styled.div`
 {{#each DslContext.builtin-pages as |PAGE|}}
 {{#if (eq PAGE.name "contact")}}{{{file PAGE.style}}}{{/if}}{{/each}}
 `
+
 const ContactView = props => {
   const { t } = props;
 
@@ -32,10 +34,10 @@ const ContactView = props => {
       {renderMetaData()}
       <PageStyled>
         <div id="contact-page">
-          <LayoutCenter>
+          <Container>
             <h1 className="text-center">{t('form.title')}</h1>
             <ContactForm {...props} />
-          </LayoutCenter>
+          </Container>
         </div>
       </PageStyled>
     </PageLayout>

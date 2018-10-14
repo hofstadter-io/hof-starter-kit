@@ -4,8 +4,7 @@ import styled from 'styled-components';
 import Helmet from 'react-helmet';
 
 import translate from '../../../i18n';
-import { LayoutCenter } from '../../common/components';
-import { Card, CardGroup, CardTitle, CardText } from '../../common/components/web';
+import { Container, Card, CardGroup, CardTitle, CardText } from '../../common/components/web';
 import { PageLayout } from '../../layout/page';
 
 import LoginForm from './LoginForm';
@@ -59,10 +58,10 @@ class LoginView extends React.PureComponent {
         {renderMetaData()}
         <PageStyled>
           <div id="login-page">
-            <LayoutCenter>
+            <Container>
               <h1 className="text-center">{t('login.form.title')}</h1>
               <LoginForm onSubmit={this.onSubmit(login)} />
-            </LayoutCenter>
+            </Container>
           </div>
         </PageStyled>
       </PageLayout>

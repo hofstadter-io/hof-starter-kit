@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom';
 import { compose } from 'react-apollo';
 
 import { PageLayout } from '../../layout/page';
+import { Container, Row, Col } from '../../common/components/web';
+
 import settings from '../../../../../../settings';
 import translate from '../../../i18n';
 import UsersFilterView from '../components/UsersFilterView';
@@ -58,14 +60,26 @@ class Users extends React.Component {
         {this.renderMetaData()}
         <PageStyled>
           <div id="user-list-page">
-            <h2>{this.props.t('users.list.title')}</h2>
-            <Link to="/users/new">
-              <Button color="primary">{this.props.t('users.btn.add')}</Button>
-            </Link>
-            <hr />
-            <UsersFilterView {...this.props} />
-            <hr />
-            <UsersListView {...this.props} />
+            <Container>
+              <Row style={ {paddingTop: '0.5em'} }>
+                <Col>
+                  <h2>
+                    {this.props.t('users.list.title')}
+                  </h2>
+                </Col>
+                <Col xs="4">
+                  <Link to="/users/new">
+                    <Button color="primary">{this.props.t('users.btn.add')}</Button>
+                  </Link>
+                </Col>
+              </Row>
+              <hr />
+              <UsersFilterView {...this.props} />
+              <hr />
+              <div style={ {overflowY: 'auto'} }>
+                <UsersListView {...this.props} />
+              </div>
+            </Container>
           </div>
         </PageStyled>
       </PageLayout>

@@ -2,10 +2,10 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 
 import PageNotFound from './containers/PageNotFound';
-import Feature from '../ClientModule';
+import ClientModule from '../ClientModule';
 import resources from './locales';
 
-export default new Feature({
+export default new ClientModule({
   route: [<Route component={PageNotFound} />],
   localization: [{ ns: 'notFound', resources }]
 });

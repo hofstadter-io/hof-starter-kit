@@ -13,6 +13,8 @@ template-configs:
       # builtin-pages, for [style]
       - in: packages/client/src/modules/contact/components/ContactView.web.jsx
         out: packages/client/src/modules/contact/components/ContactView.web.jsx
+      - in: packages/client/src/modules/pageNotFound/containers/PageNotFound.jsx
+        out: packages/client/src/modules/pageNotFound/containers/PageNotFound.jsx
 
   - name: pages
     field: "pages"

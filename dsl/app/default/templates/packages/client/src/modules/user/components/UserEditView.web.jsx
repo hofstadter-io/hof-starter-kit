@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { PageLayout } from '../../layout/page';
+import { Container, Row, Col } from '../../common/components/web';
 
 import UserForm from './UserForm';
 import settings from '../../../../../../settings';
@@ -68,18 +69,28 @@ class UserEditView extends React.PureComponent {
           {this.renderMetaData(t)}
           <PageStyled>
             <div id="user-edit-page">
-              <Link id="back-button" to={user && user.role === 'admin' ? '/users' : '/profile'}>
-                Back
-              </Link>
-              <h2>
-                {t('userEdit.form.titleEdit')} {t('userEdit.form.title')}
-              </h2>
+            <Container>
+              <Row style={ {paddingTop: '0.5em'} }>
+                <Col>
+                  <h2>
+                    {t('userEdit.form.titleEdit')} {t('userEdit.form.title')}
+                  </h2>
+                </Col>
+                <Col xs="3">
+                  <Link id="back-button" to={user && user.role === 'admin' ? '/users' : '/profile'}>
+                    Back
+                  </Link>
+                </Col>
+              </Row>
               <UserForm
                 onSubmit={this.props.onSubmit}
                 shouldDisplayRole={isNotSelf}
                 shouldDisplayActive={isNotSelf}
                 initialValues={user}
               />
+              <br />
+              <br />
+            </Container>
             </div>
           </PageStyled>
         </PageLayout>

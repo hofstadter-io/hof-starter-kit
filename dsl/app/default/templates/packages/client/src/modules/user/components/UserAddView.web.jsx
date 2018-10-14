@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { PageLayout } from '../../layout/page';
+import { Container, Row, Col } from '../../common/components/web';
 
 import UserForm from './UserForm';
 import settings from '../../../../../../settings';
@@ -57,18 +58,28 @@ class UserAddView extends React.PureComponent {
         {this.renderMetaData(t)}
         <PageStyled>
           <div id="user-add-page">
-            <Link id="back-button" to="/users">
-              Back
-            </Link>
-            <h2>
-              {t('userEdit.form.titleCreate')} {t('userEdit.form.title')}
-            </h2>
-            <UserForm
-              onSubmit={this.props.onSubmit}
-              initialValues={ {} }
-              shouldDisplayRole={true}
-              shouldDisplayActive={true}
-            />
+            <Container>
+              <Row style={ {paddingTop: '0.5em'} }>
+                <Col>
+                  <h2>
+                    {t('userEdit.form.titleCreate')} {t('userEdit.form.title')}
+                  </h2>
+                </Col>
+                <Col xs="3">
+                  <Link id="back-button" to="/users">
+                    Back
+                  </Link>
+                </Col>
+              </Row>
+              <UserForm
+                onSubmit={this.props.onSubmit}
+                initialValues={ {} }
+                shouldDisplayRole={true}
+                shouldDisplayActive={true}
+              />
+            <br />
+            <br />
+            </Container>
           </div>
         </PageStyled>
       </PageLayout>

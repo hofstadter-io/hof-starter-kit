@@ -5,8 +5,8 @@ import Helmet from 'react-helmet';
 
 import translate from '../../../i18n';
 import ForgotPasswordForm from '../components/ForgotPasswordForm';
-import { LayoutCenter } from '../../common/components';
 import { PageLayout } from '../../layout/page';
+import { Container } from '../../common/components/web';
 
 import settings from '../../../../../../settings';
 
@@ -58,14 +58,14 @@ class ForgotPasswordView extends React.Component {
     return (
       <PageLayout>
         {renderMetaData()}
-        <LayoutCenter>
-          <PageStyled>
+        <PageStyled>
+          <Container>
             <div id="forgot-password-page">
               <h1 className="text-center">{t('forgotPass.form.title')}</h1>
               <ForgotPasswordForm onSubmit={this.onSubmit({ forgotPassword, t })} sent={this.state.sent} />
             </div>
-          </PageStyled>
-        </LayoutCenter>
+          </Container>
+        </PageStyled>
       </PageLayout>
     );
   }

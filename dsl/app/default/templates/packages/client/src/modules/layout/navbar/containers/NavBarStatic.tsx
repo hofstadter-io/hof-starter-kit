@@ -52,45 +52,52 @@ class NavBar extends React.Component {
       <NavBarStyled>
         <div id="styled-navbar">
           <Navbar>
-            <Container>
-              <Nav>
-                <NavLink to="/" className="navbar-brand">
-                  {settings.app.name}
+            {{#with DslContext.layout.navbar as |NAVBAR|}}
+            <Nav>
+              <NavLink to="/" className="navbar-brand" id="brand-logo">
+                {{#if (eq NAVBAR.logo.type "image")}}
+                <img src="{{{NAVBAR.logo.source}}}" />
+                {{else if (eq NAVBAR.logo.type "text")}}
+                {{NAVBAR.logo.value}}
+                {{else}}
+                {settings.app.name}
+                {{/if}}
+              </NavLink>
+
+              {{#each NAVBAR.leftItems as |ITEM|}}
+              {{#if ITEM.role}}
+              <IfLoggedIn key="{{{ITEM.href}}}" role="{{ITEM.role}}">
+                <NavLink to="{{{ITEM.href}}}" className="nav-link">
+                  {t('{{ITEM.name}}')}
                 </NavLink>
+              </IfLoggedIn>
+              {{else}}
+              <NavLink to="{{{ITEM.href}}}" className="nav-link">
+                {t('{{ITEM.name}}')}
+              </NavLink>
+              {{/if}}
+              {{/each}}
 
-                <IfLoggedIn key="/users" role="admin">
-                  <NavLink to="/users" className="nav-link">
-                    {t('users')}
-                  </NavLink>
-                </IfLoggedIn>
+            </Nav>
+            {{/with}}
 
-                <NavLink to="/about" className="nav-link">
-                  {t('about')}
+            <Nav className="justify-content-end">
+              <IfLoggedIn key="/profile">
+                <NavLink to="/profile" className="nav-link" activeClassName="active">
+                  <ProfileName />
                 </NavLink>
-
-                <NavLink to="/contact" className="nav-link">
-                  {t('contact')}
+              </IfLoggedIn>
+              <IfLoggedIn key="/logout">
+                <LogoutLink t={t}/>
+              </IfLoggedIn>
+              <IfNotLoggedIn key="/login">
+                <NavLink to="/login" className="nav-link" activeClassName="active">
+                  {t('signin')}
                 </NavLink>
-              </Nav>
+              </IfNotLoggedIn>
 
-              <Nav className="justify-content-end">
-                <IfLoggedIn key="/profile">
-                  <NavLink to="/profile" className="nav-link" activeClassName="active">
-                    <ProfileName />
-                  </NavLink>
-                </IfLoggedIn>
-                <IfLoggedIn key="/logout">
-                  <LogoutLink t={t}/>
-                </IfLoggedIn>
-                <IfNotLoggedIn key="/login">
-                  <NavLink to="/login" className="nav-link" activeClassName="active">
-                    {t('signin')}
-                  </NavLink>
-                </IfNotLoggedIn>
-
-                <LanguagePicker i18n={i18n} />
-              </Nav>
-            </Container>
+              <LanguagePicker i18n={i18n} />
+            </Nav>
           </Navbar>
         </div>
       </NavbarStyled>

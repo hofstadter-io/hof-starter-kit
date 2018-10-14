@@ -6,8 +6,7 @@ import { Link } from 'react-router-dom';
 
 import translate from '../../../i18n';
 import SubscriptionProfile from '../../subscription/containers/SubscriptionProfile';
-import { LayoutCenter } from '../../common/components';
-import { Card, CardGroup, CardTitle, CardText } from '../../common/components/web';
+import { Container, Card, CardGroup, CardTitle, CardText } from '../../common/components/web';
 import { PageLayout } from '../../layout/page';
 
 import settings from '../../../../../../settings';
@@ -49,7 +48,7 @@ const ProfileView = ({ currentUserLoading, currentUser, t }) => {
         {renderMetaData(t)}
         <PageStyled>
           <div id="profile-page">
-            <LayoutCenter>
+            <Container>
               <h1 className="text-center">{t('profile.card.title')}</h1>
               <Card>
                 <CardGroup>
@@ -79,7 +78,7 @@ const ProfileView = ({ currentUserLoading, currentUser, t }) => {
               >
                 {t('profile.editProfileText')}
               </Link>
-            </LayoutCenter>
+            </Container>
           </div>
         </PageStyled>
       </PageLayout>
