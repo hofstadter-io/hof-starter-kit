@@ -1,0 +1,9 @@
+name: "default"
+template-configs:
+
+  - name: once-files
+    field: "."
+
+    templates:
+      - in: db/lib.ts
+        out: "packages/server/src/{{relPath}}/db/{{kebab name}}.ts"

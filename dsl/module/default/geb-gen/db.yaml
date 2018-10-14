@@ -1,0 +1,14 @@
+name: "default"
+template-configs:
+
+  - name: once-files
+    field: "."
+
+    templates:
+      - in: db/migrations.js
+        out: "packages/server/src/modules/{{kebab name}}/db/migrations.js"
+      - in: db/seeds.js
+        out: "packages/server/src/modules/{{kebab name}}/db/seeds.js"
+      - in: db/lib.ts
+        out: "packages/server/src/modules/{{kebab name}}/db/lib.ts"
+

@@ -1,0 +1,11 @@
+name: "default"
+template-configs:
+
+  - name: once-files
+    field: "."
+
+    templates:
+      - in: server/index.ts
+        out: "packages/server/src/modules/{{name}}/server/index.ts"
+
+
