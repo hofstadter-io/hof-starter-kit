@@ -9,6 +9,6 @@ template-configs:
         out: "packages/server/src/modules/{{kebab name}}/db/migrations.js"
       - in: db/seeds.js
         out: "packages/server/src/modules/{{kebab name}}/db/seeds.js"
-      - in: db/lib.ts
-        out: "packages/server/src/modules/{{kebab name}}/db/lib.ts"
+      - in: db/lib.js
+        out: "packages/server/src/modules/{{kebab name}}/db/lib.js"
 

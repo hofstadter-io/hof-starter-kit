@@ -5,5 +5,5 @@ template-configs:
     field: "."
 
     templates:
-      - in: db/lib.ts
-        out: "packages/server/src/{{relPath}}/db/{{kebab name}}.ts"
+      - in: db/lib.js
+        out: "packages/server/src/{{relPath}}/db/{{kebab name}}.js"

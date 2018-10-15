@@ -61,8 +61,8 @@ export function createWithIdAdapter(options) {
         builder.transacting(trx);
       }
 
-      await builder;
-      return values[idField];
+      return builder;
+      // return values[idField];
     } catch (e) {
       log.error(`Error in ${T}.createWithId()`, e);
       throw e;

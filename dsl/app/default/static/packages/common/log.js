@@ -9,6 +9,9 @@ const log = minilog(loggerName);
 log.suggest.defaultResult = false;
 log.suggest.clear().allow(loggerName, settings.app.logging.level);
 
+var __DEV__ = true;
+var __SERVER__ = true;
+
 if (__DEV__ && __SERVER__) {
   let console_log = global.console.log;
   global.console.log = function() {
