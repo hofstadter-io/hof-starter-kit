@@ -4,5 +4,46 @@ template-configs:
   - name: once-files
     field: "."
 
+    templates:
 
+      - in: client/index.jsx
+        out: "packages/client/src/{{relPath}}/{{kebab name}}/index.js"
 
+      - in: graphql/queries/one.graphql
+        out: "packages/client/src/{{relPath}}/{{kebab name}}/graphql/queries/one.graphql"
+      - in: graphql/queries/list.graphql
+        out: "packages/client/src/{{relPath}}/{{kebab name}}/graphql/queries/list.graphql"
+
+      - in: graphql/mutations/create.graphql
+        out: "packages/client/src/{{relPath}}/{{kebab name}}/graphql/mutations/create.graphql"
+      - in: graphql/mutations/update.graphql
+        out: "packages/client/src/{{relPath}}/{{kebab name}}/graphql/mutations/update.graphql"
+      - in: graphql/mutations/delete.graphql
+        out: "packages/client/src/{{relPath}}/{{kebab name}}/graphql/mutations/delete.graphql"
+
+      - in: graphql/fragments/type-solo.graphql
+        out: "packages/client/src/{{relPath}}/{{kebab name}}/graphql/fragments/type-solo.graphql"
+      - in: graphql/fragments/type-nested.graphql
+        out: "packages/client/src/{{relPath}}/{{kebab name}}/graphql/fragments/type-nested.graphql"
+
+      - in: client/components/add.jsx
+        out: "packages/client/src/{{relPath}}/{{kebab name}}/components/add.jsx"
+      - in: client/components/edit.jsx
+        out: "packages/client/src/{{relPath}}/{{kebab name}}/components/edit.jsx"
+      - in: client/components/form.jsx
+        out: "packages/client/src/{{relPath}}/{{kebab name}}/components/form.jsx"
+      - in: client/components/list.jsx
+        out: "packages/client/src/{{relPath}}/{{kebab name}}/components/list.jsx"
+      - in: client/components/view.jsx
+        out: "packages/client/src/{{relPath}}/{{kebab name}}/components/view.jsx"
+
+      - in: client/containers/add.jsx
+        out: "packages/client/src/{{relPath}}/{{kebab name}}/containers/add.jsx"
+      - in: client/containers/edit.jsx
+        out: "packages/client/src/{{relPath}}/{{kebab name}}/containers/edit.jsx"
+      - in: client/containers/form.jsx
+        out: "packages/client/src/{{relPath}}/{{kebab name}}/containers/form.jsx"
+      - in: client/containers/list.jsx
+        out: "packages/client/src/{{relPath}}/{{kebab name}}/containers/list.jsx"
+      - in: client/containers/view.jsx
+        out: "packages/client/src/{{relPath}}/{{kebab name}}/containers/view.jsx"

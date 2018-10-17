@@ -3,7 +3,7 @@ import i18n from './i18n';
 
 import user from './user';
 
-{{#each DslContext.modules as |MOD|}}
+{{#each DslContext.modules as |MOD| ~}}
 import {{camel MOD}} from './{{kebab MOD}}/server';
 {{/each}}
 
@@ -20,8 +20,8 @@ export default new ServerModule(
 
   user,
 
-  {{#each DslContext.modules as |MOD|}}
-  {{camel MOD}},
+  {{#each DslContext.modules as |MOD| ~}}
+  {{!}}  {{camel MOD}},
   {{/each}}
 
   contact,

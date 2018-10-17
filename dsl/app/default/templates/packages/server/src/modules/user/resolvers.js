@@ -33,9 +33,7 @@ export default pubsub => ({
       }
     ),
     currentUser(obj, args, { User, user }) {
-      console.log("CURRENT USER")
       try {
-        console.log("current user", user)
         if (user) {
           return User.getUser(user.id);
         } else {
@@ -43,8 +41,6 @@ export default pubsub => ({
         }
       } catch(e) {
         console.log("current user CATCH")
-
-
       }
     }
   },

@@ -1,0 +1,17 @@
+{{#with DslContext as |TYPE|}}
+mutation {{camel TYPE.name}}Create($input: {{camelT TYPE.name}}CreateInput) {
+  createPost(input: $input) {
+    {{camel TYPE.name}} {
+      id
+      updatedAt
+    }
+    message
+    errors {
+      field
+      message
+    }
+  }
+}
+{{/with}}
+
+

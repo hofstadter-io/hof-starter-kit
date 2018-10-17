@@ -1,0 +1,16 @@
+{{#with DslContext as |TYPE|}}
+mutation {{camel TYPE.name}}Update($id: Int!, $values: {{camelT TYPE.name}}UpdateInput) {
+  updatePost(id: $id, values: $values) {
+    {{camel TYPE.name}} {
+      id
+      updatedAt
+    }
+    message
+    errors {
+      field
+      message
+    }
+  }
+}
+{{/with}}
+

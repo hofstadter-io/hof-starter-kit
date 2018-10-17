@@ -4,5 +4,19 @@ template-configs:
   - name: once-files
     field: "."
 
+    templates:
+      - in: client/index.jsx
+        out: "packages/client/src/modules/{{name}}/index.jsx"
+
+      - in: client/locales/index.js
+        out: packages/client/src/modules/{{name}}/locales/index.js
+
+
+  - name: translations
+    field: "translations"
+    templates:
+
+      - in: client/locales/translations.json
+        out: packages/client/src/modules/{{parent}}/locales/{{name}}/translations.json
 
 

@@ -1,0 +1,11 @@
+{{#with DslContext as |TYPE|}}
+mutation {{camel TYPE.name}}Delete($id: Int!) {
+  deletePost(id: $id) {
+    message
+    errors {
+      field
+      message
+    }
+  }
+}
+{{/with}}
