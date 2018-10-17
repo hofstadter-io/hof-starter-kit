@@ -115,7 +115,7 @@ export function getByIdAdapter(options) {
   if (!options.idField) options.idField = 'id';
   if (!options.filters) options.filters = [];
 
-  options.filters.push({
+  options.filters.unshift({
     field: options.idField,
     compare: '=',
     valueExtractor: args => args.id
@@ -141,7 +141,7 @@ export function listAdapter(options) {
   if (!options.idField) options.idField = 'id';
   if (!options.filters) options.filters = [];
 
-  options.filters.push({
+  options.filters.unshift({
     applyWhen: args => args.ids && args.ids.length > 0,
     field: options.idField,
     compare: 'in',
@@ -169,7 +169,7 @@ export function pagingAdapter(options) {
   if (!options.filters) options.filters = [];
   if (!options.limit) options.limit = 10;
 
-  options.filters.push({
+  options.filters.unshift({
     applyWhen: args => args.ids && args.ids.length > 0,
     field: options.idField,
     compare: 'in',

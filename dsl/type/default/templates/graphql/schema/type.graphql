@@ -125,7 +125,7 @@ input {{camelT TYPE.name}}UpdateInput {
 type {{camelT TYPE.name}}MutationPayload {
   {{camel TYPE.name}}: {{camelT TYPE.name}}
 
-  # tokens: Tokens
+  message: String
   errors: [FieldError!]
 }
 

@@ -25,10 +25,14 @@ obj.Mutation.{{typeName}}Update = authSwitch([
           })
           return { {{typeName}}: result, errors: null};
         } else {
-          return { {{typeName}}: null, errors: [{
-            field: "?",
-            message: "unknown error"
-          }]};
+          return {
+            {{typeName}}: null,
+            message: "failed",
+            errors: [{
+              field: "?",
+              message: "unknown error"
+            }]
+          };
         }
         console.log("UPDATE ret", ret);
 

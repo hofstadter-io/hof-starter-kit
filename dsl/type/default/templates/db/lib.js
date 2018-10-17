@@ -9,6 +9,7 @@ import {
   createWithIdAdapter,
   createWithoutIdAdapter,
   updateAdapter,
+  updateMultiConditionAdapter,
   deleteAdapter,
   deleteMultiConditionAdapter,
   getManyRelationAdapter,
@@ -22,6 +23,10 @@ import { orderedFor } from "../../../sql/batch";
 {{#with DslContext as |TYPE|}}
 
 export default {
+  create: createWithoutIdAdapter({ table: '{{snake TYPE.name}}', idField: 'id' }),
+  update: updateAdapter({ table: '{{snake TYPE.name}}', idField: 'id' }),
+  delete: deleteAdapter({ table: '{{snake TYPE.name}}', idField: 'id' }),
+
   select: selectAdapter({ table: '{{snake TYPE.name}}' }),
   get: getAdapter({ table: '{{snake TYPE.name}}', idField: 'id' }),
   getMany: listAdapter({ table: '{{snake TYPE.name}}', idField: 'id' }),
@@ -29,31 +34,20 @@ export default {
 
   {{#if TYPE.owned}}
   createFor: createWithIdAdapter({ table: '{{snake TYPE.name}}', idField: 'user_id' }),
-  updateFor: updateAdapter({
+  updateFor: updateMultiConditionAdapter({
     table: '{{snake TYPE.name}}',
     idField: 'id',
-    filters: [{
-      bool: 'and',
-      field: 'user_id',
-      compare: '=',
-      valueExtractor: args => args.userId
-    }]
   }),
-  deleteFor: deleteAdapter({
+  deleteFor: deleteMultiConditionAdapter({
     table: '{{snake TYPE.name}}',
     idField: 'id',
-    filters: [{
-      bool: 'and',
-      field: 'user_id',
-      compare: '=',
-      valueExtractor: args => args.userId
-    }]
   }),
 
   getFor: getAdapter({
     table: '{{snake TYPE.name}}',
     idField: 'id',
     filters: [{
+      bool: 'and',
       field: 'user_id',
       compare: '=',
       valueExtractor: args => args.userId
@@ -63,6 +57,7 @@ export default {
     table: '{{snake TYPE.name}}',
     idField: 'user_id',
     filters: [{
+      bool: 'and',
       field: 'user_id',
       compare: '=',
       valueExtractor: args => args.userId
@@ -72,16 +67,12 @@ export default {
     table: '{{snake TYPE.name}}',
     idField: 'user_id',
     filters: [{
+      bool: 'and',
       field: 'user_id',
       compare: '=',
       valueExtractor: args => args.userId
     }]
   }),
-  {{else}}
-
-  create: createWithoutIdAdapter({ table: '{{snake TYPE.name}}', idField: 'id' }),
-  update: updateAdapter({ table: '{{snake TYPE.name}}', idField: 'id' }),
-  delete: deleteAdapter({ table: '{{snake TYPE.name}}', idField: 'id' }),
   {{/if}}
 
   {{#each TYPE.relations as |RELATION|}}

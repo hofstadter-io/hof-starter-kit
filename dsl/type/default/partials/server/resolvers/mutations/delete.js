@@ -1,21 +1,4 @@
 obj.Mutation.{{typeName}}Delete = authSwitch([
-  {{#if TYPE.owned}}
-  // owner update
-  {
-    requiredScopes: (sources, args, context, info) => {
-      let reqd = ['owner:{{typeName}}/update'];
-      return reqd;
-    },
-    providedScopes: (sources, args, context, info) => context.auth.scope,
-    callback: async (sources, args, context, info) => {
-      // Need to validate incoming filters...
-      args.filters = args.filters || [];
-      args.userId = context.user.id;
-      const results = await context.{{TypeName}}.getFor(args);
-      return { {{typeName}}: results, errors: null};
-    }
-  },
-  {{/if}}
 
   // non-owner delete
   {
@@ -24,19 +7,70 @@ obj.Mutation.{{typeName}}Delete = authSwitch([
       '{{ROLE}}:{{typeName}}/delete'{{#unless @last}},{{/unless}}
       {{/each}}
     ],
-    providedScopes: (sources, args, context, info) => context.auth.scope,
+    providedScopes: (sources, args, context, info) => context.auth.scope || [],
     callback: async (sources, args, context, info) => {
-      console.log('deleting {{typeName}}:', args);
       try {
-        const e = new FieldError();
-
-        return { {{typeName}}, errors: null };
+        // Need to validate incoming filters...
+        args.filters = args.filters || [];
+        const result = await context.{{TypeName}}.delete(args.id);
+        var message = "failed"
+        if (result) {
+          message = "success"
+        } else {
+          // why did we fail?
+          const ret = await context.{{TypeName}}.get({id: args.id});
+          if (ret) {
+            message = "unknown"
+          } else {
+            message = "not found"
+          }
+        }
+        return { {{typeName}}: null, message,  errors: null};
       } catch (e) {
-        return { {{typeName}}: null, errors: e };
+        return { {{typeName}}: null, message: null, errors: e };
       }
 
     }
+  },
+
+  {{#if TYPE.owned}}
+  // owner update
+  {
+    requiredScopes: (sources, args, context, info) => {
+      let reqd = ['owner:{{typeName}}/delete'];
+      return reqd;
+    },
+    providedScopes: (sources, args, context, info) => context.auth.scope || [],
+    callback: async (sources, args, context, info) => {
+      try {
+        // Need to validate incoming filters...
+        args.filters = args.filters || [];
+        args.userId = context.user.id;
+
+        var message = "failed"
+        const result = await context.{{TypeName}}.deleteFor({
+          id: args.id,
+          userId: args.userId
+        });
+
+        if (result) {
+          message = "success"
+        } else {
+          // why did we fail?
+          const ret = await context.{{TypeName}}.getFor(args);
+          if (ret) {
+            message = "unknown"
+          } else {
+            message = "not found"
+          }
+        }
+        return { {{typeName}}: null, message,  errors: null};
+      } catch (e) {
+        return { {{typeName}}: null, message: null, errors: e };
+      }
+    }
   }
+  {{/if}}
 
 ], {
   validator: 'wildcard-i-love-trump'
