@@ -38,5 +38,10 @@ dependencies:
         - in: mode.yaml
           out: mode.yaml
 
+    - name: migrations
+      field: "."
+      templates:
+        - in: init.yaml
+          out: init.yaml
 
 
