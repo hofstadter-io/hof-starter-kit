@@ -18,7 +18,17 @@ const grant = async (user, req) => {
 
 const getCurrentUser = async ({ req }) => {
   if (req && req.session.userId) {
-    return await User.getUser(req.session.userId);
+    try {
+      console.log("getCurrentUser()")
+      return await User.getUser(req.session.userId);
+    } catch(e) {
+      console.log("getCurrentUser(ERROR)")
+      console.log("  ", e.name)
+      console.log("  ", e.message)
+      console.log("  ", e.type)
+      console.log("  ", typeof e)
+      throw new Error("internal server error");
+    }
   }
 };
 

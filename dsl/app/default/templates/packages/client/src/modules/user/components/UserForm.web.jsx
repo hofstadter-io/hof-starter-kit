@@ -152,10 +152,7 @@ const UserFormWithFormik = withFormik({
       isActive: isActive,
       password: '',
       passwordConfirmation: '',
-      profile: {
-        firstName: profile && profile.firstName,
-        lastName: profile && profile.lastName
-      },
+      profile: profile || {},
       auth: {
         ...values.initialValues.auth
       }

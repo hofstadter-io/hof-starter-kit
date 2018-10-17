@@ -10,7 +10,6 @@ import ServerModule from '../ServerModule';
 import resources from './locales';
 
 const createContextFunc = async ({ context: { user } }) => {
-  console.log("USER CONTEXT", User)
   return {
     User,
     user,

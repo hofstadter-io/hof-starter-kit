@@ -18,7 +18,9 @@ class User {
         'u.is_active',
         'u.email',
         {{#each PROFILE.fields as |FIELD|}}
+        {{#unless FIELD.migration}}
         'up.{{snake FIELD.name}}',
+        {{/unless}}
         {{/each}}
         'ca.serial',
         'fa.fb_id',
@@ -86,7 +88,9 @@ class User {
           'u.is_active',
           'u.email',
           {{#each PROFILE.fields as |FIELD|}}
+          {{#unless FIELD.migration}}
           'up.{{snake FIELD.name}}',
+          {{/unless}}
           {{/each}}
           'ca.serial',
           'fa.fb_id',
@@ -263,7 +267,9 @@ class User {
           'u.is_active',
           'u.email',
           {{#each PROFILE.fields as |FIELD|}}
+          {{#unless FIELD.migration}}
           'up.{{snake FIELD.name}}',
+          {{/unless}}
           {{/each}}
           'u.id'
         )
@@ -285,7 +291,9 @@ class User {
           'u.email',
           'u.password_hash',
           {{#each PROFILE.fields as |FIELD|}}
+          {{#unless FIELD.migration}}
           'up.{{snake FIELD.name}}',
+          {{/unless}}
           {{/each}}
           'u.id'
         )
@@ -309,7 +317,9 @@ class User {
           'u.email',
           'u.password_hash',
           {{#each PROFILE.fields as |FIELD|}}
+          {{#unless FIELD.migration}}
           'up.{{snake FIELD.name}}',
+          {{/unless}}
           {{/each}}
           'u.id'
         )
@@ -333,7 +343,9 @@ class User {
           'u.email',
           'u.password_hash',
           {{#each PROFILE.fields as |FIELD|}}
+          {{#unless FIELD.migration}}
           'up.{{snake FIELD.name}}',
+          {{/unless}}
           {{/each}}
           'u.id'
         )
@@ -357,7 +369,9 @@ class User {
           'u.email',
           'u.password_hash',
           {{#each PROFILE.fields as |FIELD|}}
+          {{#unless FIELD.migration}}
           'up.{{snake FIELD.name}}',
+          {{/unless}}
           {{/each}}
           'u.id'
         )
@@ -380,7 +394,9 @@ class User {
           'u.is_active',
           'u.email',
           {{#each PROFILE.fields as |FIELD|}}
+          {{#unless FIELD.migration}}
           'up.{{snake FIELD.name}}',
+          {{/unless}}
           {{/each}}
           'u.id'
         )
@@ -401,7 +417,9 @@ class User {
           'u.is_active',
           'u.email',
           {{#each PROFILE.fields as |FIELD|}}
+          {{#unless FIELD.migration}}
           'up.{{snake FIELD.name}}',
+          {{/unless}}
           {{/each}}
           'u.id'
         )

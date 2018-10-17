@@ -12,7 +12,6 @@ const USERS_SUBSCRIPTION = 'users_subscription';
 export default pubsub => ({
   Query: {
     users: withAuth(['user:view:all'], (obj, { orderBy, filter }, { User }) => {
-      console.log("USER RESOLVER", User)
       return User.getUsers(orderBy, filter);
     }),
     user: withAuth(
@@ -34,10 +33,18 @@ export default pubsub => ({
       }
     ),
     currentUser(obj, args, { User, user }) {
-      if (user) {
-        return User.getUser(user.id);
-      } else {
-        return null;
+      console.log("CURRENT USER")
+      try {
+        console.log("current user", user)
+        if (user) {
+          return User.getUser(user.id);
+        } else {
+          return null;
+        }
+      } catch(e) {
+        console.log("current user CATCH")
+
+
       }
     }
   },
