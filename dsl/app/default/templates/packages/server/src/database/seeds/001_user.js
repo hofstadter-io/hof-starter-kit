@@ -1,5 +1,6 @@
 import bcrypt from 'bcryptjs';
 import { returnId, truncateTables } from '../../sql/helpers';
+import { decamelizeKeys } from "humps";
 
 {{#with DslContext.modules as |MODS|}}
 {{#each MODS as |MOD|}}
@@ -36,12 +37,12 @@ export async function seed(knex, Promise) {
       email: user.email,
       password_hash: await bcrypt.hash(user.password, 12),
       role: user.role,
-      is_active: user.is_active
+      is_active: user.isActive
     });
 
     user.profile.user_id = id[0];
 
-    await returnId(knex('user_profile')).insert(user.profile);
+    await returnId(knex('user_profile')).insert(decamelizeKeys(user.profile));
   }
 
 }
