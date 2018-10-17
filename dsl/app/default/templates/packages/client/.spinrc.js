@@ -61,17 +61,19 @@ const config = {
     stack: ['apollo', 'react', 'styled-components', 'css', 'sass', 'less', 'es6', 'ts', 'webpack', 'i18next'],
     cache: '../../.cache',
     // cache: false,
-    ssr: true,
     webpackDll: true,
     reactHotLoader: false,
 
     {{#if (eq APP.mode "live")}}
+    ssr: false,
     minify: true,
     sourceMap: false,
     {{else if (eq APP.mode "prod")}}
+    ssr: false,
     minify: true,
     sourceMap: false,
     {{else}}
+    ssr: false,
     minify: false,
     sourceMap: true,
     {{/if}}
@@ -101,7 +103,7 @@ const config = {
 config.options.devProxy = config.options.ssr;
 
 const extraDefines = {
-  __SSR__: config.options.ssr
+  __SSR__: false
 };
 
 config.options.defines = Object.assign(config.options.defines, extraDefines);

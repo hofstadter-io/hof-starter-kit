@@ -49,19 +49,21 @@ const config = {
     stack: ['apollo', 'react', 'styled-components', 'css', 'sass', 'less', 'es6', 'js', 'ts', 'webpack', 'i18next'],
     cache: '../../.cache',
     // cache: false,
-    ssr: true,
     webpackDll: true,
     reactHotLoader: false,
     persistGraphQL: false,
     frontendRefreshOnBackendChange: true,
 
     {{#if (eq APP.mode "live")}}
+    ssr: false,
     minify: true,
     sourceMap: false,
     {{else if (eq APP.mode "prod")}}
+    ssr: false,
     minify: true,
     sourceMap: false,
     {{else}}
+    ssr: false,
     minify: false,
     sourceMap: true,
     {{/if}}
@@ -87,7 +89,7 @@ const config = {
 config.options.devProxy = config.options.ssr;
 
 const extraDefines = {
-  __SSR__: config.options.ssr,
+  __SSR__: false,
   __FRONTEND_BUILD_DIR__: `"../client/build"`,
   __DLL_BUILD_DIR__: `"../client/build/dll"`
 };
