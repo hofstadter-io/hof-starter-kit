@@ -9,14 +9,17 @@ import User from './sql';
 import ServerModule from '../ServerModule';
 import resources from './locales';
 
-const createContextFunc = async ({ context: { user } }) => ({
-  User,
-  user,
-  auth: {
-    isAuthenticated: !!user,
-    scope: user ? scopes[user.role] : null
-  }
-});
+const createContextFunc = async ({ context: { user } }) => {
+  console.log("USER CONTEXT", User)
+  return {
+    User,
+    user,
+    auth: {
+      isAuthenticated: !!user,
+      scope: user ? scopes[user.role] : null
+    }
+  };
+}
 
 const middleware = app => {
   if (settings.user.auth.password.sendConfirmationEmail) {

@@ -12,6 +12,7 @@ const USERS_SUBSCRIPTION = 'users_subscription';
 export default pubsub => ({
   Query: {
     users: withAuth(['user:view:all'], (obj, { orderBy, filter }, { User }) => {
+      console.log("USER RESOLVER", User)
       return User.getUsers(orderBy, filter);
     }),
     user: withAuth(
