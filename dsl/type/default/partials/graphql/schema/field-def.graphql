@@ -1,0 +1,19 @@
+{{#if (eq Field.type "string")}}
+  {{snake Field.name}}: String
+{{else if (eq Field.type "text")}}
+  {{snake Field.name}}: String
+{{else if (eq Field.type "json")}}
+  {{snake Field.name}}: JSON
+{{else if (eq Field.type "boolean")}}
+  {{snake Field.name}}: Boolean
+{{else if (eq Field.type "integer")}}
+  {{snake Field.name}}: Int
+{{else if (eq Field.type "decimal")}}
+  {{snake Field.name}}: Float
+{{else if (eq Field.type "date")}}
+  {{snake Field.name}}: Date
+{{else if (eq Field.type "time")}}
+  {{snake Field.name}}: Time
+{{else if (eq Field.type "datetime")}}
+  {{snake Field.name}}: DateTime
+{{/if}}

@@ -29,6 +29,9 @@ exports.up = function(knex, Promise) {
       table.dateTime('{{snake FIELD.name}}');
     {{/if}}
       {{/each}}
+    {{#if TYPE.visibility.enabled}}
+      table.boolean('{{snake TYPE.visibility.public}}').default({{TYPE.visibility.default}});
+    {{/if}}
 
     {{#if TYPE.owned}}
       table

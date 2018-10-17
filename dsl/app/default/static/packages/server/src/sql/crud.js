@@ -35,8 +35,7 @@ export function createWithIdGenAdapter(options) {
         builder.transacting(trx);
       }
 
-      await builder;
-      return values.id;
+      return builder;
     } catch (e) {
       log.error(`Error in ${T}.create()`, e);
       throw e;
@@ -348,7 +347,7 @@ export function createRelationAdapter(options) {
         builder.transacting(trx);
       }
 
-      return await builder;
+      return builder;
     } catch (e) {
       log.error(`Error in ${table}.createRelationAdapter(${elemField},${collectionField})`, e);
       throw e;

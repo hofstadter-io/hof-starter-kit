@@ -29,12 +29,54 @@ export default {
 
   {{#if TYPE.owned}}
   createFor: createWithIdAdapter({ table: '{{snake TYPE.name}}', idField: 'user_id' }),
-  updateFor: updateAdapter({ table: '{{snake TYPE.name}}', idField: 'user_id' }),
-  deleteFor: deleteAdapter({ table: '{{snake TYPE.name}}', idField: 'user_id' }),
+  updateFor: updateAdapter({
+    table: '{{snake TYPE.name}}',
+    idField: 'id',
+    filters: [{
+      bool: 'and',
+      field: 'user_id',
+      compare: '=',
+      valueExtractor: args => args.userId
+    }]
+  }),
+  deleteFor: deleteAdapter({
+    table: '{{snake TYPE.name}}',
+    idField: 'id',
+    filters: [{
+      bool: 'and',
+      field: 'user_id',
+      compare: '=',
+      valueExtractor: args => args.userId
+    }]
+  }),
 
-  getFor: getAdapter({ table: '{{snake TYPE.name}}', idField: 'user_id' }),
-  getManyFor: listAdapter({ table: '{{snake TYPE.name}}', idField: 'user_id' }),
-  pagingFor: pagingAdapter({ table: '{{snake TYPE.name}}', idField: 'user_id' }),
+  getFor: getAdapter({
+    table: '{{snake TYPE.name}}',
+    idField: 'id',
+    filters: [{
+      field: 'user_id',
+      compare: '=',
+      valueExtractor: args => args.userId
+    }]
+  }),
+  getManyFor: listAdapter({
+    table: '{{snake TYPE.name}}',
+    idField: 'user_id',
+    filters: [{
+      field: 'user_id',
+      compare: '=',
+      valueExtractor: args => args.userId
+    }]
+  }),
+  pagingFor: pagingAdapter({
+    table: '{{snake TYPE.name}}',
+    idField: 'user_id',
+    filters: [{
+      field: 'user_id',
+      compare: '=',
+      valueExtractor: args => args.userId
+    }]
+  }),
   {{else}}
 
   create: createWithoutIdAdapter({ table: '{{snake TYPE.name}}', idField: 'id' }),
@@ -58,6 +100,30 @@ export default {
   {{/if}}
   {{/with}}{{/gettype}}
   {{/each}}
+
+  {{#if TYPE.search}}
+  // Search helpers
+  {{#with TYPE.search as |Search|}}
+  search: pagingAdapter({
+    table: '{{snake TYPE.name}}',
+    filters: [
+      {{#each Search.fields as |FIELD|}}
+      {
+        bool: 'or',
+        field: '{{snake FIELD}}',
+        compare: 'like',
+        valueExtractor: args => `${args.searchText}`
+      },
+      {{/each}}
+      {{#each Search.relation as |SearchRel|}}
+      // relation {{SearchRel}}
+      {{/each}}
+
+    ]
+  }),
+  {{/with}}
+  {{/if}}
+
 }
 
 {{/with}}

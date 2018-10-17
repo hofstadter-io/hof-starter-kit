@@ -37,12 +37,15 @@ export default async function seed(knex, Promise) {
   for (let data of datas) {
     var uid = await knex('user')
       .where({
-        username: data['owner']
+        username: data['{{#if TYPE.owned.name}}{{camel TYPE.owned.name}}{{else}}owner{{/if}}']
       })
       .first('id')
       .then(row => row.id)
 
     var did = await Lib.{{camelT TYPE.name}}.createFor(uid, {
+      {{#if TYPE.visibility.enabled}}
+        {{snake TYPE.visibility.public}}: data['{{camel TYPE.visibility.public}}'] || {{TYPE.visibility.default}},
+      {{/if}}
       {{#each TYPE.fields as |FIELD|}}
       {{snake FIELD.name}}: data['{{FIELD.name}}']{{#unless @last}},{{/unless}}
       {{/each}}
@@ -63,13 +66,16 @@ export default async function seed(knex, Promise) {
         {{#if REL_TYPE.owned}}
         var oid = await knex('user')
           .where({
-            username: data['owner']
+            username: data['{{#if REL_TYPE.owned.name}}{{camel REL_TYPE.owned.name}}{{else}}owner{{/if}}']
           })
           .first('id')
           .then(row => row.id)
 
           {{#if (eq RELATION.relation "one-to-one")}}
         await Lib.{{camelT REL_TYPE.name}}.createFor(oid, {
+          {{#if REL_TYPE.visibility.enabled}}
+            {{snake REL_TYPE.visibility.public}}: data['{{camel REL_TYPE.visibility.public}}'] || {{REL_TYPE.visibility.default}},
+          {{/if}}
           {{#each REL_TYPE.fields as |FIELD|}}
           {{snake FIELD.name}}: rel['{{FIELD.name}}'],
           {{/each}}
@@ -77,6 +83,9 @@ export default async function seed(knex, Promise) {
         })
           {{else if (eq RELATION.relation "one-to-many")}}
         await Lib.{{camelT REL_TYPE.name}}.createFor(oid, {
+          {{#if REL_TYPE.visibility.enabled}}
+            {{snake REL_TYPE.visibility.public}}: data['{{camel REL_TYPE.visibility.public}}'] || {{REL_TYPE.visibility.default}},
+          {{/if}}
           {{#each REL_TYPE.fields as |FIELD|}}
           {{snake FIELD.name}}: rel['{{FIELD.name}}'],
           {{/each}}
@@ -100,6 +109,9 @@ export default async function seed(knex, Promise) {
 
           {{#if (eq RELATION.relation "one-to-one")}}
         await Lib.{{camelT REL_TYPE.name}}.create({
+          {{#if REL_TYPE.visibility.enabled}}
+            {{snake REL_TYPE.visibility.public}}: data['{{camel REL_TYPE.visibility.public}}'] || {{REL_TYPE.visibility.default}},
+          {{/if}}
           {{#each REL_TYPE.fields as |FIELD|}}
           {{snake FIELD.name}}: rel['{{FIELD.name}}'],
           {{/each}}
@@ -107,6 +119,9 @@ export default async function seed(knex, Promise) {
         })
           {{else if (eq RELATION.relation "one-to-many")}}
         await Lib.{{camelT REL_TYPE.name}}.create({
+          {{#if REL_TYPE.visibility.enabled}}
+            {{snake REL_TYPE.visibility.public}}: data['{{camel REL_TYPE.visibility.public}}'] || {{REL_TYPE.visibility.default}},
+          {{/if}}
           {{#each REL_TYPE.fields as |FIELD|}}
           {{snake FIELD.name}}: rel['{{FIELD.name}}'],
           {{/each}}

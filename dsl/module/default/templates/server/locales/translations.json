@@ -1,0 +1,3 @@
+{{#with RepeatedContext as |LANG|}}
+{{{file LANG.file}}}
+{{/with}}

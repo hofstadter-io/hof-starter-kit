@@ -61,16 +61,16 @@ export default function filterBuilder(queryBuilder, args) {
           compare = filter.compare;
         }
 
-        let value = filter.value ? filter.value : filter.values;
-        if (!value) {
+        let value = filter.value !== undefined ? filter.value : filter.values;
+        if (value === undefined) {
           value = filter.timeValue ? filter.timeValue : filter.timeValues;
-          if (!value) {
+          if (value === undefined) {
             value = filter.intValue ? filter.intValue : filter.intValues;
           }
-          if (!value) {
+          if (value === undefined) {
             value = filter.floatValue ? filter.floatValue : filter.floatValues;
           }
-          if (!value) {
+          if (value === undefined) {
             value = filter.boolValue ? filter.boolValue : filter.boolValues;
           }
         }

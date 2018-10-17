@@ -1,0 +1,133 @@
+{{#with DslContext as |TYPE|}}
+type {{camelT TYPE.name}} {
+  createdAt: DateTime
+  updatedAt: DateTime
+
+  id: ID
+  {{#if TYPE.owned}}
+  {{#if TYPE.owned.name}}
+  {{camel TYPE.owned.name}}Id: ID
+  {{camel TYPE.owned.name}}: User
+  {{else}}
+  userId: ID
+  user: User
+  {{/if}}
+  {{/if}}
+
+  {{#each TYPE.fields as |Field| ~}}
+{{!}}  {{> graphql/schema/field-def.graphql Field=Field ~}}
+  {{/each}}
+
+  {{#if TYPE.visibility.enabled}}
+  {{#if TYPE.visibility.public}}
+  {{camel TYPE.visibility.public}}: Boolean
+  {{else}}
+  isPublic: Boolean
+  {{/if}}
+  {{/if}}
+
+  {{#each TYPE.relations as |RELATION|}}
+  {{#gettype RELATION.type true}}{{#with . as |REL_TYPE|}}
+  {{#if (eq RELATION.relation "one-to-one")}}
+  {{camel RELATION.name}}: {{camelT REL_TYPE.name}}
+  {{else if (eq RELATION.relation "one-to-many")}}
+  {{camel RELATION.name}}: [{{camelT REL_TYPE.name}}]
+  {{else if (eq RELATION.relation "many-to-many")}}
+  {{camel RELATION.name}}: [{{camelT REL_TYPE.name}}]
+  {{/if}}
+  {{/with}}{{/gettype}}
+  {{/each}}
+}
+
+{{#if TYPE.owned}}
+extend type User {
+{{#if (eq TYPE.owned.type "has-one")}}
+  {{camel TYPE.name}}: {{camelT TYPE.name}}
+{{else if (eq TYPE.owned.type "has-many")}}
+  {{camel TYPE.name}}s: [{{camelT TYPE.name}}]
+{{/if}}
+}
+{{/if}}
+
+extend type Query {
+
+  {{camel TYPE.name}}({{camel TYPE.name}}Id: String!): {{camelT TYPE.name}}Payload!
+
+  {{camel TYPE.name}}List(
+    options: ListingOptions
+  ): {{camelT TYPE.name}}ListingPayload
+
+  {{camel TYPE.name}}Paging(
+    page: Int
+    options: ListingOptions
+  ): {{camelT TYPE.name}}PagingPayload
+
+  {{#if TYPE.search}}
+  {{camel TYPE.name}}Search(
+    searchText: String!
+    page: Int
+    options: ListingOptions
+  ): {{camelT TYPE.name}}SearchPayload
+  {{/if}}
+
+}
+
+type {{camelT TYPE.name}}Payload {
+  {{camel TYPE.name}}: {{camelT TYPE.name}}
+
+  # tokens: Tokens
+  errors: [Error!]
+}
+
+type {{camelT TYPE.name}}ListingPayload {
+  results: [{{camelT TYPE.name}}]
+  count: Int
+  total: Int
+  errors: [Error!]
+}
+
+type {{camelT TYPE.name}}PagingPayload {
+  results: [{{camelT TYPE.name}}]
+  count: Int
+  pages: Int
+  errors: [FieldError!]
+}
+
+{{#if TYPE.search}}
+type {{camelT TYPE.name}}SearchPayload {
+  results: [{{camelT TYPE.name}}]
+  count: Int
+  pages: Int
+  errors: [Error!]
+}
+{{/if}}
+
+extend type Mutation {
+  {{camel TYPE.name}}Create(input: {{camelT TYPE.name}}CreateInput!): {{camelT TYPE.name}}MutationPayload!
+  {{camel TYPE.name}}Update(id: ID!, values: {{camelT TYPE.name}}UpdateInput!): {{camelT TYPE.name}}MutationPayload!
+  {{camel TYPE.name}}Delete(id: ID!): {{camelT TYPE.name}}MutationPayload!
+}
+
+input {{camelT TYPE.name}}CreateInput {
+  # Create fields
+  {{#each TYPE.fields as |Field| ~}}
+{{!}}  {{> graphql/schema/field-def.graphql Field=Field ~}}
+  {{/each}}
+}
+
+input {{camelT TYPE.name}}UpdateInput {
+  # Update fields
+  {{#each TYPE.fields as |Field| ~}}
+{{!}}  {{> graphql/schema/field-def.graphql Field=Field ~}}
+  {{/each}}
+}
+
+type {{camelT TYPE.name}}MutationPayload {
+  {{camel TYPE.name}}: {{camelT TYPE.name}}
+
+  # tokens: Tokens
+  errors: [FieldError!]
+}
+
+
+{{/with}}

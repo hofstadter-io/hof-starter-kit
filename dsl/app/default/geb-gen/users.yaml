@@ -17,6 +17,8 @@ template-configs:
       out: packages/server/src/modules/user/sql.js
     - in: packages/server/src/modules/user/resolvers.js
       out: packages/server/src/modules/user/resolvers.js
+    - in: packages/server/src/modules/user/scopes.js
+      out: packages/server/src/modules/user/scopes.js
 
     # client files
 

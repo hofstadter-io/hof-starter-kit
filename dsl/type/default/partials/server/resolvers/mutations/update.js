@@ -1,0 +1,72 @@
+obj.Mutation.{{typeName}}Update = authSwitch([
+  {{#if TYPE.owned}}
+  // owner update
+  {
+    requiredScopes: (sources, args, context, info) => {
+      let reqd = ['owner:{{typeName}}/update'];
+      return reqd;
+    },
+    providedScopes: (sources, args, context, info) => context.auth.scope,
+    callback: async (sources, args, context, info) => {
+      console.log('updating {{typeName}}:', args);
+      try {
+        const e = new FieldError();
+        var id = args.id;
+        var {{typeName}} = args.values;
+        args.user_id = context.user.id;
+        console.log('updating {{typeName}}:', args);
+
+        // TODO validate...
+
+        var ret = await context.{{TypeName}}.updateFor(id, {{typeName}});
+        if (ret) {
+          var result = await context.{{TypeName}}.get({
+            id
+          })
+          return { {{typeName}}: result, errors: null};
+        } else {
+          return { {{typeName}}: null, errors: [{
+            field: "?",
+            message: "unknown error"
+          }]};
+        }
+        console.log("UPDATE ret", ret);
+
+      } catch (e) {
+        return {
+          {{typeName}}: null,
+          errors: [{
+            field: "?",
+            message: e
+          }]
+        };
+      }
+    }
+  },
+  {{/if}}
+
+  // non-owner update
+  {
+    requiredScopes: [
+      {{#each AUTH.update as |ROLE|}}
+      '{{ROLE}}:{{typeName}}/update'{{#unless @last}},{{/unless}}
+      {{/each}}
+    ],
+    providedScopes: (sources, args, context, info) => context.auth.scope,
+    callback: async (sources, args, context, info) => {
+      console.log('updating {{typeName}}:', args);
+      try {
+        const e = new FieldError();
+
+        return { {{typeName}}, errors: null };
+      } catch (e) {
+        return { {{typeName}}: null, errors: e };
+      }
+
+    }
+  }
+
+], {
+  validator: 'wildcard-i-love-trump'
+})
+

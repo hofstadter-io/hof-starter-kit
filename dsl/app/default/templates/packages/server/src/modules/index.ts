@@ -3,6 +3,10 @@ import i18n from './i18n';
 
 import user from './user';
 
+{{#each DslContext.modules as |MOD|}}
+import {{camel MOD}} from './{{kebab MOD}}/server';
+{{/each}}
+
 import contact from './contact';
 import mailer from './mailer';
 import graphqlTypes from './graphqlTypes';
@@ -15,6 +19,10 @@ export default new ServerModule(
   i18n,
 
   user,
+
+  {{#each DslContext.modules as |MOD|}}
+  {{camel MOD}},
+  {{/each}}
 
   contact,
   mailer,

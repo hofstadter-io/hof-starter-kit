@@ -5,7 +5,9 @@ template-configs:
     field: "."
 
     templates:
-      - in: server/index.ts
-        out: "packages/server/src/modules/{{name}}/server/index.ts"
+      - in: server/index.js
+        out: "packages/server/src/modules/{{name}}/server/index.js"
 
+      - in: server/resolvers/index.js
+        out: "packages/server/src/modules/{{name}}/server/resolvers/index.js"
 

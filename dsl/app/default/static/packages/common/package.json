@@ -18,6 +18,7 @@
     "apollo-logger": "^0.3.0",
     "apollo-utilities": "^1.0.11",
     "graphql": "^0.13.0",
+    "graphql-autharoo": "^1.0.6",
     "lodash": "^4.17.4",
     "minilog": "^3.1.0",
     "react-router-redux": "^5.0.0-alpha.8",

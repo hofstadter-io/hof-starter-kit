@@ -4,5 +4,7 @@ template-configs:
   - name: once-files
     field: "."
 
-
+    templates:
+      - in: server/resolvers/type.js
+        out: "packages/server/src/{{relPath}}/server/resolvers/{{kebab name}}.js"
 

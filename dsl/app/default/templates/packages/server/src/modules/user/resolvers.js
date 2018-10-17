@@ -16,7 +16,7 @@ export default pubsub => ({
     }),
     user: withAuth(
       () => {
-        return ['user:view:self'];
+        return ['user:view'];
       },
       (obj, { id }, { user, User, req: { t } }) => {
         if (user.id === id || user.role === 'admin') {

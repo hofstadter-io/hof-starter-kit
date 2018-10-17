@@ -4,5 +4,10 @@ template-configs:
   - name: once-files
     field: "."
 
+    templates:
+
+      - in: graphql/schema/type.graphql
+        out: "packages/server/src/{{relPath}}/graphql/schema/{{kebab name}}.graphql"
+
 
 
