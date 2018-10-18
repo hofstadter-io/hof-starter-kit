@@ -1,18 +1,21 @@
+{{#with DslContext as |TYPE|}}
+// {{TYPE.name}}
 import React from 'react';
 import { Route, NavLink } from 'react-router-dom';
+
+import { AuthRoute, IfLoggedIn, IfNotLoggedIn, withLoadedUser  } from '../../user/containers/Auth';
 
 import translate from '../../../i18n';
 import ClientModule from "../../ClientModule";
 
-// import Contact from './containers/Contact';
-
-{{#with DslContext as |TYPE|}}
-// {{TYPE.name}}
-
+import {{camelT TYPE.name}}List from './containers/list.jsx'
+import {{camelT TYPE.name}}View from './containers/view.jsx'
 
 export default new ClientModule({
-  // route: [<Route exact path="/contact" component={Contact} />],
-
+  route: [
+    <AuthRoute exact path="{{TYPE.pages.list.route}}" role={['user', 'admin']} redirect="/login" component={ {{camelT TYPE.name}}List } />,
+    <AuthRoute path="{{TYPE.pages.view.route}}" role={['user', 'admin']} redirect="/login" component={ {{camelT TYPE.name}}View } />
+  ]
 });
 
 {{/with}}

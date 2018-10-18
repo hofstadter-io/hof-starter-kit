@@ -3,7 +3,7 @@ obj.Query.{{typeName}}List = authSwitch([
   // owner view
   {
     requiredScopes: (sources, args, context, info) => {
-      if (args.options.visibility && args.options.visibility.self === true) {
+      if (args.options && args.options.visibility && args.options.visibility.self === true) {
         return ['owner:{{typeName}}/view'];
       }
       return ['skip']
@@ -13,7 +13,7 @@ obj.Query.{{typeName}}List = authSwitch([
       try {
         args.userId = context.user.id;
         {{#if TYPE.visibility.enabled}}
-        if (args.options.visibility && args.options.visibility.which) {
+        if (args.options && args.options.visibility && args.options.visibility.which) {
           const which = args.options.visibility.which;
           if (which === '{{TYPE.visibility.public}}') {
             args.filters = [{
@@ -58,7 +58,7 @@ obj.Query.{{typeName}}List = authSwitch([
     callback: async (sources, args, context, info) => {
       try {
         {{#if TYPE.visibility.enabled}}
-        if (args.options.visibility && args.options.visibility.which) {
+        if (args.options && args.options.visibility && args.options.visibility.which) {
           const which = args.options.visibility.which;
           if (which === '{{TYPE.visibility.public}}') {
             args.filters = [{

@@ -1,7 +1,7 @@
 {{#with DslContext as |TYPE|}}
 type {{camelT TYPE.name}} {
-  createdAt: DateTime
-  updatedAt: DateTime
+  createdAt: String
+  updatedAt: String
 
   id: ID
   {{#if TYPE.owned}}

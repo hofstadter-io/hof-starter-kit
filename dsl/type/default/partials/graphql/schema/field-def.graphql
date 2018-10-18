@@ -15,5 +15,5 @@
 {{else if (eq Field.type "time")}}
   {{snake Field.name}}: Time
 {{else if (eq Field.type "datetime")}}
-  {{snake Field.name}}: DateTime
+  {{snake Field.name}}: String
 {{/if}}

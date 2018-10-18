@@ -124,8 +124,12 @@ export function getByIdAdapter(options) {
   const selector = selectAdapter(options);
 
   return async function(args, trx) {
+
     try {
       let ret = await selector(args, trx);
+      if (ret.length === 0) {
+        return null;
+      }
       ret = camelizeKeys(ret[0]);
       return ret;
     } catch (e) {

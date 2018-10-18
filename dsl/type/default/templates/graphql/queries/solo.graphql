@@ -3,15 +3,12 @@
 {{#with (camel  TYPE.name) as |typeName|}}
 #import "../fragments/type-solo.graphql"
 
-query {{typeName}}List($options: ListingOptions) {
-  {{typeName}}List(options: $options) {
-    results {
+#xxximport "./Comment.graphql"
+
+query {{typeName}}($id: String!) {
+  {{typeName}}({{typeName}}Id: $id) {
+    {{typeName}}{
       ...{{TypeName}}Info
-    }
-    count
-    total
-    errors {
-      message
     }
   }
 }

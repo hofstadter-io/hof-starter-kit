@@ -9,8 +9,8 @@ template-configs:
       - in: client/index.jsx
         out: "packages/client/src/{{relPath}}/{{kebab name}}/index.js"
 
-      - in: graphql/queries/one.graphql
-        out: "packages/client/src/{{relPath}}/{{kebab name}}/graphql/queries/one.graphql"
+      - in: graphql/queries/solo.graphql
+        out: "packages/client/src/{{relPath}}/{{kebab name}}/graphql/queries/solo.graphql"
       - in: graphql/queries/list.graphql
         out: "packages/client/src/{{relPath}}/{{kebab name}}/graphql/queries/list.graphql"
 
@@ -41,8 +41,6 @@ template-configs:
         out: "packages/client/src/{{relPath}}/{{kebab name}}/containers/add.jsx"
       - in: client/containers/edit.jsx
         out: "packages/client/src/{{relPath}}/{{kebab name}}/containers/edit.jsx"
-      - in: client/containers/form.jsx
-        out: "packages/client/src/{{relPath}}/{{kebab name}}/containers/form.jsx"
       - in: client/containers/list.jsx
         out: "packages/client/src/{{relPath}}/{{kebab name}}/containers/list.jsx"
       - in: client/containers/view.jsx

@@ -65,12 +65,12 @@ class NavBar extends React.Component {
               </NavLink>
 
               {{#each NAVBAR.leftItems as |ITEM|}}
-              {{#if ITEM.role}}
-              <IfLoggedIn key="{{{ITEM.href}}}" role="{{ITEM.role}}">
-                <NavLink to="{{{ITEM.href}}}" className="nav-link">
-                  {t('{{ITEM.name}}')}
-                </NavLink>
-              </IfLoggedIn>
+              {{#if ITEM.roles}}
+                <IfLoggedIn key="{{{ITEM.href}}}" role={[{{#each ITEM.roles as |R|}}"{{R}}"{{#unless @last}}, {{/unless}}{{/each}}]}>
+                  <NavLink to="{{{ITEM.href}}}" className="nav-link">
+                    {t('{{ITEM.name}}')}
+                  </NavLink>
+                </IfLoggedIn>
               {{else}}
               <NavLink to="{{{ITEM.href}}}" className="nav-link">
                 {t('{{ITEM.name}}')}

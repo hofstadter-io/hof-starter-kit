@@ -9,9 +9,12 @@ obj.Query.{{typeName}} = authSwitch([
     providedScopes: (sources, args, context, info) => context.auth.scope,
     callback: async (sources, args, context, info) => {
       // Need to validate incoming filters...
+      args.id = args.{{typeName}}Id
       args.filters = args.filters || [];
       args.userId = context.user.id;
+      console.log("{{typeName}} - owner args", args)
       const results = await context.{{TypeName}}.getFor(args);
+      console.log("{{typeName}} - owner results", results)
       return { {{typeName}}: results, errors: null};
     }
   },
@@ -34,6 +37,7 @@ obj.Query.{{typeName}} = authSwitch([
     callback: async (sources, args, context, info) => {
       // Need to validate incoming filters...
       {{#if TYPE.visibility.enabled}}
+      args.id = args.{{typeName}}Id
       args.filters = args.filters || [];
       args.filters.push({
         field: 'is_public',
@@ -41,6 +45,7 @@ obj.Query.{{typeName}} = authSwitch([
         value: true
       })
       {{/if}}
+      console.log("{{typeName}} - non-owner args", args)
       const results = await context.{{TypeName}}.get(args);
       return { {{typeName}}: results, errors: null};
     }
