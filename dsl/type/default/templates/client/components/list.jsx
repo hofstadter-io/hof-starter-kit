@@ -25,7 +25,7 @@ const PageStyled = styled.div`
 class {{TypeName}}List extends React.PureComponent {
   static propTypes = {
     loading: PropTypes.bool.isRequired,
-    {{typeName}}s: PropTypes.object,
+    {{typeName}}s: PropTypes.array,
     // deletePost: PropTypes.func.isRequired,
     // loadData: PropTypes.func,
     t: PropTypes.func
