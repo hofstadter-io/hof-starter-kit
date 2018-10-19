@@ -5,31 +5,43 @@
 {{#with (trimto_last TYPE.relPath "/" false) as |MOD_NAME|}}
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withFormik } from 'formik';
+import Helmet from 'react-helmet';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import * as RS from 'reactstrap'
 
-import translate from '../../../i18n';
+import settings from '../../../../../../../settings';
+import { PageLayout } from '../../../layout/page';
+import translate, { TranslateFunction } from '../../../../i18n';
+
 import Field from '../../../utils/FieldAdapter';
 import { Form, RenderField, Button } from '../../common/components/web';
 import { required, validateForm } from '../../../../../common/validation';
 
-const postFormSchema = {
-  title: [required],
-  content: [required]
+const PageStyled = styled.div`
+{{{file TYPE.pages.view.style}}}
+`
+
+const {{typeName}}FormSchema = {
+{{#each TYPE.fields as |FIELD|}}
+  {{camel FIELD.name}}: [required]{{#unless @last}},{{/each}}
+{{/each}}
 };
 
-const validate = values => validateForm(values, postFormSchema);
+const validate = values => validateForm(values, {{typeName}}FormSchema);
 
-const PostForm = ({ values, handleSubmit, submitting, t }) => {
+const {{TypeName}}Form = ({ values, handleSubmit, submitting, t }) => {
   return (
-    <Form name="post" onSubmit={handleSubmit}>
-      <Field name="title" component={RenderField} type="text" label={t('post.field.title')} value={values.title} />
+    <Form name="{{typeName}}" onSubmit={handleSubmit}>
+    {{#each TYPE.fields as |FIELD|}}
       <Field
-        name="content"
+        name="{{camel FIELD.name}}"
         component={RenderField}
         type="text"
-        label={t('post.field.content')}
-        value={values.content}
+        label={t('{{typeName}}.field.{{camel FIELD.name}}')}
+        value={ values.{{FIELD.name}} }
       />
+    {{/each}}
       <Button color="primary" type="submit" disabled={submitting}>
         {t('post.btn.submit')}
       </Button>
@@ -37,16 +49,16 @@ const PostForm = ({ values, handleSubmit, submitting, t }) => {
   );
 };
 
-PostForm.propTypes = {
+{{TypeName}}Form.propTypes = {
   handleSubmit: PropTypes.func,
   onSubmit: PropTypes.func,
   submitting: PropTypes.bool,
   values: PropTypes.object,
-  post: PropTypes.object,
+  {{typeName}}: PropTypes.object,
   t: PropTypes.func
 };
 
-const PostFormWithFormik = withFormik({
+const {{TypeName}}FormWithFormik = withFormik({
   mapPropsToValues: props => ({
     title: props.post && props.post.title,
     content: props.post && props.post.content

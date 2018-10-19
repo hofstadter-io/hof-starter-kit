@@ -100,7 +100,7 @@ class {{TypeName}}List extends React.PureComponent {
         <RS.Container>
           <RS.Row>
             { {{typeName}}s.map( elem => (
-                <RS.Col lg="8" sm="12">
+                <RS.Col lg="8" sm="12" key="{elem.id}">
                   <p><b><Link to={"{{typeName}}/" + elem.id}>{elem.title}</Link></b> - <i>by {elem.author.username}</i></p>
                 </RS.Col>
               )
