@@ -24,7 +24,7 @@ const PageStyled = styled.div`
 
 const {{typeName}}FormSchema = {
 {{#each TYPE.fields as |FIELD|}}
-  {{camel FIELD.name}}: [required]{{#unless @last}},{{/each}}
+  {{camel FIELD.name}}: [required]{{#unless @last}},{{/unless}}
 {{/each}}
 };
 
