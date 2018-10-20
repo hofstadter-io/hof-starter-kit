@@ -29,7 +29,9 @@ export function createWithIdGenAdapter(options) {
       }
       values[idField] = idGen();
 
-      let builder = knex(T).insert(decamelizeKeys(values));
+      let builder = knex(T)
+        .returning(idField)
+        .insert(decamelizeKeys(values));
 
       if (trx) {
         builder.transacting(trx);
@@ -54,7 +56,10 @@ export function createWithIdAdapter(options) {
   return async function(id, values, trx) {
     try {
       values[idField] = id;
-      let builder = knex(T).insert(decamelizeKeys(values));
+
+      let builder = knex(T)
+        .returning(idField)
+        .insert(decamelizeKeys(values));
 
       if (trx) {
         builder.transacting(trx);
@@ -71,9 +76,17 @@ export function createWithIdAdapter(options) {
 
 export function createWithoutIdAdapter(options) {
   const T = options.table;
+  let idField = 'id';
+  if (options) {
+    if (options.idField) {
+      idField = options.idField;
+    }
+  }
   return async function(values, trx) {
     try {
-      let builder = knex(T).insert(decamelizeKeys(values));
+      let builder = knex(T)
+        .returning(idField)
+        .insert(decamelizeKeys(values));
 
       if (trx) {
         builder.transacting(trx);
