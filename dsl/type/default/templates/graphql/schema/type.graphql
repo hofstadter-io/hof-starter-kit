@@ -104,8 +104,8 @@ type {{camelT TYPE.name}}SearchPayload {
 
 extend type Mutation {
   {{camel TYPE.name}}Create(input: {{camelT TYPE.name}}CreateInput!): {{camelT TYPE.name}}MutationPayload!
-  {{camel TYPE.name}}Update(id: ID!, values: {{camelT TYPE.name}}UpdateInput!): {{camelT TYPE.name}}MutationPayload!
-  {{camel TYPE.name}}Delete(id: ID!): {{camelT TYPE.name}}MutationPayload!
+  {{camel TYPE.name}}Update(id: Int!, values: {{camelT TYPE.name}}UpdateInput!): {{camelT TYPE.name}}MutationPayload!
+  {{camel TYPE.name}}Delete(id: Int!): {{camelT TYPE.name}}MutationPayload!
 }
 
 input {{camelT TYPE.name}}CreateInput {

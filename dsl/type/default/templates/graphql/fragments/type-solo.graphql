@@ -12,6 +12,10 @@ fragment {{TypeName}}Info on {{TypeName}} {
   {{camel FIELD.name}}
   {{/each}}
 
+  {{#if TYPE.visibility}}
+  {{#if TYPE.visibility.public}}{{TYPE.visibility.public}}{{else}}isPublic{{/if}}
+  {{/if}}
+
   {{#if TYPE.owned}}
   {{TYPE.owned.name}}Id
   {{TYPE.owned.name}}{

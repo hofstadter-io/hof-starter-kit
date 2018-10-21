@@ -6,18 +6,18 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { compose, graphql } from 'react-apollo';
+import { compose } from 'react-apollo';
 
-import PostEditView from '../components/edit';
+import { IfLoggedIn, IfNotLoggedIn, withLoadedUser } from '../../../user/containers/Auth';
 
-import LIST from '../graphql/queries/list.graphql';
-import EDIT from '../graphql/mutaions/edit.graphql';
+import {{TypeName}}EditC from '../components/edit';
+import {{TypeName}}SDK from '../sdk';
 // import SYNC from '../graphql/subscriptions/sync.graphql';
 
 class {{TypeName}}Edit extends React.Component {
   static propTypes = {
     loading: PropTypes.bool.isRequired,
-    post: PropTypes.object,
+    {{typeName}}: PropTypes.object,
     // subscribeToMore: PropTypes.func.isRequired,
     history: PropTypes.object,
     navigation: PropTypes.object
@@ -25,16 +25,19 @@ class {{TypeName}}Edit extends React.Component {
 
   constructor(props) {
     super(props);
-    this.subscription = null;
+    // this.subscription = null;
   }
 
   componentDidMount() {
+    /*
     if (!this.props.loading) {
       this.initPostEditSubscription();
     }
+    */
   }
 
   componentDidUpdate(prevProps) {
+    /*
     if (!this.props.loading) {
       let prevPostId = prevProps.post ? prevProps.post.id : null;
       // Check if props have changed and, if necessary, stop the subscription
@@ -44,22 +47,28 @@ class {{TypeName}}Edit extends React.Component {
       }
       this.initPostEditSubscription();
     }
+    */
   }
 
   componentWillUnmount() {
+    /*
     if (this.subscription) {
       // unsubscribe
       this.subscription();
       this.subscription = null;
     }
+    */
   }
 
   initPostEditSubscription() {
+    /*
     if (!this.subscription && this.props.post) {
       this.subscribeToPostEdit(this.props.post.id);
     }
+    */
   }
 
+    /*
   subscribeToPostEdit = postId => {
     const { subscribeToMore, history, navigation } = this.props;
 
@@ -87,47 +96,19 @@ class {{TypeName}}Edit extends React.Component {
       }
     });
   };
+  */
 
   render() {
-    return <PostEditView {...this.props} />;
+    console.log("{{typeName}} Container EDIT RENDER", this.props)
+    return <{{TypeName}}EditC {...this.props} />;
   }
 }
 
 export default compose(
-  graphql(POST_QUERY, {
-    options: props => {
-      let id = 0;
-      if (props.match) {
-        id = props.match.params.id;
-      } else if (props.navigation) {
-        id = props.navigation.state.params.id;
-      }
-
-      return {
-        variables: { id }
-      };
-    },
-    props({ data: { loading, error, post, subscribeToMore } }) {
-      if (error) throw new Error(error);
-      return { loading, post, subscribeToMore };
-    }
-  }),
-  graphql(EDIT_POST, {
-    props: ({ ownProps: { history, navigation }, mutate }) => ({
-      editPost: async (id, title, content) => {
-        await mutate({
-          variables: { input: { id, title: title.trim(), content: content.trim() } }
-        });
-        if (history) {
-          return history.push('/posts');
-        }
-        if (navigation) {
-          return navigation.navigate('PostList');
-        }
-      }
-    })
-  })
-)(PostEdit);
+  withLoadedUser,
+  {{TypeName}}SDK.View,
+  {{TypeName}}SDK.Update
+)({{TypeName}}Edit);
 
 {{/with}}
 {{/with}}

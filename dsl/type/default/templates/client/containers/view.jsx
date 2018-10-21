@@ -6,11 +6,13 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { compose, graphql } from 'react-apollo';
+import { compose } from 'react-apollo';
+
+import { IfLoggedIn, IfNotLoggedIn, withLoadedUser } from '../../../user/containers/Auth';
 
 import {{TypeName}}ViewC from '../components/view';
+import {{TypeName}}SDK from '../sdk';
 
-import SOLO from '../graphql/queries/solo.graphql';
 // Need Relations queries here
 // import SYNC from '../graphql/subscriptions/sync.graphql';
 
@@ -103,28 +105,9 @@ class {{TypeName}}View extends React.Component {
 }
 
 export default compose(
-  graphql(SOLO, {
-    options: props => {
-      console.log("{{TypeName}} - solo view query container PROPS", props)
-      let id = 1;
-      if (props.match) {
-        id = props.match.params.{{typeName}}Id || props.match.params.id;
-      } else if (props.navigation) {
-        id = props.navigation.state.params.{{typeName}}Id || props.navigation.state.params.id;
-      }
-
-      console.log("{{TypeName}} - solo view query container", id)
-
-      return {
-        variables: { id }
-      };
-    },
-    props({ data: { loading, error, {{typeName}} /*, subscribeToMore*/ } }) {
-      console.log("{{TypeName}} - solo view props container", loading, error, {{typeName}})
-      if (error) throw new Error(error);
-      return { loading, {{typeName}} /*, subscribeToMore */};
-    }
-  }),
+  withLoadedUser,
+  {{TypeName}}SDK.View,
+  {{TypeName}}SDK.Delete
 )({{TypeName}}View);
 
 {{/with}}

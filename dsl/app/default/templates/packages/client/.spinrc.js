@@ -14,6 +14,11 @@ Object.keys(ifaces).forEach(function (ifname) {
       return;
     }
 
+    // skip docker
+    if (ifname.substring(0,6) === "docker") {
+      return
+    }
+
     if (alias >= 1) {
       // this single interface has multiple ipv4 addresses
       console.log(ifname + ':' + alias, iface.address);
@@ -88,7 +93,7 @@ const config = {
       __API_URL__: '"https://{{APP.name}}.hofstadter.io/graphql"'
     {{else}}
       __DEV__: process.env.NODE_ENV !== 'production',
-      __API_URL__: '"/graphql"'
+      __API_URL__: `"http://${hostIP}:8080/graphql"`
     {{/if}}
 
     },
@@ -103,7 +108,7 @@ const config = {
 config.options.devProxy = config.options.ssr;
 
 const extraDefines = {
-  __SSR__: false
+  __SSR__: config.options.ssr
 };
 
 config.options.defines = Object.assign(config.options.defines, extraDefines);

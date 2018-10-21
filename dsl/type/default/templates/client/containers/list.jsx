@@ -9,8 +9,8 @@ import PropTypes from 'prop-types';
 import { compose, graphql } from 'react-apollo';
 
 import {{TypeName}}ListC from '../components/list';
+import {{TypeName}}SDK from '../sdk';
 
-import LIST from '../graphql/queries/list.graphql';
 // Need Relations queries here
 // import SYNC from '../graphql/subscriptions/sync.graphql';
 
@@ -97,34 +97,14 @@ class {{TypeName}}List extends React.Component {
 */
 
   render() {
-    console.log("{{typeName}} Container RENDER", this.props)
+    // console.log("{{typeName}} Container RENDER", this.props)
     return <{{TypeName}}ListC {...this.props} />;
   }
 }
 
 export default compose(
-  graphql(LIST, {
-    options: props => {
-      var offset = 0
-      var limit = 10
-
-      console.log("{{TypeName}} - list query container", offset, limit)
-
-      return {
-        options: { offset, limit }
-      };
-    },
-    props(results) {
-      console.log("{{TypeName}} - list props container - results", results)
-      let { data } = results;
-      console.log("{{TypeName}} - list props container - data", data)
-      let { loading, error, {{typeName}}List /*, subscribeToMore*/ } = data;
-      let {{typeName}}s = {{typeName}}List ? {{typeName}}List.results : [];
-      console.log("{{TypeName}} - list props container - props", loading, error, {{typeName}}s)
-      if (error) throw new Error(error);
-      return { loading, {{typeName}}s /*, subscribeToMore */};
-    }
-  }),
+  {{TypeName}}SDK.List,
+  {{TypeName}}SDK.Delete
 )({{TypeName}}List);
 
 {{/with}}

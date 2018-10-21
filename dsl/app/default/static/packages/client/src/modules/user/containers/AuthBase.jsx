@@ -22,7 +22,7 @@ const withUser = Component => {
 };
 
 const hasRole = (role, currentUser) => {
-  console.log("hasRole", role, currentUser)
+  // console.log("hasRole", role, currentUser)
   return currentUser && (!role || (Array.isArray(role) ? role : [role]).indexOf(currentUser.role) >= 0) ? true : false;
 };
 

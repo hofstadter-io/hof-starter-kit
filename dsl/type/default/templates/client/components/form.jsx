@@ -14,12 +14,13 @@ import settings from '../../../../../../../settings';
 import { PageLayout } from '../../../layout/page';
 import translate, { TranslateFunction } from '../../../../i18n';
 
-import Field from '../../../utils/FieldAdapter';
-import { Form, RenderField, Button } from '../../common/components/web';
-import { required, validateForm } from '../../../../../common/validation';
+import { withFormik  } from 'formik';
+import Field from '../../../../utils/FieldAdapter';
+import { Form, RenderField, Button } from '../../../common/components/web';
+import { required, validateForm } from '../../../../../../common/validation';
 
 const PageStyled = styled.div`
-{{{file TYPE.pages.view.style}}}
+{{{file TYPE.pages.form.style}}}
 `
 
 const {{typeName}}FormSchema = {
@@ -43,7 +44,7 @@ const {{TypeName}}Form = ({ values, handleSubmit, submitting, t }) => {
       />
     {{/each}}
       <Button color="primary" type="submit" disabled={submitting}>
-        {t('post.btn.submit')}
+        {t('{{typeName}}.btn.submit')}
       </Button>
     </Form>
   );
@@ -60,8 +61,9 @@ const {{TypeName}}Form = ({ values, handleSubmit, submitting, t }) => {
 
 const {{TypeName}}FormWithFormik = withFormik({
   mapPropsToValues: props => ({
-    title: props.post && props.post.title,
-    content: props.post && props.post.content
+    {{#each TYPE.fields as |FIELD|}}
+    {{camel FIELD.name}}: props.{{typeName}} && props.{{typeName}}.{{camel FIELD.name}},
+    {{/each}}
   }),
   validate: values => validate(values),
   handleSubmit(
@@ -73,10 +75,10 @@ const {{TypeName}}FormWithFormik = withFormik({
     onSubmit(values);
   },
   enableReinitialize: true,
-  displayName: 'PostForm' // helps with React DevTools
+  displayName: '{{TypeName}}Form' // helps with React DevTools
 });
 
-export default translate('post')(PostFormWithFormik(PostForm));
+export default translate('{{MOD_NAME}}')({{TypeName}}FormWithFormik({{TypeName}}Form));
 
 {{/with}}
 {{/with}}

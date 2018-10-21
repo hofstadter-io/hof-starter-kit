@@ -10,6 +10,9 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import * as RS from 'reactstrap'
 
+// TODO Custom Imports
+import { format, distanceInWords, formatRelative, subDays  } from 'date-fns'
+
 import { Table, Button, Pagination } from '../../../common/components/web';
 import settings from '../../../../../../../settings';
 import { PageLayout } from '../../../layout/page';
@@ -53,47 +56,9 @@ class {{TypeName}}List extends React.PureComponent {
 
   render() {
     const { loading, {{typeName}}s, t } = this.props;
-    console.log("LIST RENDER", loading, {{typeName}}s)
-    const columns = [
-      {
-        title: t('list.column.title'),
-        dataIndex: 'title',
-        key: 'title',
-        render: (text, record) => (
-          <Link className="{{typeName}}Link" to={`{{TYPE.pages.view.route}}/${record.id}`}>
-            {text}
-          </Link>
-        )
-      },
-      {
-        title: t('list.column.actions'),
-        key: 'actions',
-        width: 50,
-        render: (text, record) => (
-          <Button color="primary" size="sm" className="delete-button" onClick={() => this.handleDeletePost(record.id)}>
-            {t('post.btn.del')}
-          </Button>
-        )
-      }
-    ];
+    // console.log("LIST RENDER", loading, {{typeName}}s)
     const Loading = () => <div className="text-center">{t('{{typeName}}.loadMsg')}</div>;
     const No{{TypeName}}sMessage = () => <div className="text-center">{t('{{typeName}}.no{{TypeName}}sMsg')}</div>;
-    /*
-    const Render{{TypeName}}s = () => (
-      <Fragment>
-        <Table dataSource={posts.edges.map(({ node }) => node)} columns={columns} />
-        <Pagination
-          itemsPerPage={posts.edges.length}
-          handlePageChange={this.handlePageChange}
-          hasNextPage={posts.pageInfo.hasNextPage}
-          pagination={type}
-          total={posts.totalCount}
-          loadMoreText={t('list.btn.more')}
-          defaultPageSize={itemsNumber}
-        />
-      </Fragment>
-    );
-    */
     const Render{{TypeName}}s = ({ {{typeName}}s }) => (
       <div>
         <pre>"{ {{typeName}}s.length }" {{typeName}}s should go here</pre>
@@ -101,7 +66,10 @@ class {{TypeName}}List extends React.PureComponent {
           <RS.Row>
             { {{typeName}}s.map( elem => (
                 <RS.Col lg="8" sm="12" key="{elem.id}">
-                  <p><b><Link to={"{{typeName}}/" + elem.id}>{elem.title}</Link></b> - <i>by {elem.author.username}</i></p>
+                  <p>
+                    <b><Link to={"{{typeName}}/" + elem.id}>{{typeName}} {elem.id}</Link></b>
+                    <p>{ JSON.stringify(elem) }</p>
+                  </p>
                 </RS.Col>
               )
             )}

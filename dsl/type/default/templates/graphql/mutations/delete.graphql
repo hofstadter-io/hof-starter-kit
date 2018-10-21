@@ -1,6 +1,6 @@
 {{#with DslContext as |TYPE|}}
 mutation {{camel TYPE.name}}Delete($id: Int!) {
-  deletePost(id: $id) {
+  {{camel TYPE.name}}Delete(id: $id) {
     message
     errors {
       field

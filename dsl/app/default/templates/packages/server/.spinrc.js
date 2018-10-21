@@ -14,6 +14,11 @@ Object.keys(ifaces).forEach(function (ifname) {
       return;
     }
 
+    // skip docker
+    if (ifname.substring(0,6) === "docker") {
+      return
+    }
+
     if (alias >= 1) {
       // this single interface has multiple ipv4 addresses
       console.log(ifname + ':' + alias, iface.address);
@@ -70,16 +75,18 @@ const config = {
 
     defines: {
       __SERVER_PORT__: 8080,
-      __API_URL__: '"/graphql"', // Use full URL if API is external, e.g. https://example.com/graphql
 
     {{#if (eq APP.mode "live")}}
       __DEV__: true,
+      __API_URL__: '"/graphql"', // Use full URL if API is external, e.g. https://example.com/graphql
       __WEBSITE_URL__: '"https://{{APP.name}}.live.hofstadter.io"'
     {{else if (eq APP.mode "prod")}}
       __DEV__: false,
+      __API_URL__: '"/graphql"', // Use full URL if API is external, e.g. https://example.com/graphql
       __WEBSITE_URL__: '"https://{{APP.name}}.hofstadter.io"'
     {{else}}
       __DEV__: process.env.NODE_ENV !== 'production',
+      __API_URL__: `"/graphql"`, // Use full URL if API is external, e.g. https://example.com/graphql
       __WEBSITE_URL__: `"http://${hostIP}:3000"`
     {{/if}}
     },
@@ -89,7 +96,7 @@ const config = {
 config.options.devProxy = config.options.ssr;
 
 const extraDefines = {
-  __SSR__: false,
+  k_SSR__: config.options.ssr,
   __FRONTEND_BUILD_DIR__: `"../client/build"`,
   __DLL_BUILD_DIR__: `"../client/build/dll"`
 };

@@ -7,50 +7,78 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import * as RS from 'reactstrap'
 
-import translate from '../../../i18n';
-import { PageLayout } from '../../common/components/web';
-import PostForm from './PostForm';
+import settings from '../../../../../../../settings';
+import { PageLayout } from '../../../layout/page';
+import translate, { TranslateFunction } from '../../../../i18n';
 
-import settings from '../../../../../../settings';
+import {{TypeName}}Form from './form';
 
-const onSubmit = addPost => values => {
-  addPost(values.title, values.content);
+const onSubmit = ({{typeName}}Create) => values => {
+  console.log("create - on Submit", {{typeName}}, values)
+  {{typeName}}Create(values);
 };
 
-const PostAddView = ({ addPost, t }) => {
+const {{TypeName}}Create = ({ loading, {{typeName}}, {{typeName}}Create, currentUser, match, location, t }) => {
+  let {{typeName}}Obj = {{typeName}};
+  if ({{typeName}} && {{typeName}}.{{typeName}}) {
+    {{typeName}} = {{typeName}}.{{typeName}}
+  }
+  console.log("Create RENDER", currentUser, {{typeName}}, {{typeName}}Obj);
+  // if new {{typeName}} was just added read it from router
+  if (!{{typeName}}Obj && location.state) {
+    {{typeName}}Obj = location.state.{{typeName}};
+  }
+
   const renderMetaData = () => (
     <Helmet
-      title={`${settings.app.name} - ${t('post.title')}`}
+      title={`${settings.app.name} - ${t('{{typeName}}.title')}`}
       meta={[
         {
           name: 'description',
-          content: t('post.meta')
+          content: t('{{typeName}}.meta')
         }
       ]}
     />
   );
-  return (
-    <PageLayout>
-      {renderMetaData()}
-      <Link id="back-button" to="/posts">
-        {t('post.btn.back')}
-      </Link>
-      <h2>
-        {t(`post.label.create`)} {t('post.label.post')}
-      </h2>
-      <PostForm onSubmit={onSubmit(addPost)} />
-      <br />
-    </PageLayout>
-  );
+
+  if (loading && !{{typeName}}Obj) {
+    return (
+      <PageLayout>
+        {renderMetaData()}
+        <div className="text-center">{t('{{typeName}}.loadMsg')}</div>
+      </PageLayout>
+    );
+  } else {
+    return (
+      <PageLayout>
+        {renderMetaData()}
+        <Link id="back-button" to="{{TYPE.pages.list.route}}">
+          {t('{{typeName}}.btn.back')}
+        </Link>
+        <h2>
+          {t(`{{typeName}}.label.create`)} {t('{{typeName}}.label.{{typeName}}')}
+        </h2>
+        <{{TypeName}}Form onSubmit={onSubmit({{typeName}}Create)} {{typeName}}={ {{typeName}} } />
+        <br />
+      </PageLayout>
+    );
+  }
 };
 
-PostAddView.propTypes = {
-  addPost: PropTypes.func.isRequired,
+{{TypeName}}Create.propTypes = {
+  loading: PropTypes.bool.isRequired,
+  {{typeName}}: PropTypes.object,
+  {{typeName}}Create: PropTypes.func.isRequired,
+  match: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
   t: PropTypes.func
 };
 
-export default translate('post')(PostAddView);
+export default translate('{{MOD_NAME}}')({{TypeName}}Create);
+
 {{/with}}
 {{/with}}
 {{/with}}

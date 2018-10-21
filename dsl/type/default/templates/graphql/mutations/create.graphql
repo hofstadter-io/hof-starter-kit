@@ -1,6 +1,6 @@
 {{#with DslContext as |TYPE|}}
-mutation {{camel TYPE.name}}Create($input: {{camelT TYPE.name}}CreateInput) {
-  createPost(input: $input) {
+mutation {{camel TYPE.name}}Create($input: {{camelT TYPE.name}}CreateInput!) {
+  {{camel TYPE.name}}Create(input: $input) {
     {{camel TYPE.name}} {
       id
       updatedAt

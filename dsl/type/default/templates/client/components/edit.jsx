@@ -3,84 +3,81 @@
 {{#with (camel  TYPE.name) as |typeName|}}
 {{#with (snake  TYPE.name) as |type_name|}}
 {{#with (trimto_last TYPE.relPath "/" false) as |MOD_NAME|}}
-
-
-mport React from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import * as RS from 'reactstrap'
 
-import translate from '../../../i18n';
-import { PageLayout } from '../../common/components/web';
-import PostForm from './PostForm';
-import PostComments from '../containers/PostComments';
-import settings from '../../../../../../settings';
+import settings from '../../../../../../../settings';
+import { PageLayout } from '../../../layout/page';
+import translate, { TranslateFunction } from '../../../../i18n';
 
-const onSubmit = (post, editPost) => values => {
-  editPost(post.id, values.title, values.content);
+import {{TypeName}}Form from './form';
+
+const onSubmit = ({{typeName}}, {{typeName}}Update) => values => {
+  console.log("on Submit", {{typeName}}, values)
+  {{typeName}}Update({{typeName}}.id, values);
 };
 
-const PostEditView = ({ loading, post, match, location, subscribeToMore, editPost, t }) => {
-  let postObj = post;
-  // if new post was just added read it from router
-  if (!postObj && location.state) {
-    postObj = location.state.post;
+const {{TypeName}}Edit = ({ loading, {{typeName}}, {{typeName}}Update, currentUser, match, location, t }) => {
+  let {{typeName}}Obj = {{typeName}};
+  if ({{typeName}} && {{typeName}}.{{typeName}}) {
+    {{typeName}} = {{typeName}}.{{typeName}}
+  }
+  console.log("EDIT RENDER", currentUser, {{typeName}}, {{typeName}}Obj);
+  // if new {{typeName}} was just added read it from router
+  if (!{{typeName}}Obj && location.state) {
+    {{typeName}}Obj = location.state.{{typeName}};
   }
 
   const renderMetaData = () => (
     <Helmet
-      title={`${settings.app.name} - ${t('post.title')}`}
+      title={`${settings.app.name} - ${t('{{typeName}}.title')}`}
       meta={[
         {
           name: 'description',
-          content: t('post.meta')
+          content: t('{{typeName}}.meta')
         }
       ]}
     />
   );
 
-  if (loading && !postObj) {
+  if (loading && !{{typeName}}Obj) {
     return (
       <PageLayout>
         {renderMetaData()}
-        <div className="text-center">{t('post.loadMsg')}</div>
+        <div className="text-center">{t('{{typeName}}.loadMsg')}</div>
       </PageLayout>
     );
   } else {
     return (
       <PageLayout>
         {renderMetaData()}
-        <Link id="back-button" to="/posts">
-          {t('post.btn.back')}
+        <Link id="back-button" to={"/{{typeName}}/" + {{typeName}}.id}>
+          {t('{{typeName}}.btn.back')}
         </Link>
         <h2>
-          {t(`post.label.edit`)} {t('post.label.post')}
+          {t(`{{typeName}}.label.edit`)} {t('{{typeName}}.label.{{typeName}}')}
         </h2>
-        <PostForm onSubmit={onSubmit(postObj, editPost)} post={post} />
+        <{{TypeName}}Form onSubmit={onSubmit({{typeName}}, {{typeName}}Update)} {{typeName}}={ {{typeName}} } />
         <br />
-        {postObj && (
-          <PostComments
-            postId={Number(match.params.id)}
-            comments={postObj.comments}
-            subscribeToMore={subscribeToMore}
-          />
-        )}
       </PageLayout>
     );
   }
 };
 
-PostEditView.propTypes = {
+{{TypeName}}Edit.propTypes = {
   loading: PropTypes.bool.isRequired,
-  post: PropTypes.object,
-  editPost: PropTypes.func.isRequired,
+  {{typeName}}: PropTypes.object,
+  {{typeName}}Update: PropTypes.func.isRequired,
   match: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
-  subscribeToMore: PropTypes.func.isRequired,
   t: PropTypes.func
 };
 
-export default translate('post')(PostEditView);
+export default translate('{{MOD_NAME}}')({{TypeName}}Edit);
 
 {{/with}}
 {{/with}}

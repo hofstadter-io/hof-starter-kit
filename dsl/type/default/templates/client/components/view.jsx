@@ -18,11 +18,12 @@ const PageStyled = styled.div`
 {{{file TYPE.pages.view.style}}}
 `
 
-const {{TypeName}}View = ({ loading, {{typeName}}, match, location, t }) => {
+const {{TypeName}}View = ({ loading, {{typeName}}, {{typeName}}Delete, currentUser, match, location, t }) => {
   let {{typeName}}Obj = {{typeName}};
   if ({{typeName}} && {{typeName}}.{{typeName}}) {
     {{typeName}} = {{typeName}}.{{typeName}}
   }
+  console.log("RENDER", currentUser, {{typeName}}, {{typeName}}Obj);
   // if new {{typeName}} was just added read it from router
   if (!{{typeName}}Obj && location.state) {
     {{typeName}}Obj = location.state.{{typeName}};
@@ -45,7 +46,9 @@ const {{TypeName}}View = ({ loading, {{typeName}}, match, location, t }) => {
   }
 
   if (loading && !{{typeName}}Obj) {
-    console.log("{{typeName}} RENDER", loading, {{typeName}}, {{typeName}}Obj)
+    console.log("RENDER 2", currentUser, {{typeName}}, {{typeName}}Obj);
+
+    // console.log("{{typeName}} RENDER", loading, {{typeName}}, {{typeName}}Obj)
     return (
       <PageLayout>
         {renderMetaData()}
@@ -57,7 +60,7 @@ const {{TypeName}}View = ({ loading, {{typeName}}, match, location, t }) => {
       </PageLayout>
     );
   } else {
-    console.log("{{typeName}} RENDER", loading, {{typeName}}, {{typeName}}Obj)
+    // console.log("{{typeName}} RENDER", loading, {{typeName}}, {{typeName}}Obj)
     return (
       <PageLayout>
         {renderMetaData()}
@@ -79,8 +82,7 @@ const {{TypeName}}View = ({ loading, {{typeName}}, match, location, t }) => {
               {t(`{{typeName}}.label.view`)} {t('{{typeName}}.label.{{typeName}}')}
             </h2>
 
-            <h1>{ {{typeName}}.title }</h1>
-            <pre>{ {{typeName}}.content }</pre>
+            <pre>{ JSON.stringify({{typeName}}) }</pre>
 
             {{/if}}
 

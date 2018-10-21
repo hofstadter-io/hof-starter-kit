@@ -12,13 +12,16 @@ obj.Mutation.{{typeName}}Update = authSwitch([
       try {
         const e = new FieldError();
         var id = args.id;
+        args.values.updatedAt = new Date();
         var {{typeName}} = args.values;
-        args.user_id = context.user.id;
+        var user_id = context.user.id;
         console.log('updating {{typeName}}:', args);
 
         // TODO validate...
 
-        var ret = await context.{{TypeName}}.updateFor(id, {{typeName}});
+        var ret = await context.{{TypeName}}.updateFor({ id, user_id }, {{typeName}});
+        console.log("UPDATE ret", ret);
+
         if (ret) {
           var result = await context.{{TypeName}}.get({
             id
@@ -34,7 +37,6 @@ obj.Mutation.{{typeName}}Update = authSwitch([
             }]
           };
         }
-        console.log("UPDATE ret", ret);
 
       } catch (e) {
         return {

@@ -1,0 +1,22 @@
+name: "default"
+template-configs:
+
+  - name: once-files
+    field: "."
+
+    templates:
+
+      - in: sdk/js/index.js
+        out: "packages/client/src/{{relPath}}/{{kebab name}}/sdk/index.js"
+
+      - in: sdk/js/view.js
+        out: "packages/client/src/{{relPath}}/{{kebab name}}/sdk/view.js"
+      - in: sdk/js/list.js
+        out: "packages/client/src/{{relPath}}/{{kebab name}}/sdk/list.js"
+      - in: sdk/js/create.js
+        out: "packages/client/src/{{relPath}}/{{kebab name}}/sdk/create.js"
+      - in: sdk/js/update.js
+        out: "packages/client/src/{{relPath}}/{{kebab name}}/sdk/update.js"
+      - in: sdk/js/delete.js
+        out: "packages/client/src/{{relPath}}/{{kebab name}}/sdk/delete.js"
+
