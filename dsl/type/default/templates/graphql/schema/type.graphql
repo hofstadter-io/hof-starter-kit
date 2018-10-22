@@ -34,6 +34,11 @@ type {{camelT TYPE.name}} {
   {{camel RELATION.name}}: [{{camelT REL_TYPE.name}}]
   {{else if (eq RELATION.relation "many-to-many")}}
   {{camel RELATION.name}}: [{{camelT REL_TYPE.name}}]
+  {{else if (eq RELATION.relation "belongs-to-one")}}
+  {{camel REL_TYPE.name}}Id: String
+  {{camel REL_TYPE.name}}: {{camelT REL_TYPE.name}}
+  {{else if (eq RELATION.relation "belongs-to-many")}}
+  {{camel RELATION.name}}: [{{camelT REL_TYPE.name}}]
   {{/if}}
   {{/with}}{{/gettype}}
   {{/each}}

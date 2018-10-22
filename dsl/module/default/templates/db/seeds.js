@@ -66,7 +66,7 @@ export default async function seed(knex, Promise) {
         {{#if REL_TYPE.owned}}
         var oid = await knex('user')
           .where({
-            username: data['{{#if REL_TYPE.owned.name}}{{camel REL_TYPE.owned.name}}{{else}}owner{{/if}}']
+            username: rel['{{#if REL_TYPE.owned.name}}{{camel REL_TYPE.owned.name}}{{else}}owner{{/if}}']
           })
           .first('id')
           .then(row => row.id)

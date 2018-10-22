@@ -51,6 +51,7 @@ obj.Mutation.{{typeName}}Update = authSwitch([
   },
   {{/if}}
 
+  {{#if AUTH.update}}
   // non-owner update
   {
     requiredScopes: [
@@ -70,7 +71,8 @@ obj.Mutation.{{typeName}}Update = authSwitch([
       }
 
     }
-  }
+  },
+  {{/if}}
 
 ], {
   validator: 'wildcard-i-love-trump'
