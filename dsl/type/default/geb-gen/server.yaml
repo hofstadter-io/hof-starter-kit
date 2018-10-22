@@ -5,6 +5,19 @@ template-configs:
     field: "."
 
     templates:
-      - in: server/resolvers/type.js
-        out: "packages/server/src/{{relPath}}/server/resolvers/{{kebab name}}.js"
+
+      - in: server/resolvers/index.js
+        out: "packages/server/src/{{relPath}}/resolvers/{{kebab name}}/index.js"
+
+      - in: server/resolvers/self.js
+        out: "packages/server/src/{{relPath}}/resolvers/{{kebab name}}/self.js"
+      - in: server/resolvers/queries.js
+        out: "packages/server/src/{{relPath}}/resolvers/{{kebab name}}/queries.js"
+      - in: server/resolvers/mutations.js
+        out: "packages/server/src/{{relPath}}/resolvers/{{kebab name}}/mutations.js"
+
+      - in: server/resolvers/owned.js
+        out: "packages/server/src/{{relPath}}/resolvers/{{kebab name}}/owned.js"
+      - in: server/resolvers/relations.js
+        out: "packages/server/src/{{relPath}}/resolvers/{{kebab name}}/relations.js"
 

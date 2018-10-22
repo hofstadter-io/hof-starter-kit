@@ -1,10 +1,10 @@
 {{#with DslContext as |MODULE|}}
 // {{MODULE.name}}
 {{/with}}
-import ServerModule from "../../ServerModule";
+import ServerModule from "../ServerModule";
 
-import Lib from '../db/lib';
-import schema from '../graphql/schema';
+import Lib from './db/lib';
+import schema from './graphql/schema';
 import createResolvers from './resolvers';
 // import resources from './locales';
 

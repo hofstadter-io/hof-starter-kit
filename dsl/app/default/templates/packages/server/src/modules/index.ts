@@ -4,7 +4,7 @@ import i18n from './i18n';
 import user from './user';
 
 {{#each DslContext.modules as |MOD| ~}}
-import {{camel MOD}} from './{{kebab MOD}}/server';
+import {{camel MOD}} from './{{kebab MOD}}';
 {{/each}}
 
 import contact from './contact';

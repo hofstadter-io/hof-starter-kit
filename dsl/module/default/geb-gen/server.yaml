@@ -6,7 +6,7 @@ template-configs:
 
     templates:
       - in: server/index.js
-        out: "packages/server/src/modules/{{name}}/server/index.js"
+        out: "packages/server/src/modules/{{name}}/index.js"
 
       - in: db/migrations.js
         out: "packages/server/src/modules/{{kebab name}}/db/migrations.js"
@@ -19,7 +19,7 @@ template-configs:
         out: "packages/server/src/modules/{{kebab name}}/graphql/schema/index.js"
 
       - in: server/resolvers/index.js
-        out: "packages/server/src/modules/{{name}}/server/resolvers/index.js"
+        out: "packages/server/src/modules/{{name}}/resolvers/index.js"
 
       - in: client/locales/index.js
         out: packages/server/src/modules/{{name}}/locales/index.js

@@ -64,6 +64,4 @@ if (module.hot) {
   module.hot.accept(['./middleware/website']);
 }
 
-console.log(app._router.stack)
-
 export default app;

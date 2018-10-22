@@ -3,7 +3,6 @@
 {{#with (camel  TYPE.name) as |typeName|}}
 {{#with (snake  TYPE.name) as |type_name|}}
 {{#with (trimto_last TYPE.relPath "/" false) as |MOD_NAME|}}
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { compose } from 'react-apollo';
