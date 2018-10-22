@@ -10,6 +10,14 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import * as RS from 'reactstrap'
 
+{{#each TYPE.pages.list.imports as |IMPORT|}}
+import {{#if IMPORT.default}}{{IMPORT.default}}{{/if ~}}
+{{#if IMPORT.nested ~}}
+{{#if IMPORT.default}}, {{/if ~}}
+{ {{#each IMPORT.nested}}{{.}}{{#unless @last}}, {{/unless}}{{/each}} } from '{{IMPORT.library}}';
+{{/if}}
+{{/each}}
+
 // TODO Custom Imports
 import { format, distanceInWords, formatRelative, subDays  } from 'date-fns'
 

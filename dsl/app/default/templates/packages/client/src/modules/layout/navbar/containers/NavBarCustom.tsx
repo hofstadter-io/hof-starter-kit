@@ -1,17 +1,43 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { NavLink } from 'react-router-dom';
-import { Container, Navbar, Nav, NavItem } from 'reactstrap';
+import styled from 'styled-components';
 
+import { NavLink, withRouter } from 'react-router-dom';
+import * from 'reactstrap';
+
+import i18n from 'i18next';
+import { LanguagePicker } from '../../../../modules/common/components/web';
 import translate from '../../../../i18n';
-import modules from '../../../../modules';
-import settings from '../../../../../../../settings';
 
 import { IfLoggedIn, IfNofLoggedIn } from '../../../user';
 
 const NavBarStyled = styled.div`
 {{{file DslContext.layout.navbar.style}}}
 `
+
+const ProfileName = withLoadedUser(
+  ({ currentUser }) => (currentUser ? currentUser.fullName || currentUser.username : null)
+);
+
+const LogoutLink = translate('navbar')(
+  withRouter(
+    withLogout(({ logout, history, t }) => (
+      <a
+        href="javascript:void(0)"
+        onClick={e => {
+          e.preventDefault();
+          (async () => {
+            await logout();
+            history.push('/');
+          })();
+        }}
+        className="nav-link"
+      >
+      {t('logout')}
+      </a>
+    ))
+  )
+);
 
 class NavBar extends React.Component {
   public static propTypes = {

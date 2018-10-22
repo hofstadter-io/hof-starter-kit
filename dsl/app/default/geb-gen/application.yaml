@@ -5,20 +5,22 @@ template-configs:
   - name: once-files
     templates:
 
+    # Top-level
     - in: package.json
       out: package.json
 
+    # Client
     - in: packages/client/.spinrc.js
       out: packages/client/.spinrc.js
-    - in: packages/server/.spinrc.js
-      out: packages/server/.spinrc.js
-
-
-    - in: packages/server/src/app.js
-      out: packages/server/src/app.js
-
-
+    - in: packages/client/package.json
+      out: packages/client/package.json
     - in: packages/client/src/modules/index.js
       out: packages/client/src/modules/index.js
+
+    # Server
+    - in: packages/server/.spinrc.js
+      out: packages/server/.spinrc.js
+    - in: packages/server/src/app.js
+      out: packages/server/src/app.js
     - in: packages/server/src/modules/index.ts
       out: packages/server/src/modules/index.ts

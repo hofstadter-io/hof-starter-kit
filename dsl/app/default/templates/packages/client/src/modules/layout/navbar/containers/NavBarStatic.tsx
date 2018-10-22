@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { NavLink, withRouter } from 'react-router-dom';
-import { Container, Navbar, Nav, NavItem } from 'reactstrap';
+import { Container, Button, Navbar, Nav, NavItem } from 'reactstrap';
+
+import { FontAwesomeIcon  } from '@fortawesome/react-fontawesome';
 
 import i18n from 'i18next';
 import { LanguagePicker } from '../../../../modules/common/components/web';
 
 import translate from '../../../../i18n';
-import modules from '../../../../modules';
-import settings from '../../../../../../../settings';
 
 import { IfLoggedIn, IfNotLoggedIn, withLoadedUser, withLogout } from '../../../user/containers/Auth';
 
@@ -54,13 +54,14 @@ class NavBar extends React.Component {
           <Navbar>
             {{#with DslContext.layout.navbar as |NAVBAR|}}
             <Nav>
+              {{#if DslContext.layout.drawer.enabled}}
+              <FontAwesomeIcon icon={['fas', 'bars']} size="lg" style={ {marginTop: '.25em', marginRight: '1em'} }/>
+              {{/if}}
               <NavLink to="/" className="navbar-brand" id="brand-logo">
                 {{#if (eq NAVBAR.logo.type "image")}}
                 <img src="{{{NAVBAR.logo.source}}}" />
-                {{else if (eq NAVBAR.logo.type "text")}}
-                {{NAVBAR.logo.value}}
                 {{else}}
-                {settings.app.name}
+                {{NAVBAR.logo.value}}
                 {{/if}}
               </NavLink>
 

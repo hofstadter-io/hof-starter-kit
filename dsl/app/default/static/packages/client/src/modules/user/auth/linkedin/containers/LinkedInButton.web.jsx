@@ -1,7 +1,6 @@
 import React from 'react';
 import { withApollo } from 'react-apollo';
-import faLinkedInSquare from '@fortawesome/fontawesome-free-brands/faLinkedin';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button } from '../../../../common/components/web';
 import access from '../../../access';
 import './LinkedInButton.css';
@@ -14,7 +13,7 @@ const LinkedInButton = withApollo(({ client, text }) => {
   return (
     <Button type="button" size="lg" onClick={() => access.doLogin(client).then(linkedInLogin)} className="linkedInBtn">
       <div className="iconContainer">
-        <FontAwesomeIcon icon={faLinkedInSquare} className="linkedInIcon" />
+        <FontAwesomeIcon icon={['fab', 'linkedin']} className="linkedInIcon" />
         <div className="separator" />
       </div>
       <div className="btnText">
@@ -35,7 +34,7 @@ const LinkedInLink = withApollo(({ client, text }) => {
 const LinkedInIcon = withApollo(({ client }) => {
   return (
     <FontAwesomeIcon
-      icon={faLinkedInSquare}
+      icon={['fab', 'linkedin']}
       style={{ marginTop: 10, color: '#3B5998', fontSize: 40 }}
       onClick={() => access.doLogin(client).then(linkedInLogin)}
     />

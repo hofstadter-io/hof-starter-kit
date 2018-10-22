@@ -1,7 +1,6 @@
 import React from 'react';
 import { withApollo } from 'react-apollo';
-import faGooglePlusSquare from '@fortawesome/fontawesome-free-brands/faGooglePlusSquare';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button } from '../../../../common/components/web';
 import access from '../../../access';
 import './GoogleButton.css';
@@ -14,7 +13,7 @@ const GoogleButton = withApollo(({ client, text }) => {
   return (
     <Button type="button" size="lg" onClick={() => access.doLogin(client).then(googleLogin)} className="googleBtn">
       <div className="iconContainer">
-        <FontAwesomeIcon icon={faGooglePlusSquare} className="googleIcon" />
+        <FontAwesomeIcon icon={['fab', 'google']} className="googleIcon" />
         <div className="separator" />
       </div>
       <div className="btnText">
@@ -35,7 +34,7 @@ const GoogleLink = withApollo(({ client, text }) => {
 const GoogleIcon = withApollo(({ client }) => {
   return (
     <FontAwesomeIcon
-      icon={faGooglePlusSquare}
+      icon={['fab', 'google']}
       style={{ marginTop: 10, color: '#c43832', fontSize: 40 }}
       onClick={() => access.doLogin(client).then(googleLogin)}
     />

@@ -9,6 +9,13 @@ import settings from '../../../../../../../settings';
 import { PageLayout } from '../../../layout/page';
 import translate, { TranslateFunction } from '../../../../i18n';
 
+{{#each PAGE.imports as |IMPORT|}}
+import {{#if IMPORT.default}}{{IMPORT.default}}{{/if ~}}
+{{#if IMPORT.nested ~}}
+{{#if IMPORT.default}}, {{/if ~}}
+  { {{#each IMPORT.nested}}{{.}}{{#unless @last}}, {{/unless}}{{/each}} }{{/if}} from '{{IMPORT.library}}';
+{{/each}}
+
 const PageStyled = styled.div`
 {{{file PAGE.style}}}
 `
