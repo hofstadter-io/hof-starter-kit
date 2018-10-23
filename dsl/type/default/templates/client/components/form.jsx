@@ -33,20 +33,16 @@ const validate = values => validateForm(values, {{typeName}}FormSchema);
 
 const {{TypeName}}Form = ({ values, handleSubmit, submitting, t }) => {
   return (
+    {{#if TYPE.pages.form.custom}}
+      {{{file TYPE.pages.form.file}}}
+    {{else}}
     <Form name="{{typeName}}" onSubmit={handleSubmit}>
-    {{#each TYPE.fields as |FIELD|}}
-      <Field
-        name="{{camel FIELD.name}}"
-        component={RenderField}
-        type="text"
-        label={t('{{typeName}}.field.{{camel FIELD.name}}')}
-        value={ values.{{FIELD.name}} }
-      />
-    {{/each}}
+      {{> client/components/form-fields.js}}
       <Button color="primary" type="submit" disabled={submitting}>
         {t('{{typeName}}.btn.submit')}
       </Button>
     </Form>
+    {{/if}}
   );
 };
 

@@ -4,7 +4,7 @@ import ClientModule from '../../ClientModule';
 {{#if DslContext.layout.navbar.custom}}
 import NavBar from './containers/NavBarCustom';
 {{else}}
-import NavBar from './containers/NavBarStatic';
+import NavBar from './containers/NavBarDefault';
 {{/if}}
 
 export default new ClientModule({

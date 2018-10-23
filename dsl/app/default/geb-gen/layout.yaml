@@ -13,17 +13,17 @@ template-configs:
 
     - in: packages/client/src/modules/layout/page/index.tsx
       out: packages/client/src/modules/layout/page/index.tsx
-    - in: packages/client/src/modules/layout/page/containers/PageLayoutModules.tsx
-      out: packages/client/src/modules/layout/page/containers/PageLayoutModules.tsx
-    - in: packages/client/src/modules/layout/page/containers/PageLayoutStatic.tsx
-      out: packages/client/src/modules/layout/page/containers/PageLayoutStatic.tsx
+    - in: packages/client/src/modules/layout/page/containers/PageLayoutDefault.tsx
+      out: packages/client/src/modules/layout/page/containers/PageLayoutDefault.tsx
+    - in: packages/client/src/modules/layout/page/containers/PageLayoutCustom.tsx
+      out: packages/client/src/modules/layout/page/containers/PageLayoutCustom.tsx
 
     - in: packages/client/src/modules/layout/navbar/index.tsx
       out: packages/client/src/modules/layout/navbar/index.tsx
-    - in: packages/client/src/modules/layout/navbar/containers/NavBarModules.tsx
-      out: packages/client/src/modules/layout/navbar/containers/NavBarModules.tsx
-    - in: packages/client/src/modules/layout/navbar/containers/NavBarStatic.tsx
-      out: packages/client/src/modules/layout/navbar/containers/NavBarStatic.tsx
+    - in: packages/client/src/modules/layout/navbar/containers/NavBarDefault.tsx
+      out: packages/client/src/modules/layout/navbar/containers/NavBarDefault.tsx
+    - in: packages/client/src/modules/layout/navbar/containers/NavBarCustom.tsx
+      out: packages/client/src/modules/layout/navbar/containers/NavBarCustom.tsx
 
     - in: packages/client/src/modules/layout/footer/index.tsx
       out: packages/client/src/modules/layout/footer/index.tsx
