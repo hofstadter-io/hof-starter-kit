@@ -20,6 +20,8 @@ template-configs:
     # Server
     - in: packages/server/.spinrc.js
       out: packages/server/.spinrc.js
+    - in: packages/server/.env
+      out: packages/server/.env
     - in: packages/server/src/app.js
       out: packages/server/src/app.js
     - in: packages/server/src/modules/index.ts
