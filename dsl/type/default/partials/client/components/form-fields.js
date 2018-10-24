@@ -26,3 +26,22 @@
 />
 {{/each}}
 
+{{#if TYPE.visibility.enabled}}
+{{#if TYPE.visibility.public}}
+<Field
+  name="{{TYPE.visibility.public}}"
+  component={RenderCheckBox}
+  type="checkbox"
+  label={t('{{typeName}}.field.{{TYPE.visibility.public}}')}
+  checked={ values.{{TYPE.visibility.public}} }
+/>
+{{else}}
+<Field
+  name="isPublic"
+  component={RenderCheckBox}
+  type="checkbox"
+  label={t('{{typeName}}.field.isPublic')}
+  checked={ values.isPublic }
+/>
+{{/if}}
+{{/if}}

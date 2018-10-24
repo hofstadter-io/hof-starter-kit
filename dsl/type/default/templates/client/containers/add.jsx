@@ -21,7 +21,6 @@ class {{TypeName}}Add extends React.Component {
   }
 
   render() {
-    console.log("{{typeName}} Container CREATE RENDER", this.props)
     return <{{TypeName}}AddC {...this.props} />;
   }
 }

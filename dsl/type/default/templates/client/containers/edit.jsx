@@ -98,7 +98,6 @@ class {{TypeName}}Edit extends React.Component {
   */
 
   render() {
-    console.log("{{typeName}} Container EDIT RENDER", this.props)
     return <{{TypeName}}EditC {...this.props} />;
   }
 }

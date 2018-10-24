@@ -17,7 +17,6 @@ import translate, { TranslateFunction } from '../../../../i18n';
 import {{TypeName}}Form from './form';
 
 const onSubmit = ({{typeName}}, {{typeName}}Update) => values => {
-  console.log("on Submit", {{typeName}}, values)
   {{typeName}}Update({{typeName}}.id, values);
 };
 
@@ -26,7 +25,6 @@ const {{TypeName}}Edit = ({ loading, {{typeName}}, {{typeName}}Update, currentUs
   if ({{typeName}} && {{typeName}}.{{typeName}}) {
     {{typeName}} = {{typeName}}.{{typeName}}
   }
-  console.log("EDIT RENDER", currentUser, {{typeName}}, {{typeName}}Obj);
   // if new {{typeName}} was just added read it from router
   if (!{{typeName}}Obj && location.state) {
     {{typeName}}Obj = location.state.{{typeName}};

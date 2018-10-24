@@ -118,6 +118,14 @@ input {{camelT TYPE.name}}CreateInput {
   {{#each TYPE.fields as |Field| ~}}
 {{!}}  {{> graphql/schema/field-def.graphql Field=Field ~}}
   {{/each}}
+
+  {{#if TYPE.visibility.enabled}}
+  {{#if TYPE.visibility.public}}
+  {{camel TYPE.visibility.public}}: Boolean
+  {{else}}
+  isPublic: Boolean
+  {{/if}}
+  {{/if}}
 }
 
 input {{camelT TYPE.name}}UpdateInput {
@@ -125,6 +133,14 @@ input {{camelT TYPE.name}}UpdateInput {
   {{#each TYPE.fields as |Field| ~}}
 {{!}}  {{> graphql/schema/field-def.graphql Field=Field ~}}
   {{/each}}
+
+  {{#if TYPE.visibility.enabled}}
+  {{#if TYPE.visibility.public}}
+  {{camel TYPE.visibility.public}}: Boolean
+  {{else}}
+  isPublic: Boolean
+  {{/if}}
+  {{/if}}
 }
 
 type {{camelT TYPE.name}}MutationPayload {

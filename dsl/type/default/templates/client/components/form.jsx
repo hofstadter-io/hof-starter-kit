@@ -16,7 +16,7 @@ import translate, { TranslateFunction } from '../../../../i18n';
 
 import { withFormik  } from 'formik';
 import Field from '../../../../utils/FieldAdapter';
-import { Form, RenderField, Button } from '../../../common/components/web';
+import { Form, RenderField, RenderSelect, RenderCheckBox, Button } from '../../../common/components/web';
 import { required, validateForm } from '../../../../../../common/validation';
 
 const PageStyled = styled.div`
@@ -25,13 +25,21 @@ const PageStyled = styled.div`
 
 const {{typeName}}FormSchema = {
 {{#each TYPE.fields as |FIELD|}}
-  {{camel FIELD.name}}: [required]{{#unless @last}},{{/unless}}
+  {{camel FIELD.name}}: [required],
 {{/each}}
+  {{#if TYPE.visibility.enabled}}
+  {{#if TYPE.visibility.public}}
+  {{TYPE.visibility.public}}: [],
+  {{else}}
+  isPublic: [],
+  {{/if}}
+  {{/if}}
 };
 
 const validate = values => validateForm(values, {{typeName}}FormSchema);
 
 const {{TypeName}}Form = ({ values, handleSubmit, submitting, t }) => {
+  console.log("FORM VALUES", values)
   return (
     {{#if TYPE.pages.form.custom}}
       {{{file TYPE.pages.form.file}}}
@@ -56,11 +64,23 @@ const {{TypeName}}Form = ({ values, handleSubmit, submitting, t }) => {
 };
 
 const {{TypeName}}FormWithFormik = withFormik({
-  mapPropsToValues: props => ({
-    {{#each TYPE.fields as |FIELD|}}
-    {{camel FIELD.name}}: props.{{typeName}} && props.{{typeName}}.{{camel FIELD.name}},
-    {{/each}}
-  }),
+  mapPropsToValues: props => {
+    console.log("PROPS", props.{{typeName}})
+    return {
+      {{#each TYPE.fields as |FIELD|}}
+      {{camel FIELD.name}}: props.{{typeName}} && props.{{typeName}}.{{camel FIELD.name}},
+      {{/each}}
+
+      {{#if TYPE.visibility.enabled}}
+      {{#if TYPE.visibility.public}}
+      {{TYPE.visibility.public}}: props.{{typeName}} && props.{{typeName}}.{{TYPE.visibility.public}},
+      {{else}}
+      isPublic: props.{{typeName}} && props.{{typeName}}.isPublic,
+      {{/if}}
+      {{/if}}
+    }
+
+  },
   validate: values => validate(values),
   handleSubmit(
     values,

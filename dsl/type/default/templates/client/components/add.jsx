@@ -17,7 +17,6 @@ import translate, { TranslateFunction } from '../../../../i18n';
 import {{TypeName}}Form from './form';
 
 const onSubmit = ({{typeName}}Create) => values => {
-  console.log("create - on Submit", {{typeName}}, values)
   {{typeName}}Create(values);
 };
 
@@ -26,7 +25,6 @@ const {{TypeName}}Create = ({ loading, {{typeName}}, {{typeName}}Create, current
   if ({{typeName}} && {{typeName}}.{{typeName}}) {
     {{typeName}} = {{typeName}}.{{typeName}}
   }
-  console.log("Create RENDER", currentUser, {{typeName}}, {{typeName}}Obj);
   // if new {{typeName}} was just added read it from router
   if (!{{typeName}}Obj && location.state) {
     {{typeName}}Obj = location.state.{{typeName}};
