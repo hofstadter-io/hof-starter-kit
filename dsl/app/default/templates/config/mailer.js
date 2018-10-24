@@ -4,7 +4,7 @@ export default {
   host: process.env.EMAIL_HOST,
   port: process.env.EMAIL_PORT,
   auth: {
-    user: {{DslContext.secrets.mailgun.domain}},
-    pass: {{DslContext.secrets.mailgun.apikey}}
+    user: "{{DslContext.secrets.mailgun.domain}}",
+    pass: "{{DslContext.secrets.mailgun.apikey}}"
   }
 };
