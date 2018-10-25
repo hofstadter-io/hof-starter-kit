@@ -39,7 +39,6 @@ const {{typeName}}FormSchema = {
 const validate = values => validateForm(values, {{typeName}}FormSchema);
 
 const {{TypeName}}Form = ({ values, handleSubmit, submitting, t }) => {
-  console.log("FORM VALUES", values)
   return (
     {{#if TYPE.pages.form.custom}}
       {{{file TYPE.pages.form.file}}}
@@ -65,7 +64,6 @@ const {{TypeName}}Form = ({ values, handleSubmit, submitting, t }) => {
 
 const {{TypeName}}FormWithFormik = withFormik({
   mapPropsToValues: props => {
-    console.log("PROPS", props.{{typeName}})
     return {
       {{#each TYPE.fields as |FIELD|}}
       {{camel FIELD.name}}: props.{{typeName}} && props.{{typeName}}.{{camel FIELD.name}},
