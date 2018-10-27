@@ -45,3 +45,15 @@ template-configs:
         out: "packages/client/src/{{relPath}}/{{kebab name}}/containers/list.jsx"
       - in: client/containers/view.jsx
         out: "packages/client/src/{{relPath}}/{{kebab name}}/containers/view.jsx"
+
+  - name: custom-components
+    field: components
+    templates:
+
+      - in: client/components/custom.jsx
+        out: "packages/client/src/{{pkg_path}}/{{name}}.jsx"
+      - in: client/containers/custom.jsx
+        out: "packages/client/src/{{pkg_path}}/../containers/{{name}}.jsx"
+
+
+

@@ -14,6 +14,10 @@ import settings from '../../../../../../../settings';
 import { PageLayout } from '../../../layout/page';
 import translate, { TranslateFunction } from '../../../../i18n';
 
+{{#each TYPE.components as |COMPONENT|}}
+import {{COMPONENT.name}} from './{{COMPONENT.name}}';
+{{/each}}
+
 const PageStyled = styled.div`
 {{{file TYPE.pages.view.style}}}
 `
