@@ -1,0 +1,63 @@
+extend type Query {
+
+  {{camel TYPE.name}}({{camel TYPE.name}}Id: String!): {{camelT TYPE.name}}Payload!
+
+  {{camel TYPE.name}}List(
+    options: ListingOptions
+  ): {{camelT TYPE.name}}ListingPayload
+
+  {{camel TYPE.name}}Page(
+    limit: Int
+    after: Int
+  ): {{camelT TYPE.name}}PagingPayload
+
+  {{#if TYPE.search}}
+  {{camel TYPE.name}}Search(
+    searchText: String!
+    page: Int
+    options: ListingOptions
+  ): {{camelT TYPE.name}}SearchPayload
+  {{/if}}
+
+}
+
+type {{camelT TYPE.name}}Payload {
+  {{camel TYPE.name}}: {{camelT TYPE.name}}
+
+  # tokens: Tokens
+  errors: [Error!]
+}
+
+type {{camelT TYPE.name}}ListingPayload {
+  results: [{{TypeName}}]
+  count: Int
+  total: Int
+  errors: [Error!]
+}
+
+type {{TypeName}}Edge {
+  node: {{TypeName}}
+  cursor: Int
+}
+
+type {{TypeName}}PageInfo {
+  endCursor: Int
+  hasNextPage: Boolean
+}
+
+type {{TypeName}}PagingPayload {
+  count: Int
+  edges: [{{TypeName}}Edge]
+  pageInfo: {{TypeName}}PageInfo
+}
+
+{{#if TYPE.search}}
+type {{camelT TYPE.name}}SearchPayload {
+  results: [{{camelT TYPE.name}}]
+  count: Int
+  pages: Int
+  errors: [Error!]
+}
+{{/if}}
+
+

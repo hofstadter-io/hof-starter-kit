@@ -6,17 +6,24 @@ template-configs:
 
     templates:
 
-      - in: sdk/js/index.js
+      - in: client/sdk/index.js
         out: "packages/client/src/{{relPath}}/{{kebab name}}/sdk/index.js"
 
-      - in: sdk/js/view.js
+      - in: client/sdk/view.js
         out: "packages/client/src/{{relPath}}/{{kebab name}}/sdk/view.js"
-      - in: sdk/js/list.js
+      - in: client/sdk/list.js
         out: "packages/client/src/{{relPath}}/{{kebab name}}/sdk/list.js"
-      - in: sdk/js/create.js
+      - in: client/sdk/page.js
+        out: "packages/client/src/{{relPath}}/{{kebab name}}/sdk/page.js"
+
+      - in: client/sdk/create.js
         out: "packages/client/src/{{relPath}}/{{kebab name}}/sdk/create.js"
-      - in: sdk/js/update.js
+      - in: client/sdk/update.js
         out: "packages/client/src/{{relPath}}/{{kebab name}}/sdk/update.js"
-      - in: sdk/js/delete.js
+      - in: client/sdk/delete.js
         out: "packages/client/src/{{relPath}}/{{kebab name}}/sdk/delete.js"
 
+      - in: client/sdk/view-client.js
+        out: "packages/client/src/{{relPath}}/{{kebab name}}/sdk/view-client.js"
+      - in: client/sdk/create-client.js
+        out: "packages/client/src/{{relPath}}/{{kebab name}}/sdk/create-client.js"

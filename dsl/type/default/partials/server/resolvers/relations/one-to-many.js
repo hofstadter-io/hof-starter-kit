@@ -160,6 +160,8 @@ obj.{{TypeName}}.{{camel RELATION.name}} = createBatchResolver(async (sources, a
   console.log("{{TypeName}}.{{camel RELATION.name}} - final", results)
 
   // Return empty when not an array (likely an Authzn Error)
-  return results.map(r => Array.isArray(r) ? r : [])
+  const ret = results.map((r,idx) => Array.isArray(r) ? r : [])
+  console.log("{{TypeName}}.{{camel RELATION.name}} - final", ret)
+  return ret;
 });
 

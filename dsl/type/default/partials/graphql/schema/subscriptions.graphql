@@ -1,0 +1,10 @@
+extend type Subscription {
+  {{typeName}}Notification(id: Int!): {{TypeName}}Notification
+  {{typeName}}sNotification(endCursor: Int!): {{TypeName}}Notification
+}
+
+type {{TypeName}}Notification {
+  mutation: String!
+  id: Int!
+  node: {{TypeName}}
+}

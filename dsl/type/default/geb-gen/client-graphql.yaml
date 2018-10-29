@@ -1,0 +1,36 @@
+name: "default"
+template-configs:
+
+  - name: once-files
+    field: "."
+
+    templates:
+
+      - in: graphql/fragments/type-solo.graphql
+        out: "packages/client/src/{{relPath}}/{{kebab name}}/graphql/fragments/type-solo.graphql"
+      - in: graphql/fragments/type-nested.graphql
+        out: "packages/client/src/{{relPath}}/{{kebab name}}/graphql/fragments/type-nested.graphql"
+
+      - in: graphql/queries/solo.graphql
+        out: "packages/client/src/{{relPath}}/{{kebab name}}/graphql/queries/solo.graphql"
+      - in: graphql/queries/solo-client.graphql
+        out: "packages/client/src/{{relPath}}/{{kebab name}}/graphql/queries/solo-client.graphql"
+      - in: graphql/queries/list.graphql
+        out: "packages/client/src/{{relPath}}/{{kebab name}}/graphql/queries/list.graphql"
+      - in: graphql/queries/page.graphql
+        out: "packages/client/src/{{relPath}}/{{kebab name}}/graphql/queries/page.graphql"
+
+      - in: graphql/mutations/create.graphql
+        out: "packages/client/src/{{relPath}}/{{kebab name}}/graphql/mutations/create.graphql"
+      - in: graphql/mutations/create-client.graphql
+        out: "packages/client/src/{{relPath}}/{{kebab name}}/graphql/mutations/create-client.graphql"
+      - in: graphql/mutations/update.graphql
+        out: "packages/client/src/{{relPath}}/{{kebab name}}/graphql/mutations/update.graphql"
+      - in: graphql/mutations/delete.graphql
+        out: "packages/client/src/{{relPath}}/{{kebab name}}/graphql/mutations/delete.graphql"
+
+      - in: graphql/subscriptions/solo.graphql
+        out: "packages/client/src/{{relPath}}/{{kebab name}}/graphql/subscriptions/solo.graphql"
+      - in: graphql/subscriptions/list.graphql
+        out: "packages/client/src/{{relPath}}/{{kebab name}}/graphql/subscriptions/list.graphql"
+

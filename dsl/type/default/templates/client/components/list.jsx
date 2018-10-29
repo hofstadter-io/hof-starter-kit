@@ -38,33 +38,29 @@ class {{TypeName}}List extends React.PureComponent {
     loading: PropTypes.bool.isRequired,
     {{typeName}}s: PropTypes.array,
     // deletePost: PropTypes.func.isRequired,
-    // loadData: PropTypes.func,
+    loadData: PropTypes.func,
     t: PropTypes.func
   };
 
   handleDeletePost = id => {
-  /*
     const { deletePost } = this.props;
     deletePost(id);
-  */
   };
 
   handlePageChange = (pagination, pageNumber) => {
-  /*
     const {
-      {{typeName}}s: {
+      {{typeName}}Page: {
         pageInfo: { endCursor }
       },
       loadData
     } = this.props;
 
     pagination === 'relay' ? loadData(endCursor + 1, 'add') : loadData((pageNumber - 1) * itemsNumber, 'replace');
-  */
   };
 
   render() {
-    const { loading, {{typeName}}s, t } = this.props;
-    // console.log("LIST RENDER", loading, {{typeName}}s)
+    let { loading, {{typeName}}Page, t } = this.props;
+    console.log("LIST RENDER", loading, {{typeName}}Page)
     const Loading = () => <div className="text-center">{t('{{typeName}}.loadMsg')}</div>;
     const No{{TypeName}}sMessage = () => <div className="text-center">{t('{{typeName}}.no{{TypeName}}sMsg')}</div>;
     const Render{{TypeName}}s = ({ {{typeName}}s }) => (
@@ -85,6 +81,12 @@ class {{TypeName}}List extends React.PureComponent {
         </RS.Container>
       </div>
     );
+
+    /*
+    if ({{typeName}}Page && !{{typeName}}s) {
+      {{typeName}}s = {{typeName}}Page.edges.map(e => e.node);
+    }
+    */
 
     return (
       <PageLayout>
@@ -109,7 +111,7 @@ class {{TypeName}}List extends React.PureComponent {
             <Button color="primary">{t('list.btn.add')}</Button>
           </Link>
           {/* Render loader */}
-          {loading && !{{typeName}}s && <Loading />}
+          {loading && !{{typeName}}Page && <Loading />}
           {/* Render main post content */}
           { {{typeName}}s  ? <Render{{TypeName}}s {{typeName}}s={ {{typeName}}s }/> : <No{{TypeName}}sMessage />}
 

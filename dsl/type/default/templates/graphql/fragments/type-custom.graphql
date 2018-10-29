@@ -1,0 +1,32 @@
+{{#with DslContext as |TYPE|}}
+{{#with (camelT TYPE.name) as |TypeName|}}
+{{#with (camel  TYPE.name) as |typeName|}}
+
+fragment {{TypeName}}Info on {{TypeName}} {
+  id
+
+  createdAt
+  updatedAt
+
+  {{#each TYPE.fields as |FIELD|}}
+  {{camel FIELD.name}}
+  {{/each}}
+
+  {{#if TYPE.visibility}}
+  {{#if TYPE.visibility.public}}{{TYPE.visibility.public}}{{else}}isPublic{{/if}}
+  {{/if}}
+
+  {{#if TYPE.owned}}
+  {{TYPE.owned.name}}Id
+  {{TYPE.owned.name}}{
+    id
+    username
+    email
+  }
+  {{/if}}
+
+}
+
+{{/with}}
+{{/with}}
+{{/with}}

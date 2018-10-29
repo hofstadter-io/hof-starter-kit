@@ -1,154 +1,19 @@
 {{#with DslContext as |TYPE|}}
-type {{camelT TYPE.name}} {
-  createdAt: String
-  updatedAt: String
+{{#with (camelT TYPE.name) as |TypeName|}}
+{{#with (camel  TYPE.name) as |typeName|}}
+{{#with (snake  TYPE.name) as |type_name|}}
 
-  id: ID
-  {{#if TYPE.owned}}
-  {{#if TYPE.owned.name}}
-  {{camel TYPE.owned.name}}Id: ID
-  {{camel TYPE.owned.name}}: User
-  {{else}}
-  userId: ID
-  user: User
-  {{/if}}
-  {{/if}}
+{{> graphql/schema/self.graphql}}
 
-  {{#each TYPE.fields as |Field| ~}}
-{{!}}  {{> graphql/schema/field-def.graphql Field=Field ~}}
-  {{/each}}
+{{> graphql/schema/owned.graphql}}
 
-  {{#if TYPE.visibility.enabled}}
-  {{#if TYPE.visibility.public}}
-  {{camel TYPE.visibility.public}}: Boolean
-  {{else}}
-  isPublic: Boolean
-  {{/if}}
-  {{/if}}
+{{> graphql/schema/queries.graphql}}
 
-  {{#each TYPE.relations as |RELATION|}}
-  {{#gettype RELATION.type true}}{{#with . as |REL_TYPE|}}
-  {{#if (eq RELATION.relation "one-to-one")}}
-  {{camel RELATION.name}}: {{camelT REL_TYPE.name}}
-  {{else if (eq RELATION.relation "one-to-many")}}
-  {{camel RELATION.name}}: [{{camelT REL_TYPE.name}}]
-  {{else if (eq RELATION.relation "many-to-many")}}
-  {{camel RELATION.name}}: [{{camelT REL_TYPE.name}}]
-  {{else if (eq RELATION.relation "belongs-to-one")}}
-  {{camel REL_TYPE.name}}Id: String
-  {{camel REL_TYPE.name}}: {{camelT REL_TYPE.name}}
-  {{else if (eq RELATION.relation "belongs-to-many")}}
-  {{camel RELATION.name}}: [{{camelT REL_TYPE.name}}]
-  {{/if}}
-  {{/with}}{{/gettype}}
-  {{/each}}
-}
+{{> graphql/schema/mutations.graphql}}
 
-{{#if TYPE.owned}}
-extend type User {
-{{#if (eq TYPE.owned.type "has-one")}}
-  {{camel TYPE.name}}: {{camelT TYPE.name}}
-{{else if (eq TYPE.owned.type "has-many")}}
-  {{camel TYPE.name}}s: [{{camelT TYPE.name}}]
-{{/if}}
-}
-{{/if}}
+{{> graphql/schema/subscriptions.graphql}}
 
-extend type Query {
-
-  {{camel TYPE.name}}({{camel TYPE.name}}Id: String!): {{camelT TYPE.name}}Payload!
-
-  {{camel TYPE.name}}List(
-    options: ListingOptions
-  ): {{camelT TYPE.name}}ListingPayload
-
-  {{camel TYPE.name}}Paging(
-    page: Int
-    options: ListingOptions
-  ): {{camelT TYPE.name}}PagingPayload
-
-  {{#if TYPE.search}}
-  {{camel TYPE.name}}Search(
-    searchText: String!
-    page: Int
-    options: ListingOptions
-  ): {{camelT TYPE.name}}SearchPayload
-  {{/if}}
-
-}
-
-type {{camelT TYPE.name}}Payload {
-  {{camel TYPE.name}}: {{camelT TYPE.name}}
-
-  # tokens: Tokens
-  errors: [Error!]
-}
-
-type {{camelT TYPE.name}}ListingPayload {
-  results: [{{camelT TYPE.name}}]
-  count: Int
-  total: Int
-  errors: [Error!]
-}
-
-type {{camelT TYPE.name}}PagingPayload {
-  results: [{{camelT TYPE.name}}]
-  count: Int
-  pages: Int
-  errors: [FieldError!]
-}
-
-{{#if TYPE.search}}
-type {{camelT TYPE.name}}SearchPayload {
-  results: [{{camelT TYPE.name}}]
-  count: Int
-  pages: Int
-  errors: [Error!]
-}
-{{/if}}
-
-extend type Mutation {
-  {{camel TYPE.name}}Create(input: {{camelT TYPE.name}}CreateInput!): {{camelT TYPE.name}}MutationPayload!
-  {{camel TYPE.name}}Update(id: Int!, values: {{camelT TYPE.name}}UpdateInput!): {{camelT TYPE.name}}MutationPayload!
-  {{camel TYPE.name}}Delete(id: Int!): {{camelT TYPE.name}}MutationPayload!
-}
-
-input {{camelT TYPE.name}}CreateInput {
-  # Create fields
-  {{#each TYPE.fields as |Field| ~}}
-{{!}}  {{> graphql/schema/field-def.graphql Field=Field ~}}
-  {{/each}}
-
-  {{#if TYPE.visibility.enabled}}
-  {{#if TYPE.visibility.public}}
-  {{camel TYPE.visibility.public}}: Boolean
-  {{else}}
-  isPublic: Boolean
-  {{/if}}
-  {{/if}}
-}
-
-input {{camelT TYPE.name}}UpdateInput {
-  # Update fields
-  {{#each TYPE.fields as |Field| ~}}
-{{!}}  {{> graphql/schema/field-def.graphql Field=Field ~}}
-  {{/each}}
-
-  {{#if TYPE.visibility.enabled}}
-  {{#if TYPE.visibility.public}}
-  {{camel TYPE.visibility.public}}: Boolean
-  {{else}}
-  isPublic: Boolean
-  {{/if}}
-  {{/if}}
-}
-
-type {{camelT TYPE.name}}MutationPayload {
-  {{camel TYPE.name}}: {{camelT TYPE.name}}
-
-  message: String
-  errors: [FieldError!]
-}
-
-
+{{/with}}
+{{/with}}
+{{/with}}
 {{/with}}

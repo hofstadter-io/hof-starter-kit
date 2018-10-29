@@ -6,20 +6,22 @@ import add{{TypeName}}Resolvers from './self';
 
 import addQueryResolvers from './queries';
 import addMutationResolvers from './mutations';
+import addSubscriptionResolvers from './subscriptions';
 
 import addOwnedResolvers from './owned';
 import addRelationResolvers from './relations';
 
 
-export default function addResolvers(obj) {
+export default function addResolvers(obj, pubsub) {
 
-  obj = add{{TypeName}}Resolvers(obj);
+  obj = add{{TypeName}}Resolvers(obj, pubsub);
 
-  obj = addQueryResolvers(obj);
-  obj = addMutationResolvers(obj);
+  obj = addQueryResolvers(obj, pubsub);
+  obj = addMutationResolvers(obj, pubsub);
+  obj = addSubscriptionResolvers(obj, pubsub);
 
-  obj = addOwnedResolvers(obj);
-  obj = addRelationResolvers(obj);
+  obj = addOwnedResolvers(obj, pubsub);
+  obj = addRelationResolvers(obj, pubsub);
 
   return obj;
 }

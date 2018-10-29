@@ -3,10 +3,12 @@
 import React from 'react';
 import { Route, NavLink } from 'react-router-dom';
 
-import { AuthRoute, IfLoggedIn, IfNotLoggedIn, withLoadedUser  } from '../../user/containers/Auth';
+import { AuthRoute } from '../../user/containers/Auth';
 
 import translate from '../../../i18n';
 import ClientModule from "../../ClientModule";
+
+import resolvers from './resolvers';
 
 import {{camelT TYPE.name}}Create from './containers/add.jsx'
 import {{camelT TYPE.name}}List from './containers/list.jsx'
@@ -19,7 +21,8 @@ export default new ClientModule({
     <AuthRoute exact path="{{TYPE.pages.list.route}}" role={['user', 'admin']} redirect="/login" component={ {{camelT TYPE.name}}List } />,
     <AuthRoute path="{{TYPE.pages.update.route}}" role={['user', 'admin']} redirect="/login" component={ {{camelT TYPE.name}}Edit } />,
     <AuthRoute path="{{TYPE.pages.view.route}}" role={['user', 'admin']} redirect="/login" component={ {{camelT TYPE.name}}View } />,
-  ]
+  ],
+  resolver: [resolvers],
 });
 
 {{/with}}

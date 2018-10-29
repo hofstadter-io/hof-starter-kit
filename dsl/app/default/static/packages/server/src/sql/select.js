@@ -75,17 +75,38 @@ export default function selectAdapter(options) {
         return localBuilder;
       }; // End of makcBuilder(...) def
 
+      const makeCountBuilder = function(args, trx) {
+        let localBuilder = knex.from(opts.table);
+
+        // add join conditions
+        localBuilder = joinBuilder(localBuilder, args);
+
+        // add filter conditions
+        localBuilder = filterBuilder(localBuilder, args);
+
+        // grouping, ordering
+        localBuilder = grouping(localBuilder, args);
+        localBuilder = ordering(localBuilder, args);
+
+        if (trx) {
+          localBuilder.transacting(trx);
+        }
+
+        return localBuilder;
+      }; // End of makcBuilder(...) def
+
       let count = null;
       if (args.count) {
         // are we printing SQL?
         if (args.printSQL) {
-          const sql = await makeBuilder(args, trx).toString();
-          console.log(`${opts.name} - SQL`, sql);
+          const sql = await makeCountBuilder(args, trx).count(args.count).groupBy(opts.idField).toString();
+          console.log(`${opts.name} - count - SQL`, sql);
         }
 
-        let outerBuilderA = makeBuilder(args, trx).count(args.count);
+        let outerBuilderA = makeCountBuilder(args, trx).count(args.count).groupBy(opts.idField);
 
         const countRes = await outerBuilderA;
+        console.log("select count - result", countRes)
         const cnt = countRes[0]['count(`' + opts.idField + '`)'];
         if (args.onlyCount) {
           return cnt;
@@ -93,16 +114,21 @@ export default function selectAdapter(options) {
         count = cnt;
       }
       if (args.countDistinct) {
+
         // are we printing SQL?
         if (args.printSQL) {
-          const sql = await makeBuilder(args, trx).toString();
-          console.log(`${opts.name} - SQL`, sql);
+          console.log(`${opts.name} - countDistinct - SQL`, 'pre');
+          const sql = await makeCountBuilder(args, trx).countDistinct(args.countDistinct).toString();
+          console.log(`${opts.name} - countDistinct - SQL`, sql);
         }
 
-        let outerBuilderB = makeBuilder(args, trx).countDistinct(args.countDistinct);
+        let outerBuilderB = makeCountBuilder(args, trx).countDistinct(args.countDistinct);
 
         const countRes = await outerBuilderB;
-        const cnt = countRes[0]['count(`' + opts.idField + '`)'];
+        console.log("select countDistinct - result", countRes)
+        const cnt = countRes[0]['count'];
+        // const cnt = countRes[0]['count(`' + opts.idField + '`)'];
+        console.log("cnt: ", cnt)
         if (args.onlyCount) {
           return cnt;
         }

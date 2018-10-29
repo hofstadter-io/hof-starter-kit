@@ -1,0 +1,10 @@
+{{#if TYPE.owned}}
+extend type User {
+{{#if (eq TYPE.owned.type "has-one")}}
+  {{camel TYPE.name}}: {{camelT TYPE.name}}
+{{else if (eq TYPE.owned.type "has-many")}}
+  {{camel TYPE.name}}s: [{{camelT TYPE.name}}]
+{{/if}}
+}
+{{/if}}
+

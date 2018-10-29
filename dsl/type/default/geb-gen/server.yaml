@@ -15,6 +15,8 @@ template-configs:
         out: "packages/server/src/{{relPath}}/resolvers/{{kebab name}}/queries.js"
       - in: server/resolvers/mutations.js
         out: "packages/server/src/{{relPath}}/resolvers/{{kebab name}}/mutations.js"
+      - in: server/resolvers/subscriptions.js
+        out: "packages/server/src/{{relPath}}/resolvers/{{kebab name}}/subscriptions.js"
 
       - in: server/resolvers/owned.js
         out: "packages/server/src/{{relPath}}/resolvers/{{kebab name}}/owned.js"

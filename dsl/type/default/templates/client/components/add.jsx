@@ -12,7 +12,12 @@ import * as RS from 'reactstrap'
 
 import settings from '../../../../../../../settings';
 import { PageLayout } from '../../../layout/page';
+import { Pagination } from '../../../common/components/web';
 import translate, { TranslateFunction } from '../../../../i18n';
+
+import paginationConfig from '../../../../../../../config/pagination';
+
+const { itemsNumber, type  } = paginationConfig.web;
 
 import {{TypeName}}Form from './form';
 
@@ -67,7 +72,6 @@ const {{TypeName}}Create = ({ loading, {{typeName}}, {{typeName}}Create, current
 };
 
 {{TypeName}}Create.propTypes = {
-  loading: PropTypes.bool.isRequired,
   {{typeName}}: PropTypes.object,
   {{typeName}}Create: PropTypes.func.isRequired,
   match: PropTypes.object.isRequired,

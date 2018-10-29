@@ -30,10 +30,10 @@ export default {
   select: selectAdapter({ table: '{{snake TYPE.name}}' }),
   get: getAdapter({ table: '{{snake TYPE.name}}', idField: 'id' }),
   getMany: listAdapter({ table: '{{snake TYPE.name}}', idField: 'id' }),
-  paging: pagingAdapter({ table: '{{snake TYPE.name}}', idField: 'id' }),
+  paging: pagingAdapter({ table: '{{snake TYPE.name}}', idField: 'id', printSQL: true}),
 
   {{#if TYPE.owned}}
-  createFor: createWithIdAdapter({ table: '{{snake TYPE.name}}', idField: 'user_id' }),
+  createFor: createWithoutIdAdapter({ table: '{{snake TYPE.name}}', idField: 'id' }),
   updateFor: updateMultiConditionAdapter({
     table: '{{snake TYPE.name}}',
     idField: 'id',

@@ -1,0 +1,23 @@
+{{#with DslContext as |TYPE|}}
+{{#with (camelT TYPE.name) as |TypeName|}}
+{{#with (camel  TYPE.name) as |typeName|}}
+#import "../fragments/type-nested.graphql"
+
+query {{typeName}}Page($limit: Int!, $after: Int) {
+  {{typeName}}Page(limit: $limit, after: $after) {
+    count
+    edges {
+      cursor
+      node {
+        ...{{TypeName}}InfoNested
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+  }
+}
+{{/with}}
+{{/with}}
+{{/with}}

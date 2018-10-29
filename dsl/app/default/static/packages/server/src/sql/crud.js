@@ -193,15 +193,22 @@ export function pagingAdapter(options) {
     valueExtractor: args => args.ids
   });
 
-  options.count = options.idField;
+  options.countDistinct = options.idField;
+  // options.count = '*';
+  // options.count = options.idField;
+  // options.countDistinct = options.idField;
+  // options.countDistinct = options.table + "." + options.idField + " as count";
   options.withCount = true;
 
   const selector = selectAdapter(options);
 
   return async function(args, trx) {
+    console.log("paging adapter", args, options)
     try {
       let ret = await selector(args, trx);
       ret.rows = camelizeKeys(ret.rows);
+
+      console.log("paging adapter - ret", ret)
 
       return {
         results: ret.rows,

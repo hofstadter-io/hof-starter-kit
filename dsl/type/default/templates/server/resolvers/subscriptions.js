@@ -12,14 +12,14 @@ import FieldError from '../../../../../../common/FieldError';
 
 export default function addResolvers(obj, pubsub) {
 
-  obj = add{{TypeName}}MutationResolvers(obj, pubsub);
+  obj = add{{TypeName}}SubscriptionResolvers(obj, pubsub);
 
   return obj;
 }
 
-function add{{TypeName}}MutationResolvers(obj, pubsub) {
+function add{{TypeName}}SubscriptionResolvers(obj, pubsub) {
 
-  {{> server/resolvers/mutations.js}}
+  {{> server/resolvers/subscriptions.js}}
 
   return obj;
 }
@@ -28,4 +28,5 @@ function add{{TypeName}}MutationResolvers(obj, pubsub) {
 {{/with}}
 {{/with}}
 {{/with}}
+
 

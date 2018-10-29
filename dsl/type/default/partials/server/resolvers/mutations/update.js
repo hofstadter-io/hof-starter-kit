@@ -23,10 +23,27 @@ obj.Mutation.{{typeName}}Update = authSwitch([
         console.log("UPDATE ret", ret);
 
         if (ret) {
-          var result = await context.{{TypeName}}.get({
+          var {{typeName}}Ret = await context.{{TypeName}}.get({
             id
           })
-          return { {{typeName}}: result, errors: null};
+          console.log("UPDATE {{typeName}}Ret", {{typeName}}Ret);
+          // list view
+          pubsub.publish('{{typeName}}sNotification', {
+            {{typeName}}sNotification: {
+              mutation: 'UPDATED',
+              id: {{typeName}}Ret.id,
+              node: {{typeName}}Ret
+            }
+          });
+          // solo view
+          pubsub.publish('{{typeName}}Notification', {
+            {{typeName}}Notification: {
+              mutation: 'UPDATED',
+              id: {{typeName}}Ret.id,
+              node: {{typeName}}Ret
+            }
+          });
+          return { {{typeName}}Ret, errors: null};
         } else {
           return {
             {{typeName}}: null,

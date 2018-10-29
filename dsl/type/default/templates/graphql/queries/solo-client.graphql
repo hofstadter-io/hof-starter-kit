@@ -3,11 +3,9 @@
 {{#with (camel  TYPE.name) as |typeName|}}
 #import "../fragments/type-nested.graphql"
 
-query {{typeName}}($id: String!) {
-  {{typeName}}({{typeName}}Id: $id) {
-    {{typeName}} {
-      ...{{TypeName}}InfoNested
-    }
+query {{typeName}}State {
+  {{typeName}} @client {
+    ...{{TypeName}}InfoNested
   }
 }
 {{/with}}

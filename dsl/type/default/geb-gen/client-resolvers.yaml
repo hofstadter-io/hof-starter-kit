@@ -1,0 +1,11 @@
+name: "default"
+template-configs:
+
+  - name: once-files
+    field: "."
+
+    templates:
+
+      - in: client/resolvers/index.js
+        out: "packages/client/src/{{relPath}}/{{kebab name}}/resolvers/index.js"
+

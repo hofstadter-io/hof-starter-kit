@@ -6,8 +6,12 @@
 
 import { graphql } from 'react-apollo';
 
-import SOLO from '../graphql/queries/solo.graphql';
+import SOLO from '../graphql/queries/solo-client.graphql';
 
+export default graphql(SOLO, {
+  props: ({ data: { {{typeName}}  }  }) => ({ {{typeName}}  })
+})
+/*
 export default graphql(SOLO, {
   options: props => {
     console.log("{{TypeName}} - solo view query container PROPS", props)
@@ -24,12 +28,13 @@ export default graphql(SOLO, {
       variables: { id }
     };
   },
-  props({ data: { loading, error, {{typeName}} /*, subscribeToMore*/ } }) {
+  props({ data: { loading, error, {{typeName}}, subscribeToMore } }) {
     // console.log("{{TypeName}} - solo view props container", loading, error, {{typeName}})
     if (error) throw new Error(error);
-    return { loading, {{typeName}} /*, subscribeToMore */};
+    return { loading, {{typeName}}, subscribeToMore };
   }
 })
+*/
 
 {{/with}}
 {{/with}}

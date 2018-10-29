@@ -1,0 +1,45 @@
+type {{camelT TYPE.name}} {
+  createdAt: String
+  updatedAt: String
+
+  id: ID
+  {{#if TYPE.owned}}
+  {{#if TYPE.owned.name}}
+  {{camel TYPE.owned.name}}Id: ID
+  {{camel TYPE.owned.name}}: User
+  {{else}}
+  userId: ID
+  user: User
+  {{/if}}
+  {{/if}}
+
+  {{#each TYPE.fields as |Field| ~}}
+{{!}}  {{> graphql/schema/field-def.graphql Field=Field ~}}
+  {{/each}}
+
+  {{#if TYPE.visibility.enabled}}
+  {{#if TYPE.visibility.public}}
+  {{camel TYPE.visibility.public}}: Boolean
+  {{else}}
+  isPublic: Boolean
+  {{/if}}
+  {{/if}}
+
+  {{#each TYPE.relations as |RELATION|}}
+  {{#gettype RELATION.type true}}{{#with . as |REL_TYPE|}}
+  {{#if (eq RELATION.relation "one-to-one")}}
+  {{camel RELATION.name}}: {{camelT REL_TYPE.name}}
+  {{else if (eq RELATION.relation "one-to-many")}}
+  {{camel RELATION.name}}: [{{camelT REL_TYPE.name}}]
+  {{else if (eq RELATION.relation "many-to-many")}}
+  {{camel RELATION.name}}: [{{camelT REL_TYPE.name}}]
+  {{else if (eq RELATION.relation "belongs-to-one")}}
+  {{camel REL_TYPE.name}}Id: String
+  {{camel REL_TYPE.name}}: {{camelT REL_TYPE.name}}
+  {{else if (eq RELATION.relation "belongs-to-many")}}
+  {{camel RELATION.name}}: [{{camelT REL_TYPE.name}}]
+  {{/if}}
+  {{/with}}{{/gettype}}
+  {{/each}}
+}
+

@@ -3,6 +3,7 @@
 {{#with (camel  TYPE.name) as |typeName|}}
 {{#with (snake  TYPE.name) as |type_name|}}
 {{#with (trimto_last TYPE.relPath "/" false) as |MOD_NAME|}}
+{{#with TYPE.pages.view as |VIEW|}}
 import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
@@ -18,11 +19,14 @@ import translate, { TranslateFunction } from '../../../../i18n';
 import {{COMPONENT.name}} from './{{COMPONENT.name}}';
 {{/each}}
 
+
+
 const PageStyled = styled.div`
 {{{file TYPE.pages.view.style}}}
 `
 
-const {{TypeName}}View = ({ loading, {{typeName}}, {{typeName}}Delete, currentUser, match, location, t }) => {
+const {{TypeName}}View = (props) => {
+  let { loading, {{typeName}}, {{typeName}}Delete, currentUser, match, location, t } = props;
   let {{typeName}}Obj = {{typeName}};
   if ({{typeName}} && {{typeName}}.{{typeName}}) {
     {{typeName}} = {{typeName}}.{{typeName}}
@@ -107,6 +111,7 @@ const {{TypeName}}View = ({ loading, {{typeName}}, {{typeName}}Delete, currentUs
 };
 
 export default translate('{{MOD_NAME}}')({{TypeName}}View);
+{{/with}}
 {{/with}}
 {{/with}}
 {{/with}}

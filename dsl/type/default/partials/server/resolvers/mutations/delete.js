@@ -12,14 +12,31 @@ obj.Mutation.{{typeName}}Delete = authSwitch([
       try {
         // Need to validate incoming filters...
         args.filters = args.filters || [];
+        const {{typeName}} = await context.{{TypeName}}.get({id: args.id});
         const result = await context.{{TypeName}}.delete(args.id);
+
         var message = "failed"
         if (result) {
           message = "success"
+          // list view
+          pubsub.publish('{{typeName}}sNotification', {
+            {{typeName}}sNotification: {
+              mutation: 'DELETED',
+              id: {{typeName}}.id,
+              node: {{typeName}}
+            }
+          });
+          // solo view
+          pubsub.publish('{{typeName}}Notification', {
+            {{typeName}}Notification: {
+              mutation: 'DELETED',
+              id: {{typeName}}.id,
+              node: {{typeName}}
+            }
+          });
         } else {
           // why did we fail?
-          const ret = await context.{{TypeName}}.get({id: args.id});
-          if (ret) {
+          if ({{typeName}}) {
             message = "unknown"
           } else {
             message = "not found"

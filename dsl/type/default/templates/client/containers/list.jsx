@@ -3,110 +3,171 @@
 {{#with (camel  TYPE.name) as |typeName|}}
 {{#with (snake  TYPE.name) as |type_name|}}
 {{#with (trimto_last TYPE.relPath "/" false) as |MOD_NAME|}}
+{{#with TYPE.pages.list as |VIEW|}}
 
 import React from 'react';
 import PropTypes from 'prop-types';
 import { compose, graphql } from 'react-apollo';
+import update from 'immutability-helper';
+
+import { IfLoggedIn, IfNotLoggedIn, withLoadedUser } from '../../../user/containers/Auth';
 
 import {{TypeName}}ListC from '../components/list';
 import {{TypeName}}SDK from '../sdk';
 
-// Need Relations queries here
-// import SYNC from '../graphql/subscriptions/sync.graphql';
+{{#if VIEW.sync}}
+import {{upper type_name}}S_SUBSCRIPTION from '../graphql/subscriptions/list.graphql';
+{{/if}}
+
+export function Add{{TypeName}}(prev, node) {
+  {{#each TYPE.relations as |RELATION|}}
+  node.{{camel RELATION.name}} = [];
+  {{/each}}
+  console.log("Add{{TypeName}}", prev, node)
+
+  // ignore if duplicate
+  if (prev.{{typeName}}Page.edges.some({{typeName}} => node.id === {{typeName}}.cursor)) {
+    return update(prev, {
+      {{typeName}}s: {
+        count: {
+          $set: prev.{{typeName}}Page.count - 1
+        },
+        edges: {
+          $set: prev.{{typeName}}Page.edges
+        }
+      }
+    });
+  }
+
+  const filtered{{TypeName}}s = prev.{{typeName}}Page.edges.filter({{typeName}} => {{typeName}}.node.id !== null);
+
+  const edge = {
+    cursor: node.id,
+    node: node,
+    __typename: '{{TypeName}}Edges'
+  };
+
+  return update(prev, {
+    {{typeName}}Page: {
+      count: {
+        $set: prev.{{typeName}}Page.count + 1
+      },
+      edges: {
+        $set: [...filtered{{TypeName}}s, edge]
+      }
+    }
+  });
+}
+
+function Delete{{TypeName}}(prev, id) {
+  const index = prev.{{typeName}}Page.edges.findIndex(x => x.node.id === id);
+
+  // ignore if not found
+  if (index < 0) {
+    return prev;
+  }
+
+  return update(prev, {
+    {{typeName}}Page: {
+      totalCount: {
+        $set: prev.{{typeName}}Page.totalCount - 1
+      },
+      edges: {
+        $splice: [[index, 1]]
+      }
+    }
+  });
+}
 
 class {{TypeName}}List extends React.Component {
   static propTypes = {
     loading: PropTypes.bool.isRequired,
     {{typeName}}: PropTypes.object,
-    // subscribeToMore: PropTypes.func.isRequired,
+    {{#if VIEW.sync}}
+    subscribeToMore: PropTypes.func.isRequired,
+    {{/if}}
     history: PropTypes.object,
     navigation: PropTypes.object
   };
 
+  static propTypes = {
+    loading: PropTypes.bool.isRequired,
+    {{typeName}}s: PropTypes.object,
+    subscribeToMore: PropTypes.func.isRequired
+  };
+
   constructor(props) {
     super(props);
-    // this.subscription = null;
-  }
-
-  componentDidMount() {
-/*
-    if (!this.props.loading) {
-      this.initPostEditSubscription();
-    }
-*/
+    this.subscription = null;
   }
 
   componentDidUpdate(prevProps) {
-/*
     if (!this.props.loading) {
-      let prevId = prevProps.post ? prevProps.post.id : null;
+      const endCursor = this.props.{{typeName}}s ? this.props.{{typeName}}s.pageInfo.endCursor : 0;
+      const prevEndCursor = prevProps.{{typeName}}s ? prevProps.{{typeName}}s.pageInfo.endCursor : null;
       // Check if props have changed and, if necessary, stop the subscription
-      if (this.subscription && prevPostId !== this.props.post.id) {
+      if (this.subscription && prevEndCursor !== endCursor) {
         this.subscription();
         this.subscription = null;
       }
-      this.initPostEditSubscription();
+      if (!this.subscription) {
+        this.subscribeTo{{TypeName}}List(endCursor);
+      }
     }
-*/
   }
 
   componentWillUnmount() {
-/*
     if (this.subscription) {
       // unsubscribe
       this.subscription();
       this.subscription = null;
     }
-*/
   }
 
-/*
-  initPostEditSubscription() {
-    if (!this.subscription && this.props.post) {
-      this.subscribeToPostEdit(this.props.post.id);
-    }
-  }
-
-  subscribeToPostEdit = postId => {
-    const { subscribeToMore, history, navigation } = this.props;
+  subscribeTo{{TypeName}}List = endCursor => {
+    const { subscribeToMore } = this.props;
 
     this.subscription = subscribeToMore({
-      document: POST_SUBSCRIPTION,
-      variables: { id: postId },
+      document: {{upper type_name}}S_SUBSCRIPTION,
+      variables: { endCursor },
       updateQuery: (
         prev,
         {
           subscriptionData: {
-            data: {
-              postUpdated: { mutation }
-            }
+            data
           }
         }
       ) => {
-        if (mutation === 'DELETED') {
-          if (history) {
-            return history.push('/posts');
-          } else if (navigation) {
-            return navigation.goBack();
-          }
+        console.log("{{TypeName}} - onNotification - data", data)
+        let {
+          {{typeName}}sNotification: { mutation, node }
+        } = data;
+
+        let newResult = prev;
+
+        if (mutation === 'CREATED') {
+          newResult = Add{{TypeName}}(prev, node);
+        } else if (mutation === 'DELETED') {
+          newResult = Delete{{TypeName}}(prev, node.id);
         }
-        return prev;
+
+        return newResult;
       }
     });
   };
-*/
 
   render() {
-    // console.log("{{typeName}} Container RENDER", this.props)
+    console.log("{{typeName}} Container RENDER", this.props)
     return <{{TypeName}}ListC {...this.props} />;
   }
 }
 
 export default compose(
-  {{TypeName}}SDK.List,
+  {{TypeName}}SDK.Page,
   {{TypeName}}SDK.Delete
 )({{TypeName}}List);
 
+{{/with}}
 {{/with}}
 {{/with}}
 {{/with}}

@@ -15,9 +15,6 @@ import {{TypeName}}SDK from '../sdk';
 class {{TypeName}}Add extends React.Component {
   constructor(props) {
     super(props);
-    /*
-    this.subscription = null;
-    */
   }
 
   render() {

@@ -1,0 +1,57 @@
+extend type Mutation {
+  {{camel TYPE.name}}Create(input: {{camelT TYPE.name}}CreateInput!): {{camelT TYPE.name}}MutationPayload!
+  {{camel TYPE.name}}Update(id: Int!, values: {{camelT TYPE.name}}UpdateInput!): {{camelT TYPE.name}}MutationPayload!
+  {{camel TYPE.name}}Delete(id: Int!): {{camelT TYPE.name}}MutationPayload!
+}
+
+input {{camelT TYPE.name}}CreateInput {
+  # Create fields
+  {{#each TYPE.fields as |Field| ~}}
+{{!}}  {{> graphql/schema/field-def.graphql Field=Field ~}}
+  {{/each}}
+
+  {{#if TYPE.visibility.enabled}}
+  {{#if TYPE.visibility.public}}
+  {{camel TYPE.visibility.public}}: Boolean
+  {{else}}
+  isPublic: Boolean
+  {{/if}}
+  {{/if}}
+
+  {{#each TYPE.relations as |RELATION|}}
+  {{#gettype RELATION.type true}}{{#with . as |REL_TYPE|}}
+  {{#if (eq RELATION.relation "one-to-one")}}
+  {{else if (eq RELATION.relation "one-to-many")}}
+  {{else if (eq RELATION.relation "many-to-many")}}
+  {{else if (eq RELATION.relation "belongs-to-one")}}
+  {{camel REL_TYPE.name}}Id: String
+  {{else if (eq RELATION.relation "belongs-to-many")}}
+  {{camel REL_TYPE.name}}Id: String
+  {{/if}}
+  {{/with}}{{/gettype}}
+  {{/each}}
+}
+
+input {{camelT TYPE.name}}UpdateInput {
+  # Update fields
+  {{#each TYPE.fields as |Field| ~}}
+{{!}}  {{> graphql/schema/field-def.graphql Field=Field ~}}
+  {{/each}}
+
+  {{#if TYPE.visibility.enabled}}
+  {{#if TYPE.visibility.public}}
+  {{camel TYPE.visibility.public}}: Boolean
+  {{else}}
+  isPublic: Boolean
+  {{/if}}
+  {{/if}}
+}
+
+type {{camelT TYPE.name}}MutationPayload {
+  {{camel TYPE.name}}: {{camelT TYPE.name}}
+
+  message: String
+  errors: [FieldError!]
+}
+
+

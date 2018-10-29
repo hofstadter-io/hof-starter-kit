@@ -1,24 +1,26 @@
 {{#with DslContext as |TYPE|}}
+{{#with RepeatedContext as |VIEW_REL|}}
+{{#gettype VIEW_REL.type true}}{{#with . as |REL_TYPE|}}
 {{#with (camelT TYPE.name) as |TypeName|}}
 {{#with (camel  TYPE.name) as |typeName|}}
 {{#with (snake  TYPE.name) as |type_name|}}
-{{#with (trimto_last TYPE.relPath "/" false) as |MOD_NAME|}}
+{{#with (camelT REL_TYPE.name) as |RelTypeName|}}
+{{#with (camel  REL_TYPE.name) as |relTypeName|}}
+{{#with (snake  REL_TYPE.name) as |rel_type_name|}}
 {{#with TYPE.pages.view as |VIEW|}}
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import { compose } from 'react-apollo';
 
 import { IfLoggedIn, IfNotLoggedIn, withLoadedUser } from '../../../user/containers/Auth';
 
-import {{TypeName}}ViewC from '../components/view';
+import {{TypeName}}ListC from '../components/view-{{kebab rel_type_name}}-list';
 import {{TypeName}}SDK from '../sdk';
 
 {{#each VIEW.relations as |RELATION|}}
-{{#if RELATION.sdk}}{{#gettype RELATION.type true}}{{#with . as |REL_TYPE|}}
-import {{camel RELATION.name}}SDK from '../../../../{{REL_TYPE.pkg_path}}/{{REL_TYPE.name}}/sdk'
-{{#if RELATION.sync}}
-import {{upper (snake RELATION.name)}}_SUBSCRIPTION from '../../{{kebab REL_TYPE.name}}/graphql/subscriptions/solo.graphql';
-{{/if}}
+{{#if RELATION.sdk}}{{#gettype RELATION.type true}}{{#with . as |SDK_TYPE|}}
+import {{camel RELATION.name}} from '../../../../{{SDK_TYPE.pkg_path}}/{{SDK_TYPE.name}}/sdk'
 {{/with}}{{/gettype}}{{/if}}
 {{/each}}
 
@@ -79,7 +81,7 @@ class {{TypeName}}View extends React.Component {
   {{#if VIEW.sync}}
   {{/if}}
   init{{TypeName}}Subscription() {
-    console.log("{{TypeName}} - SUBSCRP", this.props)
+    console.log("{{TypeName}} - SUBSCRP", this.props.{{typeName}})
     if (!this.subscription && this.props.{{typeName}}) {
       this.subscribeTo{{TypeName}}Notifications(this.props.{{typeName}}.{{typeName}}.id);
     }
@@ -97,12 +99,12 @@ class {{TypeName}}View extends React.Component {
         prev,
         {
           subscriptionData: {
-            data
+            data: {
+              {{typeName}}Notification: { mutation }
+            }
           }
         }
       ) => {
-        console.log("{{TypeName}} Subscription Data:", data)
-        let { {{typeName}}Subscription: { mutation } } = data;
         if (mutation === 'DELETED') {
           if (history) {
             return history.push('/{{typeName}}s');
@@ -126,11 +128,9 @@ export default compose(
 
 {{#each VIEW.relations as |RELATION|}}
 {{#if RELATION.sdk}}{{#gettype RELATION.type true}}{{#with . as |SDK_TYPE|}}
-  {{RELATION.name}}SDK.ViewClient,
-  {{RELATION.name}}SDK.CreateClient,
-  {{RELATION.name}}SDK.Create,
-  {{RELATION.name}}SDK.Update,
-  {{RELATION.name}}SDK.Delete,
+  {{RELATION.name}}.Create,
+  {{RELATION.name}}.Update,
+  {{RELATION.name}}.Delete,
 {{/with}}{{/gettype}}{{/if}}
 {{/each}}
 
@@ -138,9 +138,14 @@ export default compose(
   {{TypeName}}SDK.Delete
 )({{TypeName}}View);
 
+
 {{/with}}
 {{/with}}
 {{/with}}
 {{/with}}
+{{/with}}
+{{/with}}
+{{/with}}
+{{/with}}{{/gettype}}
 {{/with}}
 {{/with}}

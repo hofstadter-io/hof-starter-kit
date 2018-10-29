@@ -13,18 +13,15 @@ import resources from './locales';
 import {{camelT TYPE.name}} from './{{kebab TYPE.name}}';
 {{/with}}{{/gettype ~}}{{/each}}
 
+const {{camelT MODULE.name}}Module = {
+  localization: [{ ns: '{{MODULE.name}}', resources }]
+};
 
-
-export default new ClientModule({
-  // route: [<Route exact path="/contact" component={Contact} />],
-
-    localization: [{ ns: '{{MODULE.name}}', resources }]
-  },
-
+export default new ClientModule(
+  {{camelT MODULE.name}}Module,
   {{#each MODULE.types as |T|}}{{#gettype T.type true}}{{#with . as |TYPE|}}
   {{camelT TYPE.name}}{{#unless @last}},{{/unless ~}}
   {{/with}}{{/gettype ~}}{{/each}}
-
 );
 
 {{/with}}
