@@ -17,7 +17,7 @@ import {{TypeName}}SDK from '../sdk';
 {{#if RELATION.sdk}}{{#gettype RELATION.type true}}{{#with . as |REL_TYPE|}}
 import {{camel RELATION.name}}SDK from '../../../../{{REL_TYPE.pkg_path}}/{{REL_TYPE.name}}/sdk'
 {{#if RELATION.sync}}
-import {{upper (snake RELATION.name)}}_SUBSCRIPTION from '../../{{kebab REL_TYPE.name}}/graphql/subscriptions/solo.graphql';
+import {{upper (snake RELATION.name)}}_SUBSCRIPTION from '../../{{kebab REL_TYPE.name}}/graphql/subscriptions/list.graphql';
 {{/if}}
 {{/with}}{{/gettype}}{{/if}}
 {{/each}}
@@ -26,12 +26,75 @@ import {{upper (snake RELATION.name)}}_SUBSCRIPTION from '../../{{kebab REL_TYPE
 import {{upper type_name}}_SUBSCRIPTION from '../graphql/subscriptions/solo.graphql';
 {{/if}}
 
+{{#each VIEW.relations as |RELATION|}}
+{{#if RELATION.sdk}}{{#gettype RELATION.type true}}{{#with . as |REL_TYPE|}}
+export function Add{{camelT REL_TYPE.name}}(prev, node) {
+  console.log("Add{{camelT REL_TYPE.name}}", prev, node)
+
+  // ignore if duplicate
+  if (prev.{{camel REL_TYPE.name}}Page.edges.some({{camel REL_TYPE.name}} => node.id === {{camel REL_TYPE.name}}.cursor)) {
+    return update(prev, {
+      {{camel REL_TYPE.name}}s: {
+        count: {
+          $set: prev.{{camel REL_TYPE.name}}Page.count - 1
+        },
+        edges: {
+          $set: prev.{{camel REL_TYPE.name}}Page.edges
+        }
+      }
+    });
+  }
+
+  const filtered{{camelT REL_TYPE.name}}s = prev.{{camel REL_TYPE.name}}Page.edges.filter({{camel REL_TYPE.name}} => {{camel REL_TYPE.name}}.node.id !== null);
+
+  const edge = {
+    cursor: node.id,
+    node: node,
+    __typename: '{{camelT REL_TYPE.name}}Edges'
+  };
+
+  return update(prev, {
+    {{camel REL_TYPE.name}}Page: {
+      count: {
+        $set: prev.{{camel REL_TYPE.name}}Page.count + 1
+      },
+      edges: {
+        $set: [...filtered{{camelT REL_TYPE.name}}s, edge]
+      }
+    }
+  });
+}
+
+function Delete{{camelT REL_TYPE.name}}(prev, id) {
+  const index = prev.{{camel REL_TYPE.name}}Page.edges.findIndex(x => x.node.id === id);
+
+  // ignore if not found
+  if (index < 0) {
+    return prev;
+  }
+
+  return update(prev, {
+    {{camel REL_TYPE.name}}Page: {
+      totalCount: {
+        $set: prev.{{camel REL_TYPE.name}}Page.totalCount - 1
+      },
+      edges: {
+        $splice: [[index, 1]]
+      }
+    }
+  });
+}
+
+{{/with}}{{/gettype}}{{/if}}
+{{/each}}
+
+
 class {{TypeName}}View extends React.Component {
   static propTypes = {
     loading: PropTypes.bool.isRequired,
     {{typeName}}: PropTypes.object,
     {{#if VIEW.sync}}
-    subscribeToMore: PropTypes.func.isRequired,
+    subscribeToMore{{TypeName}}: PropTypes.func.isRequired,
     {{/if}}
     history: PropTypes.object,
     navigation: PropTypes.object
@@ -42,19 +105,35 @@ class {{TypeName}}View extends React.Component {
     {{#if VIEW.sync}}
     this.subscription = null;
     {{/if}}
+    {{#each VIEW.relations as |RELATION|}}
+    {{#if RELATION.sdk}}{{#gettype RELATION.type true}}{{#with . as |REL_TYPE|}}
+    {{#if RELATION.sync}}
+    this.{{camel REL_TYPE.name}}Subscription = null;
+    {{/if}}
+    {{/with}}{{/gettype}}{{/if}}
+    {{/each}}
   }
 
   componentDidMount() {
-    {{#if VIEW.sync}}
     if (!this.props.loading) {
+    {{#if VIEW.sync}}
       this.init{{TypeName}}Subscription();
-    }
     {{/if}}
+
+    {{#each VIEW.relations as |RELATION|}}
+    {{#if RELATION.sdk}}{{#gettype RELATION.type true}}{{#with . as |REL_TYPE|}}
+    {{#if RELATION.sync}}
+      this.init{{camelT REL_TYPE.name}}Subscription();
+    {{/if}}
+    {{/with}}{{/gettype}}{{/if}}
+    {{/each}}
+    }
   }
 
   componentDidUpdate(prevProps) {
-    {{#if VIEW.sync}}
+    console.log("{{TypeName}} componentDidUpdate", this.props);
     if (!this.props.loading) {
+    {{#if VIEW.sync}}
       let prev{{TypeName}}Id = prevProps.{{typeName}} ? prevProps.{{typeName}}.id : null;
       // Check if props have changed and, if necessary, stop the subscription
       if (this.subscription && prev{{TypeName}}Id !== this.props.{{typeName}}.id) {
@@ -62,22 +141,51 @@ class {{TypeName}}View extends React.Component {
         this.subscription = null;
       }
       this.init{{TypeName}}Subscription();
-    }
     {{/if}}
+
+    {{#each VIEW.relations as |RELATION|}}
+    {{#if RELATION.sdk}}{{#gettype RELATION.type true}}{{#with . as |REL_TYPE|}}
+    {{#if RELATION.sync}}
+      // {{REL_TYPE.name}} Subscription
+      const endCursor = this.props.{{camel REL_TYPE.name}}s ? this.props.{{camel REL_TYPE.name}}s.pageInfo.endCursor : 0;
+      const prevEndCursor = prevProps.{{camel REL_TYPE.name}}s ? prevProps.{{camel REL_TYPE.name}}s.pageInfo.endCursor : null;
+      // Check if props have changed and, if necessary, stop the subscription
+      if (this.{{camel REL_TYPE.name}}Subscription && prevEndCursor !== endCursor) {
+        this.{{camel REL_TYPE.name}}Subscription();
+        this.{{camel REL_TYPE.name}}Subscription = null;
+      }
+      if (!this.{{camel REL_TYPE.name}}Subscription) {
+        console.log("SUBSCIBIN''''''", endCursor, this.props.{{typeName}}.{{typeName}}.id)
+        this.subscribeTo{{camelT REL_TYPE.name}}List(endCursor, this.props.{{typeName}}.{{typeName}}.id);
+      }
+    {{/if}}
+    {{/with}}{{/gettype}}{{/if}}
+    {{/each}}
+    }
   }
 
   componentWillUnmount() {
-    {{#if VIEW.sync}}
     if (this.subscription) {
+    {{#if VIEW.sync}}
       // unsubscribe
       this.subscription();
       this.subscription = null;
-    }
     {{/if}}
+
+    {{#each VIEW.relations as |RELATION|}}
+    {{#if RELATION.sdk}}{{#gettype RELATION.type true}}{{#with . as |REL_TYPE|}}
+    {{#if RELATION.sync}}
+        /*
+      this.{{camel REL_TYPE.name}}Subscription();
+      this.{{camel REL_TYPE.name}}Subscription = null;
+      */
+    {{/if}}
+    {{/with}}{{/gettype}}{{/if}}
+    {{/each}}
+    }
   }
 
   {{#if VIEW.sync}}
-  {{/if}}
   init{{TypeName}}Subscription() {
     console.log("{{TypeName}} - SUBSCRP", this.props)
     if (!this.subscription && this.props.{{typeName}}) {
@@ -86,11 +194,11 @@ class {{TypeName}}View extends React.Component {
   }
 
   subscribeTo{{TypeName}}Notifications = {{typeName}}Id => {
-    const { subscribeToMore, history, navigation } = this.props;
+    const { subscribeToMore{{TypeName}}, history, navigation } = this.props;
 
     console.log("subscribing:", {{typeName}}Id)
 
-    this.subscription = subscribeToMore({
+    this.subscription = subscribeToMore{{TypeName}}({
       document: {{upper type_name}}_SUBSCRIPTION,
       variables: { id: {{typeName}}Id },
       updateQuery: (
@@ -114,6 +222,48 @@ class {{TypeName}}View extends React.Component {
       }
     });
   };
+  {{/if}}
+
+  {{#each VIEW.relations as |RELATION|}}
+  {{#if RELATION.sdk}}{{#gettype RELATION.type true}}{{#with . as |REL_TYPE|}}
+  {{#if RELATION.sync}}
+  subscribeTo{{camelT REL_TYPE.name}}List = (endCursor, {{typeName}}IdStr) => {
+    let {{typeName}}Id = parseInt({{typeName}}IdStr);
+    console.log("{{REL_TYPE.name}} - SUBSCRP", this.props, endCursor, {{typeName}}IdStr, {{typeName}}Id)
+    const { subscribeToMore{{camelT REL_TYPE.name}} } = this.props;
+
+    this.{{camel REL_TYPE.name}}Subscription = subscribeToMore{{camelT REL_TYPE.name}}({
+      document: {{upper (snake REL_TYPE.name)}}S_SUBSCRIPTION,
+      variables: { endCursor, {{typeName}}Id },
+      updateQuery: (
+        prev,
+        {
+          subscriptionData: {
+            data
+          }
+        }
+      ) => {
+        console.log("{{camelT REL_TYPE.name}} - onNotification - data", data)
+        let {
+          {{camel REL_TYPE.name}}sNotification: { mutation, node }
+        } = data;
+
+        let newResult = prev;
+
+        if (mutation === 'CREATED') {
+          newResult = Add{{camelT REL_TYPE.name}}(prev, node);
+        } else if (mutation === 'DELETED') {
+          newResult = Delete{{camelT REL_TYPE.name}}(prev, node.id);
+        }
+
+        return newResult;
+      }
+    });
+
+  };
+  {{/if}}
+  {{/with}}{{/gettype}}{{/if}}
+  {{/each}}
 
   render() {
     console.log("{{typeName}} Container RENDER", this.props)
@@ -128,6 +278,7 @@ export default compose(
 {{#if RELATION.sdk}}{{#gettype RELATION.type true}}{{#with . as |SDK_TYPE|}}
   {{RELATION.name}}SDK.ViewClient,
   {{RELATION.name}}SDK.CreateClient,
+  {{RELATION.name}}SDK.Page,
   {{RELATION.name}}SDK.Create,
   {{RELATION.name}}SDK.Update,
   {{RELATION.name}}SDK.Delete,

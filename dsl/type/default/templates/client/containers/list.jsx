@@ -84,16 +84,10 @@ class {{TypeName}}List extends React.Component {
     loading: PropTypes.bool.isRequired,
     {{typeName}}: PropTypes.object,
     {{#if VIEW.sync}}
-    subscribeToMore: PropTypes.func.isRequired,
+    subscribeToMore{{TypeName}}: PropTypes.func.isRequired,
     {{/if}}
     history: PropTypes.object,
     navigation: PropTypes.object
-  };
-
-  static propTypes = {
-    loading: PropTypes.bool.isRequired,
-    {{typeName}}s: PropTypes.object,
-    subscribeToMore: PropTypes.func.isRequired
   };
 
   constructor(props) {
@@ -125,9 +119,9 @@ class {{TypeName}}List extends React.Component {
   }
 
   subscribeTo{{TypeName}}List = endCursor => {
-    const { subscribeToMore } = this.props;
+    const { subscribeToMore{{TypeName}} } = this.props;
 
-    this.subscription = subscribeToMore({
+    this.subscription = subscribeToMore{{TypeName}}({
       document: {{upper type_name}}S_SUBSCRIPTION,
       variables: { endCursor },
       updateQuery: (

@@ -42,7 +42,10 @@ export default async function seed(knex, Promise) {
       .first('id')
       .then(row => row.id)
 
-    var did = await Lib.{{camelT TYPE.name}}.createFor(uid, {
+    console.log("Create For", uid)
+
+    var did = await Lib.{{camelT TYPE.name}}.createFor({
+      user_id: uid,
       {{#if TYPE.visibility.enabled}}
         {{snake TYPE.visibility.public}}: data['{{camel TYPE.visibility.public}}'] || {{TYPE.visibility.default}},
       {{/if}}
@@ -72,7 +75,8 @@ export default async function seed(knex, Promise) {
           .then(row => row.id)
 
           {{#if (eq RELATION.relation "one-to-one")}}
-        await Lib.{{camelT REL_TYPE.name}}.createFor(oid, {
+        await Lib.{{camelT REL_TYPE.name}}.createFor({
+          user_id: oid,
           {{#if REL_TYPE.visibility.enabled}}
             {{snake REL_TYPE.visibility.public}}: data['{{camel REL_TYPE.visibility.public}}'] || {{REL_TYPE.visibility.default}},
           {{/if}}
@@ -82,7 +86,8 @@ export default async function seed(knex, Promise) {
           {{snake TYPE.name}}_id: did
         })
           {{else if (eq RELATION.relation "one-to-many")}}
-        await Lib.{{camelT REL_TYPE.name}}.createFor(oid, {
+        await Lib.{{camelT REL_TYPE.name}}.createFor({
+          user_id: oid,
           {{#if REL_TYPE.visibility.enabled}}
             {{snake REL_TYPE.visibility.public}}: data['{{camel REL_TYPE.visibility.public}}'] || {{REL_TYPE.visibility.default}},
           {{/if}}

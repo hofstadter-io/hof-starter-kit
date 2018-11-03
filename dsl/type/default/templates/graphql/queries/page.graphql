@@ -3,8 +3,22 @@
 {{#with (camel  TYPE.name) as |typeName|}}
 #import "../fragments/type-nested.graphql"
 
-query {{typeName}}Page($limit: Int!, $after: Int) {
-  {{typeName}}Page(limit: $limit, after: $after) {
+query {{typeName}}Page(
+  {{#each TYPE.relatations as |RELATION|}}
+  {{#if (eq RELATION.relation "belongs-to-one")}}
+  ${{typeName}}Id: Int,
+  {{/if}}
+  {{/each}}
+  $limit: Int!, $after: Int
+) {
+  {{typeName}}Page(
+    {{#each TYPE.relatations as |RELATION|}}
+    {{#if (eq RELATION.relation "belongs-to-one")}}
+    {{typeName}}Id: ${{typeName}}Id,
+    {{/if}}
+    {{/each}}
+    limit: $limit, after: $after
+  ) {
     count
     edges {
       cursor

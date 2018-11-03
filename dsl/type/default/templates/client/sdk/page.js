@@ -18,15 +18,22 @@ const limit =
 export default graphql(PAGE, {
 
     options: props => {
-      console.log("PAGING PROPS", props)
+      console.log("{{TypeName}} PAGING PROPS", props);
       let localLimit = props.limit ? props.limit : limit;
+      let vars = { limit: localLimit, after: 0 };
+      {{#each TYPE.relations as |RELATION|}}
+      {{#if (eq RELATION.relation "belongs-to-one")}}
+      vars.{{camel RELATION.name}}Id = props.match.params.id;
+      {{/if}}
+      {{/each}}
+      console.log("{{TypeName}} PAGING PROPS - vars", vars);
       return {
-        variables: { limit: localLimit, after: 0 },
+        variables: vars,
         fetchPolicy: 'cache-and-network'
       };
     },
     props: ({ data }) => {
-      console.log("PAGING DATA", data)
+      console.log("{{TypeName}} PAGING DATA", data)
       const { loading, error, {{typeName}}s, {{typeName}}Page, fetchMore, subscribeToMore } = data;
       const loadData = (after, dataDelivery) => {
         return fetchMore({
@@ -53,7 +60,7 @@ export default graphql(PAGE, {
         });
       };
       if (error) throw new Error(error);
-      return { loading, {{typeName}}s, {{typeName}}Page, subscribeToMore, loadData };
+      return { loading, {{typeName}}s, {{typeName}}Page, subscribeToMore{{TypeName}}: subscribeToMore, loadData };
     }
   })
 

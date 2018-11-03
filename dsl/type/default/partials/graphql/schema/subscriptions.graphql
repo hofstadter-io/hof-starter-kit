@@ -1,6 +1,13 @@
 extend type Subscription {
   {{typeName}}Notification(id: Int!): {{TypeName}}Notification
-  {{typeName}}sNotification(endCursor: Int!): {{TypeName}}Notification
+  {{typeName}}sNotification(
+    endCursor: Int!
+    {{#each TYPE.relations as |RELATION|}}
+    {{#if (eq RELATION.relation "belongs-to-one")}}
+    {{RELATION.name}}Id: Int!
+    {{/if}}
+    {{/each}}
+  ): {{TypeName}}Notification
 }
 
 type {{TypeName}}Notification {

@@ -29,7 +29,6 @@ export default new ClientModule(
   {{!}}  {{camel MOD}},
   {{/each}}
 
-
   pageNotFound,
   i18n
 );

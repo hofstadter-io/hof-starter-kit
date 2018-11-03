@@ -27,7 +27,7 @@ export default graphql(SOLO, {
   props({ data: { loading, error, {{typeName}}, subscribeToMore } }) {
     // console.log("{{TypeName}} - solo view props container", loading, error, {{typeName}})
     if (error) throw new Error(error);
-    return { loading, {{typeName}}, subscribeToMore };
+    return { loading, {{typeName}}, subscribeToMore{{TypeName}}: subscribeToMore };
   }
 })
 

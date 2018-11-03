@@ -3,8 +3,22 @@
 {{#with (camel  TYPE.name) as |typeName|}}
 #import "../fragments/type-solo.graphql"
 
-subscription on{{TypeName}}sNotification($endCursor: Int!) {
-  {{typeName}}sNotification(endCursor: $endCursor) {
+subscription on{{TypeName}}sNotification(
+  {{#each TYPE.relatations as |RELATION|}}
+  {{#if (eq RELATION.relation "belongs-to-one")}}
+  ${{typeName}}Id: Int!,
+  {{/if}}
+  {{/each}}
+  $endCursor: Int!
+  ) {
+  {{typeName}}sNotification(
+    {{#each TYPE.relatations as |RELATION|}}
+    {{#if (eq RELATION.relation "belongs-to-one")}}
+    {{typeName}}Id: ${{typeName}}Id,
+    {{/if}}
+    {{/each}}
+    endCursor: $endCursor
+  ) {
     mutation
     id
     node {
