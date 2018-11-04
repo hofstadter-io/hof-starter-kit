@@ -31,9 +31,41 @@ obj.Query.{{typeName}}Page = authSwitch([
         }
         {{/if}}
         const results = await context.{{TypeName}}.pagingFor(args);
+        const edgesArray: Edges[] = [];
+        const total = results.count;
+        const hasNextPage = total > args.after + args.limit;
+
+        results.results.map(({{typeName}}, index) => {
+          edgesArray.push({
+            cursor: args.after + index,
+            node: {{typeName}}
+          });
+        });
+        const endCursor = edgesArray.length > 0 ? edgesArray[edgesArray.length - 1].cursor : 0;
+
+        const ret = {
+          count: total,
+          edges: edgesArray,
+          pageInfo: {
+            endCursor,
+            hasNextPage
+          },
+          errors: null
+        };
+
+        console.log('Query.{{typeName}}Page - non-owner - ret', ret);
+        return ret;
         return { results: results, count: -1, total: -1, errors: null};
       } catch (e) {
-        return { results: null, count: -1, total: -1, errors: [e]};
+        console.error('Query.{{typeName}}Page - non-owner - ERROR', e);
+
+        const ret = {
+          count: -1,
+          edges: null,
+          pageInfo: null,
+          errors: [e]
+        };
+        return ret;
       }
     }
   },
@@ -136,9 +168,41 @@ obj.Query.{{typeName}}Page = authSwitch([
           value: true
         })
         const results = await context.{{TypeName}}.paging(args);
+        const edgesArray: Edges[] = [];
+        const total = results.count;
+        const hasNextPage = total > args.after + args.limit;
+
+        results.results.map(({{typeName}}, index) => {
+          edgesArray.push({
+            cursor: args.after + index,
+            node: {{typeName}}
+          });
+        });
+        const endCursor = edgesArray.length > 0 ? edgesArray[edgesArray.length - 1].cursor : 0;
+
+        const ret = {
+          count: total,
+          edges: edgesArray,
+          pageInfo: {
+            endCursor,
+            hasNextPage
+          },
+          errors: null
+        };
+
+        console.log('Query.{{typeName}}Page - non-owner - ret', ret);
+        return ret;
         return { results: results, count: -1, total: -1, errors: null};
       } catch (e) {
-        return { results: null, count: -1, total: -1, errors: [e]};
+        console.error('Query.{{typeName}}Page - non-owner - ERROR', e);
+
+        const ret = {
+          count: -1,
+          edges: null,
+          pageInfo: null,
+          errors: [e]
+        };
+        return ret;
       }
     }
   },
