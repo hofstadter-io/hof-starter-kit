@@ -7,6 +7,11 @@ extend type Query {
   ): {{camelT TYPE.name}}ListingPayload
 
   {{camel TYPE.name}}Page(
+    {{#each TYPE.relations as |RELATION|}}
+    {{#if (eq RELATION.relation "belongs-to-one")}}
+    {{RELATION.name}}Id: Int
+    {{/if}}
+    {{/each}}
     limit: Int
     after: Int
   ): {{camelT TYPE.name}}PagingPayload

@@ -4,17 +4,17 @@
 #import "../fragments/type-nested.graphql"
 
 query {{typeName}}Page(
-  {{#each TYPE.relatations as |RELATION|}}
+  {{#each TYPE.relations as |RELATION|}}
   {{#if (eq RELATION.relation "belongs-to-one")}}
-  ${{typeName}}Id: Int,
+  ${{camel RELATION.name}}Id: Int,
   {{/if}}
   {{/each}}
   $limit: Int!, $after: Int
 ) {
   {{typeName}}Page(
-    {{#each TYPE.relatations as |RELATION|}}
+    {{#each TYPE.relations as |RELATION|}}
     {{#if (eq RELATION.relation "belongs-to-one")}}
-    {{typeName}}Id: ${{typeName}}Id,
+    {{camel RELATION.name}}Id: ${{camel RELATION.name}}Id,
     {{/if}}
     {{/each}}
     limit: $limit, after: $after

@@ -37,7 +37,7 @@ obj.Mutation.{{typeName}}Create = async (sources, args, context, info) => {
             }
           });
 
-          return { {{typeName}}Ret, errors: null };
+          return { {{typeName}}: {{typeName}}Ret, errors: null };
         } catch (e) {
           return {
             {{typeName}}: null,

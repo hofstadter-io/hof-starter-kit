@@ -7,6 +7,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { compose } from 'react-apollo';
+import update from 'immutability-helper';
 
 import { IfLoggedIn, IfNotLoggedIn, withLoadedUser } from '../../../user/containers/Auth';
 
@@ -27,33 +28,41 @@ import {{upper type_name}}_SUBSCRIPTION from '../graphql/subscriptions/solo.grap
 {{/if}}
 
 {{#each VIEW.relations as |RELATION|}}
-{{#if RELATION.sdk}}{{#gettype RELATION.type true}}{{#with . as |REL_TYPE|}}
+{{#if RELATION.sync}}{{#gettype RELATION.type true}}{{#with . as |REL_TYPE|}}
 export function Add{{camelT REL_TYPE.name}}(prev, node) {
   console.log("Add{{camelT REL_TYPE.name}}", prev, node)
 
+  {{#each REL_TYPE.relations as |RELATION2|}}
+  if (!node.{{camel RELATION2.name}}) {
+    node.{{camel RELATION2.name}} = null;
+  }
+  {{/each}}
+
   // ignore if duplicate
   if (prev.{{camel REL_TYPE.name}}Page.edges.some({{camel REL_TYPE.name}} => node.id === {{camel REL_TYPE.name}}.cursor)) {
-    return update(prev, {
-      {{camel REL_TYPE.name}}s: {
+    let ret = update(prev, {
+      {{camel REL_TYPE.name}}Page: {
         count: {
-          $set: prev.{{camel REL_TYPE.name}}Page.count - 1
+          $set: prev.{{camel REL_TYPE.name}}Page.count  /* + 1 */
         },
         edges: {
           $set: prev.{{camel REL_TYPE.name}}Page.edges
         }
       }
     });
+    console.log("Add{{camelT REL_TYPE.name}} - same - ret", ret)
+    return ret
   }
 
   const filtered{{camelT REL_TYPE.name}}s = prev.{{camel REL_TYPE.name}}Page.edges.filter({{camel REL_TYPE.name}} => {{camel REL_TYPE.name}}.node.id !== null);
 
   const edge = {
-    cursor: node.id,
+    cursor: parseInt(node.id),
     node: node,
-    __typename: '{{camelT REL_TYPE.name}}Edges'
+    __typename: '{{camelT REL_TYPE.name}}Edge'
   };
 
-  return update(prev, {
+  let ret = update(prev, {
     {{camel REL_TYPE.name}}Page: {
       count: {
         $set: prev.{{camel REL_TYPE.name}}Page.count + 1
@@ -63,6 +72,8 @@ export function Add{{camelT REL_TYPE.name}}(prev, node) {
       }
     }
   });
+  console.log("Add{{camelT REL_TYPE.name}} - diff - ret", ret)
+  return ret;
 }
 
 function Delete{{camelT REL_TYPE.name}}(prev, id) {
@@ -147,9 +158,12 @@ class {{TypeName}}View extends React.Component {
     {{#if RELATION.sdk}}{{#gettype RELATION.type true}}{{#with . as |REL_TYPE|}}
     {{#if RELATION.sync}}
       // {{REL_TYPE.name}} Subscription
-      const endCursor = this.props.{{camel REL_TYPE.name}}s ? this.props.{{camel REL_TYPE.name}}s.pageInfo.endCursor : 0;
-      const prevEndCursor = prevProps.{{camel REL_TYPE.name}}s ? prevProps.{{camel REL_TYPE.name}}s.pageInfo.endCursor : null;
+      // const endCursor = this.props.{{camel REL_TYPE.name}}s ? this.props.{{camel REL_TYPE.name}}s.pageInfo.endCursor : 0;
+      // const prevEndCursor = prevProps.{{camel REL_TYPE.name}}s ? prevProps.{{camel REL_TYPE.name}}s.pageInfo.endCursor : null;
+      const endCursor = this.props.{{camel REL_TYPE.name}}Page ? this.props.{{camel REL_TYPE.name}}Page.pageInfo.endCursor : 0;
+      const prevEndCursor = prevProps.{{camel REL_TYPE.name}}Page ? prevProps.{{camel REL_TYPE.name}}Page.pageInfo.endCursor : null;
       // Check if props have changed and, if necessary, stop the subscription
+      console.log("Got Here {{RELATION.name}}", prevEndCursor, endCursor)
       if (this.{{camel REL_TYPE.name}}Subscription && prevEndCursor !== endCursor) {
         this.{{camel REL_TYPE.name}}Subscription();
         this.{{camel REL_TYPE.name}}Subscription = null;
@@ -175,10 +189,8 @@ class {{TypeName}}View extends React.Component {
     {{#each VIEW.relations as |RELATION|}}
     {{#if RELATION.sdk}}{{#gettype RELATION.type true}}{{#with . as |REL_TYPE|}}
     {{#if RELATION.sync}}
-        /*
       this.{{camel REL_TYPE.name}}Subscription();
       this.{{camel REL_TYPE.name}}Subscription = null;
-      */
     {{/if}}
     {{/with}}{{/gettype}}{{/if}}
     {{/each}}
@@ -227,9 +239,15 @@ class {{TypeName}}View extends React.Component {
   {{#each VIEW.relations as |RELATION|}}
   {{#if RELATION.sdk}}{{#gettype RELATION.type true}}{{#with . as |REL_TYPE|}}
   {{#if RELATION.sync}}
+  init{{camelT REL_TYPE.name}}Subscription() {
+    console.log("{{TypeName}} - SUBSCRP", this.props)
+    if (!this.{{camel RELATION.name}}Subscription && this.props.{{camel RELATION.name}}) {
+      this.subscribeTo{{camelT REL_TYPE.name}}Notifications(0, this.props.{{typeName}}.{{typeName}}.id);
+    }
+  }
   subscribeTo{{camelT REL_TYPE.name}}List = (endCursor, {{typeName}}IdStr) => {
     let {{typeName}}Id = parseInt({{typeName}}IdStr);
-    console.log("{{REL_TYPE.name}} - SUBSCRP", this.props, endCursor, {{typeName}}IdStr, {{typeName}}Id)
+    console.log("{{REL_TYPE.name}} - subscribing", this.props, endCursor, {{typeName}}IdStr, {{typeName}}Id)
     const { subscribeToMore{{camelT REL_TYPE.name}} } = this.props;
 
     this.{{camel REL_TYPE.name}}Subscription = subscribeToMore{{camelT REL_TYPE.name}}({

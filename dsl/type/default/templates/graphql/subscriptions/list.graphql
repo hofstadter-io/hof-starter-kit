@@ -4,17 +4,17 @@
 #import "../fragments/type-solo.graphql"
 
 subscription on{{TypeName}}sNotification(
-  {{#each TYPE.relatations as |RELATION|}}
+  {{#each TYPE.relations as |RELATION|}}
   {{#if (eq RELATION.relation "belongs-to-one")}}
-  ${{typeName}}Id: Int!,
+  ${{camel RELATION.name}}Id: Int!,
   {{/if}}
   {{/each}}
   $endCursor: Int!
   ) {
   {{typeName}}sNotification(
-    {{#each TYPE.relatations as |RELATION|}}
+    {{#each TYPE.relations as |RELATION|}}
     {{#if (eq RELATION.relation "belongs-to-one")}}
-    {{typeName}}Id: ${{typeName}}Id,
+    {{camel RELATION.name}}Id: ${{camel RELATION.name}}Id,
     {{/if}}
     {{/each}}
     endCursor: $endCursor

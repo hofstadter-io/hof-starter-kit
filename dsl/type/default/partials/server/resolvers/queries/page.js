@@ -135,7 +135,7 @@ obj.Query.{{typeName}}Page = authSwitch([
           compare: '=',
           value: true
         })
-        const results = await context.{{TypeName}}.getMany(args);
+        const results = await context.{{TypeName}}.paging(args);
         return { results: results, count: -1, total: -1, errors: null};
       } catch (e) {
         return { results: null, count: -1, total: -1, errors: [e]};
@@ -146,7 +146,7 @@ obj.Query.{{typeName}}Page = authSwitch([
   // non-visibility view
   {
     requiredScopes: (sources, args, context, info) => {
-      console.log('Query.{{typeName}}List - non-owner - reqd', context.auth, context.user);
+      console.log('Query.{{typeName}}Page - non-owner - reqd', args, context.auth, context.user);
       {{#if AUTH.view}}
       {{#each AUTH.view as |ROLE|}}
       return [
@@ -160,10 +160,61 @@ obj.Query.{{typeName}}Page = authSwitch([
     providedScopes: (sources, args, context, info) => context.auth.scope,
     callback: async (sources, args, context, info) => {
       try {
-        const results = await context.{{TypeName}}.getMany(args);
-        return { results: results, count: -1, total: -1, errors: null};
+        /*
+          {{{yaml TYPE.relations}}}
+        */
+        {{#each TYPE.relations as |RELATION|}}
+        {{#if (eq RELATION.relation "belongs-to-one")}}
+        if (args.{{camel RELATION.name}}Id) {
+          args.filters = [{
+            field: '{{snake RELATION.name}}_id',
+            compare: '=',
+            value: args.{{camel RELATION.name}}Id
+          }]
+
+        }
+        {{/if}}
+        {{/each}}
+
+        console.log('Query.{{typeName}}Page - non-owner - args', args);
+
+        const results = await context.{{TypeName}}.paging(args);
+
+        console.log('Query.{{typeName}}Page - non-owner - results', results);
+
+        const edgesArray: Edges[] = [];
+        const total = results.count;
+        const hasNextPage = total > args.after + args.limit;
+
+        results.results.map(({{typeName}}, index) => {
+          edgesArray.push({
+            cursor: args.after + index,
+            node: {{typeName}}
+          });
+        });
+        const endCursor = edgesArray.length > 0 ? edgesArray[edgesArray.length - 1].cursor : 0;
+
+        const ret = {
+          count: total,
+          edges: edgesArray,
+          pageInfo: {
+            endCursor,
+            hasNextPage
+          },
+          errors: null
+        };
+        console.log('Query.{{typeName}}Page - non-owner - ret', ret);
+        return ret;
       } catch (e) {
-        return { results: null, count: -1, total: -1, errors: [e]};
+        console.error('Query.{{typeName}}Page - non-owner - ERROR', e);
+
+        const ret = {
+          count: -1,
+          edges: null,
+          pageInfo: null,
+          errors: [e]
+        };
+        return ret;
       }
     }
   },
@@ -172,5 +223,4 @@ obj.Query.{{typeName}}Page = authSwitch([
 ], {
   validator: 'wildcard-i-love-trump'
 });
-
 

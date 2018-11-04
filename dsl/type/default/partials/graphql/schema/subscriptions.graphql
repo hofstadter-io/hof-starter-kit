@@ -4,7 +4,7 @@ extend type Subscription {
     endCursor: Int!
     {{#each TYPE.relations as |RELATION|}}
     {{#if (eq RELATION.relation "belongs-to-one")}}
-    {{RELATION.name}}Id: Int!
+    {{camel RELATION.name}}Id: Int!
     {{/if}}
     {{/each}}
   ): {{TypeName}}Notification

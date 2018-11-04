@@ -31,7 +31,10 @@ const {{TypeName}}View = (props) => {
   if ({{typeName}} && {{typeName}}.{{typeName}}) {
     {{typeName}} = {{typeName}}.{{typeName}}
   }
-  console.log("RENDER", currentUser, {{typeName}}, {{typeName}}Obj);
+
+  console.log("PROOOOPS", props);
+
+  // console.log("RENDER", currentUser, {{typeName}}, {{typeName}}Obj);
   // if new {{typeName}} was just added read it from router
   if (!{{typeName}}Obj && location.state) {
     {{typeName}}Obj = location.state.{{typeName}};

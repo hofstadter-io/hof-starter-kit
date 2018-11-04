@@ -46,7 +46,7 @@ export default graphql(PAGE, {
             const pageInfo = fetchMoreResult.{{typeName}}Page.pageInfo;
             const displayedEdges = dataDelivery === 'add' ? [...previousResult.{{typeName}}Page.edges, ...newEdges] : newEdges;
 
-            return {
+            let ret = {
               // By returning `cursor` here, we update the `fetchMore` function
               // to the new cursor.
               {{typeName}}Page: {
@@ -56,11 +56,23 @@ export default graphql(PAGE, {
                 __typename: '{{TypeName}}s'
               }
             };
+
+            ret.{{typeName}}s = ret.{{typeName}}Page
+
+            console.log("{{TypeName}} PAGING DATA - fetchMore - ret", ret)
+            return ret;
           }
         });
       };
       if (error) throw new Error(error);
-      return { loading, {{typeName}}s, {{typeName}}Page, subscribeToMore{{TypeName}}: subscribeToMore, loadData };
+      // let ret = { loading, {{typeName}}s: {{typeName}}Page, {{typeName}}Page, subscribeToMore{{TypeName}}: subscribeToMore, loadData };
+      let ret = { loading, subscribeToMore{{TypeName}}: subscribeToMore, loadData };
+      // if ({{typeName}}Page) {
+        ret.{{typeName}}Page = {{typeName}}Page
+        // ret.{{typeName}}s = {{typeName}}Page
+      // }
+      console.log("{{TypeName}} PAGING DATA - ret", ret)
+      return ret;
     }
   })
 

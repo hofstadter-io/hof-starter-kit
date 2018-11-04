@@ -10,7 +10,15 @@ const TYPE_NAME_{{upper type_name}} = '{{TypeName}}';
 const defaults = {
   {{typeName}}: {
     id: null,
+    /*
+    createdAt: null,
+    updatedAt: null,
     {{> client/resolvers/type-fields.js}}
+    {{#if TYPE.owned}}
+    {{#if TYPE.owned.name}}{{TYPE.owned.name}}{{else}}user{{/if}},
+    {{#if TYPE.owned.name}}{{TYPE.owned.name}}Id{{else}}userId{{/if}},
+    {{/if}}
+    */
     __typename: TYPE_NAME_{{upper type_name}}
   },
   __typename: TYPE_NAME

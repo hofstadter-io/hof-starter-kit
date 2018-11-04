@@ -1,9 +1,9 @@
 {{#with DslContext as |TYPE|}}
 {{#with (camelT TYPE.name) as |TypeName|}}
 {{#with (camel  TYPE.name) as |typeName|}}
-#import "../fragments/type-nested.graphql"
+#import "../fragments/type-solo.graphql"
 
-mutation add{{TypeName}}Client(${{typeName}}: {{TypeName}}InfoNested!) {
+mutation add{{TypeName}}Client(${{typeName}}: {{TypeName}}Info!) {
   on{{TypeName}}Select(comment: $comment) @client
 }
 {{/with}}

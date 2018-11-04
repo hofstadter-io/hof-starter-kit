@@ -1,9 +1,10 @@
+#import "../fragments/type-solo.graphql"
+
 {{#with DslContext as |TYPE|}}
 mutation {{camel TYPE.name}}Update($id: Int!, $values: {{camelT TYPE.name}}UpdateInput!) {
   {{camel TYPE.name}}Update(id: $id, values: $values) {
     {{camel TYPE.name}} {
-      id
-      updatedAt
+      ...{{camelT TYPE.name}}Info
     }
     message
     errors {
