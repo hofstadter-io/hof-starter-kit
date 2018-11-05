@@ -80,11 +80,11 @@ obj.Query.{{typeName}} = authSwitch([
   {
     requiredScopes: async (sources, args, context, info) => {
       {{#if AUTH.view}}
-      {{#each AUTH.view as |ROLE|}}
       let reqd = [
+      {{#each AUTH.view as |ROLE|}}
         '{{ROLE}}:{{typeName}}/view'{{#unless @last}},{{/unless}}
-      ]
       {{/each}}
+      ]
       {{else}}
       let reqd = [];
       {{/if}}

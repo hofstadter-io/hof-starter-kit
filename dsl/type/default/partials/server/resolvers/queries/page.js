@@ -77,11 +77,11 @@ obj.Query.{{typeName}}Page = authSwitch([
     requiredScopes: (sources, args, context, info) => {
       console.log('Query.{{typeName}}Page - non-owner - reqd', context.auth, context.user);
       {{#if AUTH.view.private}}
-      {{#each AUTH.view.private as |ROLE|}}
       return [
+      {{#each AUTH.view.private as |ROLE|}}
         '{{ROLE}}:{{typeName}}/view'{{#unless @last}},{{/unless}}
-      ]
       {{/each}}
+      ]
       {{else}}
       return [];
       {{/if}}
@@ -149,11 +149,11 @@ obj.Query.{{typeName}}Page = authSwitch([
     requiredScopes: (sources, args, context, info) => {
       console.log('Query.{{typeName}}List - non-owner - reqd', context.auth, context.user);
       {{#if AUTH.view.public}}
-      {{#each AUTH.view.public as |ROLE|}}
       return [
+      {{#each AUTH.view.public as |ROLE|}}
         '{{ROLE}}:{{typeName}}/view'{{#unless @last}},{{/unless}}
-      ]
       {{/each}}
+      ]
       {{else}}
       return [];
       {{/if}}
@@ -212,11 +212,11 @@ obj.Query.{{typeName}}Page = authSwitch([
     requiredScopes: (sources, args, context, info) => {
       console.log('Query.{{typeName}}Page - non-owner - reqd', args, context.auth, context.user);
       {{#if AUTH.view}}
-      {{#each AUTH.view as |ROLE|}}
       return [
+      {{#each AUTH.view as |ROLE|}}
         '{{ROLE}}:{{typeName}}/view'{{#unless @last}},{{/unless}}
-      ]
       {{/each}}
+      ]
       {{else}}
       return [];
       {{/if}}
