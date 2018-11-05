@@ -2,8 +2,7 @@ import bcrypt from 'bcryptjs';
 import { returnId, truncateTables } from '../../sql/helpers';
 import { decamelizeKeys } from "humps";
 
-{{#with DslContext.modules as |MODS|}}
-{{#each MODS as |MOD|}}
+{{#each DslContext.modules as |MOD|}}
 import {{camelT MOD}}Seed, { clear as {{camelT MOD}}Clear } from '../../modules/{{kebab MOD}}/db/seeds';
 {{/each}}
 
@@ -13,7 +12,7 @@ const users = data.users;
 export async function seed(knex, Promise) {
   console.log("cleaning modules")
   // clean modules first
-{{#each MODS as |MOD|}}
+{{#each DslContext.modules as |MOD|}}
   await {{camelT MOD}}Clear(knex, Promise);
 {{/each}}
 
@@ -46,4 +45,3 @@ export async function seed(knex, Promise) {
   }
 
 }
-{{/with}}
