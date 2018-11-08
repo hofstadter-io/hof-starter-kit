@@ -8,7 +8,6 @@ import { FontAwesomeIcon  } from '@fortawesome/react-fontawesome';
 
 import i18n from 'i18next';
 import { LanguagePicker } from '../../../../modules/common/components/web';
-
 import translate from '../../../../i18n';
 
 import { IfLoggedIn, IfNotLoggedIn, withLoadedUser, withLogout } from '../../../user/containers/Auth';
@@ -47,6 +46,7 @@ class NavBar extends React.Component {
   };
 
   public render() {
+    console.log("NavBar.props", this.props);
     const { t } = this.props;
     return (
       <NavBarStyled>
@@ -101,7 +101,7 @@ class NavBar extends React.Component {
             </Nav>
           </Navbar>
         </div>
-      </NavbarStyled>
+      </NavBarStyled>
     );
   }
 }

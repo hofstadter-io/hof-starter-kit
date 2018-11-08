@@ -1,25 +1,24 @@
-import nodemailer from 'nodemailer';
-import mailgunTransport from 'nodemailer-mailgun-transport';
+import nodemailer from "nodemailer";
+import mailgunTransport from "nodemailer-mailgun-transport";
 
-import settings from '../../../../../settings';
+import settings from "../../../../../settings";
 
 const mailerConfig = settings.mailer;
 
 var transport = null;
 
 if (mailerConfig.provider === "mailgun") {
-    // Configure transport options
-    const mailgunOptions = {
-        auth: {
-            api_key: mailerConfig.auth.pass,
-            domain: mailerConfig.auth.user,
-        }
+  // Configure transport options
+  const mailgunOptions = {
+    auth: {
+      api_key: mailerConfig.auth.pass,
+      domain: mailerConfig.auth.user
     }
+  };
 
-    transport = mailgunTransport(mailgunOptions)
-
+  transport = mailgunTransport(mailgunOptions);
 } else {
-    transport = mailerConfig;
+  transport = mailerConfig;
 }
 
 const nm = nodemailer.createTransport(transport);
