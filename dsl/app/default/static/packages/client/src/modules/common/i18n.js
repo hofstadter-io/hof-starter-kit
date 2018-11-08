@@ -9,7 +9,7 @@ export default ns => {
       return reactI18next.translate(ns)(Component);
     } else {
       // eslint-disable-next-line react/display-name
-      return props => React.createElement(Component, { ...props, t: key => key });
+      return props => React.createElement(Component, { t: key => key, ...props });
     }
   };
 };

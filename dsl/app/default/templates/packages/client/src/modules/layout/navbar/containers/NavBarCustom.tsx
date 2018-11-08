@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import { NavLink, withRouter } from 'react-router-dom';
@@ -39,11 +38,7 @@ const NavBarStyled = styled.div`
 {{{file DslContext.layout.navbar.style}}}
 `
 
-class NavBar extends React.Component {
-  public static propTypes = {
-    t: PropTypes.func
-  };
-
+class NavBar extends React.Component<{t:any}> {
   public render() {
     const { t } = this.props;
     return (

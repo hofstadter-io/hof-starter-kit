@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import translate, { TranslateFunction } from '../../../../i18n';
@@ -9,11 +8,7 @@ const FooterStyled = styled.footer`
 {{{file DslContext.layout.footer.style}}}
 `
 
-class Footer extends React.Component {
-  public static propTypes = {
-    t: PropTypes.func
-  };
-
+class Footer extends React.Component<{ t?: any }> {
   public render() {
     const { t } = this.props;
     return (
