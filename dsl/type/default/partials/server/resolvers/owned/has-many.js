@@ -3,132 +3,20 @@ obj.User.{{typeName}}s = createBatchResolver(async (sources, args, context, info
   // TODO auth batching
 
   const blocks = [
-    // Owner Block
-    {
-      requiredScopes: (sources, args, context, info) => {
-        return ['owner:{{typeName}}/view']
-      },
-      providedScopes: (sources, args, context, info) => {
-        return sources.map(s => {
-          return s.userId == context.user.id ? context.auth.scope : []
-        })
-      },
-      callback: async (sources, args, context, info) => {
-        args.userId = context.user.id;
-        const results = await context.{{TypeName}}.getManyFor(args);
-        const ordered = orderedFor(results, [context.user.id], 'userId', false);
-				const ret = reconcileBatchOneToMany(us, ordered, 'userId');
 
-        return ret.map(r => r.length > 0 ? r : null);
-      }
-    },
+    {{> server/resolvers/owned/has-many-owner.js }}
 
-    // Non-owner Blocks
     {{#if TYPE.visibility.enabled}}
-    // private-visibility view
-    {
-      requiredScopes: (sources, args, context, info) => {
-        {{#if AUTH.view.private}}
-        {{#each AUTH.view.private as |ROLE|}}
-        return [
-          '{{ROLE}}:{{typeName}}/view'{{#unless @last}},{{/unless}}
-        ]
-        {{/each}}
-        {{else}}
-        return [];
-        {{/if}}
-      },
-      providedScopes: (sources, args, context, info) => {
-        return sources.map(s => context.auth.scope)
-      },
-      callback: async (sources, args, context, info) => {
-        var uids = sources.filter(s => s !== null).map(s => s.userId);
 
-        args.filters = [{
-          field: 'user_id',
-          compare: 'in',
-          values: uids,
-        }]
+    {{> server/resolvers/owned/has-many-viz-prv.js }}
+    {{> server/resolvers/owned/has-many-viz-pub.js }}
 
-        const results = await context.{{TypeName}}.getMany(args);
-        const ordered = orderedFor(results, uids, 'userId', false);
-				const ret = reconcileBatchOneToMany(us, ordered, 'userId');
-
-        return ret.map(r => r.length > 0 ? r : null);
-      }
-    },
-    // public-visibility view
-    {
-      requiredScopes: (sources, args, context, info) => {
-        {{#if AUTH.view.public}}
-        {{#each AUTH.view.public as |ROLE|}}
-        return [
-          '{{ROLE}}:{{typeName}}/view'{{#unless @last}},{{/unless}}
-        ]
-        {{/each}}
-        {{else}}
-        return [];
-        {{/if}}
-      },
-      providedScopes: (sources, args, context, info) => {
-        return sources.map(s => context.auth.scope)
-      },
-      callback: async (sources, args, context, info) => {
-        var filtered = sources.filter(s => s !== null)
-        var uids = filtered.map(s => s.userId);
-
-        args.filters = [{
-          field: 'user_id',
-          compare: 'in',
-          values: uids,
-          bool: 'and'
-        },{
-          field: '{{#if TYPE.visibility.public}}{{TYPE.visibility.public}}{{else}}public{{/if}}',
-          compare: '=',
-          value: true,
-          bool: 'and'
-        }]
-
-        const results = await context.{{TypeName}}.getMany(args);
-        const ordered = orderedFor(results, uids, 'userId', false);
-				const ret = reconcileBatchOneToMany(us, ordered, 'userId');
-        return ret.map(r => r.length > 0 ? r : null);
-      }
-    },
     {{else}}
-    // non-visibility view
-    {
-      requiredScopes: (sources, args, context, info) => {
-        {{#if AUTH.view}}
-        {{#each AUTH.view as |ROLE|}}
-        return [
-          '{{ROLE}}:{{typeName}}/view'{{#unless @last}},{{/unless}}
-        ]
-        {{/each}}
-        {{else}}
-        return [];
-        {{/if}}
-      },
-      providedScopes: (sources, args, context, info) => {
-        return sources.map(s => context.auth.scope)
-      },
-      callback: async (sources, args, context, info) => {
-        var uids = sources.filter(s => s !== null).map(s => s.userId);
 
-        args.filters = [{
-          field: 'user_id',
-          compare: 'in',
-          values: uids,
-        }]
+    {{> server/resolvers/owned/has-many-non-viz.js }}
 
-        const results = await context.{{TypeName}}.getMany(args);
-        const ordered = orderedFor(results, uids, 'userId', false);
-				const ret = reconcileBatchOneToMany(us, ordered, 'userId');
-
-        return ret.map(r => r.length > 0 ? r : null);
-      }
-    },
     {{/if}}
+
   ]
 
   const options = {
