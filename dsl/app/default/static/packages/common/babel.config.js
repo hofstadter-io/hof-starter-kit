@@ -8,8 +8,7 @@ module.exports = {
     '@babel/plugin-proposal-class-properties',
     ['@babel/plugin-proposal-decorators', { legacy: true }],
     '@babel/plugin-proposal-object-rest-spread',
-    ['styled-components', { ssr: true }],
-    ['import', { libraryName: 'antd-mobile' }]
+    ['styled-components', { ssr: true }]
   ],
   env: {
     production: {

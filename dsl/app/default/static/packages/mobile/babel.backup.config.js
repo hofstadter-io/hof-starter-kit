@@ -3,8 +3,7 @@ module.exports = {
   presets: ['babel-preset-expo'],
   plugins: [
     'haul/src/utils/fixRequireIssues',
-    ['styled-components', { ssr: true }],
-    ['import', { libraryName: 'antd-mobile' }]
+    ['styled-components', { ssr: true }]
   ],
   env: {
     production: {
