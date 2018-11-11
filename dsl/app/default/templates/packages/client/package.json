@@ -41,7 +41,7 @@
   "license": "MIT",
   "dependencies": {
 {{#each APP.imports as |IMPORT|}}
-    "{{IMPORT.library}}": "{{IMPORT.version}}",
+    "{{IMPORT.library}}": "{{#if IMPORT.version}}{{IMPORT.version}}{{else}}^0.0.0{{/if}}",
 {{/each}}
     "@fortawesome/fontawesome-svg-core": "^1.2.6",
     "@fortawesome/react-fontawesome": "0.1.3",
