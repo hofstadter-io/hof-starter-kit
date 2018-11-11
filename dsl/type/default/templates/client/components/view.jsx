@@ -19,10 +19,15 @@ import translate, { TranslateFunction } from '../../../../i18n';
 import {{COMPONENT.name}} from './{{COMPONENT.name}}';
 {{/each}}
 
-
+{{#each VIEW.imports as |IMPORT|}}
+import {{#if IMPORT.default}}{{IMPORT.default}}{{/if ~}}
+{{#if IMPORT.nested ~}}
+{{#if IMPORT.default}}, {{/if ~}}
+  { {{#each IMPORT.nested}}{{.}}{{#unless @last}}, {{/unless}}{{/each}} }{{/if}} from '{{IMPORT.library}}';
+{{/each}}
 
 const PageStyled = styled.div`
-{{{file TYPE.pages.view.style}}}
+{{{file VIEW.style}}}
 `
 
 const {{TypeName}}View = (props) => {
