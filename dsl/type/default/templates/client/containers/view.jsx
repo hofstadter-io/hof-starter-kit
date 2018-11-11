@@ -303,8 +303,11 @@ export default compose(
 {{/with}}{{/gettype}}{{/if}}
 {{/each}}
 
+{{#unless VIEW.omit-sdk}}
   {{TypeName}}SDK.View,
   {{TypeName}}SDK.Delete
+{{/unless}}
+
 )({{TypeName}}View);
 
 {{/with}}
