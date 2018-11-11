@@ -31,7 +31,7 @@ obj.Query.{{typeName}}Page = authSwitch([
         }
         {{/if}}
         const results = await context.{{TypeName}}.pagingFor(args);
-        const edgesArray: Edges[] = [];
+        const edgesArray = [];
         const total = results.count;
         const hasNextPage = total > args.after + args.limit;
 
@@ -112,7 +112,7 @@ obj.Query.{{typeName}}Page = authSwitch([
         console.log('Query.{{typeName}}Page - non-owner - results', results);
 
 
-        const edgesArray: Edges[] = [];
+        const edgesArray = [];
         const total = results.count;
         const hasNextPage = total > args.after + args.limit;
 
@@ -168,7 +168,7 @@ obj.Query.{{typeName}}Page = authSwitch([
           value: true
         })
         const results = await context.{{TypeName}}.paging(args);
-        const edgesArray: Edges[] = [];
+        const edgesArray = [];
         const total = results.count;
         const hasNextPage = total > args.after + args.limit;
 
@@ -246,7 +246,7 @@ obj.Query.{{typeName}}Page = authSwitch([
 
         console.log('Query.{{typeName}}Page - non-owner - results', results);
 
-        const edgesArray: Edges[] = [];
+        const edgesArray = [];
         const total = results.count;
         const hasNextPage = total > args.after + args.limit;
 
