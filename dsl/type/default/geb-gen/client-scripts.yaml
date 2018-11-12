@@ -1,0 +1,12 @@
+name: "default"
+template-configs:
+
+  - name: custom-scripts
+    field: scripts
+    templates:
+
+      - in: client/scripts/custom.js
+        out: "packages/client/src/{{pkg_path}}/{{name}}.js"
+
+
+
