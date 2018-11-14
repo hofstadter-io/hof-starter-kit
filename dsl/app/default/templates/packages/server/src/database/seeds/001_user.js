@@ -3,7 +3,11 @@ import { returnId, truncateTables } from '../../sql/helpers';
 import { decamelizeKeys } from "humps";
 
 {{#each DslContext.modules as |MOD|}}
+{{#getdsl (concat3 "modules." MOD ".module") true}}{{#with . as |MODULE|}}
+{{#if MODULE.seeds}}
 import {{camelT MOD}}Seed, { clear as {{camelT MOD}}Clear } from '../../modules/{{kebab MOD}}/db/seeds';
+{{/if}}
+{{/with}}{{/getdsl}}
 {{/each}}
 
 import data from '../../../../../user-files/seeds/users.json';
@@ -13,7 +17,11 @@ export async function seed(knex, Promise) {
   console.log("cleaning modules")
   // clean modules first
 {{#each DslContext.modules as |MOD|}}
+{{#getdsl (concat3 "modules." MOD ".module") true}}{{#with . as |MODULE|}}
+{{#if MODULE.seeds}}
   await {{camelT MOD}}Clear(knex, Promise);
+{{/if}}
+{{/with}}{{/getdsl}}
 {{/each}}
 
   console.log("cleaning users")

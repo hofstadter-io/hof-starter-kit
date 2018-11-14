@@ -1,19 +1,19 @@
-{{#with DslContext.modules as |MODS|}}
-{{#each MODS as |MOD|}}
+{{#each DslContext.modules as |MOD|}}
+{{#getdsl (concat3 "modules." MOD ".module") true}}{{#with . as |MODULE|}}
+{{#if MODULE.seeds}}
 import {{camelT MOD}}Seed, { clear as {{camelT MOD}}Clear } from '../../modules/{{kebab MOD}}/db/seeds';
+{{/if}}
+{{/with}}{{/getdsl}}
 {{/each}}
-{{/with}}
 
 export async function seed(knex, Promise) {
 
-{{#with DslContext.modules as |MODS|}}
-{{#each MODS as |MOD|}}
-//   await {{camelT MOD}}Clear(knex, Promise);
-{{/each}}
-
-{{#each MODS as |MOD|}}
+{{#each DslContext.modules as |MOD|}}
+{{#getdsl (concat3 "modules." MOD ".module") true}}{{#with . as |MODULE|}}
+{{#if MODULE.seeds}}
   await {{camelT MOD}}Seed(knex, Promise);
+{{/if}}
+{{/with}}{{/getdsl}}
 {{/each}}
-{{/with}}
 
 }
