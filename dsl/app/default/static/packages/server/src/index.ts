@@ -1,20 +1,21 @@
-import 'dotenv/config';
-import log from '../../common/log';
-import './server';
+import "dotenv/config";
+import log from "../../common/log";
+import "./server";
 
-process.on('uncaughtException', ex => {
+process.on("uncaughtException", ex => {
   log.error(ex);
   process.exit(1);
 });
 
-process.on('unhandledRejection', reason => {
+process.on("unhandledRejection", reason => {
+  console.log("GOT HERE");
   log.error(reason);
 });
 
 if (module.hot) {
   module.hot.status(event => {
-    if (event === 'abort' || event === 'fail') {
-      log('HMR error status: ' + event);
+    if (event === "abort" || event === "fail") {
+      log("HMR error status: " + event);
       // Signal webpack.run.js to do full-reload of the back-end
       process.exit(250);
     }

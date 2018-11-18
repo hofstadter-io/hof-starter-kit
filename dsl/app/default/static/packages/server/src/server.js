@@ -16,6 +16,7 @@ addGraphQLSubscriptions(server);
 const serverPromise = new Promise(resolve => {
   server.listen(serverPort, () => {
     log.info(`API is now running on port ${serverPort}`);
+    console.log(process.env)
     resolve(server);
   });
 });
@@ -25,28 +26,35 @@ server.on('close', () => {
 });
 
 if (module.hot) {
-  module.hot.dispose(() => {
-    try {
-      if (server) {
-        server.close();
+    module.hot.dispose(() => {
+      console.log("DISPOSE", process.env)
+      try {
+        if (server) {
+          server.close();
+        }
+      } catch (error) {
+        log(error.stack);
       }
-    } catch (error) {
-      log(error.stack);
-    }
-  });
-  module.hot.accept(['./app'], () => {
-    server.removeAllListeners('request');
-    server.on('request', app);
-  });
-  module.hot.accept(['./api/subscriptions'], () => {
-    try {
-      addGraphQLSubscriptions(server);
-    } catch (error) {
-      log(error.stack);
-    }
-  });
+    });
 
-  module.hot.accept();
+  if (process.env.HOF_CLIENT_COMPONENT === 'true') {
+    module.hot.accept(['./app'], () => {
+      server.removeAllListeners('request');
+      server.on('request', app);
+    });
+  }
+
+  if (process.env.HOF_SERVER_COMPONENT === 'true') {
+    module.hot.accept(['./api/subscriptions'], () => {
+      try {
+        addGraphQLSubscriptions(server);
+      } catch (error) {
+        log(error.stack);
+      }
+    });
+  }
+
+    module.hot.accept();
 }
 
 export default serverPromise;

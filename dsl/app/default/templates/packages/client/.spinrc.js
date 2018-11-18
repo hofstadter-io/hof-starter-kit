@@ -19,6 +19,10 @@ Object.keys(ifaces).forEach(function (ifname) {
       return
     }
 
+    if (ifname.substring(0,7) === "vboxnet") {
+      return
+    }
+
     if (alias >= 1) {
       // this single interface has multiple ipv4 addresses
       console.log(ifname + ':' + alias, iface.address);
@@ -51,8 +55,8 @@ const config = {
         __CLIENT__: true
       },
       // Wait for backend to start prior to letting webpack load frontend page
-      waitOn: ['tcp:localhost:8080'],
-      enabled: true
+      waitOn: ['tcp:localhost:8081'],
+      enabled: process.env.HOF_CLIENT_COMPONENT === 'true' ? true : false
     },
     test: {
       stack: ['server'],
@@ -93,7 +97,7 @@ const config = {
       __API_URL__: '"https://{{APP.name}}.hofstadter.io/graphql"'
     {{else}}
       __DEV__: process.env.NODE_ENV !== 'production',
-      __API_URL__: `"http://${hostIP}:8080/graphql"`
+      __API_URL__: `"http://${hostIP}:8081/graphql"`
     {{/if}}
 
     },

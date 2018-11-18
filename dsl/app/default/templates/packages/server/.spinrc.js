@@ -19,6 +19,10 @@ Object.keys(ifaces).forEach(function (ifname) {
       return
     }
 
+    if (ifname.substring(0,7) === "vboxnet") {
+      return
+    }
+
     if (alias >= 1) {
       // this single interface has multiple ipv4 addresses
       console.log(ifname + ':' + alias, iface.address);
@@ -40,6 +44,7 @@ const config = {
       defines: {
         __SERVER__: true
       },
+      //  enabled: process.env.HOF_SERVER_COMPONENT === 'true' ? true : false
       enabled: true
     },
     test: {
@@ -74,7 +79,7 @@ const config = {
     {{/if}}
 
     defines: {
-      __SERVER_PORT__: 8080,
+      __SERVER_PORT__: process.env.HOF_SERVER_COMPONENT === 'true' ? 8081 : 8080,
 
     {{#if (eq APP.mode "live")}}
       __DEV__: true,
@@ -96,12 +101,14 @@ const config = {
 config.options.devProxy = config.options.ssr;
 
 const extraDefines = {
-  k_SSR__: config.options.ssr,
+  __SSR__: config.options.ssr,
   __FRONTEND_BUILD_DIR__: `"../client/build"`,
   __DLL_BUILD_DIR__: `"../client/build/dll"`
 };
 
 config.options.defines = Object.assign(config.options.defines, extraDefines);
+
+console.log("DEFINES", config.options.defines)
 
 module.exports = config;
 {{/with}}

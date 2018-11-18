@@ -4,9 +4,13 @@ import path from 'path';
 import { isApiExternal } from './net';
 import modules from './modules';
 import graphiqlMiddleware from './middleware/graphiql';
-import websiteMiddleware from './middleware/website';
 import createApolloServer from './graphql';
 import errorMiddleware from './middleware/error';
+
+let websiteMiddleware = null;
+if (process.env.HOF_CLIENT_COMPONENT === 'true') {
+  websiteMiddleware = require('./middleware/website');
+}
 
 const app = express();
 
@@ -32,7 +36,7 @@ if (__DEV__) {
   });
 }
 
-if (!isApiExternal) {
+if (!isApiExternal && process.env.HOF_SERVER_COMPONENT === 'true') {
   const graphqlServer = createApolloServer();
   graphqlServer.applyMiddleware({
     app,
@@ -41,29 +45,33 @@ if (!isApiExternal) {
   });
 }
 
-// Workaround: this middleware should be because playground calls next func
-// See: https://github.com/prisma/graphql-playground/issues/557
-app.get('/graphql', () => {});
-app.get('/graphiql', (...args) => graphiqlMiddleware(...args));
-
-app.use((...args) => websiteMiddleware(...args));
-
-app.use(
-  '/',
-  express.static(__FRONTEND_BUILD_DIR__, {
-    maxAge: '180 days'
-  })
-);
-
-if (__DEV__) {
-  app.use('/', express.static(__DLL_BUILD_DIR__, { maxAge: '180 days' }));
-  app.use(errorMiddleware);
+if (process.env.HOF_SERVER_COMPONENT === 'true') {
+  // Workaround: this middleware should be because playground calls next func
+  // See: https://github.com/prisma/graphql-playground/issues/557
+  app.get('/graphql', () => {});
+  app.get('/graphiql', (...args) => graphiqlMiddleware(...args));
 }
 
-if (module.hot) {
-  module.hot.accept(['./middleware/website']);
-}
 
-// console.log(app._router.stack)
+
+if (process.env.HOF_CLIENT_COMPONENT === 'true') {
+  app.use((...args) => websiteMiddleware(...args));
+
+  app.use(
+    '/',
+    express.static(__FRONTEND_BUILD_DIR__, {
+      maxAge: '180 days'
+    })
+  );
+
+  if (__DEV__) {
+    app.use('/', express.static(__DLL_BUILD_DIR__, { maxAge: '180 days' }));
+    app.use(errorMiddleware);
+  }
+
+  if (module.hot) {
+    module.hot.accept(['./middleware/website']);
+  }
+}
 
 export default app;
