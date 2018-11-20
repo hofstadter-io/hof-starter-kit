@@ -8,9 +8,22 @@ template-configs:
       - in: client/index.jsx
         out: "packages/client/src/modules/{{name}}/index.jsx"
 
+      - in: client/pages/index.jsx
+        out: packages/client/src/modules/{{name}}/pages/index.jsx
+
       - in: client/locales/index.js
         out: packages/client/src/modules/{{name}}/locales/index.js
 
+  - name: module-pages
+    field: "pages"
+    templates:
+
+      - in: client/pages/page.jsx
+        out: packages/client/src/modules/{{parent}}/pages/{{name}}/index.jsx
+      - in: client/pages/container.jsx
+        out: packages/client/src/modules/{{parent}}/pages/{{name}}/container.jsx
+      - in: client/pages/component.jsx
+        out: packages/client/src/modules/{{parent}}/pages/{{name}}/component.jsx
 
   - name: translations
     field: "translations"

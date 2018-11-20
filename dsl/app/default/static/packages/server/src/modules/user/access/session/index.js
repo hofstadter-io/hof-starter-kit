@@ -21,6 +21,7 @@ const getCurrentUser = async ({ req }) => {
     try {
       return await User.getUser(req.session.userId);
     } catch(e) {
+      console.log("ERROR", e)
       throw new Error("internal server error");
     }
   }

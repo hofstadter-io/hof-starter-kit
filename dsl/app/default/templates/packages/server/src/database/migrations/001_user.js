@@ -1,5 +1,6 @@
 {{#with DslContext.user.profile as |PROFILE|}}
 exports.up = function(knex, Promise) {
+
   return Promise.all([
     knex.schema.createTable('user', table => {
       table.increments();
@@ -10,6 +11,7 @@ exports.up = function(knex, Promise) {
       table.boolean('is_active').defaultTo(false);
       table.timestamps(true, true);
     }),
+
     knex.schema.createTable('user_profile', table => {
       table.increments();
 
@@ -43,6 +45,19 @@ exports.up = function(knex, Promise) {
         .onDelete('CASCADE');
       table.timestamps(true, true);
     }),
+
+    knex.schema.createTable('auth_apikey', table => {
+      table.increments();
+      table.string('auth_apikey').unique();
+      table
+        .integer('user_id')
+        .unsigned()
+        .references('id')
+        .inTable('user')
+        .onDelete('CASCADE');
+      table.timestamps(true, true);
+    }),
+
     knex.schema.createTable('auth_certificate', table => {
       table.increments();
       table.string('serial').unique();
@@ -54,6 +69,7 @@ exports.up = function(knex, Promise) {
         .onDelete('CASCADE');
       table.timestamps(true, true);
     }),
+
     knex.schema.createTable('auth_facebook', table => {
       table.increments();
       table.string('fb_id').unique();
@@ -66,6 +82,7 @@ exports.up = function(knex, Promise) {
         .onDelete('CASCADE');
       table.timestamps(true, true);
     }),
+
     knex.schema.createTable('auth_google', table => {
       table.increments();
       table.string('google_id').unique();
@@ -78,6 +95,7 @@ exports.up = function(knex, Promise) {
         .onDelete('CASCADE');
       table.timestamps(true, true);
     }),
+
     knex.schema.createTable('auth_github', table => {
       table.increments();
       table.string('gh_id').unique();
@@ -90,6 +108,7 @@ exports.up = function(knex, Promise) {
         .onDelete('CASCADE');
       table.timestamps(true, true);
     }),
+
     knex.schema.createTable('auth_linkedin', table => {
       table.increments();
       table.string('ln_id').unique();
@@ -102,6 +121,7 @@ exports.up = function(knex, Promise) {
         .onDelete('CASCADE');
       table.timestamps(true, true);
     })
+
   ]);
 };
 

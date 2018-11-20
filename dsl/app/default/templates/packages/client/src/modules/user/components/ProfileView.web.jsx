@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 import translate from '../../../i18n';
 import SubscriptionProfile from '../../subscription/containers/SubscriptionProfile';
-import { Container, Card, CardGroup, CardTitle, CardText } from '../../common/components/web';
+import { Container, Card, CardGroup, CardTitle, CardText, Button } from '../../common/components/web';
 import { PageLayout } from '../../layout/page';
 
 import settings from '../../../../../../settings';
@@ -30,7 +30,8 @@ const renderMetaData = t => {
   );
 };
 
-const ProfileView = ({ currentUserLoading, currentUser, t }) => {
+const ProfileView = (props) => {
+  let { currentUserLoading, currentUser, generateApikey, t } = props;
   if (currentUserLoading && !currentUser) {
     return (
       <PageLayout>
@@ -43,6 +44,8 @@ const ProfileView = ({ currentUserLoading, currentUser, t }) => {
       </PageLayout>
     );
   } else if (currentUser) {
+    console.log("PROFILE", props)
+    console.log("CURRENT USER", currentUser, generateApikey)
     return (
       <PageLayout>
         {renderMetaData(t)}
@@ -70,6 +73,20 @@ const ProfileView = ({ currentUserLoading, currentUser, t }) => {
                       <CardText>{currentUser.profile.fullName}</CardText>
                     </CardGroup>
                   )}
+                <CardGroup>
+                  <CardTitle>{t('profile.card.group.apikey')}:</CardTitle>
+                  <CardText>
+                    {currentUser.auth && currentUser.auth.apikey && currentUser.auth.apikey.apikey !== null
+                      ?
+                        <b>{currentUser.auth.apikey.apikey}</b>
+                      :
+                        <Button
+                          className="btn btn-success btn-sm"
+                          onClick={() => props.generateApikey(currentUser.id)}
+                        >Generate</Button>
+                    }
+                  </CardText>
+                </CardGroup>
                 {settings.subscription.enabled && <SubscriptionProfile />}
               </Card>
               <Link
@@ -100,6 +117,7 @@ const ProfileView = ({ currentUserLoading, currentUser, t }) => {
 ProfileView.propTypes = {
   currentUserLoading: PropTypes.bool,
   currentUser: PropTypes.object,
+  generateApikey: PropTypes.func,
   t: PropTypes.func
 };
 

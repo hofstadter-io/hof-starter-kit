@@ -1,0 +1,12 @@
+#import "./User.graphql"
+mutation generateApikey($id: Int!) {
+  generateApikey(id: $id) {
+    user {
+      ...UserInfo
+    }
+    errors {
+      field
+      message
+    }
+  }
+}

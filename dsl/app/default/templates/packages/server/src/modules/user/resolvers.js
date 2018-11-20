@@ -18,10 +18,12 @@ export default pubsub => ({
       () => {
         return ['user:view'];
       },
-      (obj, { id }, { user, User, req: { t } }) => {
+      async (obj, { id }, { user, User, req: { t } }) => {
         if (user.id === id || user.role === 'admin') {
           try {
-            return { user: User.getUser(id) };
+            let ret = await User.getUser(id);
+            console.log("get User - ret", ret, id, user.id)
+            return { user: ret };
           } catch (e) {
             return { errors: e };
           }
@@ -32,10 +34,12 @@ export default pubsub => ({
         return { user: null, errors: e.getErrors() };
       }
     ),
-    currentUser(obj, args, { User, user }) {
+    currentUser: async (obj, args, { User, user }) => {
       try {
         if (user) {
-          return User.getUser(user.id);
+          let ret = await User.getUser(user.id);
+          console.log("currentUser - ret", ret, user.id)
+          return ret
         } else {
           return null;
         }
@@ -49,6 +53,7 @@ export default pubsub => ({
       return obj;
     },
     auth(obj) {
+      console.log("auth obj", obj)
       return obj;
     }
   },
@@ -67,6 +72,7 @@ export default pubsub => ({
       }
     }
   },
+
   Mutation: {
     addUser: withAuth(
       (obj, args, { User, user }) => {
@@ -94,6 +100,11 @@ export default pubsub => ({
 
           const [createdUserId] = await User.register({ ...input });
           await User.editUserProfile({ id: createdUserId, ...input });
+
+          if (settings.user.auth.apikey.enabled) {
+            // by default, generate an Apikey
+            await User.generateApikeyAuth({ userId: createdUserId });
+          }
 
           if (settings.user.auth.certificate.enabled) {
             await User.editAuthCertificate({ id: createdUserId, ...input });
@@ -226,7 +237,47 @@ export default pubsub => ({
           return { errors: e };
         }
       }
-    )
+    ),
+
+    generateApikey: withAuth(
+      (obj, args, { User, user }) => {
+        return user.id !== args.id ? ['user:update'] : ['user:update:self'];
+      },
+      async (obj, { id }, { User, user, req: { t } }) => {
+        const isAdmin = () => user.role === 'admin';
+        const isSelf = () => user.id === id;
+        try {
+
+        if (isSelf() || isAdmin() ) {
+          if (settings.user.auth.apikey.enabled) {
+            // by default, generate an Apikey
+            user = await User.getUser(id);
+            console.log("gen APIKey", id, user)
+            let apikey = null;
+            if (user.apikey) {
+              apikey = await User.regenerateApikeyAuth({ userId: id });
+            } else {
+              apikey = await User.generateApikeyAuth({ userId: id });
+            }
+            console.log("gen APIKey", apikey)
+          }
+
+          user = await User.getUser(id);
+          pubsub.publish(USERS_SUBSCRIPTION, {
+            usersUpdated: {
+              mutation: 'UPDATED',
+              node: user
+            }
+          });
+        }
+
+          console.log("geb API returns", user)
+          return { user };
+        } catch (e) {
+          return { errors: e };
+        }
+      }
+    ),
   },
   Subscription: {
     usersUpdated: {

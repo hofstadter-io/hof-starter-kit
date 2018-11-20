@@ -6,6 +6,8 @@ import UserEditView from '../components/UserEditView';
 
 import USER_QUERY from '../graphql/UserQuery.graphql';
 import EDIT_USER from '../graphql/EditUser.graphql';
+import GENERATE_APIKEY from '../graphql/GenerateApikey.graphql';
+
 import settings from '../../../../../../settings';
 import translate from '../../../i18n';
 import UserFormatter from '../helpers/UserFormatter';
@@ -62,6 +64,7 @@ export default compose(
       };
     },
     props({ data: { loading, user } }) {
+      console.log("User", user)
       const userPayload = user ? { user: user.user, errors: user.errors } : {};
       return {
         loading,
@@ -69,9 +72,11 @@ export default compose(
       };
     }
   }),
+
   graphql(EDIT_USER, {
     props: ({ ownProps: { history, navigation, location }, mutate }) => ({
       editUser: async input => {
+        console.log("GET HERE EDIT USER")
         try {
           const {
             data: { editUser }
@@ -96,5 +101,57 @@ export default compose(
         }
       }
     })
+  }),
+
+  graphql(GENERATE_APIKEY, {
+
+    props: (input) => {
+      console.log("APIKEY - input", input)
+      let { mutate } = input;
+
+      let id = 0;
+      if (input.ownProps.user) {
+        id = input.ownProps.user.id;
+      } else if (input.ownProps.match) {
+        id = input.ownProps.match.params.id;
+      } else if (input.ownProps.navigation) {
+        id = input.ownProps.navigation.state.params.id;
+      }
+
+      return {
+        generateApikey: async () => {
+          console.log("APIKEY - gen", id)
+          try {
+            const {
+              data: { generateApikey }
+            } = await mutate({
+              variables: { id }
+            });
+            console.log("APIKEY - data", generateApikey)
+            if (generateApikey.errors) {
+              return { errors: generateApikey.errors };
+            } else {
+              return { user: generateApikey.user }
+            }
+              /*
+            if (history) {
+              if (location && location.state && location.state.from === 'profile') {
+                return history.push('/profile');
+              }
+              return history.push('/users');
+            }
+
+            if (navigation) {
+              return navigation.goBack();
+            }
+            */
+
+          } catch (e) {
+            console.log(e.graphQLErrors);
+          }
+        }
+      }
+    }
+
   })
 )(UserEdit);

@@ -10,6 +10,9 @@ fragment UserInfo on User {
     ...UserProfileInfo
   }
   auth {
+    apikey {
+      apikey
+    }
     certificate {
       serial
     }

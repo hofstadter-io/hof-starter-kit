@@ -13,15 +13,28 @@ import resources from './locales';
 import {{camelT TYPE.name}} from './{{kebab TYPE.name}}';
 {{/with}}{{/gettype ~}}{{/each}}
 
+{{#if MODULE.pages}}
+import {{camelT TYPE.name}}Pages from './pages';
+{{/if}}
+
 const {{camelT MODULE.name}}Module = {
   localization: [{ ns: '{{MODULE.name}}', resources }]
 };
 
 export default new ClientModule(
-  {{camelT MODULE.name}}Module,
+
+  // pages
+  {{#if MODULE.pages}}
+  {{camelT TYPE.name}}Pages,
+  {{/if}}
+
+  // types
   {{#each MODULE.types as |T|}}{{#gettype T.type true}}{{#with . as |TYPE|}}
-  {{camelT TYPE.name}}{{#unless @last}},{{/unless ~}}
+  {{camelT TYPE.name}},
   {{/with}}{{/gettype ~}}{{/each}}
+
+  // module
+  {{camelT MODULE.name}}Module
 );
 
 {{/with}}

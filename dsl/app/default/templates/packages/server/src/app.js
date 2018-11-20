@@ -45,12 +45,10 @@ if (!isApiExternal && process.env.HOF_SERVER_COMPONENT === 'true') {
   });
 }
 
-if (process.env.HOF_SERVER_COMPONENT === 'true') {
   // Workaround: this middleware should be because playground calls next func
   // See: https://github.com/prisma/graphql-playground/issues/557
   app.get('/graphql', () => {});
   app.get('/graphiql', (...args) => graphiqlMiddleware(...args));
-}
 
 
 

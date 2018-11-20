@@ -64,6 +64,7 @@ class UserEditView extends React.PureComponent {
       );
     } else {
       const isNotSelf = !user || (user && user.id !== currentUser.id);
+      console.log("IS NOT SELF", isNotSelf, user && (user.role === 'admin') ? ( isNotSelf ? '/users' : '/profile' ) : '/profile')
       return (
         <PageLayout>
           {this.renderMetaData(t)}
@@ -77,7 +78,7 @@ class UserEditView extends React.PureComponent {
                   </h2>
                 </Col>
                 <Col xs="3">
-                  <Link id="back-button" to={user && user.role === 'admin' ? '/users' : '/profile'}>
+                  <Link id="back-button" to={user && (currentUser.role === 'admin') ? ( isNotSelf ? '/users' : '/profile' ) : '/profile'}>
                     Back
                   </Link>
                 </Col>
@@ -87,6 +88,8 @@ class UserEditView extends React.PureComponent {
                 shouldDisplayRole={isNotSelf}
                 shouldDisplayActive={isNotSelf}
                 initialValues={user}
+                generateApikey={this.props.generateApikey}
+                currentApikey={user.auth && user.auth.apikey && user.auth.apikey.apikey ? user.auth.apikey.apikey : null}
               />
               <br />
               <br />

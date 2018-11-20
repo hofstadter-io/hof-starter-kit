@@ -2,6 +2,7 @@
 import { camelizeKeys, decamelizeKeys, decamelize } from 'humps';
 import { has } from 'lodash';
 import bcrypt from 'bcryptjs';
+import uuidv4 from 'uuid/v4'
 
 import knex from '../../sql/connector';
 import { returnId } from '../../sql/helpers';
@@ -22,6 +23,7 @@ class User {
         'up.{{snake FIELD.name}}',
         {{/unless}}
         {{/each}}
+        'ak.apikey',
         'ca.serial',
         'fa.fb_id',
         'fa.display_name AS fbDisplayName',
@@ -34,6 +36,7 @@ class User {
       )
       .from('user AS u')
       .leftJoin('user_profile AS up', 'up.user_id', 'u.id')
+      .leftJoin('auth_apikey AS ak', 'ak.user_id', 'u.id')
       .leftJoin('auth_certificate AS ca', 'ca.user_id', 'u.id')
       .leftJoin('auth_facebook AS fa', 'fa.user_id', 'u.id')
       .leftJoin('auth_google AS ga', 'ga.user_id', 'u.id')
@@ -92,6 +95,7 @@ class User {
           'up.{{snake FIELD.name}}',
           {{/unless}}
           {{/each}}
+          'ak.apikey',
           'ca.serial',
           'fa.fb_id',
           'fa.display_name AS fbDisplayName',
@@ -104,6 +108,7 @@ class User {
         )
         .from('user AS u')
         .leftJoin('user_profile AS up', 'up.user_id', 'u.id')
+        .leftJoin('auth_apikey AS ak', 'ak.user_id', 'u.id')
         .leftJoin('auth_certificate AS ca', 'ca.user_id', 'u.id')
         .leftJoin('auth_facebook AS fa', 'fa.user_id', 'u.id')
         .leftJoin('auth_google AS ga', 'ga.user_id', 'u.id')
@@ -131,6 +136,27 @@ class User {
         .from('user AS u')
         .where('u.id', '=', id)
         .leftJoin('user_profile AS up', 'up.user_id', 'u.id')
+        .first()
+    );
+  }
+
+  async getUserWithApikey(apikey) {
+    return camelizeKeys(
+      await knex
+        .select(
+          'u.username',
+          'u.role',
+          'u.is_active',
+          'u.email',
+          {{#each PROFILE.fields as |FIELD|}}
+          'up.{{snake FIELD.name}}',
+          {{/each}}
+          'u.id'
+        )
+        .from('user AS u')
+        .leftJoin('auth_apikey AS ak', 'ak.user_id', 'u.id')
+        .leftJoin('user_profile AS up', 'up.user_id', 'u.id')
+        .where('ca.serial', '=', serial)
         .first()
     );
   }
@@ -165,6 +191,16 @@ class User {
     }
 
     return returnId(knex('user')).insert({ username, email, role, password_hash: passwordHash, is_active: !!isActive });
+  }
+
+  generateApikeyAuth({ userId }) {
+    const apikey = uuidv4();
+    return returnId(knex('auth_apikey')).insert({ apikey: apikey, user_id: userId }).then(() => apikey);
+  }
+
+  regenerateApikeyAuth({ userId }) {
+    const apikey = uuidv4();
+    return knex('auth_apikey').where('user_id', '=', userId).update({ apikey: apikey }).then(() => apikey);
   }
 
   createFacebookAuth({ id, displayName, userId }) {

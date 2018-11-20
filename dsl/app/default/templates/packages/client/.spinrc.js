@@ -56,7 +56,8 @@ const config = {
       },
       // Wait for backend to start prior to letting webpack load frontend page
       waitOn: ['tcp:localhost:8081'],
-      enabled: process.env.HOF_CLIENT_COMPONENT === 'true' ? true : false
+      enabled: true
+      // enabled: process.env.HOF_CLIENT_COMPONENT === 'true' ? true : false
     },
     test: {
       stack: ['server'],

@@ -6,7 +6,7 @@ import translate from '../../i18n';
 import access from './access';
 import resolvers from './resolvers';
 import resources from './locales';
-import ProfileView from './components/ProfileView';
+import ProfileView from './containers/Profile';
 import { MenuItem } from '../../modules/common/components/web';
 import Users from './containers/Users';
 import UserEdit from './containers/UserEdit';

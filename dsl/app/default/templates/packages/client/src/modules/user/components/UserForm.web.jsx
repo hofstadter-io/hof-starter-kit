@@ -29,8 +29,10 @@ const updateUserFormSchema = {
 
 const validate = (values, createNew) => validateForm(values, createNew ? createUserFormSchema : updateUserFormSchema);
 
-const UserForm = ({ values, handleSubmit, error, setFieldValue, t, shouldDisplayRole, shouldDisplayActive }) => {
-  const { username, email, role, isActive, profile, auth, password, passwordConfirmation } = values;
+const UserForm = (props) => {
+  console.log("UserForm", props)
+  const { values, handleSubmit, error, setFieldValue, t, shouldDisplayRole, shouldDisplayActive } = props;
+  const { username, email, role, isActive, apikey, profile, auth, password, passwordConfirmation } = values;
 
   return (
     <Form name="user" onSubmit={handleSubmit}>
@@ -93,6 +95,20 @@ const UserForm = ({ values, handleSubmit, error, setFieldValue, t, shouldDisplay
       />
       {{/each}}
 
+      {settings.user.auth.apikey.enabled && (
+        <div className="d-flex flex-row justify-content-between">
+          <p>API Key: {props.currentApikey}</p>
+          <Button
+            className="btn btn-warning btn-sm"
+            onClick={async () => {
+              console.log("REGEN !!!", props)
+              props.generateApikey(props.initialValues.id).then((result) => {
+                console.log("REGEN result", result, props)
+              });
+            }}
+          >Regenerate</Button>
+        </div>
+      )}
       {settings.user.auth.certificate.enabled && (
         <Field
           name="serial"
@@ -144,8 +160,10 @@ UserForm.propTypes = {
 
 const UserFormWithFormik = withFormik({
   mapPropsToValues: values => {
-    const { username, email, role, isActive, profile } = values.initialValues;
+    console.log("FORMIK", values)
+    const { id, username, email, role, isActive, profile } = values.initialValues;
     return {
+      id: id,
       username: username,
       email: email,
       role: role || 'user',

@@ -16,7 +16,6 @@ addGraphQLSubscriptions(server);
 const serverPromise = new Promise(resolve => {
   server.listen(serverPort, () => {
     log.info(`API is now running on port ${serverPort}`);
-    console.log(process.env)
     resolve(server);
   });
 });
@@ -27,7 +26,6 @@ server.on('close', () => {
 
 if (module.hot) {
     module.hot.dispose(() => {
-      console.log("DISPOSE", process.env)
       try {
         if (server) {
           server.close();

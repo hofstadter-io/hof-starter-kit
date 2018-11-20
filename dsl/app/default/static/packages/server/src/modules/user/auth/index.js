@@ -1,3 +1,4 @@
+import apikey from './apikey';
 import facebook from './facebook';
 import github from './github';
 import google from './google';
@@ -7,4 +8,4 @@ import linkedin from './linkedIn';
 
 import AuthModule from './AuthModule';
 
-export default new AuthModule(facebook, github, google, linkedin, password);
+export default new AuthModule(apikey, facebook, github, google, linkedin, password);

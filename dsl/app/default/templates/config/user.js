@@ -19,6 +19,9 @@ export default {
       sendAddNewUserEmail: true,
       enabled: true
     },
+    apikey: {
+      enabled: true
+    },
     certificate: {
       devSerial: CERTIFICATE_DEVSERIAL,
       enabled: false

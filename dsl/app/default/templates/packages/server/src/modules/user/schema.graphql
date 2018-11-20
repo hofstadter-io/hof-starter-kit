@@ -35,11 +35,16 @@ type UserProfile {
 
 # Additional authentication service info
 type UserAuth {
+  apikey: ApikeyAuth
   certificate: CertificateAuth
   facebook: FacebookAuth
   google: GoogleAuth
   github: GithubAuth
   linkedin: LinkedInAuth
+}
+
+type ApikeyAuth {
+  apikey: String
 }
 
 type CertificateAuth {
@@ -87,6 +92,8 @@ extend type Mutation {
   editUser(input: EditUserInput!): UserPayload!
   # Delete a user
   deleteUser(id: Int!): UserPayload!
+
+  generateApikey(id: Int!): UserPayload!
 }
 
 # Input for ordering users
@@ -109,11 +116,16 @@ input FilterUserInput {
 
 # Additional authentication service info
 input AuthInput {
+  apikey: AuthApikeyInput
   certificate: AuthCertificateInput
   facebook: AuthFacebookInput
   google: AuthGoogleInput
   github: AuthGitHubInput
   linkedin: AuthLinkedInInput
+}
+
+input AuthApikeyInput {
+  apikey: String
 }
 
 input AuthCertificateInput {

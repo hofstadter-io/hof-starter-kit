@@ -17,8 +17,8 @@ fragment {{TypeName}}Info on {{TypeName}} {
   {{/if}}
 
   {{#if TYPE.owned}}
-  {{TYPE.owned.name}}Id
-  {{TYPE.owned.name}}{
+  {{#if TYPE.owned.name}}{{TYPE.owned.name}}{{else}}user{{/if}}Id
+  {{#if TYPE.owned.name}}{{TYPE.owned.name}}{{else}}user{{/if}} {
     id
     username
     email

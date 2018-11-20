@@ -108,7 +108,5 @@ const extraDefines = {
 
 config.options.defines = Object.assign(config.options.defines, extraDefines);
 
-console.log("DEFINES", config.options.defines)
-
 module.exports = config;
 {{/with}}
