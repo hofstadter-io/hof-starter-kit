@@ -48,7 +48,7 @@ exports.up = function(knex, Promise) {
 
     knex.schema.createTable('auth_apikey', table => {
       table.increments();
-      table.string('auth_apikey').unique();
+      table.string('apikey').unique();
       table
         .integer('user_id')
         .unsigned()
