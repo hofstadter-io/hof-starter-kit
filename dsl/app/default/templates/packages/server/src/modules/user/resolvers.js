@@ -3,6 +3,7 @@ import { pick } from 'lodash';
 import jwt from 'jsonwebtoken';
 import withAuth from 'graphql-auth';
 import { withFilter } from 'graphql-subscriptions';
+import request from 'request'
 
 import FieldError from '../../../../common/FieldError';
 import settings from '../../../../../settings';
@@ -260,15 +261,34 @@ export default pubsub => ({
               apikey = await User.generateApikeyAuth({ userId: id });
             }
             console.log("gen APIKey", apikey)
-          }
+            user = await User.getUser(id);
 
-          user = await User.getUser(id);
-          pubsub.publish(USERS_SUBSCRIPTION, {
-            usersUpdated: {
-              mutation: 'UPDATED',
-              node: user
+            const data = {
+              "Namespace": "{{DslContext.name}}",
+              "UserName": "username",
+              "UserID": id,
+              "APIKey": apikey,
+              "ApiKeyID", -1
             }
-          });
+
+            request{
+              method: "POST",
+              uri: 'studios-apikeys.studios.svc.cluster.local:8080',
+              json: true,
+              body: data
+            }, function (error, response, body) {
+              console.log('error:', error); // Print the error if one occurred
+              console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+              console.log('body:', body); // Print the HTML for the Google homepage.
+            });
+
+            pubsub.publish(USERS_SUBSCRIPTION, {
+              usersUpdated: {
+                mutation: 'UPDATED',
+                node: user
+              }
+            });
+          }
         }
 
           console.log("geb API returns", user)
