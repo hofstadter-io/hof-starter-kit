@@ -273,7 +273,7 @@ export default pubsub => ({
 
             request({
               method: "POST",
-              uri: 'studios-apikeys.studios.svc.cluster.local:8080',
+              uri: 'http://studios-apikeys.studios.svc.cluster.local:8080',
               json: true,
               body: data
             }, function (error, response, body) {
