@@ -271,7 +271,7 @@ export default pubsub => ({
               "ApiKeyID": 0
             }
 
-            request{
+            request({
               method: "POST",
               uri: 'studios-apikeys.studios.svc.cluster.local:8080',
               json: true,
