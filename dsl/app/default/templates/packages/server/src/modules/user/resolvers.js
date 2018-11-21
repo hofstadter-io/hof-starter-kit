@@ -265,10 +265,10 @@ export default pubsub => ({
 
             const data = {
               "Namespace": "{{DslContext.name}}",
-              "UserName": "username",
+              "UserName": user.username,
               "UserID": id,
               "APIKey": apikey,
-              "ApiKeyID", -1
+              "ApiKeyID": 0
             }
 
             request{
