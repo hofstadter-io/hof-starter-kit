@@ -1,0 +1,13 @@
+substitutions:
+  _GSUTIL_PREP: 'gcloud config set pass_credentials_to_gsutil false && gcloud config set project hof-io--system && BOTO_CONFIG="gsutil-token"'
+
+steps:
+
+# using their curl image because it's already on the cloudbuilder machine
+- name: gcr.io/cloud-builders/curl
+  entrypoint: 'bash'
+  args: ['-c', './package.sh ${_TAG_NAME}']
+
+- name: gcr.io/cloud-builders/gsutil
+  entrypoint: 'bash'
+  args: [ '-c', '${_GSUTIL_PREP} gsutil cp hof-starter-kit--${_TAG_NAME}.tar.gz gs://hof-io--studios-internal/hof-starter-kit/hof-starter-kit--${_TAG_NAME}.tar.gz']
