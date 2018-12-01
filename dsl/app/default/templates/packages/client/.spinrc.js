@@ -5,6 +5,8 @@ var os = require('os');
 var ifaces = os.networkInterfaces();
 var hostIP = "";
 
+console.log("MINIKUBE", process.env.MINIKUBE)
+
 Object.keys(ifaces).forEach(function (ifname) {
   var alias = 0;
 
@@ -94,7 +96,7 @@ const config = {
 
     {{#if (eq env.MINIKUBE "yes")}}
       __DEV__: true,
-      __API_URL__: `"http://localhost:3000/graphql"`
+      __API_URL__: `"/graphql"`
     {{else if (eq APP.mode "live")}}
       __DEV__: true,
       __API_URL__: '"https://{{APP.name}}.live.hofstadter.io/graphql"'
