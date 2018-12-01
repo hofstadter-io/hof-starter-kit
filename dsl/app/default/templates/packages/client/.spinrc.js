@@ -43,7 +43,8 @@ const config = {
       stack: ['web'],
       openBrowser: false,
       dllExcludes: ['bootstrap'],
-    {{#if (eq APP.mode "live")}}
+    {{#if (eq env.MINIKUBE "yes")}}
+    {{else if (eq APP.mode "live")}}
       webpackDevProtocol: "https",
       webpackDevHost: "{{DslContext.name}}.live.hofstadter.io",
       webpackDevPort: 443,
@@ -73,24 +74,28 @@ const config = {
     // cache: false,
     webpackDll: true,
     reactHotLoader: false,
-
-    {{#if (eq APP.mode "live")}}
     ssr: false,
+
+    {{#if (eq env.MINIKUBE "yes")}}
+    minify: false,
+    sourceMap: true,
+    {{else if (eq APP.mode "live")}}
     minify: true,
     sourceMap: false,
     {{else if (eq APP.mode "prod")}}
-    ssr: false,
     minify: true,
     sourceMap: false,
     {{else}}
-    ssr: false,
     minify: false,
     sourceMap: true,
     {{/if}}
 
     defines: {
 
-    {{#if (eq APP.mode "live")}}
+    {{#if (eq env.MINIKUBE "yes")}}
+      __DEV__: true,
+      __API_URL__: `"http://localhost:3000/graphql"`
+    {{else if (eq APP.mode "live")}}
       __DEV__: true,
       __API_URL__: '"https://{{APP.name}}.live.hofstadter.io/graphql"'
     {{else if (eq APP.mode "prod")}}
@@ -120,3 +125,11 @@ config.options.defines = Object.assign(config.options.defines, extraDefines);
 
 module.exports = config;
 {{/with}}
+
+/*
+{{{ env }}}
+*/
+
+/*
+{{{ ENV }}}
+*/

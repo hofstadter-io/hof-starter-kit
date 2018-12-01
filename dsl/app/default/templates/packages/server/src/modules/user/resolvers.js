@@ -263,6 +263,7 @@ export default pubsub => ({
             console.log("gen APIKey", apikey)
             user = await User.getUser(id);
 
+            {{#if (eq APP.name "studios")}}
             const data = {
               "Namespace": "{{DslContext.name}}",
               "UserName": user.username,
@@ -281,6 +282,7 @@ export default pubsub => ({
               console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
               console.log('body:', body); // Print the HTML for the Google homepage.
             });
+            {{/if}}
 
             pubsub.publish(USERS_SUBSCRIPTION, {
               usersUpdated: {
