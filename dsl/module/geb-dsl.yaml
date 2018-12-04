@@ -1,4 +1,6 @@
+name: "module"
+version: "0.0.1"
+
 spec:
-  name: "module"
   type: "object"
   fields: []

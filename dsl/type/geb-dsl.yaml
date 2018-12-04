@@ -1,4 +1,6 @@
+name: "type"
+version: "0.0.1"
+
 spec:
-  name: "type"
   type: "object"
   fields: []
