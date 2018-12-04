@@ -1,0 +1,13 @@
+name: "default"
+template-configs:
+
+  - name: type-custom-components
+    field: components
+    templates:
+
+      - in: client/components/custom.jsx
+        out: "packages/client/src/{{pkg_path}}/{{name}}.jsx"
+      - in: client/containers/custom.jsx
+        when: "data"
+        out: "packages/client/src/{{pkg_path}}/../containers/{{name}}.jsx"
+

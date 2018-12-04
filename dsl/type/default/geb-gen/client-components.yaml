@@ -24,14 +24,3 @@ template-configs:
       - in: client/components/view-rel-list.jsx
         out: "packages/client/src/{{pkg_path}}/../../../components/view-{{kebab name}}-list.jsx"
 
-  - name: custom-components
-    field: components
-    templates:
-
-      - in: client/components/custom.jsx
-        out: "packages/client/src/{{pkg_path}}/{{name}}.jsx"
-      - in: client/containers/custom.jsx
-        out: "packages/client/src/{{pkg_path}}/../containers/{{name}}.jsx"
-
-
-

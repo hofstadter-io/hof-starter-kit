@@ -4,6 +4,7 @@ const url = require('url');
 var os = require('os');
 var ifaces = os.networkInterfaces();
 var hostIP = "";
+var minikubeIP = process.env.MINIKUBE_IP;
 
 console.log("MINIKUBE", process.env.MINIKUBE)
 

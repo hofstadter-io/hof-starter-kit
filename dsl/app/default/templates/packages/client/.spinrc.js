@@ -4,6 +4,7 @@ const url = require('url');
 var os = require('os');
 var ifaces = os.networkInterfaces();
 var hostIP = "";
+var minikubeIP = process.env.MINIKUBE_IP;
 
 console.log("MINIKUBE", process.env.MINIKUBE)
 
@@ -46,6 +47,9 @@ const config = {
       openBrowser: false,
       dllExcludes: ['bootstrap'],
     {{#if (eq env.MINIKUBE "yes")}}
+      webpackDevProtocol: "http",
+      webpackDevHost: `${minikubeIP}`,
+      webpackDevPort: 80,
     {{else if (eq APP.mode "live")}}
       webpackDevProtocol: "https",
       webpackDevHost: "{{DslContext.name}}.live.hofstadter.io",
@@ -96,7 +100,7 @@ const config = {
 
     {{#if (eq env.MINIKUBE "yes")}}
       __DEV__: true,
-      __API_URL__: `"/graphql"`
+      __API_URL__: `"http://${minikubeIP}/graphql"`
     {{else if (eq APP.mode "live")}}
       __DEV__: true,
       __API_URL__: '"https://{{APP.name}}.live.hofstadter.io/graphql"'
@@ -128,10 +132,3 @@ config.options.defines = Object.assign(config.options.defines, extraDefines);
 module.exports = config;
 {{/with}}
 
-/*
-{{{ env }}}
-*/
-
-/*
-{{{ ENV }}}
-*/

@@ -1,7 +1,7 @@
 name: "default"
 template-configs:
 
-  - name: custom-scripts
+  - name: type-custom-scripts
     field: scripts
     templates:
 

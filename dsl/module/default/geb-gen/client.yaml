@@ -25,7 +25,24 @@ template-configs:
       - in: client/pages/component.jsx
         out: packages/client/src/modules/{{parent}}/pages/{{name}}/component.jsx
 
-  - name: translations
+  - name: module-custom-components
+    field: components
+    templates:
+
+      - in: client/components/custom.jsx
+        out: "packages/client/src/modules/{{parent}}/components/{{camelT name}}.jsx"
+      - in: client/containers/custom.jsx
+        when: "data"
+        out: "packages/client/src/modules/{{parent}}/components/{{camelT name}}Container.jsx"
+
+  - name: module-custom-scripts
+    field: scripts
+    templates:
+
+      - in: client/scripts/custom.js
+        out: "packages/client/src/{{pkg_path}}/{{name}}.js"
+
+  - name: module-translations
     field: "translations"
     templates:
 
