@@ -1,0 +1,4 @@
+spec:
+  name: "module"
+  type: "object"
+  fields: []
