@@ -1,0 +1,4 @@
+spec:
+  name: "type"
+  type: "object"
+  fields: []
