@@ -1,4 +1,5 @@
-name: module
+name: "module"
+version: "0.0.1"
 
 spec:
   type: "object"
