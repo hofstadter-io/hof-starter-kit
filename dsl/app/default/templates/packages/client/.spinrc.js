@@ -46,6 +46,7 @@ const config = {
       stack: ['web'],
       openBrowser: false,
       dllExcludes: ['bootstrap'],
+
     {{#if (eq env.MINIKUBE "yes")}}
       webpackDevProtocol: "http",
       webpackDevHost: `${minikubeIP}`,
@@ -58,6 +59,7 @@ const config = {
     {{else}}
       webpackDevHost: `${hostIP}`,
     {{/if}}
+
       defines: {
         __CLIENT__: true
       },

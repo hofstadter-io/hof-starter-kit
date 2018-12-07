@@ -1,19 +1,13 @@
 {{#with RepeatedContext as |PAGE|}}
+import React from 'react';
+import { Route } from 'react-router-dom';
+import { AuthRoute } from '../../../user/containers/Auth';
+
 import ClientModule from '../../../ClientModule';
 
-import { Route } from 'react-router-dom';
-import { AuthRoute } from '../../user/containers/Auth';
+import Container from './container';
 
-// import Container from './container';
-
-const Container = (props) => {
-  console.log("{{PAGE.route}} - props", props)
-  return (
-    <p>hi</p>
-  )
-}
-
-export default ClientModule({
+const page = {
   {{#if PAGE.route}}
   route: [
     {{#if PAGE.auth}}
@@ -23,17 +17,19 @@ export default ClientModule({
       role={ {{{json PAGE.auth.roles}}} }
       redirect="/login"
       component={ Container }
-    />,
+    />
     {{else}}
     <Route
       exact
       path={"{{PAGE.route}}"}
       component={ Container }
-    />,
+    />
     {{/if}}
   ],
   {{/if}}
-});
+}
+
+export default new ClientModule(page);
 
 /*
 {{{yaml PAGE}}}

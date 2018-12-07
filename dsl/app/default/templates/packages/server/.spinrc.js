@@ -82,6 +82,7 @@ const config = {
     {{/if}}
 
     defines: {
+      // __SERVER_PORT__: process.env.HOF_SERVER_COMPONENT === 'true' ? 8081 : 8080,
       __SERVER_PORT__: process.env.HOF_SERVER_COMPONENT === 'true' ? 8081 : 8080,
 
     {{#if (eq env.MINIKUBE "yes")}}
@@ -102,6 +103,7 @@ const config = {
       __API_URL__: `"/graphql"`, // Use full URL if API is external, e.g. https://example.com/graphql
       __WEBSITE_URL__: `"http://${hostIP}:3000"`
     {{/if}}
+
     },
   }
 };

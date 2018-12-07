@@ -1,16 +1,16 @@
 {{#with DslContext as |MODULE|}}
 import ClientModule from '../../ClientModule';
 {{#each MODULE.pages as |PAGE|}}
-import {{PAGE.name}} from './{{PAGE.name}}';
+import {{camelT PAGE.name}} from './{{kebab PAGE.name}}';
 {{/each}}
 
 const pages = [
 {{#each MODULE.pages as |PAGE|}}
-  {{PAGE.name}},
+  {{camelT PAGE.name}},
 {{/each}}
 ]
 
-export default ClientModule(...pages);
+export default new ClientModule(...pages);
 
 /*
 {{{yaml MODULE}}}
