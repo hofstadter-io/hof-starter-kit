@@ -8,33 +8,26 @@ import CREATE from '../graphql/mutations/create.graphql';
 
 
 export default graphql(CREATE, {
-  props: ({ ownProps: { history, navigation }, mutate }) => ({
-    {{typeName}}Create: async (values, next) => {
-      console.log("{{typeName}}Create - args", values, next);
+  props: ({ ownProps, mutate }) => ({
+    // TODO pull apart values based on relationships
+    {{typeName}}Create: async (values) => {
+      // console.log("{{typeName}}Create - args", values);
       // want to get return and go to the actual item
       let ret = await mutate({
-        variables: { input: values }
+        variables: { input: values },
+        optimisticResponse: {
+          __typename: 'Mutation',
+          {{typeName}}Create: {
+            __typename: '{{TypeName}}MutationPayload',
+            // TODO pull apart and construct nased on relationships
+            {{typeName}}: values,
+            message: null,
+            errors: null
+          }
+        }
       });
-      console.log("{{typeName}}Create - ret", ret);
-      if (next) {
-        if (next === "" || next === "nowhere" || next === "stay"){
-          return
-        }
 
-        if (history) {
-          return history.push(next);
-        }
-        if (navigation) {
-          return navigation.navigate(next);
-        }
-      } else {
-        if (history) {
-          return history.push('{{TYPE.pages.list.route}}');
-        }
-        if (navigation) {
-          return navigation.navigate('{{TypeName}}List');
-        }
-      }
+      // console.log("{{typeName}}Create - ret", ret);
     }
   })
 })

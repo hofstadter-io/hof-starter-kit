@@ -1,6 +1,11 @@
+#import "../fragments/type-solo.graphql"
+
 {{#with DslContext as |TYPE|}}
 mutation {{camel TYPE.name}}Delete($id: Int!) {
   {{camel TYPE.name}}Delete(id: $id) {
+    {{camel TYPE.name}} {
+      ...{{camelT TYPE.name}}Info
+    }
     message
     errors {
       field

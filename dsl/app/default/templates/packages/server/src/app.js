@@ -7,10 +7,8 @@ import graphiqlMiddleware from './middleware/graphiql';
 import createApolloServer from './graphql';
 import errorMiddleware from './middleware/error';
 
-let websiteMiddleware = null;
-if (process.env.HOF_CLIENT_COMPONENT === 'true') {
-  websiteMiddleware = require('./middleware/website');
-}
+console.log("HOF ENV", process.env.HOF_CLIENT_COMPONENT, process.env.HOF_SERVER_COMPONENT)
+
 
 const app = express();
 
@@ -45,14 +43,18 @@ if (!isApiExternal && process.env.HOF_SERVER_COMPONENT === 'true') {
   });
 }
 
-  // Workaround: this middleware should be because playground calls next func
-  // See: https://github.com/prisma/graphql-playground/issues/557
-  app.get('/graphql', () => {});
-  app.get('/graphiql', (...args) => graphiqlMiddleware(...args));
+// Workaround: this middleware should be because playground calls next func
+// See: https://github.com/prisma/graphql-playground/issues/557
+app.get('/graphql', () => {});
+app.get('/graphiql', (...args) => graphiqlMiddleware(...args));
 
 
+
+let websiteMiddleware = null;
 
 if (process.env.HOF_CLIENT_COMPONENT === 'true') {
+  console.log("ADDING WEBSITE MIDDLEWARE")
+  websiteMiddleware = require('./middleware/website');
   app.use((...args) => websiteMiddleware(...args));
 
   app.use(

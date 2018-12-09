@@ -27,6 +27,7 @@ const defaults = {
 const resolvers = {
   Query: {
     {{typeName}}State: (_, args, { cache }) => {
+      console.log("{{typeName}}State", args, cache)
       const {
         {{typeName}}: { {{typeName}} }
       } = cache.readQuery({ query: {{upper TypeName}}_QUERY_CLIENT });
@@ -41,6 +42,7 @@ const resolvers = {
   },
   Mutation: {
     on{{TypeName}}Select: async (_, { {{typeName}} }, { cache }) => {
+      console.log("on{{TypeName}}Select", {{typeName}}, cache)
       await cache.writeData({
         data: {
           {{typeName}}: {

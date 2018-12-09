@@ -39,11 +39,19 @@ export default {
     idField: 'id',
   }),
   deleteFor: deleteMultiConditionAdapter({
+    printSQL: true,
     table: '{{snake TYPE.name}}',
     idField: 'id',
+    filters: [{
+      bool: 'and',
+      field: 'user_id',
+      compare: '=',
+      valueExtractor: args => args.userId
+    }]
   }),
 
   getFor: getAdapter({
+    printSQL: true,
     table: '{{snake TYPE.name}}',
     idField: 'id',
     filters: [{

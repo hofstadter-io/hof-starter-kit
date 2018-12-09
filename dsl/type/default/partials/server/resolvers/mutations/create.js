@@ -37,6 +37,12 @@ obj.Mutation.{{typeName}}Create = async (sources, args, context, info) => {
             }
           });
 
+          {{#each TYPE.relations as |RELATION|}}
+          {{#if (eq RELATION.relation "belongs-to-one")}}
+          // belongs-to-one notification?
+          {{/if}}
+          {{/each}}
+
           return { {{typeName}}: {{typeName}}Ret, errors: null };
         } catch (e) {
           return {

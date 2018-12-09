@@ -18,7 +18,7 @@ const limit =
 export default graphql(PAGE, {
 
     options: props => {
-      console.log("{{TypeName}} PAGING PROPS", props);
+      // console.log("{{TypeName}} PAGING PROPS", props);
       let localLimit = props.limit ? props.limit : limit;
       let vars = { limit: localLimit, after: 0 };
       {{#each TYPE.relations as |RELATION|}}
@@ -26,14 +26,14 @@ export default graphql(PAGE, {
       vars.{{camel RELATION.name}}Id = props.match.params.id;
       {{/if}}
       {{/each}}
-      console.log("{{TypeName}} PAGING PROPS - vars", vars);
+      // console.log("{{TypeName}} PAGING PROPS - vars", vars);
       return {
         variables: vars,
-        fetchPolicy: 'cache-and-network'
+        fetchPolicy: 'network-only'
       };
     },
     props: ({ data }) => {
-      console.log("{{TypeName}} PAGING DATA", data)
+      // console.log("{{TypeName}} PAGING DATA", data)
       const { loading, error, {{typeName}}s, {{typeName}}Page, fetchMore, subscribeToMore } = data;
       const loadData = (after, dataDelivery) => {
         return fetchMore({
@@ -49,7 +49,7 @@ export default graphql(PAGE, {
             let ret = {
               // By returning `cursor` here, we update the `fetchMore` function
               // to the new cursor.
-              {{typeName}}Page: {
+              {{typeName}}s: {
                 count,
                 edges: displayedEdges,
                 pageInfo,
@@ -59,19 +59,24 @@ export default graphql(PAGE, {
 
             ret.{{typeName}}s = ret.{{typeName}}Page
 
-            console.log("{{TypeName}} PAGING DATA - fetchMore - ret", ret)
+            // console.log("{{TypeName}} PAGING DATA - fetchMore - ret", ret)
             return ret;
           }
         });
       };
+
       if (error) throw new Error(error);
       // let ret = { loading, {{typeName}}s: {{typeName}}Page, {{typeName}}Page, subscribeToMore{{TypeName}}: subscribeToMore, loadData };
-      let ret = { loading, subscribeToMore{{TypeName}}: subscribeToMore, loadData };
+      let ret = {
+        loading{{TypeName}}s: loading,
+        {{typeName}}s: {{typeName}}Page ? {{typeName}}Page : null,
+        subscribeToMore{{TypeName}}s: subscribeToMore,
+        loadData
+      };
       // if ({{typeName}}Page) {
-        ret.{{typeName}}Page = {{typeName}}Page
-        // ret.{{typeName}}s = {{typeName}}Page
+      // ret.{{typeName}}s = {{typeName}}Page
       // }
-      console.log("{{TypeName}} PAGING DATA - ret", ret)
+      // console.log("{{TypeName}} PAGING DATA - ret", ret)
       return ret;
     }
   })

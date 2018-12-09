@@ -14,6 +14,20 @@ import settings from '../../../../../../../settings';
 import { PageLayout } from '../../../layout/page';
 import translate, { TranslateFunction } from '../../../../i18n';
 
+// TODO Pagenation should be conditionally included, also...
+//      there are possible multiple data paginations AND synchronizations
+import { Pagination } from '../../../common/components/web';
+import paginationConfig from '../../../../../../../config/pagination';
+const { itemsNumber, type } = paginationConfig.web;
+
+// Custom Imports
+{{#each PAGE.imports as |IMPORT|}}
+import {{#if IMPORT.default}}{{IMPORT.default}}{{/if ~}}
+{{#if IMPORT.nested ~}}
+{{#if IMPORT.default}}, {{/if ~}}
+{ {{#each IMPORT.nested}}{{.}}{{#unless @last}}, {{/unless}}{{/each}} } from '{{IMPORT.library}}';
+{{/if}}
+{{/each}}
 
 {{#each PAGE.components as |COMPONENT|}}
 {{#if (eq "type" (trimfrom_first COMPONENT.component "." false))}}
@@ -31,64 +45,73 @@ const PageStyled = styled.div`
 {{/each}}
 `
 
-const {{PageName}}Page = (props) => {
-  console.log("{{PageName}} - props", props);
+class {{PageName}}PageComponent extends React.Component {
+  static propTypes = {
+    {{> client/pages/prop-types.jsx }}
 
-  let { t } = props;
+    match: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired
+  };
 
-  const renderMetaData = () => {
+  render() {
+    let props = this.props;
+    // console.log("{{PageName}} - props", props);
 
-    var title = '{{PageName}}';
+
+    let {
+      {{#if PAGE.currentUser}}
+      currentUser,
+      {{/if}}
+
+      {{#each PAGE.data as |DATA|}}
+
+      {{#if DATA.query}}
+      loading{{camelT DATA.name}},
+      {{camel DATA.name}},
+      {{/if}}
+      {{/each}}
+
+      t
+    } = props;
+
+    const renderMetaData = () => {
+
+      var title = '{{PageName}}';
+      return (
+        <Helmet
+          title={`${settings.app.name} - ${title}`}
+          meta={[
+            {
+              name: 'description',
+              content: t('{{pageName}}.meta')
+            }
+          ]}
+        />
+      );
+    }
+
+    // console.log("{{PageName}} - render", props);
+
     return (
-      <Helmet
-        title={`${settings.app.name} - ${title}`}
-        meta={[
-          {
-            name: 'description',
-            content: t('{{pageName}}.meta')
-          }
-        ]}
-      />
+      <PageLayout>
+        {renderMetaData()}
+        <PageStyled>
+          <div id="{{pageName}}Page">
+
+            {{#each PAGE.content as |CONTENT_FILE|}}
+            {{{file CONTENT_FILE}}}
+            {{/each}}
+
+          </div>
+        </PageStyled>
+
+      </PageLayout>
     );
   }
-
-  console.log("{{PageName}} - render", props);
-
-  return (
-    <PageLayout>
-      {renderMetaData()}
-      <PageStyled>
-        <div id="{{pageName}}Page">
-
-          {{#each PAGE.content as |CONTENT_FILE|}}
-          {{{file CONTENT_FILE}}}
-          {{/each}}
-
-        </div>
-      </PageStyled>
-
-    </PageLayout>
-  );
-
 };
 
-{{PageName}}Page.propTypes = {
-
-  {{#if PAGE.currentUser}}
-  currentUser: PropTypes.object.isRequired,
-  {{/if}}
-
-  {{#each PAGE.data as |DATA|}}
-  // loading{{camelT DATA.name}}: PropTypes.bool.isRequired,
-  // {{camel DATA.name}}: PropTypes.object.isRequired,
-  {{/each}}
-
-  match: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
-  t: PropTypes.func
-};
-
-export default translate('{{MODULE.name}}')({{PageName}}Page);
+export default translate('{{MODULE.name}}')({{PageName}}PageComponent);
 {{/with}}
 {{/with}}
 {{/with}}

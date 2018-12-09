@@ -66,17 +66,18 @@ const config = {
     reactHotLoader: false,
     persistGraphQL: false,
     frontendRefreshOnBackendChange: true,
-
-    {{#if (eq APP.mode "live")}}
     ssr: false,
+
+    {{#if (eq env.MINIKUBE "yes")}}
+    minify: false,
+    sourceMap: true,
+    {{else if (eq APP.mode "live")}}
     minify: true,
     sourceMap: false,
     {{else if (eq APP.mode "prod")}}
-    ssr: false,
     minify: true,
     sourceMap: false,
     {{else}}
-    ssr: false,
     minify: false,
     sourceMap: true,
     {{/if}}
