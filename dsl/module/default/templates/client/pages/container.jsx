@@ -28,30 +28,11 @@ class {{PageName}}PageContainer extends React.Component {
 
   {{> client/pages/container-funcs.jsx}}
 
-  render() {
-    // console.log("{{pageName}} Container RENDER", this.props)
-    return <{{PageName}}Page
-    {...this.props}
-
-    {{#each PAGE.data as |DATA|}}
-    {{#each DATA.mutations as |MUTATION|}}
-    {{#if (eq MUTATION "create")}}
-    create{{camelT DATA.name}}={ this.create{{camelT DATA.name}} }
-    {{else if (eq MUTATION "update")}}
-    update{{camelT DATA.name}}={ this.update{{camelT DATA.name}} }
-    {{else if (eq MUTATION "delete")}}
-    delete{{camelT DATA.name}}={ this.delete{{camelT DATA.name}} }
-    {{/if}}
-    {{/each}}
-    {{/each}}
-  />;
-  }
+  {{> client/pages/container-render.jsx}}
 }
 
 export default compose(
-
   {{> client/pages/container-compose.jsx}}
-
 )({{PageName}}PageContainer);
 
 {{/with}}

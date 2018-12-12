@@ -1,75 +1,36 @@
 {{#with DslContext as |MODULE|}}
 {{#with RepeatedContext as |COMPONENT|}}
+{{#with (camelT COMPONENT.name) as |ComponentName|}}
+{{#with (camel  COMPONENT.name) as |componentName|}}
 
 import React from 'react';
 import PropTypes from 'prop-types';
 import { compose } from 'react-apollo';
 import update from 'immutability-helper';
 
-{{#if PAGE.currentUser}}
-import { IfLoggedIn, IfNotLoggedIn, withLoadedUser } from '../../user/containers/Auth';
-{{/if}}
+import {{ComponentName}}Component from './{{ComponentName}}';
 
-{{#each COMPONENT.data as |DATA|}}
-// {{DATA.type}}
-{{#if (eq "type" (trimfrom_first DATA.type "." false))}}
-import {{DATA.name}}SDK from '../../../{{replace (trimprefix DATA.type "type.") "." "/" -1}}/sdk';
-{{else}}
-// unknown DATA type '{{DATA.type}}'
-{{/if}}
-{{/each}}
+{{> client/components/sdk-imports.jsx}}
 
-import {{camelT COMPONENT.name}}Component from './{{camelT COMPONENT.name}}';
+{{> client/components/sync-graphql-imports.jsx}}
+{{> client/components/sync-add-del.jsx}}
+{{> client/components/update-query-funcs.jsx}}
 
-class {{camelT COMPONENT.name}}Container extends React.Component {
+class {{ComponentName}}Container extends React.Component {
   static propTypes = {
-    {{#if COMPONENT.currentUser}}
-    currentUser: PropTypes.object.isRequired,
-    {{/if}}
-
-    {{#each COMPONENT.data as |DATA|}}
-    // loading{{camelT DATA.name}}: PropTypes.bool.isRequired,
-    // {{camel DATA.name}}: PropTypes.object.isRequired,
-    {{#if DATA.sync}}
-    // subscribeToMore{{camelT DATA.name}}: PropTypes.func.isRequired,
-    {{/if}}
-    {{/each}}
-
-    match: PropTypes.object.isRequired,
-    location: PropTypes.object.isRequired,
-    history: PropTypes.object.isRequired
+    {{> client/components/prop-types.jsx }}
   };
 
-  render() {
-    console.log("{{COMPONENT.name}} Container RENDER", this.props)
-    return <{{camelT COMPONENT.name}}Component {...this.props} />;
-  }
+  {{> client/components/container-funcs.jsx}}
+
+  {{> client/components/container-render.jsx}}
 }
 
 export default compose(
-
-  {{#if COMPONENT.currentUser}}
-  withLoadedUser,
-  {{/if}}
-
-  {{#each COMPONENT.data as |DATA|}}
-
-  {{#if DATA.query}}
-  {{#if (eq DATA.query.type "view")}}
-  {{camel DATA.name}}SDK.View,
-  {{else if (eq DATA.query.type "list")}}
-  {{camel DATA.name}}SDK.Page,
-  {{/if}}
-  {{/if}}
-
-  {{#each DATA.mutations as |MUTATION|}}
-  {{camel DATA.name}}SDK.{{camelT MUTATION}},
-  {{/each}}
-
-  {{/each}}
-
-)({{PageName}}PageContainer);
+  {{> client/components/container-compose.jsx}}
+)({{ComponentName}}Container);
 
 {{/with}}
 {{/with}}
-
+{{/with}}
+{{/with}}
