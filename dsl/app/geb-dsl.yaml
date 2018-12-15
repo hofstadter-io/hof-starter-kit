@@ -2,6 +2,15 @@ name: "app"
 version: "0.0.1"
 
 spec:
-  name: "app"
   type: "object"
-  fields: []
+  fields:
+    - name: "name"
+      type: "string"
+    - name: "title"
+      type: "string"
+    - name: "version"
+      type: "string"
+    - name: "modules"
+      type: "list"
+      items:
+        type: "string"

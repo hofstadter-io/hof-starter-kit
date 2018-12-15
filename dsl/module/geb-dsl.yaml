@@ -2,6 +2,17 @@ name: "module"
 version: "0.0.1"
 
 spec:
-  name: "module"
   type: "object"
-  fields: []
+  fields:
+    - name: "name"
+      type: "string"
+    - name: "types"
+      type: "list"
+      items:
+        type: "object"
+        fields: []
+    - name: "translations"
+      type: "list"
+      items:
+        type: "object"
+        fields: []

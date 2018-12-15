@@ -5,6 +5,8 @@ var os = require('os');
 var ifaces = os.networkInterfaces();
 var hostIP = "";
 
+console.log("MINIKUBE", process.env.MINIKUBE)
+
 Object.keys(ifaces).forEach(function (ifname) {
   var alias = 0;
 
@@ -81,7 +83,12 @@ const config = {
     defines: {
       __SERVER_PORT__: process.env.HOF_SERVER_COMPONENT === 'true' ? 8081 : 8080,
 
-    {{#if (eq APP.mode "live")}}
+    {{#if (eq env.MINIKUBE "yes")}}
+      __DEV__: true,
+      __API_URL__: '"/graphql"', // Use full URL if API is external, e.g. https://example.com/graphql
+      __WEBSITE_URL__: '"http://192.168.99.100"'
+      // __WEBSITE_URL__: `"http://localhost:3000"`
+    {{else if (eq APP.mode "live")}}
       __DEV__: true,
       __API_URL__: '"/graphql"', // Use full URL if API is external, e.g. https://example.com/graphql
       __WEBSITE_URL__: '"https://{{APP.name}}.live.hofstadter.io"'

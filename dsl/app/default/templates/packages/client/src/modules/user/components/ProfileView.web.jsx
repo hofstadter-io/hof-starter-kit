@@ -5,7 +5,7 @@ import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 
 import translate from '../../../i18n';
-import SubscriptionProfile from '../../subscription/containers/SubscriptionProfile';
+// import SubscriptionProfile from '../../subscription/containers/SubscriptionProfile';
 import { Container, Card, CardGroup, CardTitle, CardText, Button } from '../../common/components/web';
 import { PageLayout } from '../../layout/page';
 
@@ -87,7 +87,6 @@ const ProfileView = (props) => {
                     }
                   </CardText>
                 </CardGroup>
-                {settings.subscription.enabled && <SubscriptionProfile />}
               </Card>
               <Link
                 className="mt-2 btn user-link"
