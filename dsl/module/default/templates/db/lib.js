@@ -1,6 +1,6 @@
 {{#with DslContext as |MODULE|}}
 {{#each MODULE.types as |T|}}{{#gettype T.type true}}{{#with . as |TYPE| ~}}
-import {{camelT TYPE.name}} from './{{kebab TYPE.name}}';
+import {{camelT TYPE.name}} from './lib/{{kebab TYPE.name}}';
 {{/with}}{{/gettype ~}}{{/each}}
 
 export default {

@@ -7,5 +7,7 @@ template-configs:
     templates:
 
       - in: db/lib.js
-        out: "packages/server/src/{{relPath}}/db/{{kebab name}}.js"
+        out: "packages/server/src/{{relPath}}/db/lib/{{kebab name}}.js"
 
+      - in: db/migrations.js
+        out: "packages/server/src/{{relPath}}/db/migs/{{kebab name}}.js"

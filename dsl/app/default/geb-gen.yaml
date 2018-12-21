@@ -31,17 +31,15 @@ user-files:
     - "translations/**/*"
 
 dependencies:
+
   designs:
+
     - name: once-files
       field: "."
       templates:
         - in: mode.yaml
           out: mode.yaml
-
-    - name: migrations
-      field: "."
-      templates:
-        - in: init.yaml
-          out: init.yaml
+        - in: migs.yaml
+          out: migs.yaml
 
 
