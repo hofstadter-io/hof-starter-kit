@@ -1,6 +1,5 @@
-mig = knex.schema.createTable('{{snake TYPE.name}}', table => {
-  table.increments();
-  table.timestamps(true, true);
+// table - update
+mig = knex.schema.table('{{snake TYPE.name}}', table => {
 
   {{#each TYPE.fields as |FIELD|}}
   {{#if FIELD.appMigId}}
