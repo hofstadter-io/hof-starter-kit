@@ -4,6 +4,8 @@ table.string('{{snake FIELD.name}}'{{#if FIELD.length}}, {{FIELD.length}}{{/if}}
 table.text('{{snake FIELD.name}}');
 {{else if (eq FIELD.type "json")}}
 table.json('{{snake FIELD.name}}');
+{{else if (eq FIELD.type "jsonb")}}
+table.jsonb('{{snake FIELD.name}}');
 {{else if (eq FIELD.type "boolean")}}
 table.boolean('{{snake FIELD.name}}');
 {{else if (eq FIELD.type "integer")}}
