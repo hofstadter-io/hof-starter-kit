@@ -20,11 +20,3 @@ exports.down = function(migId, knex, Promise) {
   return Promise.all(migs);
 };
 
-// APP Migrations
-//
-// Current: {{DslContext.versionMig}}
-// Next:    {{DslContext.versionNext}}
-/* With:
-{{yaml RepeatedContext}}
-*/
-
