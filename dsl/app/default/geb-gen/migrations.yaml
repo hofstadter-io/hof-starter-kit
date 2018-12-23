@@ -11,8 +11,8 @@ template-configs:
     - in: packages/server/src/database/seeds/modules.js
       out: packages/server/src/database/seeds/modules.js
 
-    - in: packages/server/src/database/migrations/app-migrations.js
-      out: 'packages/server/src/database/migrations/{{printf1 "%05d" versionNext}}_migrations.js'
+    - in: packages/server/src/database/migrations/next-migration.js
+      out: 'packages/server/src/database/migrations/next_migration.js'
 
   - name: app-migration-files
     field: migrations
