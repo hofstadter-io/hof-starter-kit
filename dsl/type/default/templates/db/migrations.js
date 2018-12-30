@@ -4,7 +4,7 @@ exports.up = function(migId, knex, Promise) {
   var migs = [];
   var mig = null;
 
-  switch (migID) {
+  switch (migId) {
 
     {{#each (intloop APP.versionMig) as |MIG_ID|}}
     {{#if (int_gte MIG_ID TYPE.firstMigId) ~}}
@@ -28,7 +28,7 @@ exports.up = function(migId, knex, Promise) {
 exports.down = function(migId, knex, Promise) {
   var migs = [];
 
-  switch (migID) {
+  switch (migId) {
 
     {{#each (intloop APP.versionMig) as |MIG_ID|}}
     {{#if (int_gte MIG_ID TYPE.firstMigId) ~}}
