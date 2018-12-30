@@ -1,3 +1,4 @@
+{{#with DslContext as |APP|}}
 /*eslint-disable no-unused-vars*/
 import { pick } from 'lodash';
 import jwt from 'jsonwebtoken';
@@ -7,6 +8,9 @@ import request from 'request'
 
 import FieldError from '../../../../common/FieldError';
 import settings from '../../../../../settings';
+
+
+// {{APP.name}}
 
 const USERS_SUBSCRIPTION = 'users_subscription';
 
@@ -264,6 +268,7 @@ export default pubsub => ({
             user = await User.getUser(id);
 
             {{#if (eq APP.name "studios")}}
+            // ENABLE APIKEYS
             const data = {
               "Namespace": "{{DslContext.name}}",
               "UserName": user.username,
@@ -282,6 +287,8 @@ export default pubsub => ({
               console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
               console.log('body:', body); // Print the HTML for the Google homepage.
             });
+            {{else}}
+            // APP.name != studios '{{APP.name}}' {{eq APP.name "studios"}}
             {{/if}}
 
             pubsub.publish(USERS_SUBSCRIPTION, {
@@ -331,3 +338,4 @@ export default pubsub => ({
     }
   }
 });
+{{/with}}
