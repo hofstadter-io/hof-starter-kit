@@ -1,0 +1,18 @@
+name: "migrations"
+about: "DSL for app migrations"
+version: "0.0.1"
+language: multiple
+type: "app"
+
+template-configs:
+
+  - name: once-files
+    field: "."
+    templates:
+      - in: debug.yaml
+        out: debug.yaml
+      - in: migrations.yaml
+        out: migs.yaml
+
+
+

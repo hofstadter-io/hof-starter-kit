@@ -4,14 +4,10 @@ version: "0.0.1"
 language: multiple
 type: "type"
 
-ignore-design-path: true
-
 template-configs:
 
   - name: once-files
     field: "."
     templates:
 
-      - in: versions.yaml
-        out: "{{relPath}}/{{name}}-versions.yaml"
 
