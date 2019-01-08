@@ -1,0 +1,10 @@
+{{#with DslContext as |TYPE|}}
+type:
+  name: {{TYPE.name}}
+
+  migrations:
+    {{> type/migrations/current-migrations.yaml }}
+
+    {{> type/migrations/next-migrations.yaml }}
+
+{{/with}}
