@@ -7,7 +7,7 @@ exports.up = function(migId, knex, Promise) {
   switch (migID) {
 
     {{#each (intloop APP.versionMig) as |MIG_ID|}}
-    {{#if (int_gte TYPE.firstAppMigId MIG_ID)}}
+    {{#if (int_gte MIG_ID TYPE.firstAppMigId)}}
     case {{MIG_ID}}:
 
       {{> db/mig-up.js}}
@@ -31,7 +31,7 @@ exports.down = function(migId, knex, Promise) {
   switch (migID) {
 
     {{#each (intloop APP.versionMig) as |MIG_ID|}}
-    {{#if (int_gte TYPE.firstAppMigId MIG_ID)}}
+    {{#if (int_gte MIG_ID TYPE.firstAppMigId)}}
     case {{MIG_ID}}:
 
       {{> db/mig-down.js}}
