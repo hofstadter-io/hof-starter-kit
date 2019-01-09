@@ -1,11 +1,19 @@
 {{#with DslContext as |TYPE|}}
+{{#getdsl "app" true}}{{#with . as |APP|}}
 type:
   name: {{TYPE.name}}
+
+  # TODO - figure out how to determine if there was a migration
+  #        only inc if there was
   version: {{inc TYPE.version}}
+
+  fields:
+    {{> type/migrations/field-versions.yaml}}
 
   migrations:
     {{> type/migrations/current-migrations.yaml }}
 
     {{> type/migrations/next-migrations.yaml }}
 
+{{/with}}{{/getdsl}}
 {{/with}}

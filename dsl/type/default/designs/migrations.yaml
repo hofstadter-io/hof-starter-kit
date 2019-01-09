@@ -3,7 +3,7 @@ type:
   name: {{TYPE.name}}
   versionNext: {{inc TYPE.version}}
 
-  migrations:
+  next-migrations:
 {{#each TYPE.fields as |FIELD|}}
 
 {{#unless FIELD.version}}

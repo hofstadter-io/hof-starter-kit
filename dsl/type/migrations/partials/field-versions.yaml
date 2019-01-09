@@ -1,0 +1,8 @@
+{{#each TYPE.fields as |FIELD|}}
+- name: {{FIELD.name}}
+{{#if FIELD.version}}
+  version: {{FIELD.version}}
+{{else}}
+  version: {{inc TYPE.version}}
+{{/if}}
+{{/each}}

@@ -14,8 +14,6 @@ template-configs:
 
       - in: debug.yaml
         out: "{{relPath}}/{{name}}-debug.yaml"
-      - in: versions.yaml
-        out: "{{relPath}}/{{name}}-versions.yaml"
       - in: migrations.yaml
         out: "{{relPath}}/{{name}}-migrations.yaml"
 

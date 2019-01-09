@@ -1,17 +1,20 @@
 {{#with DslContext as |TYPE|}}
+{{#getdsl "app" true}}{{#with . as |APP|}}
 exports.up = function(migId, knex, Promise) {
   var migs = [];
   var mig = null;
 
-  switch (migId) {
+  switch (migID) {
 
-    {{#each TYPE.migrations as |MIG|}}
-    case {{MIG.appMigId}}:
+    {{#each (intloop APP.versionMig) as |MIG_ID|}}
+    {{#if (int_gte TYPE.firstAppMigId MIG_ID)}}
+    case {{MIG_ID}}:
 
       {{> db/mig-up.js}}
 
       break;
 
+    {{/if}}
     {{/each}}
   }
 
@@ -25,15 +28,17 @@ exports.up = function(migId, knex, Promise) {
 exports.down = function(migId, knex, Promise) {
   var migs = [];
 
-  switch (migId) {
+  switch (migID) {
 
-    {{#each TYPE.migrations as |MIG|}}
-    case {{MIG.appMigId}}:
+    {{#each (intloop APP.versionMig) as |MIG_ID|}}
+    {{#if (int_gte TYPE.firstAppMigId MIG_ID)}}
+    case {{MIG_ID}}:
 
       {{> db/mig-down.js}}
 
       break;
 
+    {{/if}}
     {{/each}}
   }
 
@@ -43,4 +48,5 @@ exports.down = function(migId, knex, Promise) {
 
   return Promise.all(migs);
 };
+{{/with}}{{/getdsl}}
 {{/with}}
