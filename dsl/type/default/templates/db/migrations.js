@@ -10,7 +10,7 @@ exports.up = function(migId, knex, Promise) {
     {{#if (int_gte MIG_ID TYPE.firstAppMigId)}}
     case {{MIG_ID}}:
 
-      {{> db/mig-up.js}}
+      {{> db/migs/up.js}}
 
       break;
 
@@ -19,7 +19,7 @@ exports.up = function(migId, knex, Promise) {
   }
 
   if (migId === "next") {
-    {{> db/next-up.js}}
+    {{> db/next/up.js}}
   }
 
   return Promise.all(migs);
@@ -34,7 +34,7 @@ exports.down = function(migId, knex, Promise) {
     {{#if (int_gte MIG_ID TYPE.firstAppMigId)}}
     case {{MIG_ID}}:
 
-      {{> db/mig-down.js}}
+      {{> db/migs/down.js}}
 
       break;
 
@@ -43,7 +43,7 @@ exports.down = function(migId, knex, Promise) {
   }
 
   if (migId === "next") {
-    {{> db/next-down.js}}
+    {{> db/next/down.js}}
   }
 
   return Promise.all(migs);
