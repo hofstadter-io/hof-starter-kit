@@ -4,9 +4,6 @@ template-configs:
 
   - name: once-files
     templates:
-    # database files
-    - in: packages/server/src/database/seeds/user.js
-      out: packages/server/src/database/seeds/user.js
 
     # server files
     - in: packages/server/src/modules/user/schema.graphql
