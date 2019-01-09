@@ -1,6 +1,11 @@
+{{#with DslContext as |APP|}}
 app:
-  name: "{{DslContext.name}}"
-
+  name: {{APP.name}}
   versionMig: {{inc DslContext.versionMig}}
 
+  migrations:
+    {{#each (intloop (inc APP.versionMig))}}
+    - {{.}}
+    {{/each}}
 
+{{/with}}
