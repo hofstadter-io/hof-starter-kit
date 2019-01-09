@@ -1,6 +1,6 @@
 // next DOWN
-{{#if TYPE.firstMigId}}
-{{> db/table-downdate-type-table.js}}
-{{else}}
+{{#if (eq TYPE.version 1)}}
 {{> db/table-delete-type-table.js}}
+{{else}}
+{{> db/table-downdate-type-table.js}}
 {{/if}}
