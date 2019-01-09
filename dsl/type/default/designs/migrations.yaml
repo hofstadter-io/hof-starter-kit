@@ -1,8 +1,9 @@
 {{#with DslContext as |TYPE|}}
 type:
   name: {{TYPE.name}}
-  migrations:
+  versionNext: {{inc TYPE.version}}
 
+  migrations:
 {{#each TYPE.fields as |FIELD|}}
 
 {{#unless FIELD.version}}

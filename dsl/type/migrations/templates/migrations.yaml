@@ -1,6 +1,7 @@
 {{#with DslContext as |TYPE|}}
 type:
   name: {{TYPE.name}}
+  version: {{inc TYPE.version}}
 
   migrations:
     {{> type/migrations/current-migrations.yaml }}

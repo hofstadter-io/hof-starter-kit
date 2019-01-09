@@ -26,8 +26,6 @@ dependencies:
     - name: once-files
       field: "."
       templates:
-        - in: versions.yaml
-          out: "{{relPath}}/{{name}}-versions.yaml"
         - in: migrations.yaml
           out: "{{relPath}}/{{name}}-migrations.yaml"
         - in: debug.txt
