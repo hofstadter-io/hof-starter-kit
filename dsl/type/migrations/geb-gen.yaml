@@ -17,3 +17,11 @@ template-configs:
       - in: migrations.yaml
         out: "{{relPath}}/{{name}}-migrations.yaml"
 
+dependencies:
+
+  designs:
+    - name: once-files
+      field: "."
+      templates:
+        - in: need-migs.yaml
+          out: "{{relPath}}/{{name}}-need-migs.yaml"

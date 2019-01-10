@@ -1,0 +1,26 @@
+# Does this type have any migrations this iteration?
+{{#with DslContext as |TYPE|}}
+type:
+  name: {{TYPE.name}}
+
+  need-migs:
+{{#each TYPE.fields as |FIELD|}}
+{{#unless FIELD.version}}
+  - name: "{{FIELD.name}}"
+    change: create
+{{/unless}}
+{{#if FIELD.rename}}
+  - name: "{{FIELD.name}}"
+    change: rename
+{{/if}}
+{{#if FIELD.delete}}
+  - name: "{{FIELD.name}}"
+    change: delete
+{{/if}}
+{{#if FIELD.update}}
+  - name: "{{FIELD.name}}"
+    change: update
+{{/if}}
+{{/each}}
+
+{{/with}}
