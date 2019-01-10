@@ -1,26 +1,17 @@
 # Does this type have any migrations this iteration?
+
+# TODO - use some partials in this file (type/migrations/designs/need-migs.yaml)
+#        they should (could?) come from the type/default/partials/...
+#        this will consolidate the processing / logic / output
+
 {{#with DslContext as |TYPE|}}
 type:
   name: {{TYPE.name}}
 
+  # this is basically a copy of the next-migraions
+  # but we only use the fact that there is anything
+  # under the need-migs field to bump the type's version
   need-migs:
-{{#each TYPE.fields as |FIELD|}}
-{{#unless FIELD.version}}
-  - name: "{{FIELD.name}}"
-    change: create
-{{/unless}}
-{{#if FIELD.rename}}
-  - name: "{{FIELD.name}}"
-    change: rename
-{{/if}}
-{{#if FIELD.delete}}
-  - name: "{{FIELD.name}}"
-    change: delete
-{{/if}}
-{{#if FIELD.update}}
-  - name: "{{FIELD.name}}"
-    change: update
-{{/if}}
-{{/each}}
+  {{> type/migrations/field-migrations.yaml}}
 
 {{/with}}
