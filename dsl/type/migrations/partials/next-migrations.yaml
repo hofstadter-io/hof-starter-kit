@@ -1,11 +1,14 @@
+{{#getdsl "app" false}}{{#with . as |APP|}}
+# {{APP.name}} {{APP.versionMig}}
 # next migrations
 # TODO - use some partials in this file (type/migrations/partials/next-migrations.yaml)
 #        they should (could?) come from the type/default/partials/...
 #        this will consolidate the processing / logic / output
 
 {{#if TYPE.need-migs}}
-- appMigId: {{MIG_ID}}
+- appMigId: {{inc APP.versionMig}}
   ownMigId: {{inc TYPE.version}}
   migrations:
   {{> type/migrations/field-migrations.yaml}}
 {{/if}}
+{{/with}}{{/getdsl}}

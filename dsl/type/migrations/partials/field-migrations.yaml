@@ -2,21 +2,25 @@
 
 {{#unless FIELD.version}}
 - name: "{{FIELD.name}}"
+  target: field
   change: create
 {{/unless}}
 
 {{#if FIELD.rename}}
 - name: "{{FIELD.name}}"
+  target: field
   change: rename
 {{/if}}
 
 {{#if FIELD.delete}}
 - name: "{{FIELD.name}}"
+  target: field
   change: delete
 {{/if}}
 
 {{#if FIELD.update}}
 - name: "{{FIELD.name}}"
+  target: field
   change: update
 {{/if}}
 

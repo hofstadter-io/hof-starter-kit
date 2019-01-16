@@ -1,6 +1,16 @@
 # current migrations
 {{#if TYPE.migrations}}
-{{{yaml TYPE.migrations}}}
+{{#each TYPE.migrations as |TMIG|}}
+- appMigId: {{TMIG.appMigId}}
+  ownMigId: {{TMIG.ownMigId}}
+  migrations:
+  {{#each TMIG.migrations as |MIG|}}
+  - change: {{MIG.change}}
+    target: {{MIG.target}}
+    name: {{MIG.name}}
+  {{/each}}
+
+{{/each}}
 {{else}}
 #  - no existing migrations
 {{/if}}
