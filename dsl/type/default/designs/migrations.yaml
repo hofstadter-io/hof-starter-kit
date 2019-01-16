@@ -8,24 +8,28 @@ type:
 
 {{#unless FIELD.version}}
   - name: "{{FIELD.name}}"
+    target: field
     versionNext: {{inc TYPE.version}}
     change: create
 {{/unless}}
 
 {{#if FIELD.rename}}
   - name: "{{FIELD.name}}"
+    target: field
     versionNext: {{inc TYPE.version}}
     change: rename
 {{/if}}
 
 {{#if FIELD.delete}}
   - name: "{{FIELD.name}}"
+    target: field
     versionNext: {{inc TYPE.version}}
     change: delete
 {{/if}}
 
 {{#if FIELD.update}}
   - name: "{{FIELD.name}}"
+    target: field
     versionNext: {{inc TYPE.version}}
     change: update
 {{/if}}

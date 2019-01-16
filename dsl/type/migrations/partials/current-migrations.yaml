@@ -1,2 +1,6 @@
 # current migrations
+{{#if TYPE.migrations}}
 {{{yaml TYPE.migrations}}}
+{{else}}
+#  - no existing migrations
+{{/if}}
