@@ -1,0 +1,15 @@
+{{#with DslContext as |TYPE|}}
+====== TYPE
+{{{yaml TYPE}}}
+======
+
+{{#if TYPE.history}}
+HISTORY EXISTS
+{{#typediff TYPE.history.last TYPE}}{{#with . as |DIFF|}}
+====== DIFF
+{{{yaml DIFF}}}
+======
+{{/with}}{{/typediff}}
+{{/if}}
+
+{{/with}}

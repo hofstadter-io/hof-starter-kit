@@ -12,6 +12,6 @@ type:
   # but we only use the fact that there is anything
   # under the need-migs field to bump the type's version
   need-migs:
-  {{> type/migrations/field-migrations.yaml}}
+  {{> type/migrations/hof-migs.yaml}}
 
 {{/with}}

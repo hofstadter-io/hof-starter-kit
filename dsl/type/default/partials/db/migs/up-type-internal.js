@@ -12,7 +12,18 @@ mig = knex.schema.table('{{snake TYPE.name}}', table => {
 {{#each TYPE.migrations as |TMIG|}}
 {{#if (eq TMIG.appMigId MIG_ID)}}
 {{#each TMIG.migrations as |MIG|}}
-// {{MIG.change}} {{MIG.target}} {{MIG.name}}
+
+// {{MIG.change}} {{MIG.target}}
+{{#if (eq MIG.change "create")}}
+{{> db/common/target-create-switch.js}}
+{{else if (eq MIG.change "delete")}}
+{{> db/common/target-delete-switch.js}}
+{{else if (eq MIG.change "update")}}
+{{> db/common/target-update-switch.js}}
+{{else}}
+// UNKNOWN MIG.change '{{MIG.change}}'
+{{/if}}
+
 {{/each}}
 {{/if}}
 {{/each}}

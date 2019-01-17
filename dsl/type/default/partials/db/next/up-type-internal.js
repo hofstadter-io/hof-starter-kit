@@ -9,8 +9,19 @@ mig = knex.schema.createTable('{{snake TYPE.name}}', table => {
 mig = knex.schema.table('{{snake TYPE.name}}', table => {
 {{/if}}
 
-{{#each TYPE.next-migrations as |MIG|}}
-// {{MIG.change}} {{MIG.target}} {{MIG.name}}
+{{#each TYPE.hof-migs as |MIG|}}
+
+// {{MIG.change}} {{MIG.target}}
+{{#if (eq MIG.change "create")}}
+{{> db/common/target-create-switch.js}}
+{{else if (eq MIG.change "delete")}}
+{{> db/common/target-delete-switch.js}}
+{{else if (eq MIG.change "update")}}
+{{> db/common/target-update-switch.js}}
+{{else}}
+// UNKNOWN MIG.change '{{MIG.change}}'
+{{/if}}
+
 {{/each}}
 
 })

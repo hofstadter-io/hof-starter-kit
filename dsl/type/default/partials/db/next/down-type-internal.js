@@ -8,7 +8,18 @@ migs.push(knex.schema.dropTable('{{snake TYPE.name}}'))
 mig = knex.schema.table('{{snake TYPE.name}}', table => {
 
 {{#each TYPE.next-migrations as |MIG|}}
-// {{MIG.change}} {{MIG.target}} {{MIG.name}}
+
+// {{MIG.change}} {{MIG.target}}
+{{#if (eq MIG.change "create")}}
+{{> db/common/target-uncreate-switch.js}}
+{{else if (eq MIG.change "delete")}}
+{{> db/common/target-undelete-switch.js}}
+{{else if (eq MIG.change "update")}}
+{{> db/common/target-unupdate-switch.js}}
+{{else}}
+// UNKNOWN MIG.change '{{MIG.change}}'
+{{/if}}
+
 {{/each}}
 
 })

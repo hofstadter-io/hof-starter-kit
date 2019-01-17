@@ -18,9 +18,11 @@ exports.up = function(migId, knex, Promise) {
     {{/each}}
   }
 
+  {{#if TYPE.hof-migs}}
   if (migId === "next") {
     {{> db/next/up.js}}
   }
+  {{/if}}
 
   return Promise.all(migs);
 };
@@ -42,9 +44,11 @@ exports.down = function(migId, knex, Promise) {
     {{/each}}
   }
 
+  {{#if TYPE.hof-migs}}
   if (migId === "next") {
     {{> db/next/down.js}}
   }
+  {{/if}}
 
   return Promise.all(migs);
 };
