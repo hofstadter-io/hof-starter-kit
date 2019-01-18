@@ -1,6 +1,8 @@
 {{#with DslContext as |TYPE|}}
 ====== TYPE
-{{{yaml TYPE}}}
+{{#remove_hof_ctx TYPE}}{{#with . as |CLEAN|}}
+{{{yaml CLEAN}}}
+{{/with}}{{/remove_hof_ctx}}
 ======
 
 {{#if TYPE.history}}
