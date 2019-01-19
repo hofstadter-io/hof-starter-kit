@@ -16,6 +16,8 @@ template-configs:
         out: "{{relPath}}/{{name}}-debug.yaml"
       - in: migrations.yaml
         out: "{{relPath}}/{{name}}-migrations.yaml"
+      - in: history.yaml
+        out: "{{relPath}}/{{name}}-history.yaml"
 
 dependencies:
 

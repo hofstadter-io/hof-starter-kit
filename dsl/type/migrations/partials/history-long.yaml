@@ -1,0 +1,10 @@
+{{#if TYPE.history.long}}
+# previous-long
+{{#remove_hof_ctx TYPE.history.long}}{{#with . as |CLEAN|}}
+{{{yaml CLEAN}}}
+{{/with}}{{/remove_hof_ctx}}
+{{/if}}
+# last
+- appGeneration: {{APP.versionMig}}
+  ownGeneration: {{inc TYPE.version}}
+  {{> history-last.yaml}}
