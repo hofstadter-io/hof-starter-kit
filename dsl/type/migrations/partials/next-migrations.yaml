@@ -1,26 +1,8 @@
 {{#getdsl "app" false}}{{#with . as |APP|}}
-# next migrations
-{{!
-TODO - use some partials in this file (type/migrations/partials/next-migrations.yaml)
-       they should (could?) come from the type/default/partials/...
-       this will consolidate the processing / logic / output
-The overall process is to convert [ DIFF -> Migrations -> JavaScript ]
-   here we only need the [ DIFF -> Migrations ]
-}}
-
-{{! leaving this around for reference
-balh blah
-}}
-{{#if TYPE.hof-migs}}
-- appMigId: {{inc APP.versionMig}}
-  ownMigId: {{inc TYPE.version}}
-  migrations:
-  {{> type/migrations/hof-migs.yaml}}
-{{/if}}
-
 {{#if TYPE.history}}
 {{#typediff TYPE.history.last TYPE}}
 {{#if .}}{{#with . as |DIFF|}}
+# next migrations
 
 - appMigId: {{inc APP.versionMig}}
   ownMigId: {{inc TYPE.version}}
@@ -42,7 +24,7 @@ balh blah
 
 {{/with}}{{/if}}{{/typediff}}
 {{else}}{{!we have a new type}}
-# NEW TYPE !!!
+{{> new-type-migrations.yaml}}
 {{/if}}
 
 {{/with}}{{/getdsl}}

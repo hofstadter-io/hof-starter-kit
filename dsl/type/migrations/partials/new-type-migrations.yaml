@@ -1,0 +1,29 @@
+# NEW TYPE !!!
+{{#remove_hof_ctx TYPE}}{{#with . as |CLEAN|}}
+- appMigId: {{inc APP.versionMig}}
+  ownMigId: {{inc TYPE.version}}
+  migrations:
+  {{#if TYPE.owned}}
+  - change: create
+    target: owned
+    value:
+{{! intentionally unindented}}
+{{{yaml CLEAN.owned indent="      "}}}
+  {{/if}}
+
+  {{#if TYPE.visibility}}
+  - change: create
+    target: visibility
+    value:
+{{! intentionally unindented}}
+{{{yaml CLEAN.visibility indent="      "}}}
+  {{/if}}
+
+  {{#each CLEAN.fields as |FIELD|}}
+  - change: create
+    target: fields.{{FIELD.name}}
+    value:
+{{! intentionally unindented}}
+{{{yaml FIELD indent="      "}}}
+  {{/each}}
+{{/with}}{{/remove_hof_ctx}}

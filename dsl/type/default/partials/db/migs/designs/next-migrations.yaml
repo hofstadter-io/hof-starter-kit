@@ -26,6 +26,8 @@ hof-migs:
 {{/with}}{{/if}}{{/typediff}}
 {{else}}{{!we have a new type}}
 # NEW TYPE !!!
+# handled in the JS for DSL type/default
+# converted in the DSL type/migrations
 {{/if}}
 
 {{/with}}{{/getdsl}}
