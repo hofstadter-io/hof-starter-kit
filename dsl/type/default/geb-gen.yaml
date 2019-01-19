@@ -30,4 +30,6 @@ dependencies:
           out: "{{relPath}}/{{name}}-diff.txt"
         - in: debug.txt
           out: "{{relPath}}/{{name}}-debug.txt"
+        - in: migrations.yaml
+          out: "{{relPath}}/{{name}}-migrations.yaml"
 
