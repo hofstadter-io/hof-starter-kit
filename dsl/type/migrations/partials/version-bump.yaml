@@ -1,0 +1,15 @@
+# logic:
+#   if NO history, then we need to set version = 1
+#   if YES to diff, then we bump the version
+#   otherwise, leave it at the current value
+{{#if TYPE.history}}
+{{#typediff TYPE.history.last TYPE}}
+{{#if .}}
+version: {{inc TYPE.version}}
+{{else}}
+version: {{TYPE.version}}
+{{/if}}
+{{/typediff}}
+{{else}}
+version: 1
+{{/if}}

@@ -19,11 +19,3 @@ template-configs:
       - in: history.yaml
         out: "{{relPath}}/{{name}}-history.yaml"
 
-dependencies:
-
-  designs:
-    - name: once-files
-      field: "."
-      templates:
-        - in: need-migs.yaml
-          out: "{{relPath}}/{{name}}-need-migs.yaml"

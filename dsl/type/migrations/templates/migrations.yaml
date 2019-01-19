@@ -3,13 +3,7 @@
 type:
   name: {{TYPE.name}}
 
-  # TODO - figure out how to determine if there was a migration
-  #        only inc if there was
-  {{#if TYPE.need-migs}}
-  version: {{inc TYPE.version}}
-  {{else}}
-  version: {{TYPE.version}}
-  {{/if}}
+  {{> version-bump.yaml}}
 
   fields:
     {{> type/migrations/field-versions.yaml}}

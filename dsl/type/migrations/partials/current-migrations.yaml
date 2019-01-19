@@ -4,12 +4,7 @@
 - appMigId: {{TMIG.appMigId}}
   ownMigId: {{TMIG.ownMigId}}
   migrations:
-  {{#each TMIG.migrations as |MIG|}}
-  - change: {{MIG.change}}
-    target: {{MIG.target}}
-    value:
-      {{{yaml MIG.value indent="      " }}}
-  {{/each}}
+  {{> current-tmigs.yaml}}
 
 {{/each}}
 {{else}}

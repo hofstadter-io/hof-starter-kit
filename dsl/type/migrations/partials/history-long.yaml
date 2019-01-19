@@ -4,6 +4,7 @@
 {{{yaml CLEAN}}}
 {{/with}}{{/remove_hof_ctx}}
 {{/if}}
+
 # last
 - appGeneration: {{APP.versionMig}}
   ownGeneration: {{inc TYPE.version}}
