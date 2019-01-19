@@ -5,7 +5,12 @@
 {{/with}}{{/remove_hof_ctx}}
 {{/if}}
 
+{{! only add if there is a new diff}}
+{{#typediff TYPE.history.last TYPE}}
+{{#if .}}
 # last
 - appGeneration: {{APP.versionMig}}
   ownGeneration: {{inc TYPE.version}}
   {{> history-last.yaml}}
+{{/if}}
+{{/typediff}}

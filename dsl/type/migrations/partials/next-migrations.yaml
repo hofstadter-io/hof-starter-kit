@@ -1,14 +1,48 @@
 {{#getdsl "app" false}}{{#with . as |APP|}}
-# {{APP.name}} {{APP.versionMig}}
 # next migrations
-# TODO - use some partials in this file (type/migrations/partials/next-migrations.yaml)
-#        they should (could?) come from the type/default/partials/...
-#        this will consolidate the processing / logic / output
+{{!
+TODO - use some partials in this file (type/migrations/partials/next-migrations.yaml)
+       they should (could?) come from the type/default/partials/...
+       this will consolidate the processing / logic / output
+The overall process is to convert [ DIFF -> Migrations -> JavaScript ]
+   here we only need the [ DIFF -> Migrations ]
+}}
 
+{{! leaving this around for reference
+balh blah
+}}
 {{#if TYPE.hof-migs}}
 - appMigId: {{inc APP.versionMig}}
   ownMigId: {{inc TYPE.version}}
   migrations:
   {{> type/migrations/hof-migs.yaml}}
 {{/if}}
+
+{{#if TYPE.history}}
+{{#typediff TYPE.history.last TYPE}}
+{{#if .}}{{#with . as |DIFF|}}
+
+- appMigId: {{inc APP.versionMig}}
+  ownMigId: {{inc TYPE.version}}
+  migrations:
+{{#each DIFF as |D|}}
+  - change: {{D.Op}}
+    traget: {{D.Path}}
+    # gokind: {{#gokind D.Value}}{{/gokind}}
+    # builtin: {{#builtin (gokind D.Value)}}{{/builtin}}
+    {{#if (builtin (gokind D.Value))}}
+    value: {{D.Value}}
+
+    {{else}}
+    value:
+{{! unindented intentionally}}
+{{{yaml D.Value indent="      "}}}
+    {{/if}}
+{{/each}}
+
+{{/with}}{{/if}}{{/typediff}}
+{{else}}{{!we have a new type}}
+# NEW TYPE !!!
+{{/if}}
+
 {{/with}}{{/getdsl}}
