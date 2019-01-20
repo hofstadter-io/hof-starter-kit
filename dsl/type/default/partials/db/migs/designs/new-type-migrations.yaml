@@ -27,4 +27,13 @@ hof-migs:
 {{! intentionally unindented}}
 {{{yaml FIELD indent="      "}}}
   {{/each}}
+
+  {{#each CLEAN.relations as |FIELD|}}
+  - change: create
+    target: relations.{{FIELD.name}}
+    value:
+{{! intentionally unindented}}
+{{{yaml FIELD indent="      "}}}
+  {{/each}}
+
 {{/with}}{{/remove_hof_ctx}}
