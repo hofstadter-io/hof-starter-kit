@@ -8,7 +8,7 @@ mig = knex.schema.table('{{snake TYPE.name}}', table => {
 {{#each TYPE.hof-migs as |TMIG|}}
 {{#each TMIG.migrations as |MIG|}}
 
-  // {{MIG.change}} {{MIG.target}}
+  // un-{{MIG.change}} {{MIG.target}}
 {{#if (eq MIG.change "create")}}
   {{> db/common/target-uncreate-switch.js}}
 {{else if (eq MIG.change "delete")}}
