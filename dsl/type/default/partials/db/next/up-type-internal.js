@@ -26,5 +26,25 @@ mig = knex.schema.createTable('{{snake TYPE.name}}', table => {
 {{/each}}
 {{/each}}
 
+{{! RENAME columns LAST during up}}
+{{#each TYPE.hof-migs as |TMIG|}}
+{{#each TMIG.migrations as |MIG|}}
+
+{{#with (reverse (split MIG.target ".")) as |ELEMS|}}
+{{#if (eq (listelem ELEMS 0) "rename")}}
+  // RENAME COLUMN
+  /*
+  - op: {{listelem ELEMS 0}}
+  - field: {{listelem ELEMS 1}}
+  - to: {{MIG.value}}
+  */
+  table.renameColumn('{{listelem ELEMS 1}}', '{{MIG.value}}')
+{{/if}}
+{{/with}}
+
+{{/each}}
+{{/each}}
+
 })
 migs.push(mig);
+

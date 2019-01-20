@@ -7,6 +7,28 @@ migs.push(knex.schema.dropTable('{{snake TYPE.name}}'))
 
 mig = knex.schema.table('{{snake TYPE.name}}', table => {
 
+{{! RENAME columns FIRST during down}}
+{{#each TYPE.migrations as |TMIG|}}
+{{#if (eq TMIG.appMigId MIG_ID)}}
+{{#each TMIG.migrations as |MIG|}}
+
+{{#with (reverse (split MIG.target ".")) as |ELEMS|}}
+{{#if (eq (listelem ELEMS 0) "rename")}}
+  // RENAME COLUMN
+  /*
+  - op: {{listelem ELEMS 0}}
+  - field: {{listelem ELEMS 1}}
+  - to: {{MIG.value}}
+  */
+  table.renameColumn('{{MIG.value}}', '{{listelem ELEMS 1}}')
+{{/if}}
+{{/with}}
+
+{{/each}}
+{{/if}}
+{{/each}}
+
+
 {{#each TYPE.migrations as |TMIG|}}
 {{#if (eq TMIG.appMigId MIG_ID)}}
 {{#each TMIG.migrations as |MIG|}}
