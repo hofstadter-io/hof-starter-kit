@@ -1,4 +1,4 @@
-{{! migrations for: fields, visibility, non-extra table owner/rels}}
+{{! migrations for: fields, visibility, owned, non-extra table rels}}
 {{! this section has slightly different if-else-loop structure from its opposite}}
 // mig UP - {{MIG_ID}} {{TYPE.firstAppMigId}} ~ {{#if (eq MIG_ID TYPE.firstAppMigId)}} -- CREATE{{/if}}
 {{#if (int_eq MIG_ID TYPE.firstAppMigId)}}

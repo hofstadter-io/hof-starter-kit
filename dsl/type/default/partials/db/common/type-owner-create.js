@@ -8,7 +8,9 @@ table.integer('{{snake OWNER.name}}')
 table.integer('user_id')
 {{/if}}
   .unsigned()
+  .notNullable()
   .references('user.id')
+  .onDelete('CASCADE')
 
 {{else}}
 // TODO owned - has-many
