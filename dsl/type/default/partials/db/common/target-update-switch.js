@@ -1,6 +1,6 @@
 {{#if (hasprefix MIG.target "fields.")}}
 {{#if (int_gt (length (split MIG.target ".")) 2)}}
-// TODO owned - field - subfield
+// TODO field - update - subfield
 {{else}}
 {{> db/common/type-field-update.js}}
 {{/if}}
