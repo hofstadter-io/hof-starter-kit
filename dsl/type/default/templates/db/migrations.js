@@ -5,7 +5,7 @@ exports.up = function(migId, knex, Promise) {
   var mig = null;
 
   // TODO turn these into lookup tables
-  switch (migID) {
+  switch (migId) {
 
     {{#each (intloop APP.versionMig) as |MIG_ID| ~}}
     {{#if (int_gte MIG_ID TYPE.firstAppMigId) ~}}
@@ -32,7 +32,7 @@ exports.down = function(migId, knex, Promise) {
   var migs = [];
 
   // TODO turn these into lookup tables
-  switch (migID) {
+  switch (migId) {
 
     {{#each (intloop APP.versionMig) as |MIG_ID| ~}}
     {{#if (int_gte MIG_ID TYPE.firstAppMigId) ~}}

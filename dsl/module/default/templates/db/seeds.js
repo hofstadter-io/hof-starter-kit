@@ -45,7 +45,11 @@ export default async function seed(knex, Promise) {
     console.log("Create For", uid)
 
     var did = await Lib.{{camelT TYPE.name}}.createFor({
+      {{#if TYPE.owned.name}}
+      {{snake TYPE.owned.name}}: uid,
+      {{else}}
       user_id: uid,
+      {{/if}}
       {{#if TYPE.visibility.enabled}}
         {{snake TYPE.visibility.public}}: data['{{camel TYPE.visibility.public}}'] || {{TYPE.visibility.default}},
       {{/if}}

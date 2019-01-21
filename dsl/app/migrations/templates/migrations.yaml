@@ -1,11 +1,18 @@
 {{#with DslContext as |APP|}}
 app:
   name: {{APP.name}}
+  {{#if APP.modules}}
+  {{#if APP.versionMig}}
   versionMig: {{inc DslContext.versionMig}}
 
   migrations:
     {{#each (intloop (inc APP.versionMig))}}
     - {{.}}
     {{/each}}
+  {{else}}
+  versionMig: 0
+  versionNext: 1
+  {{/if}}
+  {{/if}}
 
 {{/with}}
