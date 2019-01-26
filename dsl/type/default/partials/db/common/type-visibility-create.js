@@ -4,5 +4,4 @@ table.boolean('{{snake TYPE.visibility.public}}').default({{TYPE.visibility.defa
 {{else}}
 table.boolean('public').default({{TYPE.visibility.default}});
 {{/if}}
-
 {{/with}}

@@ -1,8 +1,11 @@
 {{#with DslContext as |APP|}}
 app:
   name: {{APP.name}}
+  {{#if APP.versionMig}}
+
   {{#if APP.modules}}
   # versionMig: {{APP.versionMig}}
+  # versionMigInc: {{inc APP.versionMig}}
   {{#if (or APP.versionMig (eq APP.versionMig 0))}}
   versionMig: {{inc APP.versionMig}}
 
@@ -10,11 +13,14 @@ app:
     {{#each (intloop (inc APP.versionMig))}}
     - {{.}}
     {{/each}}
+
   {{else}}
   versionMig: 0
   {{/if}}
   {{/if}}
 
+  {{else}}
+  versionMig: 0
+  {{/if}}
+
 {{/with}}
-=====
-{{{yaml DslContext}}}

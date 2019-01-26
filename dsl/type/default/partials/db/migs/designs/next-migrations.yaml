@@ -21,6 +21,7 @@ hof-migs:
 {{! unindented intentionally}}
 {{{yaml D.Value indent="      "}}}
     {{/if}}
+
     {{#if (eq D.Op "update")}}
     {{#if (builtin (gokind D.PrevValue))}}
     prev-value: {{D.PrevValue}}
@@ -31,6 +32,7 @@ hof-migs:
 {{{yaml D.PrevValue indent="      "}}}
     {{/if}}
     {{/if}}
+
 {{/each}}
 
 {{/with}}{{/if}}{{/typediff}}
