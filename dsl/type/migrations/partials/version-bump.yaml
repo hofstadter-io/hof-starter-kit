@@ -13,3 +13,15 @@ version: {{TYPE.version}}
 {{else}}
 version: 1
 {{/if}}
+
+{{#if TYPE.firstAppMigId}}
+firstAppMigId: {{TYPE.firstAppMigId}}
+{{else}}
+
+{{#if APP.versionMig}}
+firstAppMigId: {{inc APP.versionMig}}
+{{else}}
+firstAppMigId: 1
+{{/if}}
+
+{{/if}}

@@ -12,8 +12,8 @@ template-configs:
     field: "."
     templates:
 
-      - in: debug.yaml
-        out: "{{relPath}}/{{name}}-debug.yaml"
+      - in: debug.txt
+        out: "{{relPath}}/{{name}}-debug.txt"
       - in: migrations.yaml
         out: "{{relPath}}/{{name}}-migrations.yaml"
       - in: history.yaml

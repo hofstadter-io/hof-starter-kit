@@ -7,7 +7,10 @@ exports.up = function(migId, knex, Promise) {
   // TODO turn these into lookup tables
   switch (migId) {
 
+    // vMig: '{{APP.versionMig}}'
     {{#each (intloop APP.versionMig) as |MIG_ID| ~}}
+    // MIG_ID={{MIG_ID}} - {{TYPE.firstAppMigId}}
+
     {{#if (int_gte MIG_ID TYPE.firstAppMigId) ~}}
     case {{MIG_ID}}:
 

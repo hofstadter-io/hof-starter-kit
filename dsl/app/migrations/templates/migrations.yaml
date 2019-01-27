@@ -1,9 +1,9 @@
 {{#with DslContext as |APP|}}
 app:
   name: {{APP.name}}
-  {{#if APP.versionMig}}
-
   {{#if APP.modules}}
+
+  {{#if APP.versionMig}}
   # versionMig: {{APP.versionMig}}
   # versionMigInc: {{inc APP.versionMig}}
   {{#if (or APP.versionMig (eq APP.versionMig 0))}}
@@ -15,11 +15,18 @@ app:
     {{/each}}
 
   {{else}}
-  versionMig: 0
-  {{/if}}
+  versionMig: 1
+  migrations:
+    - 1
   {{/if}}
 
-  {{else}}
+  {{else}}{{! APP.versionMig}}
+  versionMig: 1
+  migrations:
+    - 1
+  {{/if}}
+
+  {{else}}{{! APP.modules}}
   versionMig: 0
   {{/if}}
 

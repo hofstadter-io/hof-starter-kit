@@ -9,8 +9,8 @@ template-configs:
   - name: once-files
     field: "."
     templates:
-      - in: debug.yaml
-        out: debug.yaml
+      - in: debug.txt
+        out: debug.txt
       - in: migrations.yaml
         out: migs.yaml
 
