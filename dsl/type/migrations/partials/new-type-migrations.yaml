@@ -1,7 +1,11 @@
 # NEW TYPE !!!
 {{#remove_hof_ctx TYPE}}{{#with . as |CLEAN|}}
+  {{#if APP.versionMig}}
 - appMigId: {{inc APP.versionMig}}
-  ownMigId: {{inc TYPE.version}}
+  {{else}}
+- appMigId: 1
+  {{/if}}
+  ownMigId: 1
   migrations:
   {{#if TYPE.owned}}
   - change: create
