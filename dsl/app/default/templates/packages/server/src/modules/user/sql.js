@@ -141,6 +141,7 @@ class User {
   }
 
   async getUserWithApikey(apikey) {
+    console.log("getUserWithApikey: ", apikey)
     return camelizeKeys(
       await knex
         .select(
@@ -156,7 +157,7 @@ class User {
         .from('user AS u')
         .leftJoin('auth_apikey AS ak', 'ak.user_id', 'u.id')
         .leftJoin('user_profile AS up', 'up.user_id', 'u.id')
-        .where('ca.serial', '=', serial)
+        .where('ak.apikey', '=', apikey)
         .first()
     );
   }

@@ -1,46 +1,40 @@
-import createTokens from './createTokens';
-import resolvers from './resolvers';
-import schema from './schema.graphql';
+import { AuthenticationError } from 'apollo-server-errors';
+
 import AccessModule from '../AccessModule';
-import settings from '../../../../../../../settings';
 
-const grant = async user => {
-  const refreshSecret = settings.user.secret + user.passwordHash;
-  const [accessToken, refreshToken] = await createTokens(user, settings.user.secret, refreshSecret);
-
-  return {
-    accessToken,
-    refreshToken
-  };
-};
+import User from '../../sql';
 
 const getCurrentUser = async ({ req }) => {
+  console.log("APIKEY getCurrUser")
   const authorization = req && req.headers['authorization'];
   const parts = authorization && authorization.split(' ');
-  const token = parts && parts.length === 2 && parts[1];
-  if (token) {
-    const { user } = jwt.verify(token, settings.user.secret);
-    return user;
+  const apikey = parts && parts.length === 2 && parts[1];
+  if (apikey) {
+    console.log("APIKEY", apikey)
+    try {
+      const user = await User.getUserWithApikey(apikey)
+      console.log("USER", user)
+      if (user) {
+        return user;
+      }
+    } catch(e) {
+      console.log("ERROR", e)
+    }
   }
 };
 
-const createContextFunc = async ({ req, res, connectionParams, webSocket, context }) => {
+const createContextFunc = async ({ req, connectionParams, webSocket, context }) => {
+  console.log("APIKEY ctx func")
   try {
     context.user = context.user || (await getCurrentUser({ req, connectionParams, webSocket }));
   } catch (e) {
-    res.status(401).end();
-    throw e;
+    throw new AuthenticationError(e);
   }
 };
 
 export default new AccessModule(
-  settings.user.auth.access.jwt.enabled
-    ? {
-        grant: [grant],
-        schema: [schema],
-        createResolversFunc: [resolvers],
-        createContextFunc: [createContextFunc]
-      }
-    : {}
+  {
+    createContextFunc: [createContextFunc]
+  }
 );
 
