@@ -1,0 +1,3 @@
+{{#remove_hof_ctx TYPE}}{{#with . as |CLEAN|}}
+{{{yaml CLEAN}}}
+{{/with}}{{/remove_hof_ctx}}

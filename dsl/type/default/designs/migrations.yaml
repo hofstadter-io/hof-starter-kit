@@ -1,34 +1,10 @@
 {{#with DslContext as |TYPE|}}
+{{#getdsl "app" true}}{{#with . as |APP|}}
 type:
   name: {{TYPE.name}}
-  migrations:
 
-{{#each TYPE.fields as |FIELD|}}
+  {{> db/migs/designs/next-migrations.yaml }}
 
-{{#unless FIELD.version}}
-  - name: "{{FIELD.name}}"
-    versionNext: {{inc TYPE.version}}
-    change: create
-{{/unless}}
-
-{{#if FIELD.rename}}
-  - name: "{{FIELD.name}}"
-    versionNext: {{inc TYPE.version}}
-    change: rename
-{{/if}}
-
-{{#if FIELD.delete}}
-  - name: "{{FIELD.name}}"
-    versionNext: {{inc TYPE.version}}
-    change: delete
-{{/if}}
-
-{{#if FIELD.update}}
-  - name: "{{FIELD.name}}"
-    versionNext: {{inc TYPE.version}}
-    change: update
-{{/if}}
-
-{{/each}}
-
+{{/with}}{{/getdsl}}
 {{/with}}
+

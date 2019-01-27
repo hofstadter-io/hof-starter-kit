@@ -17,25 +17,29 @@ Object.keys(ifaces).forEach(function (ifname) {
       return;
     }
 
-    // skip docker
+    // skip bridges, docker, virtualbox interfaces
+    if (ifname.substring(0,3) === "br-") {
+      return
+    }
     if (ifname.substring(0,6) === "docker") {
       return
     }
-
     if (ifname.substring(0,7) === "vboxnet") {
       return
     }
 
     if (alias >= 1) {
       // this single interface has multiple ipv4 addresses
-      console.log(ifname + ':' + alias, iface.address);
+      // console.log(ifname + ':' + alias, iface.address);
       hostIP = iface.address;
     } else {
       // this interface has only one ipv4 adress
-      console.log(ifname, iface.address);
+      // console.log(ifname, iface.address);
       hostIP = iface.address;
     }
     ++alias;
+
+    console.log("{{APP.mode}} - HOSTIP", alias, hostIP)
   });
 });
 

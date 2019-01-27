@@ -4,19 +4,28 @@ template-configs:
 
   - name: once-files
     templates:
-    # database files
-    - in: packages/server/src/database/migrations/00000_migrations.js
-      out: packages/server/src/database/migrations/00000_migrations.js
-
+    # Seed files
+    - in: packages/server/src/database/seeds/user.js
+      out: packages/server/src/database/seeds/user.js
     - in: packages/server/src/database/seeds/modules.js
       out: packages/server/src/database/seeds/modules.js
 
-    - in: packages/server/src/database/migrations/app-migrations.js
+    # Builtin, baseline migrations
+    - in: packages/server/src/database/migrations/00000_migrations.js
+      out: packages/server/src/database/migrations/00000_migrations.js
+
+    # Next migrations
+    - in: packages/server/src/database/migrations/next-migration.js
       out: 'packages/server/src/database/migrations/{{printf1 "%05d" versionNext}}_migrations.js'
+      when: modules
 
   - name: app-migration-files
     field: migrations
     templates:
+      # existing migrations (that have need applied already)
       - in: packages/server/src/database/migrations/app-migrations.js
         out: 'packages/server/src/database/migrations/{{printf1 "%05d" .}}_migrations.js'
 
+### Migration files are numbered because the knex migration management
+#   is based on an ordered listing of files, with the name being added
+#   to a database file to know if it's been run already

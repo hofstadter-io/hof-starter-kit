@@ -1,0 +1,3 @@
+{{#each TYPE.hof-migs as |MIG|}}
+# {{MIG.change}} {{MIG.target}}
+{{/each}}

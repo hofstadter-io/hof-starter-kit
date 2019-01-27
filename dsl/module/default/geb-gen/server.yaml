@@ -8,7 +8,7 @@ template-configs:
       - in: server/index.js
         out: "packages/server/src/modules/{{name}}/index.js"
 
-      - in: db/migrations.js
+      - in: db/module-migrations.js
         out: "packages/server/src/modules/{{kebab name}}/db/migrations.js"
       - in: db/seeds.js
         out: "packages/server/src/modules/{{kebab name}}/db/seeds.js"

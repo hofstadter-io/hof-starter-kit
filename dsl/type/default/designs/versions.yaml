@@ -1,6 +1,0 @@
-{{#with DslContext as |TYPE|}}
-type:
-  name: {{TYPE.name}}
-  versionNext: {{inc TYPE.version}}
-{{/with}}
-

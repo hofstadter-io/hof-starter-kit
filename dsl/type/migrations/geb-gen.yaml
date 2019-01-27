@@ -1,0 +1,21 @@
+name: "migrations"
+about: "DSL for types"
+version: "0.0.1"
+language: multiple
+type: "type"
+
+ignore-design-path: true
+
+template-configs:
+
+  - name: once-files
+    field: "."
+    templates:
+
+      - in: debug.txt
+        out: "{{relPath}}/{{name}}-debug.txt"
+      - in: migrations.yaml
+        out: "{{relPath}}/{{name}}-migrations.yaml"
+      - in: history.yaml
+        out: "{{relPath}}/{{name}}-history.yaml"
+

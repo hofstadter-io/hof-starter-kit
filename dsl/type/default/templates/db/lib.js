@@ -15,10 +15,10 @@ import {
   getManyRelationAdapter,
   createRelationAdapter,
   deleteRelationAdapter
-} from "../../../sql/crud";
+} from "../../../../sql/crud";
 
-import selectAdapter from "../../../sql/select";
-import { orderedFor } from "../../../sql/batch";
+import selectAdapter from "../../../../sql/select";
+import { orderedFor } from "../../../../sql/batch";
 
 {{#with DslContext as |TYPE|}}
 

@@ -1,0 +1,17 @@
+{{#each TYPE.fields as |FIELD|}}
+  # {{TYPE.version}}
+  # {{FIELD.version}}
+- name: {{FIELD.name}}
+{{#if FIELD.version}}
+  ## yF-?T
+  version: {{FIELD.version}}
+{{else}}
+  {{#if TYPE.version}}
+  ## nF-yT
+  version: {{inc TYPE.version}}
+  {{else}}
+  ## nF-nT
+  version: 1
+  {{/if}}
+{{/if}}
+{{/each}}

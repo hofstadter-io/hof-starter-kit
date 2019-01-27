@@ -1,0 +1,17 @@
+{{#with DslContext as |TYPE|}}
+====== TYPE
+{{#remove_hof_ctx TYPE}}{{#with . as |CLEAN|}}
+{{{yaml CLEAN}}}
+{{/with}}{{/remove_hof_ctx}}
+======
+
+{{#if TYPE.history}}
+HISTORY EXISTS
+{{#typediff TYPE.history.last TYPE}}{{#with . as |DIFF|}}
+====== DIFF
+{{{yaml DIFF}}}
+======
+{{/with}}{{/typediff}}
+{{/if}}
+
+{{/with}}

@@ -1,0 +1,17 @@
+{{#with DslContext as |TYPE|}}
+{{#getdsl "app" true}}{{#with . as |APP|}}
+type:
+  name: {{TYPE.name}}
+
+  {{> version-bump.yaml}}
+
+  fields:
+    {{> type/migrations/field-versions.yaml}}
+
+  migrations:
+    {{> type/migrations/current-migrations.yaml }}
+
+    {{> type/migrations/next-migrations.yaml }}
+
+{{/with}}{{/getdsl}}
+{{/with}}

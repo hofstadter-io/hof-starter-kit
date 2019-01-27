@@ -1,0 +1,12 @@
+# current migrations
+{{#if TYPE.migrations}}
+{{#each TYPE.migrations as |TMIG|}}
+- appMigId: {{TMIG.appMigId}}
+  ownMigId: {{TMIG.ownMigId}}
+  migrations:
+  {{> current-tmigs.yaml}}
+
+{{/each}}
+{{else}}
+#  - no existing migrations
+{{/if}}

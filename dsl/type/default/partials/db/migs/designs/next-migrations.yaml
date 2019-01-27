@@ -1,0 +1,44 @@
+{{#getdsl "app" false}}{{#with . as |APP|}}
+
+{{#if TYPE.history}}
+{{#typediff TYPE.history.last TYPE}}
+{{#if .}}{{#with . as |DIFF|}}
+hof-migs:
+
+- appMigId: {{inc APP.versionMig}}
+  ownMigId: {{inc TYPE.version}}
+  migrations:
+{{#each DIFF as |D|}}
+  - change: {{D.Op}}
+    target: {{D.Path}}
+    # gokind: {{#gokind D.Value}}{{/gokind}}
+    # builtin: {{#builtin (gokind D.Value)}}{{/builtin}}
+    {{#if (builtin (gokind D.Value))}}
+    value: {{D.Value}}
+
+    {{else}}
+    value:
+{{! unindented intentionally}}
+{{{yaml D.Value indent="      "}}}
+    {{/if}}
+
+    {{#if (eq D.Op "update")}}
+    {{#if (builtin (gokind D.PrevValue))}}
+    prev-value: {{D.PrevValue}}
+
+    {{else}}
+    prev-value:
+{{! unindented intentionally}}
+{{{yaml D.PrevValue indent="      "}}}
+    {{/if}}
+    {{/if}}
+
+{{/each}}
+
+{{/with}}{{/if}}{{/typediff}}
+{{else}}{{!we have a new type}}
+{{> db/migs/designs/new-type-migrations.yaml}}
+{{/if}}
+
+{{/with}}{{/getdsl}}
+
