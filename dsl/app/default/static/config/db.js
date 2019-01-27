@@ -34,7 +34,7 @@ if (DB_TYPE === 'mysql') {
   };
 }
 
-export default {
+const obj = {
   dbType: DB_TYPE,
   client: client,
   connection: {
@@ -43,3 +43,7 @@ export default {
   },
   pool: pool
 };
+
+console.log("DB CONFIG", obj)
+
+export default obj;

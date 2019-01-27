@@ -13,5 +13,6 @@ table.integer('user_id')
   .notNullable()
   .references('user.id')
   .onDelete('CASCADE')
+  .default(0)
 
 {{/with}}

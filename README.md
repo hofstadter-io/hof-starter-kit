@@ -6,8 +6,9 @@ Hofstadter Studios DSL for the starter tier.
 
 You should be able to develop `hof-starter-kit`
 without a full development setup.
+Most work will happen from the `studios-app` directory.
 
-You will need three repos:
+First, you will need three repos:
 
 - geb
 - hof-starter-kit
@@ -29,7 +30,7 @@ cd output/packages/client
 HOF_CLIENT_COMPONENT=true yarn watch
 ```
 
-__Terminal 2:__
+__Terminal 3:__
 
 ```
 cd output/packages/server
