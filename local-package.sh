@@ -8,7 +8,7 @@ if [[ "$TAG" == "branch" ]]; then
     echo "TAG = '$TAG'"
 fi
 
-eval $(minikube docker-env)
+# eval $(minikube docker-env)
 
 cloud-build-local -config cloudbuild-local.yaml --dryrun=false \
   -substitutions _TAG_NAME=${TAG} .

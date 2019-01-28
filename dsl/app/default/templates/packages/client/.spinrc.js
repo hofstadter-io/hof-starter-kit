@@ -54,11 +54,11 @@ const config = {
 
     {{#if (eq env.MINIKUBE "yes")}}
       webpackDevProtocol: "http",
-      webpackDevHost: `${minikubeIP}`,
+      webpackDevHost: "{{APP.name}}.{{APP.client}}.live.hof.io",
       webpackDevPort: 80,
     {{else if (eq APP.mode "live")}}
       webpackDevProtocol: "https",
-      webpackDevHost: "{{DslContext.name}}.live.hofstadter.io",
+      webpackDevHost: "{{APP.name}}.{{APP.client}}.live.hofstadter.io",
       webpackDevPort: 443,
     {{else if (eq APP.mode "prod")}}
     {{else}}
@@ -107,13 +107,13 @@ const config = {
 
     {{#if (eq env.MINIKUBE "yes")}}
       __DEV__: true,
-      __API_URL__: `"http://${minikubeIP}/graphql"`
+      __API_URL__: '"http://{{APP.name}}.{{APP.client}}.live.hof.io/graphql"'
     {{else if (eq APP.mode "live")}}
       __DEV__: true,
-      __API_URL__: '"https://{{APP.name}}.live.hofstadter.io/graphql"'
+      __API_URL__: '"https://{{APP.name}}.{{APP.client}}.live.hofstadter.io/graphql"'
     {{else if (eq APP.mode "prod")}}
       __DEV__: false,
-      __API_URL__: '"https://{{APP.name}}.hofstadter.io/graphql"'
+      __API_URL__: '"https://{{APP.name}}.{{APP.client}}.hofstadter.io/graphql"'
     {{else}}
       __DEV__: process.env.NODE_ENV !== 'production',
       __API_URL__: `"http://${hostIP}:8081/graphql"`
