@@ -16,6 +16,23 @@ obj.Mutation.{{typeName}}Create = async (sources, args, context, info) => {
           {{typeName}}.userId = context.user.id;
 
           // TODO validate...
+          var requestData = null;
+          var requestResult = null;
+
+          {{#if TYPE.hooks.pre-create}}
+          requestData = {
+            'hook': '{{typeName}}.pre-create',
+            args,
+            {{typeName}}: {{typeName}},
+            user: context.user
+          }
+          {{#with TYPE.hooks.pre-create as |HOOK|}}
+          {{> server/hooks/func.js}}
+          {{/with}}
+          // TODO check for error / status return
+
+          {{typeName}} = requestResult.{{typeName}}
+          {{/if}}
 
           var ret = await context.{{TypeName}}.createFor({{typeName}})
           console.log("CREATE {{typeName}} - ret", ret);
@@ -28,6 +45,22 @@ obj.Mutation.{{typeName}}Create = async (sources, args, context, info) => {
           {{typeName}}Ret.{{camel RELATION.name}} = [];
           {{/each}}
           console.log("CREATE {{typeName}}Ret", {{typeName}}Ret);
+
+          {{#if TYPE.hooks.post-create}}
+          requestData = {
+            'hook': '{{typeName}}.post-create',
+            args,
+            {{typeName}}: {{typeName}}Ret,
+            user: context.user
+          }
+
+          {{#with TYPE.hooks.post-create as |HOOK|}}
+          {{> server/hooks/func.js}}
+          {{/with}}
+          // TODO check for error / status return
+
+          {{typeName}}Ret = requestResult.data.{{typeName}}
+          {{/if}}
 
           pubsub.publish('{{typeName}}sNotification', {
             {{typeName}}sNotification: {

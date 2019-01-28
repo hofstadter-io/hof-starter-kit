@@ -117,6 +117,21 @@ export default pubsub => ({
 
           const user = await User.getUser(createdUserId);
 
+          {{#if APP.user.hooks.post-create}}
+          var requestResult = null;
+          var requestData = {
+            'hook': 'user.post-create',
+            args,
+            user
+          }
+
+          {{#with APP.user.hooks.post-create as |HOOK|}}
+          {{> type/default/server/hooks/func.js}}
+          {{/with}}
+
+          console.log("User.post-create - requestReulst", requestResult)
+          {{/if}}
+
           if (mailer && settings.user.auth.password.sendAddNewUserEmail && !emailExists && req) {
             // async email
             jwt.sign({ user: pick(user, 'id') }, settings.user.secret, { expiresIn: '1d' }, (err, emailToken) => {
