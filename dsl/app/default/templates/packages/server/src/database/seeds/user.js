@@ -29,6 +29,7 @@ export async function seed(knex, Promise) {
   await truncateTables(knex, Promise, [
     'user',
     'user_profile',
+    'auth_apikey',
     'auth_certificate',
     'auth_facebook',
     'auth_google',
@@ -46,6 +47,13 @@ export async function seed(knex, Promise) {
       role: user.role,
       is_active: user.isActive
     });
+
+    if (user.apikey) {
+      await knex('auth_apikey').insert({
+        user_id: id[0],
+        apikey: user.apikey,
+      })
+    }
 
     user.profile.user_id = id[0];
 
