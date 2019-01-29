@@ -21,7 +21,6 @@ const getCurrentUser = async ({ req }) => {
 };
 
 const createContextFunc = async ({ req, connectionParams, webSocket, context }) => {
-  console.log("APIKEY ctx func")
   try {
     context.user = context.user || (await getCurrentUser({ req, connectionParams, webSocket }));
   } catch (e) {

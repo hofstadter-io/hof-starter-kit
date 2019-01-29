@@ -141,7 +141,6 @@ class User {
   }
 
   async getUserWithApikey(apikey) {
-    console.log("getUserWithApikey: ", apikey)
     return camelizeKeys(
       await knex
         .select(
