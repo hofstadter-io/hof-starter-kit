@@ -44,6 +44,4 @@ const obj = {
   pool: pool
 };
 
-console.log("DB CONFIG", obj)
-
 export default obj;
