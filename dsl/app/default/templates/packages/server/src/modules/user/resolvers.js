@@ -83,8 +83,9 @@ export default pubsub => ({
       (obj, args, { User, user }) => {
         return user.id !== args.input.id ? ['user:create'] : ['user:create:self'];
       },
-      async (obj, { input }, { User, user, req: { universalCookies }, mailer, req, req: { t } }) => {
+      async (obj, args, { User, user, req: { universalCookies }, mailer, req, req: { t } }) => {
         try {
+          let { input } = args;
           const e = new FieldError();
 
           const userExists = await User.getUserByUsername(input.username);

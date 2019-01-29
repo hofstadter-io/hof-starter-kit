@@ -23,7 +23,7 @@ request(rConfig{{UNIQ}}, function (error, response, body) {
   requestResult = {
     error,
     response,
-    data: JSON.Parse(body)
+    data: JSON.parse(body)
   }
 });
 
