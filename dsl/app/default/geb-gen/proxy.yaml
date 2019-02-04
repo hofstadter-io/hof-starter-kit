@@ -1,0 +1,22 @@
+name: "default"
+
+template-configs:
+
+  - name: once-files
+    templates:
+
+      - in: packages/server/src/modules/proxy/index.js
+        out: packages/server/src/modules/proxy/index.js
+      - in: packages/server/src/modules/proxy/hello.js
+        out: packages/server/src/modules/proxy/hello.js
+      - in: packages/server/src/modules/proxy/auth.js
+        out: packages/server/src/modules/proxy/auth.js
+
+
+  - name: app-proxy-endpoints
+    field: "hof-223--proxy-endpoints"
+    templates:
+
+      - in: packages/server/src/modules/proxy/endpoint.js
+        out: packages/server/src/modules/proxy/{{kebab name}}.js
+
