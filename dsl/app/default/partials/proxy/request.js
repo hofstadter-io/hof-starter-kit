@@ -39,7 +39,11 @@ var r = request(config, function (error, response, body) {
   })
 
   R.on('close', function () {
+    console.log("close", chunkedBody.length)
     res.status(R.statusCode).send(Buffer.from(chunkedBody));
+  })
+  R.on('error', function(err) {
+    console.log("Error", err)
   })
 
 })
@@ -48,10 +52,12 @@ var r = request(config, function (error, response, body) {
 })
 .on('close', function () {
   console.log("CLOSE")
+    /*
   if (RR) {
     RR.abort();
   }
-  res.status(499).end();
+  */
+  // res.status(499).end();
 })
 {{/if}}
 
