@@ -56,6 +56,7 @@ obj.Mutation.{{typeName}}Delete = authSwitch([
   },
 
   {{#if TYPE.owned}}
+  {{#unless TYPE.owned.no-mutate}}
   // owner update
   {
     requiredScopes: (sources, args, context, info) => {
@@ -115,6 +116,7 @@ obj.Mutation.{{typeName}}Delete = authSwitch([
       }
     }
   }
+  {{/unless}}
   {{/if}}
 
 ], {

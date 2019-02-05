@@ -1,20 +1,11 @@
-import Access from '../user/access';
-import ServerModule from '../';
+const authMiddleware = async (req, res, next) => {
 
-const handler = async (req, res, next) => {
+  if (!req.context.user || !req.context.auth.isAuthenticated) {
+    res.status(401).send("Unauthorized")
+  } else {
+    next();
+  }
 
-  console.log("PROXY AUTH - start");
-
-  var context = await ServerModule.createContext(req, res);
-
-  console.log("PROXY AUTH - context");
-  console.log(context);
-
-  req.context = context;
-
-  console.log("PROXY AUTH - next");
-  next();
 }
 
-export default handler;
-
+export default authMiddleware;

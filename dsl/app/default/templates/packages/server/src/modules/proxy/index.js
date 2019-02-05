@@ -1,18 +1,14 @@
+{{#with DslContext as |APP|}}
 import ServerModule from '../ServerModule';
 
-var mod = {};
-
-{{#with DslContext as |APP|}}
-{{#if (and (eq APP.client "studios") (eq APP.name "studios"))}}
-
-import helloMiddleware from './hello';
+import helloHandler from './hello';
 
 {{#each APP.hof-223--proxy-endpoints as |PROXY|}}
 import {{camel PROXY.name}} from './{{kebab PROXY.name}}';
 {{/each}}
 
 const middleware = app => {
-  helloMiddleware(app);
+  helloHandler(app);
 
   {{#each APP.hof-223--proxy-endpoints as |PROXY|}}
   {{camel PROXY.name}}(app);
@@ -20,11 +16,10 @@ const middleware = app => {
 
 };
 
-mod = {
+var mod = {
   middleware: [middleware],
 }
 
-{{/if}}
 {{/with}}
 
 export default new ServerModule(mod);

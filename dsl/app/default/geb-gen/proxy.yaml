@@ -9,6 +9,8 @@ template-configs:
         out: packages/server/src/modules/proxy/index.js
       - in: packages/server/src/modules/proxy/hello.js
         out: packages/server/src/modules/proxy/hello.js
+      - in: packages/server/src/modules/proxy/context.js
+        out: packages/server/src/modules/proxy/context.js
       - in: packages/server/src/modules/proxy/auth.js
         out: packages/server/src/modules/proxy/auth.js
 
