@@ -38,7 +38,7 @@ export async function seed(knex, Promise) {
   ]);
 
 
-  console.log("CREATING users")
+  console.log("SEEDING users")
   for (let user of users) {
     var id = await returnId(knex('user')).insert({
       username: user.username,
