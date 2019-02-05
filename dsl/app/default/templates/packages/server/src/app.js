@@ -7,7 +7,7 @@ import graphiqlMiddleware from './middleware/graphiql';
 import createApolloServer from './graphql';
 import errorMiddleware from './middleware/error';
 
-console.log("HOF ENV", process.env.HOF_CLIENT_COMPONENT, process.env.HOF_SERVER_COMPONENT)
+// console.log("HOF ENV", process.env.HOF_CLIENT_COMPONENT, process.env.HOF_SERVER_COMPONENT)
 
 
 const app = express();
@@ -27,6 +27,10 @@ const corsOptions = {
 for (const applyMiddleware of modules.middleware) {
   applyMiddleware(app);
 }
+
+app.get('/hello', (req, res) => {
+  res.status(200).send("Running")
+})
 
 if (__DEV__) {
   app.get('/servdir', (req, res) => {
