@@ -15,7 +15,18 @@ template-configs:
     - in: packages/server/src/modules/user/scopes.js
       out: packages/server/src/modules/user/scopes.js
 
+    - in: packages/server/src/modules/user/auth/index.js
+      out: packages/server/src/modules/user/auth/index.js
+
+    - in: packages/server/src/modules/user/auth/password/schema.graphql
+      out: packages/server/src/modules/user/auth/password/schema.graphql
+    - in: packages/server/src/modules/user/auth/password/resolvers.js
+      out: packages/server/src/modules/user/auth/password/resolvers.js
+
     # client files
+
+    - in: packages/client/src/modules/user/index.web.jsx
+      out: packages/client/src/modules/user/index.web.jsx
 
     - in: packages/client/src/modules/user/resolvers/index.jsx
       out: packages/client/src/modules/user/resolvers/index.jsx
@@ -25,6 +36,8 @@ template-configs:
 
     - in: packages/client/src/modules/user/components/ForgotPasswordView.web.jsx
       out: packages/client/src/modules/user/components/ForgotPasswordView.web.jsx
+    - in: packages/client/src/modules/user/components/LoginForm.web.jsx
+      out: packages/client/src/modules/user/components/LoginForm.web.jsx
     - in: packages/client/src/modules/user/components/LoginView.web.jsx
       out: packages/client/src/modules/user/components/LoginView.web.jsx
     - in: packages/client/src/modules/user/components/ProfileView.web.jsx

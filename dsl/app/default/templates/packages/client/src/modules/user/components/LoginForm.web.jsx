@@ -1,3 +1,4 @@
+{{#with DslContext as |APP|}}
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withFormik } from 'formik';
@@ -24,7 +25,7 @@ const { facebook, linkedin, google, github } = settings.user.auth;
 
 const renderSocialButtons = (buttonsLength, t) => {
   return buttonsLength > 2 ? (
-    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', minWidth: 200 }}>
+    <div style={ { display: 'flex', justifyContent: 'space-between', alignItems: 'center', minWidth: 200 } }>
       {settings.user.auth.facebook.enabled && (
         <div className="text-center">
           <FacebookButton text={t('login.fbBtn')} type={'icon'} />
@@ -92,23 +93,25 @@ const LoginForm = ({ handleSubmit, submitting, error, values, t }) => {
         value={values.password}
       />
       <div className="text-center">{error && <Alert color="error">{error}</Alert>}</div>
-      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+      <div style={ { display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' } }>
         <div className="text-center">
-          <Button size="lg" style={{ minWidth: '320px' }} color="primary" type="submit" disabled={submitting}>
+          <Button size="lg" style={ { minWidth: '320px' } } color="primary" type="submit" disabled={submitting}>
             {t('login.form.btnSubmit')}
           </Button>
         </div>
         {renderSocialButtons(buttonsLength, t)}
       </div>
-      <div className="text-center" style={{ marginTop: 10 }}>
+      <div className="text-center" style={ { marginTop: 10 } }>
         <Link to="/forgot-password">{t('login.btn.forgotPass')}</Link>
       </div>
       <hr />
-      <div className="text-center" style={{ marginBottom: 16 }}>
-        <span style={{ lineHeight: '58px' }}>{t('login.btn.notReg')}</span>
-        <NavLink className="btn btn-primary" to="/register" activeClassName="active" style={{ margin: 10 }}>
+      <div className="text-center" style={ { marginBottom: 16 } }>
+        {{#unless APP.auth.registration.disabled}}
+        <span style={ { lineHeight: '58px' } }>{t('login.btn.notReg')}</span>
+        <NavLink className="btn btn-primary" to="/register" activeClassName="active" style={ { margin: 10 } }>
           {t('login.btn.sign')}
         </NavLink>
+        {{/unless}}
       </div>
     </Form>
   );
@@ -144,3 +147,4 @@ const LoginFormWithFormik = withFormik({
 });
 
 export default translate('user')(LoginFormWithFormik(LoginForm));
+{{/with}}

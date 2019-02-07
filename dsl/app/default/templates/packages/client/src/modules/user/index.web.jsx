@@ -1,3 +1,4 @@
+{{#with DslContext as |APP|}}
 import React from 'react';
 import { CookiesProvider } from 'react-cookie';
 import { NavLink, withRouter } from 'react-router-dom';
@@ -31,8 +32,8 @@ const LogoutLink = withRouter(
       onClick={e => {
         e.preventDefault();
         (async () => {
-          await logout();
           history.push('/');
+          await logout();
         })();
       }}
       className="nav-link"
@@ -61,7 +62,9 @@ export default new Feature(access, {
     <AuthRoute exact path="/users" redirect="/profile" role="admin" component={Users} />,
     <AuthRoute exact path="/users/new" role={['admin']} component={UserAdd} />,
     <AuthRoute path="/users/:id" redirect="/profile" role={['user', 'admin']} component={UserEdit} />,
+    {{#unless APP.auth.registration.disabled}}
     <AuthRoute exact path="/register" redirectOnLoggedIn redirect="/profile" component={Register} />,
+    {{/unless}}
     <AuthRoute
       exact
       path="/login"
@@ -105,3 +108,4 @@ export default new Feature(access, {
   // eslint-disable-next-line react/display-name
   rootComponentFactory: [req => (req ? <CookiesProvider cookies={req.universalCookies} /> : <CookiesProvider />)]
 });
+{{/with}}

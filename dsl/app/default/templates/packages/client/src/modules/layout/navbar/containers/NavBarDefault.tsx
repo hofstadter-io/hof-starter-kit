@@ -23,8 +23,8 @@ const LogoutLink = translate('navbar')(
         onClick={e => {
           e.preventDefault();
           (async () => {
-            await logout();
             history.push('/');
+            await logout();
           })();
         }}
         className="nav-link"

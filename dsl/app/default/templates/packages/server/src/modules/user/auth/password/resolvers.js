@@ -1,3 +1,4 @@
+{{#with DslContext as |APP|}}
 import bcrypt from 'bcryptjs';
 import { pick } from 'lodash';
 import jwt from 'jsonwebtoken';
@@ -49,6 +50,8 @@ export default () => ({
         return { errors: e };
       }
     },
+
+{{#unless APP.auth.registration.disabled}}
     async register(obj, { input }, { mailer, User, req }) {
       try {
         const { t } = req;
@@ -106,6 +109,8 @@ export default () => ({
         return { errors: e };
       }
     },
+{{/unless}}
+
     async forgotPassword(obj, { input }, context) {
       try {
         const localAuth = pick(input, 'email');
@@ -172,3 +177,4 @@ export default () => ({
     }
   }
 });
+{{/with}}
