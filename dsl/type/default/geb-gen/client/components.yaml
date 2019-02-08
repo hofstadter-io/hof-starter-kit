@@ -1,0 +1,12 @@
+name: "default"
+template-configs:
+
+  - name: type-components
+    field: "components"
+    templates:
+
+      - in: client/components/container.jsx
+        out: "packages/client/src/{{pkg_path}}/{{camelT name}}.jsx"
+      - in: client/components/component.jsx
+        out: "packages/client/src/{{pkg_path}}/{{camelT name}}Component.jsx"
+

@@ -1,0 +1,13 @@
+{{#if TYPE.components}}
+{{#if TYPE.components.default}}
+pages:
+  {{> client/pages/designs/create-default.yaml}}
+  {{> client/pages/designs/edit-default.yaml}}
+  {{> client/pages/designs/view-default.yaml}}
+  {{> client/pages/designs/list-default.yaml}}
+{{else}}
+{{{yaml TYPE.pages}}}
+{{/if}}
+
+{{/if}}
+

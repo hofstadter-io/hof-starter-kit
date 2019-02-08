@@ -1,14 +1,9 @@
-#import "./Profile.graphql"
-
 fragment UserInfo on User {
   id
   username
   role
   isActive
   email
-  profile {
-    ...UserProfileInfo
-  }
   auth {
     apikey {
       apikey

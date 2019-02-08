@@ -28,7 +28,6 @@ export async function seed(knex, Promise) {
   // then clean users
   await truncateTables(knex, Promise, [
     'user',
-    'user_profile',
     'auth_apikey',
     'auth_certificate',
     'auth_facebook',
@@ -54,10 +53,6 @@ export async function seed(knex, Promise) {
         apikey: user.apikey,
       })
     }
-
-    user.profile.user_id = id[0];
-
-    await returnId(knex('user_profile')).insert(decamelizeKeys(user.profile));
   }
 
 }

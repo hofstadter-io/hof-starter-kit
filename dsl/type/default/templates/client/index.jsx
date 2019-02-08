@@ -1,4 +1,7 @@
 {{#with DslContext as |TYPE|}}
+{{#getdsl (concat2 "module." (replace TYPE.relPath "/" "." -1)) true}}{{#with . as |MODULE| }}
+{{#getdsl "app" true}}{{#with . as |APP| }}
+
 // {{TYPE.name}}
 import React from 'react';
 import { Route, NavLink } from 'react-router-dom';
@@ -10,27 +13,34 @@ import ClientModule from "../../ClientModule";
 
 import resolvers from './resolvers';
 
-import {{camelT TYPE.name}}Create from './containers/add.jsx'
-import {{camelT TYPE.name}}List from './containers/list.jsx'
-import {{camelT TYPE.name}}View from './containers/view.jsx'
-import {{camelT TYPE.name}}Edit from './containers/edit.jsx'
+{{#each TYPE.pages as |PAGE|}}
+{{#unless PAGE.disabled}}
+import {{camelT TYPE.name}}{{camelT PAGE.name}} from './pages/{{kebab PAGE.name}}';
+{{/unless}}
+{{/each}}
 
 export default new ClientModule({
   route: [
-    {{#if TYPE.pages.create}}
-    <AuthRoute exact path="{{TYPE.pages.create.route}}" role={['user', 'admin']} redirect="/login" component={ {{camelT TYPE.name}}Create } />,
+
+    {{#each TYPE.pages as |PAGE|}}
+    {{#unless PAGE.disabled}}
+
+    {{#if PAGE.auth.disabled}}
+    {{else}}
+    <AuthRoute
+      exact path="{{MODULE.route}}{{TYPE.route}}{{PAGE.route}}"
+      redirect="{{#if PAGE.redirect}}{{PAGE.redirect}}{{else}}/login{{/if}}"
+      role={ {{{json PAGE.auth.roles inline=true}}} }
+      component={ {{camelT TYPE.name}}{{camelT PAGE.name}} }
+    />,
     {{/if}}
-    {{#if TYPE.pages.list}}
-    <AuthRoute exact path="{{TYPE.pages.list.route}}" role={['user', 'admin']} redirect="/login" component={ {{camelT TYPE.name}}List } />,
-    {{/if}}
-    {{#if TYPE.pages.update}}
-    <AuthRoute path="{{TYPE.pages.update.route}}" role={['user', 'admin']} redirect="/login" component={ {{camelT TYPE.name}}Edit } />,
-    {{/if}}
-    {{#if TYPE.pages.view}}
-    <AuthRoute path="{{TYPE.pages.view.route}}" role={['user', 'admin']} redirect="/login" component={ {{camelT TYPE.name}}View } />,
-    {{/if}}
+
+    {{/unless}}
+    {{/each}}
   ],
   resolver: [resolvers],
 });
 
+{{/with}}{{/getdsl}}
+{{/with}}{{/getdsl}}
 {{/with}}

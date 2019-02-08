@@ -14,6 +14,13 @@ template-configs:
       - in: client/locales/index.js
         out: packages/client/src/modules/{{name}}/locales/index.js
 
+  - name: module-files
+    field: "files"
+    templates:
+
+      - in: client/files/file
+        out: "packages/client/src/modules/{{name}}/{{dst}}"
+
   - name: module-pages
     field: "pages"
     templates:

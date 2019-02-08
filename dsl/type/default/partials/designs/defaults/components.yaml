@@ -1,0 +1,12 @@
+{{#if TYPE.components}}
+{{#if TYPE.components.default}}
+components:
+  {{> client/components/designs/form-default.yaml}}
+  {{> client/components/designs/view-default.yaml}}
+  {{> client/components/designs/list-default.yaml}}
+  {{> client/components/designs/table-default.yaml}}
+{{else}}
+{{{yaml TYPE.components}}}
+{{/if}}
+
+{{/if}}

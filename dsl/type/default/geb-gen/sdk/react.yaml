@@ -27,3 +27,4 @@ template-configs:
         out: "packages/client/src/{{relPath}}/{{kebab name}}/sdk/view-client.js"
       - in: client/sdk/create-client.js
         out: "packages/client/src/{{relPath}}/{{kebab name}}/sdk/create-client.js"
+

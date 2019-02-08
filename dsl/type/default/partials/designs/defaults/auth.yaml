@@ -1,0 +1,18 @@
+{{#if TYPE.auth}}
+{{#if TYPE.auth.default}}
+auth:
+  {{#if TYPE.visibility}}
+  view:
+    public:  ['admin']
+    private: ['admin']
+  {{else}}
+  view:   ['admin']
+  {{/if}}
+  create: ['admin']
+  update: ['admin']
+  delete: ['admin']
+{{else}}
+{{{yaml TYPE.auth}}}
+{{/if}}
+
+{{/if}}

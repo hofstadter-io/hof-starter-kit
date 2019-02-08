@@ -4,33 +4,7 @@ type User {
   role: String!
   isActive: Boolean
   email: String!
-  profile: UserProfile
   auth: UserAuth
-}
-
-type UserProfile {
-  {{#each DslContext.user.profile.fields as |FIELD|}}
-  {{#if (eq FIELD.type "string")}}
-  {{camel FIELD.name}}: String
-  {{else if (eq FIELD.type "text")}}
-  {{camel FIELD.name}}: String
-  {{else if (eq FIELD.type "json")}}
-  {{camel FIELD.name}}: String
-  {{else if (eq FIELD.type "boolean")}}
-  {{camel FIELD.name}}: Boolean
-  {{else if (eq FIELD.type "integer")}}
-  {{camel FIELD.name}}: Int
-  {{else if (eq FIELD.type "decimal")}}
-  {{camel FIELD.name}}: Float
-  {{else if (eq FIELD.type "date")}}
-  {{camel FIELD.name}}: Date
-  {{else if (eq FIELD.type "time")}}
-  {{camel FIELD.name}}: Time
-  {{else if (eq FIELD.type "datetime")}}
-  {{camel FIELD.name}}: DateTime
-  {{/if}}
-  {{/each}}
-  fullName: String
 }
 
 # Additional authentication service info
@@ -159,7 +133,6 @@ input AddUserInput {
   password: String!
   role: String!
   isActive: Boolean
-  profile: ProfileInput
   auth: AuthInput
 }
 
@@ -171,32 +144,7 @@ input EditUserInput {
   isActive: Boolean
   email: String!
   password: String
-  profile: ProfileInput
   auth: AuthInput
-}
-
-input ProfileInput {
-  {{#each DslContext.user.profile.fields as |FIELD|}}
-  {{#if (eq FIELD.type "string")}}
-  {{camel FIELD.name}}: String
-  {{else if (eq FIELD.type "text")}}
-  {{camel FIELD.name}}: String
-  {{else if (eq FIELD.type "json")}}
-  {{camel FIELD.name}}: String
-  {{else if (eq FIELD.type "boolean")}}
-  {{camel FIELD.name}}: Boolean
-  {{else if (eq FIELD.type "integer")}}
-  {{camel FIELD.name}}: Int
-  {{else if (eq FIELD.type "decimal")}}
-  {{camel FIELD.name}}: Float
-  {{else if (eq FIELD.type "date")}}
-  {{camel FIELD.name}}: Date
-  {{else if (eq FIELD.type "time")}}
-  {{camel FIELD.name}}: Time
-  {{else if (eq FIELD.type "datetime")}}
-  {{camel FIELD.name}}: DateTime
-  {{/if}}
-  {{/each}}
 }
 
 extend type Subscription {
