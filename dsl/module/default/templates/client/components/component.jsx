@@ -1,4 +1,4 @@
-{{#with DslContext as |TYPE|}}
+{{#with DslContext as |MODULE|}}
 {{#with RepeatedContext as |COMPONENT|}}
 {{#with (camelT COMPONENT.name) as |ComponentName|}}
 {{#with (camel  COMPONENT.name) as |componentName|}}
@@ -56,8 +56,8 @@ class {{ComponentName}}Component extends React.Component {
   {{/each}}
 };
 
-{{#if TYPE.translations}}
-export default translate('{{TYPE.name}}')({{ComponentName}}Component);
+{{#if MODULE.translations}}
+export default translate('{{MODULE.name}}')({{ComponentName}}Component);
 {{else}}
 export default {{ComponentName}}Component;
 {{/if}}

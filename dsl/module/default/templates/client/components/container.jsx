@@ -1,7 +1,7 @@
-{{#with DslContext as |TYPE|}}
-{{#with RepeatedContext as |COMPONENT|}}
-{{#with (camelT COMPONENT.name) as |ComponentName|}}
-{{#with (camel  COMPONENT.name) as |componentName|}}
+{{#with DslContext as |MODULE| }}
+{{#with RepeatedContext as |COMPONENT| }}
+{{#with (camelT COMPONENT.name) as |ComponentName| }}
+{{#with (camel  COMPONENT.name) as |componentName| }}
 
 import React from 'react';
 import PropTypes from 'prop-types';

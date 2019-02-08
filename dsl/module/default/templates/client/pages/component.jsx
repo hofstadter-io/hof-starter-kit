@@ -47,7 +47,7 @@ const PageStyled = styled.div`
 
 class {{PageName}}PageComponent extends React.Component {
   static propTypes = {
-    {{> client/pages/prop-types.jsx }}
+    {{> client/common/prop-types.js THING=PAGE }}
 
     match: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,

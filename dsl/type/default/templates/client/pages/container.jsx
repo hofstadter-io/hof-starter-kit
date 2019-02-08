@@ -11,11 +11,11 @@ import update from 'immutability-helper';
 
 import {{PageName}}Page from './component';
 
-{{> client/pages/sdk-imports.jsx}}
+{{> client/pages/sdk-imports.jsx }}
+{{> client/pages/sync-graphql-imports.jsx }}
 
-{{> client/pages/sync-graphql-imports.jsx}}
-{{> client/pages/sync-add-del.jsx}}
-{{> client/pages/update-query-funcs.jsx}}
+{{> client/common/sync-add-del.jsx THING=PAGE }}
+{{> client/common/update-query-funcs.jsx THING=PAGE }}
 
 class {{PageName}}PageContainer extends React.Component {
   static propTypes = {
@@ -26,13 +26,13 @@ class {{PageName}}PageContainer extends React.Component {
     history: PropTypes.object.isRequired
   };
 
-  {{> client/pages/container-funcs.jsx}}
+  {{> client/common/container-funcs.jsx THING=PAGE }}
 
-  {{> client/pages/container-render.jsx}}
+  {{> client/common/container-render.jsx THING=PAGE }}
 }
 
 export default compose(
-  {{> client/pages/container-compose.jsx}}
+  {{> client/common/container-compose.jsx THING=PAGE }}
 )({{PageName}}PageContainer);
 
 {{/with}}

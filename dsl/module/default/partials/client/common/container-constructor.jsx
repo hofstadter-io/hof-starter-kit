@@ -1,4 +1,7 @@
-{{#each COMPONENT.data as |DATA|}}
+constructor(props) {
+  super(props);
+
+{{#each THING.data as |DATA|}}
 {{#if DATA.query}}
 {{#if DATA.query.sync}}
 {{#gettype DATA.type false}}
@@ -8,9 +11,9 @@
 {{#with (snake  TYPE.name) as |type_name|}}
 
 {{#if (eq DATA.query.type "view")}}
-import {{upper type_name}}_SUBSCRIPTION from '../../../../../{{replace (trimprefix DATA.type "type.") "." "/" -1}}/graphql/subscriptions/solo.graphql';
+  this.{{camel DATA.name}}Subscription = null;
 {{else if (eq DATA.query.type "list")}}
-import {{upper type_name}}S_SUBSCRIPTION from '../../../../../{{replace (trimprefix DATA.type "type.") "." "/" -1}}/graphql/subscriptions/list.graphql';
+  this.{{camel DATA.name}}Subscription = null;
 {{/if}}
 
 {{/with}}
@@ -21,4 +24,7 @@ import {{upper type_name}}S_SUBSCRIPTION from '../../../../../{{replace (trimpre
 {{/if}}
 {{/if}}
 {{/each}}
+
+}
+
 
