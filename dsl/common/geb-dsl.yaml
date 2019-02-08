@@ -1,0 +1,18 @@
+name: "module"
+version: "0.0.1"
+
+spec:
+  type: "object"
+  fields:
+    - name: "name"
+      type: "string"
+    - name: "types"
+      type: "list"
+      items:
+        type: "object"
+        fields: []
+    - name: "translations"
+      type: "list"
+      items:
+        type: "object"
+        fields: []

@@ -1,0 +1,13 @@
+name: "migrations"
+about: "DSL for types"
+version: "0.0.1"
+language: multiple
+type: "type"
+
+template-configs:
+
+  - name: once-files
+    field: "."
+    templates:
+
+

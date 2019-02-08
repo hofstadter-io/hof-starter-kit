@@ -48,7 +48,7 @@ const ComponentStyled = styled.div`
 
 class {{ComponentName}}Component extends React.Component {
   static propTypes = {
-    {{> client/common/prop-types.js THING=COMPONENT }}
+    {{> common/default/client/common/prop-types.js THING=COMPONENT }}
   };
 
   {{#each COMPONENT.content as |CONTENT_FILE|}}

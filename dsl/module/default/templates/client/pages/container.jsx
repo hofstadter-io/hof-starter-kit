@@ -14,25 +14,25 @@ import {{PageName}} from './component';
 {{> client/pages/sdk-imports.jsx }}
 {{> client/pages/sync-graphql-imports.jsx }}
 
-{{> client/common/sync-add-del.jsx THING=PAGE }}
-{{> client/common/update-query-funcs.jsx THING=PAGE }}
+{{> common/default/client/common/sync-add-del.jsx THING=PAGE }}
+{{> common/default/client/common/update-query-funcs.jsx THING=PAGE }}
 
 class {{PageName}}PageContainer extends React.Component {
   static propTypes = {
-    {{> client/common/prop-types.js  THING=PAGE }}
+    {{> common/default/client/common/prop-types.js  THING=PAGE }}
 
     match: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired
   };
 
-  {{> client/common/container-funcs.jsx THING=PAGE }}
+  {{> common/default/client/common/container-funcs.jsx THING=PAGE }}
 
-  {{> client/common/container-render.jsx THING=PAGE }}
+  {{> common/default/client/common/container-render.jsx THING=PAGE }}
 }
 
 export default compose(
-  {{> client/common/container-compose.jsx THING=PAGE }}
+  {{> common/default/client/common/container-compose.jsx THING=PAGE }}
 )({{PageName}}PageContainer);
 
 {{/with}}

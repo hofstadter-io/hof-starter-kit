@@ -14,21 +14,21 @@ import {{ComponentName}} from './{{ComponentName}}Component';
 {{> client/components/sdk-imports.jsx }}
 {{> client/components/sync-graphql-imports.jsx }}
 
-{{> client/common/sync-add-del.jsx THING=COMPONENT }}
-{{> client/common/update-query-funcs.jsx THING=COMPONENT }}
+{{> common/default/client/common/sync-add-del.jsx THING=COMPONENT }}
+{{> common/default/client/common/update-query-funcs.jsx THING=COMPONENT }}
 
 class {{ComponentName}}Container extends React.Component {
   static propTypes = {
-    {{> client/common/prop-types.js THING=COMPONENT }}
+    {{> common/default/client/common/prop-types.js THING=COMPONENT }}
   };
 
-  {{> client/common/container-funcs.jsx THING=COMPONENT }}
+  {{> common/default/client/common/container-funcs.jsx THING=COMPONENT }}
 
-  {{> client/common/container-render.jsx THING=COMPONENT }}
+  {{> common/default/client/common/container-render.jsx THING=COMPONENT }}
 }
 
 export default compose(
-  {{> client/common/container-compose.jsx THING=COMPONENT }}
+  {{> common/default/client/common/container-compose.jsx THING=COMPONENT }}
 )({{ComponentName}}Container);
 
 {{/with}}
