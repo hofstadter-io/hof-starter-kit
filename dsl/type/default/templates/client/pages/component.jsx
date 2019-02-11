@@ -1,4 +1,7 @@
 {{#with DslContext as |TYPE|}}
+{{#getdsl (replace TYPE.relPath "/" "." -1) true}}{{#with . as |MODULE| }}
+{{#getdsl "app" true}}{{#with . as |APP| }}
+
 {{#with RepeatedContext as |PAGE|}}
 {{#with (camelT PAGE.name) as |PageName|}}
 {{#with (camel  PAGE.name) as |pageName|}}
@@ -76,6 +79,10 @@ class {{PageName}}PageComponent extends React.Component {
       t
     } = props;
 
+    if (!t) {
+      t = x => x
+    }
+
     const renderMetaData = () => {
 
       var title = '{{PageName}}';
@@ -100,9 +107,18 @@ class {{PageName}}PageComponent extends React.Component {
         <PageStyled>
           <div id="{{pageName}}Page">
 
+            {{#if PAGE.content}}
+            {{#if PAGE.content.default}}
+            {{> (concat3 "type/default/client/pages/defaults/content/" PAGE.name ".html") THING=PAGE }}
+            {{else}}
             {{#each PAGE.content as |CONTENT_FILE|}}
             {{{file CONTENT_FILE}}}
             {{/each}}
+            {{/if}}
+
+            {{else}}
+            {{> (concat3 "type/default/client/pages/defaults/content/" PAGE.name ".html") THING=PAGE }}
+            {{/if}}
 
           </div>
         </PageStyled>
@@ -120,4 +136,7 @@ export default {{PageName}}PageComponent;
 {{/with}}
 {{/with}}
 {{/with}}
+
+{{/with}}{{/getdsl}}
+{{/with}}{{/getdsl}}
 {{/with}}

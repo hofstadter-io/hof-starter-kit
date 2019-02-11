@@ -1,0 +1,11 @@
+# type/default/designs/defaults/index.yaml '{{APP.name}}' '{{MODULE.name}}' '{{TYPE.name}}'
+
+# Common
+{{> type/default/designs/defaults/auth.yaml }}
+
+# Client
+{{> type/default/designs/defaults/components.yaml }}
+{{> type/default/designs/defaults/pages.yaml }}
+
+# Server?
+

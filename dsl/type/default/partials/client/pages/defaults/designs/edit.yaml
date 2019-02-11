@@ -1,0 +1,11 @@
+- name: edit
+  route: "{{APP.route}}{{MODULE.route}}/{{kebab TYPE.name}}/edit/:id"
+
+  currentUser: true
+
+  data:
+    - name: {{TYPE.name}}
+      type: {{TYPE.ctx_path}}
+      query:
+        type: view
+

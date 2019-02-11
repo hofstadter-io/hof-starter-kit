@@ -1,0 +1,12 @@
+- name: create
+  route: "{{APP.route}}{{MODULE.route}}/{{kebab TYPE.name}}/new"
+
+  currentUser: true
+
+  data:
+    - name: {{TYPE.name}}
+      type: {{TYPE.ctx_path}}
+
+      mutations:
+        - create
+

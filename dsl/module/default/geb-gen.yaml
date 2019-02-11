@@ -12,11 +12,12 @@ template-configs:
     field: "."
 
 
-static-files:
+dependencies:
 
-  - name: all
-    field: "."
-    unless: disabled
-    files:
-    - "**/*"
+  designs:
 
+    - name: once-files
+      field: "."
+      templates:
+        - in: debug.txt
+          out: "modules/{{name}}/module-debug.txt"

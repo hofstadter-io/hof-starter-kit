@@ -1,0 +1,13 @@
+- name: list
+  route: "{{APP.route}}{{MODULE.route}}/{{kebab TYPE.name}}/list"
+
+  currentUser: true
+
+  data:
+    - name: {{TYPE.name}}
+      type: {{TYPE.ctx_path}}
+      query:
+        type: list
+
+      mutations:
+        - delete

@@ -10,14 +10,14 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import * as RS from 'reactstrap'
 
-import settings from '../../../../../../../settings';
-import { PageLayout } from '../../../layout/page';
-import translate, { TranslateFunction } from '../../../../i18n';
+import settings from '../../../../../../settings';
+import { PageLayout } from '../../layout/page';
+import translate, { TranslateFunction } from '../../../i18n';
 
 // TODO Pagenation should be conditionally included, also...
 //      there are possible multiple data paginations AND synchronizations
-import { Pagination } from '../../../common/components/web';
-import paginationConfig from '../../../../../../../config/pagination';
+import { Pagination } from '../../common/components/web';
+import paginationConfig from '../../../../../../config/pagination';
 const { itemsNumber, type } = paginationConfig.web;
 
 // Custom Imports

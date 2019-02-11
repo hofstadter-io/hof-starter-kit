@@ -8,6 +8,7 @@ import ClientModule from '../../../../ClientModule';
 import Container from './container';
 
 const page = {
+  // should have some backup checking for Type Auth
   {{#if PAGE.route}}
   route: [
     {{#if PAGE.auth}}

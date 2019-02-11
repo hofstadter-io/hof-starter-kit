@@ -13,33 +13,21 @@ import ClientModule from "../../ClientModule";
 
 import resolvers from './resolvers';
 
-{{#each TYPE.pages as |PAGE|}}
-{{#unless PAGE.disabled}}
-import {{camelT TYPE.name}}{{camelT PAGE.name}} from './pages/{{kebab PAGE.name}}';
-{{/unless}}
-{{/each}}
+{{#if TYPE.pages}}
+import Pages from './pages';
+{{/if}}
 
-export default new ClientModule({
-  route: [
+export default new ClientModule(
+  {{#if TYPE.pages}}
+  Pages,
+  {{/if}}
+  {
+    route: [
 
-    {{#each TYPE.pages as |PAGE|}}
-    {{#unless PAGE.disabled}}
-
-    {{#if PAGE.auth.disabled}}
-    {{else}}
-    <AuthRoute
-      exact path="{{MODULE.route}}{{TYPE.route}}{{PAGE.route}}"
-      redirect="{{#if PAGE.redirect}}{{PAGE.redirect}}{{else}}/login{{/if}}"
-      role={ {{{json PAGE.auth.roles inline=true}}} }
-      component={ {{camelT TYPE.name}}{{camelT PAGE.name}} }
-    />,
-    {{/if}}
-
-    {{/unless}}
-    {{/each}}
-  ],
-  resolver: [resolvers],
-});
+    ],
+    resolver: [resolvers],
+  }
+);
 
 {{/with}}{{/getdsl}}
 {{/with}}{{/getdsl}}

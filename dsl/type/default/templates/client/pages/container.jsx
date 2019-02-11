@@ -9,7 +9,7 @@ import { compose } from 'react-apollo';
 import update from 'immutability-helper';
 
 
-import {{PageName}}Page from './component';
+import {{PageName}} from './component';
 
 {{> client/pages/sdk-imports.jsx }}
 {{> client/pages/sync-graphql-imports.jsx }}

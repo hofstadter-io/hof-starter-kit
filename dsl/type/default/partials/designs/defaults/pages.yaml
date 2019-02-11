@@ -1,12 +1,22 @@
-{{#if TYPE.components}}
-{{#if TYPE.components.default}}
+{{#if TYPE.pages}}
+{{#if TYPE.pages.default}}
+# all defaults
 pages:
-  {{> client/pages/designs/create-default.yaml}}
-  {{> client/pages/designs/edit-default.yaml}}
-  {{> client/pages/designs/view-default.yaml}}
-  {{> client/pages/designs/list-default.yaml}}
+{{> client/pages/defaults/designs/create.yaml}}
+{{> client/pages/defaults/designs/list.yaml}}
+{{> client/pages/defaults/designs/edit.yaml}}
+{{> client/pages/defaults/designs/view.yaml}}
 {{else}}
-{{{yaml TYPE.pages}}}
+pages:
+{{#each TYPE.pages as |PAGE|}}
+{{#if PAGE.default}}
+# {{concat3 "client/pages/designs/default/" PAGE.name ".yaml"}}
+{{> (concat3 "client/pages/defaults/designs/" PAGE.name ".yaml")}}
+{{else}}
+# existing
+- {{{yaml PAGE indent="  " skipFirst=true}}}
+{{/if}}
+{{/each}}
 {{/if}}
 
 {{/if}}

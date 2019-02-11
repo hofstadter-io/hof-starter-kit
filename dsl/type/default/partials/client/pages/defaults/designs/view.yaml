@@ -1,0 +1,17 @@
+- name: view
+  route: "{{APP.route}}{{MODULE.route}}/{{kebab TYPE.name}}/:id"
+
+  currentUser: true
+
+  data:
+    - name: {{TYPE.name}}
+      type: {{TYPE.ctx_path}}
+      query:
+        type: view
+
+      mutations:
+        - delete
+
+  components:
+    - name: view
+      component: type.modules.{{MODULE.name}}.{{TYPE.name}}.components.View

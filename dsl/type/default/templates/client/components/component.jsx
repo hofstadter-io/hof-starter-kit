@@ -1,4 +1,7 @@
 {{#with DslContext as |TYPE|}}
+{{#getdsl (replace TYPE.relPath "/" "." -1) true}}{{#with . as |MODULE| }}
+{{#getdsl "app" true}}{{#with . as |APP| }}
+
 {{#with RepeatedContext as |COMPONENT|}}
 {{#with (camelT COMPONENT.name) as |ComponentName|}}
 {{#with (camel  COMPONENT.name) as |componentName|}}
@@ -51,9 +54,18 @@ class {{ComponentName}}Component extends React.Component {
     {{> common/default/client/common/prop-types.js THING=COMPONENT }}
   };
 
+  {{#if COMPONENT.content}}
+  {{#if COMPONENT.content.default}}
+  {{> (concat3 "type/default/client/components/defaults/content/" COMPONENT.name ".jsx") THING=COMPONENT }}
+  {{else}}
   {{#each COMPONENT.content as |CONTENT_FILE|}}
   {{{file CONTENT_FILE}}}
   {{/each}}
+  {{/if}}
+
+  {{else}}
+  {{> (concat3 "type/default/client/components/defaults/content/" COMPONENT.name ".jsx") THING=COMPONENT }}
+  {{/if}}
 };
 
 {{#if TYPE.translations}}
@@ -64,5 +76,8 @@ export default {{ComponentName}}Component;
 {{/with}}
 {{/with}}
 {{/with}}
+
+{{/with}}{{/getdsl}}
+{{/with}}{{/getdsl}}
 {{/with}}
 

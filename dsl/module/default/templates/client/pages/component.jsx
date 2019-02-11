@@ -75,6 +75,10 @@ class {{PageName}}PageComponent extends React.Component {
       t
     } = props;
 
+    if (!t) {
+      t = x => x
+    }
+
     const renderMetaData = () => {
 
       var title = '{{PageName}}';

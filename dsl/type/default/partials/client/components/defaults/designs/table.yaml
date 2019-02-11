@@ -1,0 +1,12 @@
+- name: table
+
+- name: table-data
+
+  currentUser: true
+
+  data:
+    - name: {{TYPE.name}}
+      type: {{TYPE.ctx_path}}
+      query:
+        type: list
+
