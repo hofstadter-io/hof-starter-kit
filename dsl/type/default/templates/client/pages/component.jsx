@@ -35,9 +35,9 @@ import {{#if IMPORT.default}}{{IMPORT.default}}{{/if ~}}
 
 {{#each PAGE.components as |COMPONENT|}}
 {{#if (eq "type" (trimfrom_first COMPONENT.component "." false))}}
-import {{COMPONENT.name}} from '../../../../../{{replace (trimprefix COMPONENT.component "type.") "." "/" -1}}';
+import {{camelT COMPONENT.name}} from '../../../../../{{replace (trimprefix COMPONENT.component "type.") "." "/" -1}}';
 {{else if (eq "module" (trimfrom_first COMPONENT.component "." false))}}
-import {{COMPONENT.name}} from '../../../../../{{replace (trimprefix COMPONENT.component "module.") "." "/" -1}}';
+import {{camelT COMPONENT.name}} from '../../../../../{{replace (trimprefix COMPONENT.component "module.") "." "/" -1}}';
 {{else}}
 // unknown COMPONENT class '{{COMPONENT.component}}'
 {{/if}}

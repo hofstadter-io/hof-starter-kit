@@ -2,7 +2,9 @@
 {{#if TYPE.pages.default}}
 # all defaults
 pages:
+{{> client/pages/defaults/designs/toc.yaml}}
 {{> client/pages/defaults/designs/create.yaml}}
+{{> client/pages/defaults/designs/table.yaml}}
 {{> client/pages/defaults/designs/list.yaml}}
 {{> client/pages/defaults/designs/edit.yaml}}
 {{> client/pages/defaults/designs/view.yaml}}

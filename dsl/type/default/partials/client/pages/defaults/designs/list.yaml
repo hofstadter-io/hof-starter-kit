@@ -11,3 +11,7 @@
 
       mutations:
         - delete
+
+  components:
+    - name: list
+      component: type.modules.{{MODULE.name}}.{{TYPE.name}}.components.List

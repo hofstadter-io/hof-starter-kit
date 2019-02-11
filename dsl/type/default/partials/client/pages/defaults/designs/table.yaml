@@ -1,0 +1,19 @@
+- name: table
+  route: "{{APP.route}}{{MODULE.route}}/{{kebab TYPE.name}}/table"
+
+  currentUser: true
+
+  data:
+    - name: {{TYPE.name}}
+      type: {{TYPE.ctx_path}}
+      query:
+        type: list
+
+      mutations:
+        - create
+        - update
+        - delete
+
+  components:
+    - name: table
+      component: type.modules.{{MODULE.name}}.{{TYPE.name}}.components.Table

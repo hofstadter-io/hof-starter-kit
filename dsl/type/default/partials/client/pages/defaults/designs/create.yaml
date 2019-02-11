@@ -10,3 +10,6 @@
       mutations:
         - create
 
+  components:
+    - name: form
+      component: type.modules.{{MODULE.name}}.{{TYPE.name}}.components.Form

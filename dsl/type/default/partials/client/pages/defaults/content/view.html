@@ -1,4 +1,10 @@
-<b>{{PAGE.name}} default view content</b>
+<b> {{TYPE.name}} - {{PAGE.name}} default content </b>
+{ {{TYPE.name}} ? 
+  <i> - <Link to={ "{{APP.route}}{{MODULE.route}}/{{kebab TYPE.name}}/edit/" + {{TYPE.name}}.id }> edit </Link></i>
+  : ""
+}
+- <Link to="{{APP.route}}{{MODULE.route}}/{{kebab TYPE.name}}/list"> list </Link>
+- <Link to="{{APP.route}}{{MODULE.route}}/{{kebab TYPE.name}}/table"> table </Link>
 <hr />
 
 <View {...this.props} />
