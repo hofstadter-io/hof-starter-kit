@@ -31,8 +31,8 @@
           }
         }
       ) => {
-        // console.log("{{TypeName}} Subscription Data:", data)
-        let { {{typeName}}Subscription: { mutation } } = data;
+        console.log("{{TypeName}} Subscription Data:", data)
+        let { {{typeName}}Notification: { mutation } } = data;
         if (mutation === 'DELETED') {
           if (history) {
             return history.push('/{{typeName}}s');
@@ -88,7 +88,7 @@ subscribeTo{{camelT DATA.name}} = (
           }
         }
       ) => {
-        // console.log("{{camelT DATA.name}} - onNotification - data", data)
+        console.log("{{camelT DATA.name}} - onNotification - data", data)
         let {
           {{typeName}}sNotification: { mutation, node }
         } = data;

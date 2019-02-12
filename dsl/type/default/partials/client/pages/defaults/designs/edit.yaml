@@ -8,6 +8,7 @@
       type: {{TYPE.ctx_path}}
       query:
         type: view
+        sync: true
 
       mutations:
         - update

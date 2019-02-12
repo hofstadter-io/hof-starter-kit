@@ -1,6 +1,13 @@
 name: "default"
 template-configs:
 
+  - name: once-files
+    field: "."
+
+    templates:
+      - in: client/components/form-component.jsx
+        out: "packages/client/src/{{pkg_path}}/{{kebab name}}/components/DefaultForm.jsx"
+
   - name: type-components
     field: "components"
     templates:
