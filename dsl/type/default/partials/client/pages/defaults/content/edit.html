@@ -1,0 +1,8 @@
+{ {{TYPE.name}} ? 
+  <Link to={ "{{APP.route}}{{MODULE.route}}/{{kebab TYPE.name}}/" + {{TYPE.name}}.id }> back </Link>
+  : ""
+}
+<b>{{TYPE.name}} - {{PAGE.name}} default content</b>
+<hr />
+
+<Form {...this.props} />

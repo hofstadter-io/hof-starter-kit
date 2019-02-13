@@ -24,5 +24,7 @@ template-configs:
       out: packages/server/.env
     - in: packages/server/src/app.js
       out: packages/server/src/app.js
+    - in: packages/server/src/rest.js
+      out: packages/server/src/rest.js
     - in: packages/server/src/modules/index.ts
       out: packages/server/src/modules/index.ts

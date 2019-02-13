@@ -1,0 +1,17 @@
+name: "default"
+template-configs:
+
+  - name: once-files
+    field: "."
+
+    templates:
+
+      - in: client/index.jsx
+        out: "packages/client/src/{{relPath}}/{{kebab name}}/index.js"
+
+  - name: type-files
+    field: "files"
+    templates:
+
+      - in: client/files/file
+        out: "packages/client/src/{{pkg_path}}/../{{dst}}"

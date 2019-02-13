@@ -6,9 +6,9 @@ template-configs:
     templates:
     # Seed files
     - in: packages/server/src/database/seeds/user.js
-      out: packages/server/src/database/seeds/user.js
+      out: packages/server/src/database/seeds/00_user.js
     - in: packages/server/src/database/seeds/modules.js
-      out: packages/server/src/database/seeds/modules.js
+      out: packages/server/src/database/seeds/01_modules.js
 
     # Builtin, baseline migrations
     - in: packages/server/src/database/migrations/00000_migrations.js

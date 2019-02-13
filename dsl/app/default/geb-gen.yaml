@@ -41,5 +41,7 @@ dependencies:
           out: mode.yaml
         - in: migs.yaml
           out: migs.yaml
+        - in: debug.txt
+          out: "debug.txt"
 
 

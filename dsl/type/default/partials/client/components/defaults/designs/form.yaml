@@ -1,0 +1,5 @@
+- name: form
+
+  components:
+    - name: DefaultForm
+      component: type.modules.{{MODULE.name}}.{{TYPE.name}}.components.DefaultForm

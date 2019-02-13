@@ -1,10 +1,12 @@
 {{#with DslContext as |TYPE|}}
+{{#getdsl (replace TYPE.relPath "/" "." -1) true}}{{#with . as |MODULE| }}
 {{#getdsl "app" true}}{{#with . as |APP|}}
 type:
   name: {{TYPE.name}}
 
   {{> db/migs/designs/next-migrations.yaml }}
 
+{{/with}}{{/getdsl}}
 {{/with}}{{/getdsl}}
 {{/with}}
 

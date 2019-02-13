@@ -1,3 +1,4 @@
+{{#with DslContext as |APP|}}
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -70,3 +71,4 @@ class LoginView extends React.PureComponent {
 }
 
 export default translate('user')(LoginView);
+{{/with}}

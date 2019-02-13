@@ -5,6 +5,7 @@
 import { _ } from 'lodash';
 import { authSwitch } from 'graphql-autharoo';
 import { PubSub, withFilter  } from 'graphql-subscriptions';
+import request from 'request'
 
 import log from '../../../../../../common/log';
 import FieldError from '../../../../../../common/FieldError';

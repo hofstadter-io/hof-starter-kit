@@ -28,7 +28,7 @@ export async function seed(knex, Promise) {
   // then clean users
   await truncateTables(knex, Promise, [
     'user',
-    'user_profile',
+    'auth_apikey',
     'auth_certificate',
     'auth_facebook',
     'auth_google',
@@ -37,7 +37,7 @@ export async function seed(knex, Promise) {
   ]);
 
 
-  console.log("CREATING users")
+  console.log("SEEDING users")
   for (let user of users) {
     var id = await returnId(knex('user')).insert({
       username: user.username,
@@ -47,9 +47,12 @@ export async function seed(knex, Promise) {
       is_active: user.isActive
     });
 
-    user.profile.user_id = id[0];
-
-    await returnId(knex('user_profile')).insert(decamelizeKeys(user.profile));
+    if (user.apikey) {
+      await knex('auth_apikey').insert({
+        user_id: id[0],
+        apikey: user.apikey,
+      })
+    }
   }
 
 }

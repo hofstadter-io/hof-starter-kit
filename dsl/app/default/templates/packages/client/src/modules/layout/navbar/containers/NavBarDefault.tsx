@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { NavLink, withRouter } from 'react-router-dom';
-import { Container, Button, Navbar, Nav, NavItem } from 'reactstrap';
+import { Container, Button, Navbar, Nav, NavItem, Dropdown, DropdownItem, DropdownToggle, DropdownMenu } from 'reactstrap';
 
 import { FontAwesomeIcon  } from '@fortawesome/react-fontawesome';
 
@@ -23,8 +23,8 @@ const LogoutLink = translate('navbar')(
         onClick={e => {
           e.preventDefault();
           (async () => {
-            await logout();
             history.push('/');
+            await logout();
           })();
         }}
         className="nav-link"
@@ -40,8 +40,19 @@ const NavBarStyled = styled.nav`
 `
 
 class NavBar extends React.Component<{t: any}> {
+    state = {
+        userDropdownOpen: false
+    }
+
+    toggle = () => {
+        this.setState({
+          userDropdownOpen: !this.state.userDropdownOpen
+        });
+    }
+
   public render() {
     console.log("NavBar.props", this.props);
+    console.log("NavBar.state", this.state);
     const { t } = this.props;
     return (
       <NavBarStyled>
@@ -75,17 +86,48 @@ class NavBar extends React.Component<{t: any}> {
               {{/each}}
 
             </Nav>
-            {{/with}}
 
             <Nav className="justify-content-end">
-              <IfLoggedIn key="/profile">
-                <NavLink to="/profile" className="nav-link" activeClassName="active">
-                  <ProfileName />
-                </NavLink>
+
+              <IfLoggedIn key="user-dropdown">
+                <Dropdown nav isOpen={this.state.userDropdownOpen} toggle={this.toggle}>
+                  <DropdownToggle nav caret>
+                    <ProfileName />
+                  </DropdownToggle>
+                  <DropdownMenu id="user-dropdown-menu">
+                    {{#if NAVBAR.userItems}}
+                    {{#each NAVBAR.userItems as |ITEM|}}
+                    {{#if ITEM.roles}}
+                    <IfLoggedIn key="{{{ITEM.href}}}" role={[{{#each ITEM.roles as |R|}}"{{R}}"{{#unless @last}}, {{/unless}}{{/each}}]}>
+                      <NavLink to="{{{ITEM.href}}}" className="nav-link">
+                          {t('{{ITEM.name}}')}
+                      </NavLink>
+                    </IfLoggedIn>
+                    {{else}}
+                    <NavLink to="{{{ITEM.href}}}" className="nav-link">
+                      {t('{{ITEM.name}}')}
+                    </NavLink>
+                    {{/if}}
+                    {{/each}}
+                    <IfLoggedIn key="/logout">
+                      <LogoutLink t={t}/>
+                    </IfLoggedIn>
+
+                    {{else}}
+
+                    <IfLoggedIn key="/profile">
+                      <NavLink to="/profile" className="nav-link" activeClassName="active">
+                        <ProfileName />
+                      </NavLink>
+                    </IfLoggedIn>
+                    <IfLoggedIn key="/logout">
+                      <LogoutLink t={t}/>
+                    </IfLoggedIn>
+                    {{/if}}
+                  </DropdownMenu>
+                </Dropdown>
               </IfLoggedIn>
-              <IfLoggedIn key="/logout">
-                <LogoutLink t={t}/>
-              </IfLoggedIn>
+
               <IfNotLoggedIn key="/login">
                 <NavLink to="/login" className="nav-link" activeClassName="active">
                   {t('signin')}
@@ -94,6 +136,8 @@ class NavBar extends React.Component<{t: any}> {
 
               <LanguagePicker i18n={i18n} />
             </Nav>
+
+            {{/with}}
           </Navbar>
         </div>
       </NavBarStyled>

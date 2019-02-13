@@ -1,6 +1,349 @@
 name: "type"
 version: "0.0.1"
 
+
+snippets:
+  - name: NAME_REGEX_1
+    value: '^[[:alpha:]][[:word:]-]*$'
+
+  - name: NAME_REGEX_1
+    value:
+      regex: '^[[:alpha:]][[:word:]-]*$'
+
+  - name: NAME_FIELD
+    value:
+
+
 spec:
   type: "object"
-  fields: []
+  fields:
+    # NAME
+    - name: "name"
+      type: "string"
+
+      regex: SNIPPET(NAME_REGEX) ???
+      SNIPPET: NAME_REGEX_2 ??? (this one means we can't have more than one in an object?)
+      # Still there is a difference between the "snippet" type and where thie SNIPPET is injected
+
+      blacklist:
+        - "cookies"
+        - "debug"
+        - "graphqlTypes"
+        - "i18n"
+        - "mailer"
+        - "proxy"
+        - "user"
+        - "components"
+        - "defaultRouter"
+        - "favicon"
+        - "layout"
+        - "pageNotFound"
+        - "pages"
+
+
+    - name: owned
+      optional: true
+      # XXX Variants?
+      type: object
+      fields:
+        # XXX Variants?
+        - name: type
+          type: string
+          regex: '^(has-one|has-many)$'
+        - name: "name"
+          optional: true
+          type: "string"
+          regex: '^[[:alpha:]][[:word:]-]*$'
+
+        # XXX TODO no-mutate -- boolean
+
+
+    # XXX TODO - AUTH
+    - name: auth
+      type: variant
+      variants:
+        # - type: object
+        #   fields:
+        #     - name: default
+        #       type: boolean
+        - type: object
+          fields:
+            - name: view
+              type: list
+              items:
+                type: string
+                regex: '^(user|admin)$'
+            - name: create
+              type: list
+              items:
+                type: string
+                regex: '^(user|admin)$'
+            - name: update
+              type: list
+              items:
+                type: string
+                regex: '^(user|admin)$'
+            - name: delete
+              type: list
+              items:
+                type: string
+                regex: '^(user|admin)$'
+
+
+
+    # XXX TODO - VISIBILITY
+    # XXX TODO - LOOKUP
+    # XXX TODO - RELATIONS
+
+    # original is below
+    - name: fields
+      type: list
+      items:
+        type: object
+        fields:
+          #
+          - SNIPPET: NAME_FIELD
+
+          - name: type
+            type: "string"
+            regex: '^(string|text|integer|decimal|boolean|date|time|datetime|json|jsonb)'
+          - name: default
+            optional: true
+            type: string
+            regex: '^[[:word:] -]+$'
+
+    - name: fields
+      type: list
+      items:
+        type: object
+        fields:
+          - name: "name"
+            type: "string"
+            regex: '^[[:alpha:]][[:word:]-]*$'
+          - name: type
+            type: "string"
+            regex: '^(string|text|integer|decimal|boolean|date|time|datetime|json|jsonb)'
+          - name: default
+            optional: true
+            type: string
+            regex: '^[[:word:] -]+$'
+          # - name: unique
+          #   optional: true
+          #   type: boolean
+          # - name: nullable
+          #   optional: true
+          #   type: boolean
+          # - name: notNullable
+          #   optional: true
+          #   type: boolean
+
+    - name: lookup
+      optional: true
+      type: list
+      items:
+        type: object
+        fields:
+          - name: "name"
+            type: "string"
+            regex: '^[[:alpha:]][[:word:]-]*$'
+          - name: field
+            type: "string"
+            regex: '^[[:alpha:]][[:word:]-]*$'
+
+    # FILES
+    - name: files
+      optional: true
+      type: list
+      items:
+          type: object
+          fields:
+          - name: "name"
+            type: "string"
+            regex: '^[[:alpha:]][[:word:]-]*$'
+          - name: "src"
+            type: "string"
+            regex: '^([[:word:]-]+\/)+[[:word:]-]+\.[[:lower:]]{1,4}$'
+          - name: "dst"
+            type: "string"
+            regex: '^([[:word:]-]+\/)+[[:word:]-]+\.[[:lower:]]{1,4}$'
+
+    # SEEDS
+    - name: "seeds"
+      optional: true
+      type: "object"
+      fields:
+
+      - name: "file"
+        type: "string"
+        regex: '^([[:word:]-]+\/)+[[:word:]-]+\.json$'
+
+      - name: types
+        type: list
+        items:
+          type: object
+          fields:
+
+          - name: "name"
+            type: "string"
+            regex: '^[[:alpha:]][[:word:]-]*$'
+            blacklist:
+              - user
+
+          - name: "data"
+            type: "string"
+            regex: '^[[:alpha:]][[:word:]-]*$'
+
+          - name: "type"
+            type: "string"
+            regex: '^type\.modules\.[[:word:]-]+\.[[:word:]-]+$'
+
+    # TRANSLATIONS
+    - name: "translations"
+      optional: true
+      type: "list"
+      items:
+        type: "object"
+        fields:
+        - name: "name"
+          type: "string"
+          regex: '^[[:alpha:]][[:word:]-]*$'
+        - name: "file"
+          type: "string"
+          regex: '^([[:word:]-]+\/)+[[:word:]-]+\.json$'
+
+    # COMPONENTs
+    - name: components
+      optional: true
+      type: list
+      items:
+        type: object
+        fields:
+
+        - name: "name"
+          type: "string"
+          regex: '^[[:alpha:]][[:word:]-]*$'
+
+        - name: style
+          optional: true
+          type: list
+          items:
+            type: string
+            regex: '^([[:word:]-]+\/)+[[:word:]-]+\.[[:lower:]]{1,4}$'
+
+        - name: content
+          optional: true
+          type: list
+          items:
+            type: string
+            regex: '^([[:word:]-]+\/)+[[:word:]-]+\.[[:lower:]]{1,4}$'
+
+        # - name: current-user
+        #   optional: true
+        #   type: bool
+
+        - name: data
+          optional: true
+          type: list
+          items:
+            type: object
+            fields:
+            - name: "name"
+              type: "string"
+              regex: '^[[:alpha:]][[:word:]-]*$'
+            - name: "type"
+              type: "string"
+              regex: '^type\.modules\.[[:word:]-]+\.[[:word:]-]+$'
+            - name: query
+              optional: true
+              type: object
+              fields:
+                - name: type
+                  type: string
+                  regex: '^(view|list)$'
+                # - name: sync
+                #   optional: true
+                #   type: bool
+            - name: mutations
+              optional: true
+              type: list
+              items:
+                type: string
+                regex: '^(create|update|delete)$'
+
+    # PAGES
+    - name: pages
+      optional: true
+      type: list
+      items:
+        type: object
+        fields:
+        - name: "name"
+          type: "string"
+          regex: '^[[:alpha:]][[:word:]-]*$'
+        - name: "route"
+          type: "string"
+          regex: '^(\/[[:alpha:]][[:word:]-]*)+$'
+
+        - name: style
+          optional: true
+          type: list
+          items:
+            type: string
+            regex: '^([[:word:]-]+\/)+[[:word:]-]+\.[[:lower:]]{1,4}$'
+
+        - name: content
+          optional: true
+          type: list
+          items:
+            type: string
+            regex: '^([[:word:]-]+\/)+[[:word:]-]+\.[[:lower:]]{1,4}$'
+
+
+        - name: components
+          optional: true
+          type: list
+          items:
+            type: object
+            fields:
+            - name: "name"
+              type: "string"
+              regex: '^[[:alpha:]][[:word:]-]*$'
+            - name: "component"
+              type: "string"
+              regex: '^(type|module)\.modules\.[[:word:]-]+\.components\.[[:word:]-]+$'
+
+            # - name: current-user
+            #   optional: true
+            #   type: bool
+
+            - name: data
+              optional: true
+              type: list
+              items:
+                type: object
+                fields:
+                - name: "name"
+                  type: "string"
+                  regex: '^[[:alpha:]][[:word:]-]*$'
+                - name: "type"
+                  type: "string"
+                  regex: '^type\.modules\.[[:word:]-]+\.[[:word:]-]+$'
+                - name: query
+                  optional: true
+                  type: object
+                  fields:
+                    - name: type
+                      type: string
+                      regex: '^(view|list)$'
+                    # - name: sync
+                    #   optional: true
+                    #   type: bool
+                - name: mutations
+                  optional: true
+                  type: list
+                  items:
+                    type: string
+                    regex: '^(create|update|delete)$'
+
+
+

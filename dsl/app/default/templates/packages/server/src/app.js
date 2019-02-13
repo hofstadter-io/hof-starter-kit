@@ -3,11 +3,13 @@ import path from 'path';
 
 import { isApiExternal } from './net';
 import modules from './modules';
+import schema from './api/schema';
 import graphiqlMiddleware from './middleware/graphiql';
 import createApolloServer from './graphql';
+import createRestAPI from './rest';
 import errorMiddleware from './middleware/error';
 
-console.log("HOF ENV", process.env.HOF_CLIENT_COMPONENT, process.env.HOF_SERVER_COMPONENT)
+// console.log("HOF ENV", process.env.HOF_CLIENT_COMPONENT, process.env.HOF_SERVER_COMPONENT)
 
 
 const app = express();
@@ -28,6 +30,10 @@ for (const applyMiddleware of modules.middleware) {
   applyMiddleware(app);
 }
 
+app.get('/hello', (req, res) => {
+  res.status(200).send("Running")
+})
+
 if (__DEV__) {
   app.get('/servdir', (req, res) => {
     res.send(process.cwd() + path.sep);
@@ -42,6 +48,8 @@ if (!isApiExternal && process.env.HOF_SERVER_COMPONENT === 'true') {
     cors: corsOptions
   });
 }
+
+createRestAPI(app, schema, modules);
 
 // Workaround: this middleware should be because playground calls next func
 // See: https://github.com/prisma/graphql-playground/issues/557

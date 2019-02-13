@@ -1,0 +1,22 @@
+name: "default"
+template-configs:
+
+  - name: once-files
+    field: "."
+
+    templates:
+
+      - in: client/pages/index.jsx
+        out: packages/client/src/{{relPath}}/{{name}}/pages/index.jsx
+
+  - name: type-pages
+    field: "pages"
+    templates:
+
+      - in: client/pages/page.jsx
+        out: "packages/client/src/{{pkg_path}}/{{kebab name}}/index.jsx"
+      - in: client/pages/container.jsx
+        out: "packages/client/src/{{pkg_path}}/{{kebab name}}/container.jsx"
+      - in: client/pages/component.jsx
+        out: "packages/client/src/{{pkg_path}}/{{kebab name}}/component.jsx"
+

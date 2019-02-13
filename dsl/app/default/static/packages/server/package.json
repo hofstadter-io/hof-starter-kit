@@ -52,6 +52,7 @@
   "author": "SysGears INC",
   "license": "MIT",
   "dependencies": {
+    "@hofstadter-io/sofa-api": "^0.2.5",
     "@babel/polyfill": "^7.0.0",
     "@babel/register": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
@@ -91,6 +92,7 @@
     "lint-staged": "^7.0.4",
     "lodash": "^4.17.4",
     "minilog": "^3.1.0",
+    "multer": "~1.4.1",
     "nodemailer": "^4.4.1",
     "nodemailer-mailgun-transport": "^1.4.0",
     "passport": "^0.4.0",
@@ -122,6 +124,7 @@
     "stripe-local": "^0.1.1",
     "styled-components": "^3.2.6",
     "subscriptions-transport-ws": "^0.9.4",
+    "swagger-ui-express": "^4.0.2",
     "tslint-config-prettier": "^1.5.0",
     "typescript": "^2.7.2",
     "universal-cookie-express": "^2.2.0",

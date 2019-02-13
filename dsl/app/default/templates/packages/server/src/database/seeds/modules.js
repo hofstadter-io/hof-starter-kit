@@ -11,6 +11,7 @@ export async function seed(knex, Promise) {
 {{#each DslContext.modules as |MOD|}}
 {{#getdsl (concat3 "modules." MOD ".module") true}}{{#with . as |MODULE|}}
 {{#if MODULE.seeds}}
+  console.log("SEEDING - {{MOD}}")
   await {{camelT MOD}}Seed(knex, Promise);
 {{/if}}
 {{/with}}{{/getdsl}}

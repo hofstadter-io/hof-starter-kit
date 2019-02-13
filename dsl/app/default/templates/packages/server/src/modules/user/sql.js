@@ -7,7 +7,6 @@ import uuidv4 from 'uuid/v4'
 import knex from '../../sql/connector';
 import { returnId } from '../../sql/helpers';
 
-{{#with DslContext.user.profile as |PROFILE|}}
 // Actual query fetching and transformation in DB
 class User {
   async getUsers(orderBy, filter) {
@@ -18,11 +17,6 @@ class User {
         'u.role',
         'u.is_active',
         'u.email',
-        {{#each PROFILE.fields as |FIELD|}}
-        {{#unless FIELD.migration}}
-        'up.{{snake FIELD.name}}',
-        {{/unless}}
-        {{/each}}
         'ak.apikey',
         'ca.serial',
         'fa.fb_id',
@@ -35,7 +29,6 @@ class User {
         'ga.display_name AS googleDisplayName'
       )
       .from('user AS u')
-      .leftJoin('user_profile AS up', 'up.user_id', 'u.id')
       .leftJoin('auth_apikey AS ak', 'ak.user_id', 'u.id')
       .leftJoin('auth_certificate AS ca', 'ca.user_id', 'u.id')
       .leftJoin('auth_facebook AS fa', 'fa.user_id', 'u.id')
@@ -71,9 +64,7 @@ class User {
       if (has(filter, 'searchText') && filter.searchText !== '') {
         queryBuilder.where(function() {
           this.where('u.username', 'like', `%${filter.searchText}%`)
-            .orWhere('u.email', 'like', `%${filter.searchText}%`)
-            .orWhere('up.first_name', 'like', `%${filter.searchText}%`)
-            .orWhere('up.last_name', 'like', `%${filter.searchText}%`);
+            .orWhere('u.email', 'like', `%${filter.searchText}%`);
         });
       }
     }
@@ -90,11 +81,6 @@ class User {
           'u.role',
           'u.is_active',
           'u.email',
-          {{#each PROFILE.fields as |FIELD|}}
-          {{#unless FIELD.migration}}
-          'up.{{snake FIELD.name}}',
-          {{/unless}}
-          {{/each}}
           'ak.apikey',
           'ca.serial',
           'fa.fb_id',
@@ -107,7 +93,6 @@ class User {
           'ga.display_name AS googleDisplayName'
         )
         .from('user AS u')
-        .leftJoin('user_profile AS up', 'up.user_id', 'u.id')
         .leftJoin('auth_apikey AS ak', 'ak.user_id', 'u.id')
         .leftJoin('auth_certificate AS ca', 'ca.user_id', 'u.id')
         .leftJoin('auth_facebook AS fa', 'fa.user_id', 'u.id')
@@ -128,20 +113,15 @@ class User {
           'u.role',
           'u.is_active',
           'u.email',
-          {{#each PROFILE.fields as |FIELD|}}
-          'up.{{snake FIELD.name}}',
-          {{/each}}
           'u.id'
         )
         .from('user AS u')
         .where('u.id', '=', id)
-        .leftJoin('user_profile AS up', 'up.user_id', 'u.id')
         .first()
     );
   }
 
   async getUserWithApikey(apikey) {
-    console.log("getUserWithApikey: ", apikey)
     return camelizeKeys(
       await knex
         .select(
@@ -149,14 +129,10 @@ class User {
           'u.role',
           'u.is_active',
           'u.email',
-          {{#each PROFILE.fields as |FIELD|}}
-          'up.{{snake FIELD.name}}',
-          {{/each}}
           'u.id'
         )
         .from('user AS u')
         .leftJoin('auth_apikey AS ak', 'ak.user_id', 'u.id')
-        .leftJoin('user_profile AS up', 'up.user_id', 'u.id')
         .where('ak.apikey', '=', apikey)
         .first()
     );
@@ -171,14 +147,10 @@ class User {
           'u.role',
           'u.is_active',
           'u.email',
-          {{#each PROFILE.fields as |FIELD|}}
-          'up.{{snake FIELD.name}}',
-          {{/each}}
           'u.id'
         )
         .from('user AS u')
         .leftJoin('auth_certificate AS ca', 'ca.user_id', 'u.id')
-        .leftJoin('user_profile AS up', 'up.user_id', 'u.id')
         .where('ca.serial', '=', serial)
         .first()
     );
@@ -237,22 +209,6 @@ class User {
       .where({ id });
   }
 
-  async editUserProfile({ id, profile }) {
-    const userProfile = await knex
-      .select('id')
-      .from('user_profile')
-      .where({ user_id: id })
-      .first();
-
-    if (userProfile) {
-      return knex('user_profile')
-        .update(decamelizeKeys(profile))
-        .where({ user_id: id });
-    } else {
-      return returnId(knex('user_profile')).insert({ ...decamelizeKeys(profile), user_id: id });
-    }
-  }
-
   async editAuthCertificate({
     id,
     auth: {
@@ -303,15 +259,9 @@ class User {
           'u.role',
           'u.is_active',
           'u.email',
-          {{#each PROFILE.fields as |FIELD|}}
-          {{#unless FIELD.migration}}
-          'up.{{snake FIELD.name}}',
-          {{/unless}}
-          {{/each}}
           'u.id'
         )
         .from('user AS u')
-        .leftJoin('user_profile AS up', 'up.user_id', 'u.id')
         .where({ email })
         .first()
     );
@@ -327,16 +277,10 @@ class User {
           'fa.fb_id',
           'u.email',
           'u.password_hash',
-          {{#each PROFILE.fields as |FIELD|}}
-          {{#unless FIELD.migration}}
-          'up.{{snake FIELD.name}}',
-          {{/unless}}
-          {{/each}}
           'u.id'
         )
         .from('user AS u')
         .leftJoin('auth_facebook AS fa', 'fa.user_id', 'u.id')
-        .leftJoin('user_profile AS up', 'up.user_id', 'u.id')
         .where('fa.fb_id', '=', id)
         .orWhere('u.email', '=', email)
         .first()
@@ -353,16 +297,10 @@ class User {
           'lna.ln_id',
           'u.email',
           'u.password_hash',
-          {{#each PROFILE.fields as |FIELD|}}
-          {{#unless FIELD.migration}}
-          'up.{{snake FIELD.name}}',
-          {{/unless}}
-          {{/each}}
           'u.id'
         )
         .from('user AS u')
         .leftJoin('auth_linkedin AS lna', 'lna.user_id', 'u.id')
-        .leftJoin('user_profile AS up', 'up.user_id', 'u.id')
         .where('lna.ln_id', '=', id)
         .orWhere('u.email', '=', email)
         .first()
@@ -379,16 +317,10 @@ class User {
           'gha.gh_id',
           'u.email',
           'u.password_hash',
-          {{#each PROFILE.fields as |FIELD|}}
-          {{#unless FIELD.migration}}
-          'up.{{snake FIELD.name}}',
-          {{/unless}}
-          {{/each}}
           'u.id'
         )
         .from('user AS u')
         .leftJoin('auth_github AS gha', 'gha.user_id', 'u.id')
-        .leftJoin('user_profile AS up', 'up.user_id', 'u.id')
         .where('gha.gh_id', '=', id)
         .orWhere('u.email', '=', email)
         .first()
@@ -405,16 +337,10 @@ class User {
           'ga.google_id',
           'u.email',
           'u.password_hash',
-          {{#each PROFILE.fields as |FIELD|}}
-          {{#unless FIELD.migration}}
-          'up.{{snake FIELD.name}}',
-          {{/unless}}
-          {{/each}}
           'u.id'
         )
         .from('user AS u')
         .leftJoin('auth_google AS ga', 'ga.user_id', 'u.id')
-        .leftJoin('user_profile AS up', 'up.user_id', 'u.id')
         .where('ga.google_id', '=', id)
         .orWhere('u.email', '=', email)
         .first()
@@ -430,16 +356,10 @@ class User {
           'u.role',
           'u.is_active',
           'u.email',
-          {{#each PROFILE.fields as |FIELD|}}
-          {{#unless FIELD.migration}}
-          'up.{{snake FIELD.name}}',
-          {{/unless}}
-          {{/each}}
           'u.id'
         )
         .from('user AS u')
         .where('u.username', '=', username)
-        .leftJoin('user_profile AS up', 'up.user_id', 'u.id')
         .first()
     );
   }
@@ -453,22 +373,15 @@ class User {
           'u.role',
           'u.is_active',
           'u.email',
-          {{#each PROFILE.fields as |FIELD|}}
-          {{#unless FIELD.migration}}
-          'up.{{snake FIELD.name}}',
-          {{/unless}}
-          {{/each}}
           'u.id'
         )
         .from('user AS u')
         .where('u.username', '=', usernameOrEmail)
         .orWhere('u.email', '=', usernameOrEmail)
-        .leftJoin('user_profile AS up', 'up.user_id', 'u.id')
         .first()
     );
   }
 }
-{{/with}}
 const userDAO = new User();
 
 export default userDAO;

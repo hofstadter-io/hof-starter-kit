@@ -47,7 +47,7 @@ const PageStyled = styled.div`
 
 class {{PageName}}PageComponent extends React.Component {
   static propTypes = {
-    {{> client/pages/prop-types.jsx }}
+    {{> common/default/client/common/prop-types.js THING=PAGE }}
 
     match: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
@@ -74,6 +74,10 @@ class {{PageName}}PageComponent extends React.Component {
 
       t
     } = props;
+
+    if (!t) {
+      t = x => x
+    }
 
     const renderMetaData = () => {
 

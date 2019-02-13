@@ -1,0 +1,28 @@
+
+
+  - name: type-custom-components
+    field: components
+    templates:
+
+      - in: client/components/custom.jsx
+        out: "packages/client/src/modules/{{parent}}/components/{{camelT name}}.jsx"
+      - in: client/containers/custom.jsx
+        when: "data"
+        out: "packages/client/src/modules/{{parent}}/components/{{camelT name}}Container.jsx"
+
+  - name: type-custom-scripts
+    field: scripts
+    templates:
+
+      - in: client/scripts/custom.js
+        out: "packages/client/src/{{pkg_path}}/{{name}}.js"
+
+  - name: type-translations
+    field: "translations"
+    templates:
+
+      - in: client/locales/translations.json
+        out: packages/client/src/modules/{{parent}}/locales/{{name}}/translations.json
+
+
+

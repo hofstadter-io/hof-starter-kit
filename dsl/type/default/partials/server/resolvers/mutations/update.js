@@ -1,5 +1,6 @@
 obj.Mutation.{{typeName}}Update = authSwitch([
   {{#if TYPE.owned}}
+  {{#unless TYPE.owned.no-mutate}}
   // owner update
   {
     requiredScopes: (sources, args, context, info) => {
@@ -66,6 +67,7 @@ obj.Mutation.{{typeName}}Update = authSwitch([
       }
     }
   },
+  {{/unless}}
   {{/if}}
 
   {{#if AUTH.update}}

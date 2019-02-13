@@ -1,0 +1,12 @@
+- name: view
+
+- name: view-data
+
+  currentUser: true
+
+  data:
+    - name: {{TYPE.name}}
+      type: {{TYPE.ctx_path}}
+      query:
+        type: view
+

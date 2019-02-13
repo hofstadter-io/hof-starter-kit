@@ -1,11 +1,21 @@
+{{#with DslContext as |APP|}}
 import cookies from './cookies';
 import i18n from './i18n';
 
 import user from './user';
 
-{{#each DslContext.modules as |MOD| ~}}
+{{#each APP.modules as |MOD| ~}}
 import {{camel MOD}} from './{{kebab MOD}}';
 {{/each}}
+
+/*
+   {{#if (and (eq APP.client "studios") (eq APP.name "studios"))}}
+ */
+import proxy from './proxy';
+/*
+   {{/if}}
+ */
+
 
 import contact from './contact';
 import mailer from './mailer';
@@ -15,16 +25,25 @@ import './debug';
 import ServerModule from './ServerModule';
 
 export default new ServerModule(
-  cookies,
-  i18n,
+    cookies,
+    i18n,
 
-  user,
+    user,
 
-  {{#each DslContext.modules as |MOD| ~}}
-  {{!}}  {{camel MOD}},
-  {{/each}}
+    {{#each APP.modules as |MOD| ~}}
+    {{!}}  {{camel MOD}},
+    {{/each}}
 
-  contact,
-  mailer,
-  graphqlTypes
+    /*
+       {{#if (and (eq APP.client "studios") (eq APP.name "studios"))}}
+     */
+    proxy,
+    /*
+       {{/if}}
+     */
+
+    contact,
+    mailer,
+    graphqlTypes
 );
+{{/with}}

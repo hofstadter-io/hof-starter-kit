@@ -1,11 +1,11 @@
-{{#if PAGE.currentUser}}
-import { withLoadedUser } from '../../../user/containers/Auth';
+{{#if COMPONENT.currentUser}}
+import { withLoadedUser } from '../../user/containers/Auth';
 {{/if}}
 
-{{#each PAGE.data as |DATA|}}
+{{#each COMPONENT.data as |DATA|}}
 // {{DATA.type}}
 {{#if (eq "type" (trimfrom_first DATA.type "." false))}}
-import {{DATA.name}}SDK from '../../../../{{replace (trimprefix DATA.type "type.") "." "/" -1}}/sdk';
+import {{DATA.name}}SDK from '../../../{{replace (trimprefix DATA.type "type.") "." "/" -1}}/sdk';
 {{else}}
 // unknown DATA type '{{DATA.type}}'
 {{/if}}

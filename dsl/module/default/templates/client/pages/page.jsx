@@ -14,7 +14,7 @@ const page = {
     <AuthRoute
       exact
       path={"{{PAGE.route}}"}
-      role={ {{{json PAGE.auth.roles}}} }
+      role={ {{{json PAGE.auth.roles inline=true}}} }
       redirect="/login"
       component={ Container }
     />

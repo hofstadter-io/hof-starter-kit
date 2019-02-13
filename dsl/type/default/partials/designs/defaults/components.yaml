@@ -1,0 +1,22 @@
+{{#if TYPE.components}}
+{{#if TYPE.components.default}}
+# all defaults
+components:
+{{> client/components/defaults/designs/form.yaml}}
+{{> client/components/defaults/designs/view.yaml}}
+{{> client/components/defaults/designs/list.yaml}}
+{{> client/components/defaults/designs/table.yaml}}
+{{else}}
+components:
+{{#each TYPE.components as |COMPONENT|}}
+{{#if COMPONENT.default}}
+# {{concat3 "client/pages/designs/default/" COMPONENT.name ".yaml"}}
+{{> (concat3 "client/pages/defaults/designs/" COMPONENT.name ".yaml")}}
+{{else}}
+# existing
+- {{{yaml COMPONENT indent="  " skipFirst=true}}}
+{{/if}}
+{{/each}}
+{{/if}}
+
+{{/if}}

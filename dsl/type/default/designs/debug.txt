@@ -1,3 +1,15 @@
-{{#with DslContext as |TYPE|}}
-{{{yaml TYPE}}}
+{{#with DslContext as |TYPE| }}
+{{#getdsl (replace TYPE.relPath "/" "." -1) true}}{{#with module as |MODULE| }}
+{{#getdsl "app" true}}{{#with . as |APP| }}
+
+# {{TYPE.relPath}}
+# {{MODULE.name}}
+
+- {{replace TYPE.relPath "/" "." -1}}
+- {{concat2 "module." (replace TYPE.relPath "/" "." -1)}}
+
+{{{yaml MODULE}}}
+
+{{/with}}{{/getdsl}}
+{{/with}}{{/getdsl}}
 {{/with}}

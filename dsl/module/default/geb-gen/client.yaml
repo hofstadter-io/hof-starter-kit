@@ -14,6 +14,13 @@ template-configs:
       - in: client/locales/index.js
         out: packages/client/src/modules/{{name}}/locales/index.js
 
+  - name: module-files
+    field: "files"
+    templates:
+
+      - in: client/files/file
+        out: "packages/client/src/modules/{{parent}}/{{dst}}"
+
   - name: module-pages
     field: "pages"
     templates:
@@ -25,22 +32,14 @@ template-configs:
       - in: client/pages/component.jsx
         out: packages/client/src/modules/{{parent}}/pages/{{name}}/component.jsx
 
-  - name: module-custom-components
-    field: components
+  - name: module-components
+    field: "components"
     templates:
 
-      - in: client/components/custom.jsx
+      - in: client/components/container.jsx
         out: "packages/client/src/modules/{{parent}}/components/{{camelT name}}.jsx"
-      - in: client/containers/custom.jsx
-        when: "data"
-        out: "packages/client/src/modules/{{parent}}/components/{{camelT name}}Container.jsx"
-
-  - name: module-custom-scripts
-    field: scripts
-    templates:
-
-      - in: client/scripts/custom.js
-        out: "packages/client/src/{{pkg_path}}/{{name}}.js"
+      - in: client/components/component.jsx
+        out: "packages/client/src/modules/{{parent}}/components/{{camelT name}}Component.jsx"
 
   - name: module-translations
     field: "translations"

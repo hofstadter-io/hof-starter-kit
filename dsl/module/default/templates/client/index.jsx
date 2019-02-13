@@ -14,7 +14,7 @@ import {{camelT TYPE.name}} from './{{kebab TYPE.name}}';
 {{/with}}{{/gettype ~}}{{/each}}
 
 {{#if MODULE.pages}}
-import {{camelT TYPE.name}}Pages from './pages';
+import Pages from './pages';
 {{/if}}
 
 const {{camelT MODULE.name}}Module = {
@@ -25,7 +25,7 @@ export default new ClientModule(
 
   // pages
   {{#if MODULE.pages}}
-  {{camelT TYPE.name}}Pages,
+  Pages,
   {{/if}}
 
   // types

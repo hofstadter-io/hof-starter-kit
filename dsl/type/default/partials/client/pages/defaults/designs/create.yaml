@@ -1,0 +1,15 @@
+- name: create
+  route: "{{APP.route}}{{MODULE.route}}/{{kebab TYPE.name}}/new"
+
+  currentUser: true
+
+  data:
+    - name: {{TYPE.name}}
+      type: {{TYPE.ctx_path}}
+
+      mutations:
+        - create
+
+  components:
+    - name: form
+      component: type.modules.{{MODULE.name}}.{{TYPE.name}}.components.Form

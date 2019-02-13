@@ -54,27 +54,9 @@ export default pubsub => ({
     }
   },
   User: {
-    profile(obj) {
-      return obj;
-    },
     auth(obj) {
       console.log("auth obj", obj)
       return obj;
-    }
-  },
-  UserProfile: {
-    {{#each DslContext.user.profile.fields as |FIELD|}}
-    {{camel FIELD.name}}(obj) {
-      return obj.{{camel FIELD.name}};
-    },
-    {{/each}}
-
-    fullName(obj) {
-      if (obj.firstName && obj.lastName) {
-        return `${obj.firstName} ${obj.lastName}`;
-      } else {
-        return null;
-      }
     }
   },
 
@@ -83,8 +65,9 @@ export default pubsub => ({
       (obj, args, { User, user }) => {
         return user.id !== args.input.id ? ['user:create'] : ['user:create:self'];
       },
-      async (obj, { input }, { User, user, req: { universalCookies }, mailer, req, req: { t } }) => {
+      async (obj, args, { User, user, req: { universalCookies }, mailer, req, req: { t } }) => {
         try {
+          let { input } = args;
           const e = new FieldError();
 
           const userExists = await User.getUserByUsername(input.username);
@@ -104,7 +87,6 @@ export default pubsub => ({
           e.throwIf();
 
           const [createdUserId] = await User.register({ ...input });
-          await User.editUserProfile({ id: createdUserId, ...input });
 
           if (settings.user.auth.apikey.enabled) {
             // by default, generate an Apikey
@@ -116,6 +98,21 @@ export default pubsub => ({
           }
 
           const user = await User.getUser(createdUserId);
+
+          {{#if APP.user.hooks.post-create}}
+          var requestResult = null;
+          var requestData = {
+            'hook': 'user.post-create',
+            args,
+            user
+          }
+
+          {{#with APP.user.hooks.post-create as |HOOK|}}
+          {{> type/default/server/hooks/func.js}}
+          {{/with}}
+
+          console.log("User.post-create - requestReulst", requestResult)
+          {{/if}}
 
           if (mailer && settings.user.auth.password.sendAddNewUserEmail && !emailExists && req) {
             // async email
@@ -179,7 +176,6 @@ export default pubsub => ({
           const userInfo = !isSelf() && isAdmin() ? input : pick(input, ['id', 'username', 'email', 'password']);
 
           await User.editUser(userInfo);
-          await User.editUserProfile(input);
 
           if (settings.user.auth.certificate.enabled) {
             await User.editAuthCertificate(input);
@@ -266,30 +262,6 @@ export default pubsub => ({
             }
             console.log("gen APIKey", apikey)
             user = await User.getUser(id);
-
-            {{#if (eq APP.name "studios")}}
-            // ENABLE APIKEYS
-            const data = {
-              "Namespace": "{{DslContext.name}}",
-              "UserName": user.username,
-              "UserID": id,
-              "APIKey": apikey,
-              "ApiKeyID": 0
-            }
-
-            request({
-              method: "POST",
-              uri: 'http://studios-apikeys.studios.svc.cluster.local:8080',
-              json: true,
-              body: data
-            }, function (error, response, body) {
-              console.log('error:', error); // Print the error if one occurred
-              console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-              console.log('body:', body); // Print the HTML for the Google homepage.
-            });
-            {{else}}
-            // APP.name != studios '{{APP.name}}' {{eq APP.name "studios"}}
-            {{/if}}
 
             pubsub.publish(USERS_SUBSCRIPTION, {
               usersUpdated: {

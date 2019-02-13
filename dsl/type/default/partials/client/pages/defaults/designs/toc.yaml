@@ -1,0 +1,3 @@
+- name: toc
+  route: "{{APP.route}}{{MODULE.route}}/{{kebab TYPE.name}}/toc"
+
