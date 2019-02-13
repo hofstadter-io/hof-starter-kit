@@ -1,13 +1,30 @@
 name: "type"
 version: "0.0.1"
 
+
+snippets:
+  - name: NAME_REGEX_1
+    value: '^[[:alpha:]][[:word:]-]*$'
+
+  - name: NAME_REGEX_1
+    value:
+      regex: '^[[:alpha:]][[:word:]-]*$'
+
+  - name: NAME_FIELD
+    value:
+
+
 spec:
   type: "object"
   fields:
     # NAME
     - name: "name"
       type: "string"
-      regex: '^[[:alpha:]][[:word:]-]*$'
+
+      regex: SNIPPET(NAME_REGEX) ???
+      SNIPPET: NAME_REGEX_2 ??? (this one means we can't have more than one in an object?)
+      # Still there is a difference between the "snippet" type and where thie SNIPPET is injected
+
       blacklist:
         - "cookies"
         - "debug"
@@ -23,6 +40,7 @@ spec:
         - "pageNotFound"
         - "pages"
 
+
     - name: owned
       optional: true
       # XXX Variants?
@@ -37,13 +55,62 @@ spec:
           type: "string"
           regex: '^[[:alpha:]][[:word:]-]*$'
 
-        # XXX TODO no-mutate
+        # XXX TODO no-mutate -- boolean
 
 
     # XXX TODO - AUTH
+    - name: auth
+      type: variant
+      variants:
+        # - type: object
+        #   fields:
+        #     - name: default
+        #       type: boolean
+        - type: object
+          fields:
+            - name: view
+              type: list
+              items:
+                type: string
+                regex: '^(user|admin)$'
+            - name: create
+              type: list
+              items:
+                type: string
+                regex: '^(user|admin)$'
+            - name: update
+              type: list
+              items:
+                type: string
+                regex: '^(user|admin)$'
+            - name: delete
+              type: list
+              items:
+                type: string
+                regex: '^(user|admin)$'
+
+
+
     # XXX TODO - VISIBILITY
     # XXX TODO - LOOKUP
     # XXX TODO - RELATIONS
+
+    # original is below
+    - name: fields
+      type: list
+      items:
+        type: object
+        fields:
+          #
+          - SNIPPET: NAME_FIELD
+
+          - name: type
+            type: "string"
+            regex: '^(string|text|integer|decimal|boolean|date|time|datetime|json|jsonb)'
+          - name: default
+            optional: true
+            type: string
+            regex: '^[[:word:] -]+$'
 
     - name: fields
       type: list
