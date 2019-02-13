@@ -2,15 +2,19 @@ name: "app"
 version: "0.0.1"
 
 spec:
-  type: "object"
+  type: object
   fields:
-    - name: "name"
-      type: "string"
-    - name: "title"
-      type: "string"
-    - name: "version"
-      type: "string"
-    - name: "modules"
-      type: "list"
+    - name: name
+      type: string
+      regex: '^[[:alpha:]][[:word:]]*$'
+    - name: title
+      type: string
+      regex: '^[[:alpha:]][[:word:] -]*$'
+    - name: version
+      type: string
+      regex: '^[[:digit:]]+\.[[:digit:]]+\.[[:digit]]+$'
+    - name: modules
+      type: list
       items:
-        type: "string"
+        type: string
+        regex: '^[[:alpha:]][[:word:]]*$'
