@@ -52,6 +52,7 @@
   "author": "SysGears INC",
   "license": "MIT",
   "dependencies": {
+    "@hofstadter-io/sofa-api": "^0.2.5",
     "@babel/polyfill": "^7.0.0",
     "@babel/register": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
@@ -123,6 +124,7 @@
     "stripe-local": "^0.1.1",
     "styled-components": "^3.2.6",
     "subscriptions-transport-ws": "^0.9.4",
+    "swagger-ui-express": "^4.0.2",
     "tslint-config-prettier": "^1.5.0",
     "typescript": "^2.7.2",
     "universal-cookie-express": "^2.2.0",
