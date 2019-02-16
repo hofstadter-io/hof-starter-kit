@@ -3,15 +3,12 @@ version: "0.0.1"
 
 
 snippets:
-  - name: NAME_REGEX_1
-    value: '^[[:alpha:]][[:word:]-]*$'
-
-  - name: NAME_REGEX_1
-    value:
-      regex: '^[[:alpha:]][[:word:]-]*$'
-
-  - name: NAME_FIELD
-    value:
+  NAME_REGEX_1: '^[[:alpha:]][[:word:]-]*$'
+  NAME_REGEX_2: '^[[:alpha:]][[:word:]-]*$'
+  NAME_FIELD:
+    name: "name"
+    type: "string"
+    regex: '^[[:alpha:]][[:word:]-]*$'
 
 
 spec:
@@ -21,8 +18,8 @@ spec:
     - name: "name"
       type: "string"
 
-      regex: SNIPPET(NAME_REGEX) ???
-      SNIPPET: NAME_REGEX_2 ??? (this one means we can't have more than one in an object?)
+      regex: '^[[:alpha:]][[:word:]-]*$'
+      # SNIPPET: 'NAME_REGEX_2 ??? (this one means we can't have more than one in an object?)'
       # Still there is a difference between the "snippet" type and where thie SNIPPET is injected
 
       blacklist:
