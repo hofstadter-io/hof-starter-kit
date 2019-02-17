@@ -14,16 +14,20 @@ const rConfig{{UNIQ}} = {
 rConfig{{UNIQ}}.json = true;
 rConfig{{UNIQ}}.body = requestData;
 
-request(rConfig{{UNIQ}}, function (error, response, body) {
-  console.log('error:', error); // Print the error if one occurred
-  console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-  console.log('body:', body); // Print the HTML for the Google homepage.
+console.log("requestData", requestData);
 
-  // TODO, provide some filtering or rewrite here
-  requestResult = {
-    error,
-    response,
-    data: JSON.parse(body)
-  }
-});
+await request(rConfig{{UNIQ}}).
+  then( (data) => {
+    console.log('data:', data); // Print the HTML for the Google homepage.
+    requestResult = {
+      data,
+    }
+  }).
+  catch( (error) => {
+    requestResult = {
+      error,
+    }
+  });
+
+console.log('requestResult:', requestResult)
 

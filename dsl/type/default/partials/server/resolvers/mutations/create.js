@@ -21,17 +21,19 @@ obj.Mutation.{{typeName}}Create = async (sources, args, context, info) => {
 
           {{#if TYPE.hooks.pre-create}}
           requestData = {
-            'hook': '{{typeName}}.pre-create',
+            hook: '{{typeName}}.pre-create',
             args,
             {{typeName}}: {{typeName}},
             user: context.user
           }
           {{#with TYPE.hooks.pre-create as |HOOK|}}
-          {{> server/hooks/func.js}}
+          {{> server/hooks/func.js UNIQ="PreCreate"}}
           {{/with}}
           // TODO check for error / status return
 
-          {{typeName}} = requestResult.{{typeName}}
+          {{typeName}} = requestResult.data && requestResult.data.{{typeName}} ?
+            requestResult.data.{{typeName}} :
+            {{typeName}}
           {{/if}}
 
           var ret = await context.{{TypeName}}.createFor({{typeName}})
@@ -48,18 +50,21 @@ obj.Mutation.{{typeName}}Create = async (sources, args, context, info) => {
 
           {{#if TYPE.hooks.post-create}}
           requestData = {
-            'hook': '{{typeName}}.post-create',
+            hook: '{{typeName}}.post-create',
             args,
             {{typeName}}: {{typeName}}Ret,
             user: context.user
           }
 
           {{#with TYPE.hooks.post-create as |HOOK|}}
-          {{> server/hooks/func.js}}
+          {{> server/hooks/func.js UNIQ="PostCreate"}}
           {{/with}}
           // TODO check for error / status return
 
-          {{typeName}}Ret = requestResult.data.{{typeName}}
+          {{typeName}}Ret = requestResult.data && requestResult.data.{{typeName}} ?
+            requestResult.data.{{typeName}} :
+            {{typeName}};
+
           {{/if}}
 
           pubsub.publish('{{typeName}}sNotification', {
