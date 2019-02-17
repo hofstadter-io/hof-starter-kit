@@ -23,16 +23,7 @@ spec:
     # FILES
     - name: files
       optional: true
-      type: list
-      items:
-        type: object
-        fields:
-        - name: "name"
-          type: NAME_BLACKLIST
-        - name: "src"
-          type: FILEPATH_REGEX
-        - name: "dst"
-          type: FILEPATH_REGEX
+      type: FILES_SNIPPET
 
     # SEEDS
     - name: "seeds"
@@ -41,8 +32,7 @@ spec:
       fields:
 
       - name: "file"
-        type: "string"
-        regex: '^([[:word:]-]+\/)+[[:word:]-]+\.json$'
+        type: SEEDFILE_REGEX
 
       - name: types
         type: list
@@ -65,38 +55,12 @@ spec:
         - name: "name"
           type: NAME_REGEX
         - name: "file"
-          type: "string"
-          regex: '^([[:word:]-]+\/)+[[:word:]-]+\.json$'
+          type: I18NFILE_REGEX
 
     # COMPONENTs
     - name: components
       optional: true
-      type: list
-      items:
-        type: object
-        fields:
-
-        - name: "name"
-          type: NAME_BLACKLIST
-
-        - name: style
-          optional: true
-          type: list
-          items:
-            type: FILEPATH_REGEX
-
-        - name: content
-          optional: true
-          type: list
-          items:
-            type: FILEPATH_REGEX
-
-        - name: current-user
-          optional: true
-          type: boolean
-
-        - name: data
-          type: DATA_SNIPPET
+      type: COMPONENT_SNIPPET
 
     # PAGES
     - name: pages
@@ -106,51 +70,33 @@ spec:
         type: object
         fields:
         - name: "name"
-          type: "string"
-          regex: '^[[:alpha:]][[:word:]-]*$'
+          type: NAME_BLACKLIST
         - name: "route"
-          type: "string"
-          regex: '^(\/[[:alpha:]][[:word:]-]*)+$'
+          type: PAGE_ROUTE_REGEX
 
         - name: style
           optional: true
           type: list
           items:
-            type: string
-            regex: '^([[:word:]-]+\/)+[[:word:]-]+\.[[:lower:]]{1,4}$'
+            type: FILEPATH_REGEX
 
         - name: content
           optional: true
           type: list
           items:
-            type: string
-            regex: '^([[:word:]-]+\/)+[[:word:]-]+\.[[:lower:]]{1,4}$'
+            type: FILEPATH_REGEX
 
         - name: current-user
           optional: true
           type: boolean
 
         - name: data
+          optional: true
           type: DATA_SNIPPET
 
         - name: components
           optional: true
-          type: list
-          items:
-            type: object
-            fields:
-            - name: "name"
-              type: "string"
-              regex: '^[[:alpha:]][[:word:]-]*$'
-            - name: "component"
-              type: COMPONENT_REGEX
-
-            - name: current-user
-              optional: true
-              type: boolean
-
-            - name: data
-              type: DATA_SNIPPET
+          type: PAGE_COMPONENT_SNIPPET
 
 
 

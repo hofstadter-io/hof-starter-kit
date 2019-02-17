@@ -32,9 +32,35 @@ helper-types:
       - "pageNotFound"
       - "pages"
 
+  - name: PAGE_ROUTE_REGEX
+    type: "string"
+    regex: '^(\/[[:alpha:]][[:word:]-]*)+$'
+
+  - name: SEEDFILE_REGEX
+    type: "string"
+    # XXX TODO be more specific here, use multiple more specific?
+    regex: '^([[:word:]-]+\/)+[[:word:]-]+\.json$'
+
+  - name: I18NFILE_REGEX
+    type: "string"
+    # XXX TODO be more specific here, use multiple more specific?
+    regex: '^([[:word:]-]+\/)+[[:word:]-]+\.json$'
+
   - name: FILEPATH_REGEX
     type: "string"
     regex: '^([[:word:]-]+\/)+[[:word:]-]+\.[[:lower:]]{1,4}$'
+
+  - name: FILES_SNIPPET
+    type: list
+    items:
+      type: object
+      fields:
+      - name: "name"
+        type: NAME_BLACKLIST
+      - name: "src"
+        type: FILEPATH_REGEX
+      - name: "dst"
+        type: FILEPATH_REGEX
 
   - name: TYPEPATH_REGEX
     type: "string"
@@ -45,7 +71,6 @@ helper-types:
     regex: '^(type|module)\.modules\.([[:word:]-]+\.){1,2}components\.[[:word:]-]+$'
 
   - name: OWNED_SNIPPET
-    optional: true
     # XXX Variants?
     type: object
     fields:
@@ -57,11 +82,11 @@ helper-types:
         optional: true
         type: "string"
         regex: '^[[:alpha:]][[:word:]-]*$'
-
-      # XXX TODO no-mutate -- boolean
+      - name: no-mutate
+        optional: true
+        type: boolean
 
   - name: DATA_SNIPPET
-    optional: true
     type: list
     items:
       type: object
@@ -77,12 +102,60 @@ helper-types:
           - name: type
             type: string
             regex: '^(view|list)$'
-          # - name: sync
-          #   optional: true
-          #   type: bool
+          - name: sync
+            optional: true
+            type: boolean
       - name: mutations
         optional: true
         type: list
         items:
           type: string
           regex: '^(create|update|delete)$'
+
+  - name: COMPONENT_SNIPPET
+    type: list
+    items:
+      type: object
+      fields:
+
+      - name: "name"
+        type: NAME_BLACKLIST
+
+      - name: style
+        optional: true
+        type: list
+        items:
+          type: FILEPATH_REGEX
+
+      - name: content
+        optional: true
+        type: list
+        items:
+          type: FILEPATH_REGEX
+
+      - name: current-user
+        optional: true
+        type: boolean
+
+      - name: data
+        optional: true
+        type: DATA_SNIPPET
+
+  - name: PAGE_COMPONENT_SNIPPET
+    type: list
+    items:
+      type: object
+      fields:
+      - name: "name"
+        type: "string"
+        regex: '^[[:alpha:]][[:word:]-]*$'
+      - name: "component"
+        type: COMPONENT_REGEX
+
+      - name: current-user
+        optional: true
+        type: boolean
+
+      - name: data
+        optional: true
+        type: DATA_SNIPPET

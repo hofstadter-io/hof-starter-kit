@@ -6,27 +6,11 @@ spec:
   fields:
     # NAME
     - name: "name"
-      type: NAME_REGEX
-
-      blacklist:
-        - "cookies"
-        - "debug"
-        - "graphqlTypes"
-        - "i18n"
-        - "mailer"
-        - "proxy"
-        - "user"
-        - "components"
-        - "defaultRouter"
-        - "favicon"
-        - "layout"
-        - "pageNotFound"
-        - "pages"
-
+      type: NAME_BLACKLIST
 
     - name: owned
+      optional: true
       type: OWNED_SNIPPET
-
 
     # XXX TODO - AUTH
     - name: auth
