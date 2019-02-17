@@ -1,6 +1,62 @@
 name: "common"
 version: "0.0.1"
 
+# We probably don't actually want a spec for common
+# This is mainly used for partials and helpers
+
+
 spec:
   type: "object"
   fields: []
+
+
+helper-types:
+  - name: NAME_REGEX
+    type: string
+    regex: '^[[:alpha:]][[:word:]-]*$'
+
+  - name: NAME_BLACKLIST
+    type: NAME_REGEX
+    blacklist:
+      - "cookies"
+      - "debug"
+      - "graphqlTypes"
+      - "i18n"
+      - "mailer"
+      - "proxy"
+      - "user"
+      - "components"
+      - "defaultRouter"
+      - "favicon"
+      - "layout"
+      - "pageNotFound"
+      - "pages"
+
+  - name: FILEPATH_REGEX
+    type: "string"
+    regex: '^([[:word:]-]+\/)+[[:word:]-]+\.[[:lower:]]{1,4}$'
+
+  - name: TYPEPATH_REGEX
+    type: "string"
+    regex: '^type\.modules\.[[:word:]-]+\.[[:word:]-]+$'
+
+  - name: COMPONENT_REGEX
+    type: "string"
+    regex: '^(type|module)\.modules\.([[:word:]-]+\.){1,2}components\.[[:word:]-]+$'
+
+  - name: OWNED_SNIPPET
+    optional: true
+    # XXX Variants?
+    type: object
+    fields:
+      # XXX Variants?
+      - name: type
+        type: string
+        regex: '^(has-one|has-many)$'
+      - name: "name"
+        optional: true
+        type: "string"
+        regex: '^[[:alpha:]][[:word:]-]*$'
+
+      # XXX TODO no-mutate -- boolean
+

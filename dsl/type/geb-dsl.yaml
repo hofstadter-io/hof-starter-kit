@@ -1,26 +1,12 @@
 name: "type"
 version: "0.0.1"
 
-
-snippets:
-  NAME_REGEX_1: '^[[:alpha:]][[:word:]-]*$'
-  NAME_REGEX_2: '^[[:alpha:]][[:word:]-]*$'
-  NAME_FIELD:
-    name: "name"
-    type: "string"
-    regex: '^[[:alpha:]][[:word:]-]*$'
-
-
 spec:
   type: "object"
   fields:
     # NAME
     - name: "name"
-      type: "string"
-
-      regex: '^[[:alpha:]][[:word:]-]*$'
-      # SNIPPET: 'NAME_REGEX_2 ??? (this one means we can't have more than one in an object?)'
-      # Still there is a difference between the "snippet" type and where thie SNIPPET is injected
+      type: NAME_REGEX
 
       blacklist:
         - "cookies"
@@ -39,20 +25,7 @@ spec:
 
 
     - name: owned
-      optional: true
-      # XXX Variants?
-      type: object
-      fields:
-        # XXX Variants?
-        - name: type
-          type: string
-          regex: '^(has-one|has-many)$'
-        - name: "name"
-          optional: true
-          type: "string"
-          regex: '^[[:alpha:]][[:word:]-]*$'
-
-        # XXX TODO no-mutate -- boolean
+      type: OWNED_SNIPPET
 
 
     # XXX TODO - AUTH
@@ -99,7 +72,8 @@ spec:
         type: object
         fields:
           #
-          - SNIPPET: NAME_FIELD
+          - name: name
+            type: NAME_REGEX
 
           - name: type
             type: "string"

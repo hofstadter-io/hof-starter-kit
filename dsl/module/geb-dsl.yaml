@@ -7,22 +7,7 @@ spec:
 
     # NAME
     - name: "name"
-      type: "string"
-      regex: '^[[:alpha:]][[:word:]-]*$'
-      blacklist:
-        - "cookies"
-        - "debug"
-        - "graphqlTypes"
-        - "i18n"
-        - "mailer"
-        - "proxy"
-        - "user"
-        - "components"
-        - "defaultRouter"
-        - "favicon"
-        - "layout"
-        - "pageNotFound"
-        - "pages"
+      type: NAME_BLACKLIST
 
     # TYPES
     - name: "types"
@@ -31,30 +16,23 @@ spec:
         type: "object"
         fields:
         - name: "name"
-          type: "string"
-          regex: '^[[:alpha:]][[:word:]-]*$'
-          blacklist:
-            - user
+          type: NAME_BLACKLIST
         - name: "type"
-          type: "string"
-          regex: '^type\.modules\.[[:word:]-]+\.[[:word:]-]+$'
+          type: TYPEPATH_REGEX
 
     # FILES
     - name: files
       optional: true
       type: list
       items:
-          type: object
-          fields:
-          - name: "name"
-            type: "string"
-            regex: '^[[:alpha:]][[:word:]-]*$'
-          - name: "src"
-            type: "string"
-            regex: '^([[:word:]-]+\/)+[[:word:]-]+\.[[:lower:]]{1,4}$'
-          - name: "dst"
-            type: "string"
-            regex: '^([[:word:]-]+\/)+[[:word:]-]+\.[[:lower:]]{1,4}$'
+        type: object
+        fields:
+        - name: "name"
+          type: NAME_BLACKLIST
+        - name: "src"
+          type: FILEPATH_REGEX
+        - name: "dst"
+          type: FILEPATH_REGEX
 
     # SEEDS
     - name: "seeds"
@@ -71,20 +49,12 @@ spec:
         items:
           type: object
           fields:
-
           - name: "name"
-            type: "string"
-            regex: '^[[:alpha:]][[:word:]-]*$'
-            blacklist:
-              - user
-
+            type: NAME_BLACKLIST
           - name: "data"
-            type: "string"
-            regex: '^[[:alpha:]][[:word:]-]*$'
-
+            type: NAME_REGEX
           - name: "type"
-            type: "string"
-            regex: '^type\.modules\.[[:word:]-]+\.[[:word:]-]+$'
+            type: TYPEPATH_REGEX
 
     # TRANSLATIONS
     - name: "translations"
@@ -93,8 +63,7 @@ spec:
         type: "object"
         fields:
         - name: "name"
-          type: "string"
-          regex: '^[[:alpha:]][[:word:]-]*$'
+          type: NAME_REGEX
         - name: "file"
           type: "string"
           regex: '^([[:word:]-]+\/)+[[:word:]-]+\.json$'
@@ -108,26 +77,23 @@ spec:
         fields:
 
         - name: "name"
-          type: "string"
-          regex: '^[[:alpha:]][[:word:]-]*$'
+          type: NAME_BLACKLIST
 
         - name: style
           optional: true
           type: list
           items:
-            type: string
-            regex: '^([[:word:]-]+\/)+[[:word:]-]+\.[[:lower:]]{1,4}$'
+            type: FILEPATH_REGEX
 
         - name: content
           optional: true
           type: list
           items:
-            type: string
-            regex: '^([[:word:]-]+\/)+[[:word:]-]+\.[[:lower:]]{1,4}$'
+            type: FILEPATH_REGEX
 
-        # - name: current-user
-        #   optional: true
-        #   type: bool
+        - name: current-user
+          optional: true
+          type: boolean
 
         - name: data
           optional: true
@@ -186,6 +152,38 @@ spec:
             type: string
             regex: '^([[:word:]-]+\/)+[[:word:]-]+\.[[:lower:]]{1,4}$'
 
+        - name: current-user
+          optional: true
+          type: boolean
+
+        - name: data
+          optional: true
+          type: list
+          items:
+            type: object
+            fields:
+            - name: "name"
+              type: "string"
+              regex: '^[[:alpha:]][[:word:]-]*$'
+            - name: "type"
+              type: "string"
+              regex: '^type\.modules\.[[:word:]-]+\.[[:word:]-]+$'
+            - name: query
+              optional: true
+              type: object
+              fields:
+                - name: type
+                  type: string
+                  regex: '^(view|list)$'
+                # - name: sync
+                #   optional: true
+                #   type: bool
+            - name: mutations
+              optional: true
+              type: list
+              items:
+                type: string
+                regex: '^(create|update|delete)$'
 
         - name: components
           optional: true
@@ -197,12 +195,11 @@ spec:
               type: "string"
               regex: '^[[:alpha:]][[:word:]-]*$'
             - name: "component"
-              type: "string"
-              regex: '^(type|module)\.modules\.[[:word:]-]+\.components\.[[:word:]-]+$'
+              type: COMPONENT_REGEX
 
-            # - name: current-user
-            #   optional: true
-            #   type: bool
+            - name: current-user
+              optional: true
+              type: boolean
 
             - name: data
               optional: true
