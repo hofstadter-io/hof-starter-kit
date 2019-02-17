@@ -27,6 +27,13 @@ getFor: getAdapter({
     valueExtractor: args => args.userId
   }]
 }),
+
+getOneFor: getAdapter({
+  printSQL: true,
+  table: '{{snake TYPE.name}}',
+  idField: 'user_id'
+}),
+
 getManyFor: listAdapter({
   table: '{{snake TYPE.name}}',
   idField: 'user_id',

@@ -96,33 +96,7 @@ spec:
           type: boolean
 
         - name: data
-          optional: true
-          type: list
-          items:
-            type: object
-            fields:
-            - name: "name"
-              type: "string"
-              regex: '^[[:alpha:]][[:word:]-]*$'
-            - name: "type"
-              type: "string"
-              regex: '^type\.modules\.[[:word:]-]+\.[[:word:]-]+$'
-            - name: query
-              optional: true
-              type: object
-              fields:
-                - name: type
-                  type: string
-                  regex: '^(view|list)$'
-                # - name: sync
-                #   optional: true
-                #   type: bool
-            - name: mutations
-              optional: true
-              type: list
-              items:
-                type: string
-                regex: '^(create|update|delete)$'
+          type: DATA_SNIPPET
 
     # PAGES
     - name: pages
@@ -157,33 +131,7 @@ spec:
           type: boolean
 
         - name: data
-          optional: true
-          type: list
-          items:
-            type: object
-            fields:
-            - name: "name"
-              type: "string"
-              regex: '^[[:alpha:]][[:word:]-]*$'
-            - name: "type"
-              type: "string"
-              regex: '^type\.modules\.[[:word:]-]+\.[[:word:]-]+$'
-            - name: query
-              optional: true
-              type: object
-              fields:
-                - name: type
-                  type: string
-                  regex: '^(view|list)$'
-                # - name: sync
-                #   optional: true
-                #   type: bool
-            - name: mutations
-              optional: true
-              type: list
-              items:
-                type: string
-                regex: '^(create|update|delete)$'
+          type: DATA_SNIPPET
 
         - name: components
           optional: true
@@ -202,33 +150,7 @@ spec:
               type: boolean
 
             - name: data
-              optional: true
-              type: list
-              items:
-                type: object
-                fields:
-                - name: "name"
-                  type: "string"
-                  regex: '^[[:alpha:]][[:word:]-]*$'
-                - name: "type"
-                  type: "string"
-                  regex: '^type\.modules\.[[:word:]-]+\.[[:word:]-]+$'
-                - name: query
-                  optional: true
-                  type: object
-                  fields:
-                    - name: type
-                      type: string
-                      regex: '^(view|list)$'
-                    # - name: sync
-                    #   optional: true
-                    #   type: bool
-                - name: mutations
-                  optional: true
-                  type: list
-                  items:
-                    type: string
-                    regex: '^(create|update|delete)$'
+              type: DATA_SNIPPET
 
 
 

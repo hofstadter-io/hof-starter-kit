@@ -60,3 +60,29 @@ helper-types:
 
       # XXX TODO no-mutate -- boolean
 
+  - name: DATA_SNIPPET
+    optional: true
+    type: list
+    items:
+      type: object
+      fields:
+      - name: "name"
+        type: NAME_BLACKLIST
+      - name: "type"
+        type: TYPEPATH_REGEX
+      - name: query
+        optional: true
+        type: object
+        fields:
+          - name: type
+            type: string
+            regex: '^(view|list)$'
+          # - name: sync
+          #   optional: true
+          #   type: bool
+      - name: mutations
+        optional: true
+        type: list
+        items:
+          type: string
+          regex: '^(create|update|delete)$'
