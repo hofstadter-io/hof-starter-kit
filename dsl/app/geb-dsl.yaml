@@ -5,16 +5,152 @@ spec:
   type: object
   fields:
     - name: name
-      type: string
-      regex: '^[[:alpha:]][[:word:]]*$'
+      type: APP_NAME_BLACKLIST
     - name: title
-      type: string
-      regex: '^[[:alpha:]][[:word:] -]*$'
+      type: TEXT_REGEX
     - name: version
-      type: string
-      regex: '^[[:digit:]]+\.[[:digit:]]+\.[[:digit]]+$'
+      type: SEMVER_REGEX
+
+    - name: author
+      type: AUTHOR_REGEX
+    - name: license
+      type: TEXT_REGEX
+    - name: keywords
+      type: list
+      items:
+        type: TEXT_REGEX
+
     - name: modules
       type: list
       items:
-        type: string
-        regex: '^[[:alpha:]][[:word:]]*$'
+        type: NAME_REGEX
+
+    - name: config
+      type: object
+      fields:
+        - name: gaTracking
+          type: string
+          regex: '^UA-[[:digit:]]+-[[:digit:]]{2}'
+        - name: multilang
+          type: object
+          fields:
+            - name: picker
+              optional: true
+              type: boolean
+            - name: languages
+              type: list
+              items:
+                type: object
+                fields:
+                  - name: short
+                    type: string
+                    regex: '^[[:alpha:]]+$'
+                  - name: code
+                    type: string
+                    regex: '^[[:word:]-]+$'
+
+        ### XXX TODO ignored fields
+        - name: oauth
+          type: ignore
+
+    - name: user
+      type: object
+      fields:
+        - name: "translations"
+          optional: true
+          type: I18N_SNIPPET
+
+        ### XXX TODO ignored fields
+        - name: hooks
+          type: ignore
+
+    - name: auth
+      type: object
+      fields:
+        - name: password
+          type: object
+          fields:
+            - name: enabled
+              type: boolean
+        - name: apikey
+          type: object
+          fields:
+            - name: enabled
+              type: boolean
+        - name: oauth
+          type: object
+          fields:
+            - name: google
+              optional: true
+              type: boolean
+            - name: facebook
+              optional: true
+              type: boolean
+            - name: linkedin
+              optional: true
+              type: boolean
+            - name: github
+              optional: true
+              type: boolean
+        - name: registration
+          optional: true
+          type: object
+          fields:
+            - name: disabled
+              type: boolean
+
+    - name: imports
+      optional: true
+      type: list
+      items:
+        type: object
+        fields:
+          - name: library
+            type: NPM_IMPORT_REGEX
+          - name: version
+            type: NPM_VERSION_REGEX
+
+    - name: components
+      optional: true
+      type: COMPONENT_SNIPPET
+
+    - name: pages
+      optional: true
+      type: PAGES_SNIPPET
+
+    ### XXX TODO ignored fields
+    - name: secrets
+      type: ignore
+    - name: homepage
+      type: ignore
+    - name: layout
+      type: ignore
+    - name: builtin-pages
+      type: ignore
+    - name: hof-223--proxy-endpoints
+      type: ignore
+
+
+helper-types:
+
+  - name: APP_NAME_BLACKLIST
+    type: NAME_REGEX
+    blacklist:
+      # - "studios"
+      - "hof"
+      - "hofstadter"
+
+  - name: AUTHOR_REGEX
+    type: string
+    regex: '^[[:alpha:]][[:word:] -\<\>\@\.]*$'
+
+  - name: NPM_IMPORT_REGEX
+    type: string
+    regex: '^[[:alpha:]][[:word:]-]*$'
+
+  - name: NPM_VERSION_REGEX
+    type: string
+    regex:
+      - '^[\~\^]?[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+$'
+      - '^[\~\^]?[[:digit:]]+\.[[:digit:]]+$'
+      - '^[\~\^]?[[:digit:]]+$'

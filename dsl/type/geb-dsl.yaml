@@ -1,6 +1,11 @@
 name: "type"
 version: "0.0.1"
 
+helper-types:
+  - name: AUTH_ROLE_REGEX
+    type: string
+    regex: '^(user|admin)$'
+
 spec:
   type: "object"
   fields:
@@ -16,32 +21,36 @@ spec:
     - name: auth
       type: variant
       variants:
-        # - type: object
-        #   fields:
-        #     - name: default
-        #       type: boolean
+        - type: object
+          fields:
+            - name: default
+              type: boolean
         - type: object
           fields:
             - name: view
-              type: list
-              items:
-                type: string
-                regex: '^(user|admin)$'
+              type: variant
+              variants:
+                - type: list
+                  items:
+                    type: AUTH_ROLE_REGEX
+                - type: object
+                  fields:
+                    - name: public
+                      type: AUTH_ROLE_REGEX
+                    - name: private
+                      type: AUTH_ROLE_REGEX
             - name: create
               type: list
               items:
-                type: string
-                regex: '^(user|admin)$'
+                type: AUTH_ROLE_REGEX
             - name: update
               type: list
               items:
-                type: string
-                regex: '^(user|admin)$'
+                type: AUTH_ROLE_REGEX
             - name: delete
               type: list
               items:
-                type: string
-                regex: '^(user|admin)$'
+                type: AUTH_ROLE_REGEX
 
 
 
@@ -66,22 +75,6 @@ spec:
             optional: true
             type: string
             regex: '^[[:word:] -]+$'
-
-    - name: fields
-      type: list
-      items:
-        type: object
-        fields:
-          - name: "name"
-            type: "string"
-            regex: '^[[:alpha:]][[:word:]-]*$'
-          - name: type
-            type: "string"
-            regex: '^(string|text|integer|decimal|boolean|date|time|datetime|json|jsonb)'
-          - name: default
-            optional: true
-            type: string
-            regex: '^[[:word:] -]+$'
           # - name: unique
           #   optional: true
           #   type: boolean
@@ -98,207 +91,32 @@ spec:
       items:
         type: object
         fields:
-          - name: "name"
-            type: "string"
-            regex: '^[[:alpha:]][[:word:]-]*$'
+          - name: name
+            type: NAME_REGEX
           - name: field
-            type: "string"
-            regex: '^[[:alpha:]][[:word:]-]*$'
+            type: NAME_REGEX
 
     # FILES
     - name: files
       optional: true
-      type: list
-      items:
-          type: object
-          fields:
-          - name: "name"
-            type: "string"
-            regex: '^[[:alpha:]][[:word:]-]*$'
-          - name: "src"
-            type: "string"
-            regex: '^([[:word:]-]+\/)+[[:word:]-]+\.[[:lower:]]{1,4}$'
-          - name: "dst"
-            type: "string"
-            regex: '^([[:word:]-]+\/)+[[:word:]-]+\.[[:lower:]]{1,4}$'
+      type: FILES_SNIPPET
 
     # SEEDS
     - name: "seeds"
       optional: true
-      type: "object"
-      fields:
-
-      - name: "file"
-        type: "string"
-        regex: '^([[:word:]-]+\/)+[[:word:]-]+\.json$'
-
-      - name: types
-        type: list
-        items:
-          type: object
-          fields:
-
-          - name: "name"
-            type: "string"
-            regex: '^[[:alpha:]][[:word:]-]*$'
-            blacklist:
-              - user
-
-          - name: "data"
-            type: "string"
-            regex: '^[[:alpha:]][[:word:]-]*$'
-
-          - name: "type"
-            type: "string"
-            regex: '^type\.modules\.[[:word:]-]+\.[[:word:]-]+$'
+      type: SEEDS_SNIPPET
 
     # TRANSLATIONS
     - name: "translations"
       optional: true
-      type: "list"
-      items:
-        type: "object"
-        fields:
-        - name: "name"
-          type: "string"
-          regex: '^[[:alpha:]][[:word:]-]*$'
-        - name: "file"
-          type: "string"
-          regex: '^([[:word:]-]+\/)+[[:word:]-]+\.json$'
+      type: I18N_SNIPPET
 
     # COMPONENTs
     - name: components
       optional: true
-      type: list
-      items:
-        type: object
-        fields:
-
-        - name: "name"
-          type: "string"
-          regex: '^[[:alpha:]][[:word:]-]*$'
-
-        - name: style
-          optional: true
-          type: list
-          items:
-            type: string
-            regex: '^([[:word:]-]+\/)+[[:word:]-]+\.[[:lower:]]{1,4}$'
-
-        - name: content
-          optional: true
-          type: list
-          items:
-            type: string
-            regex: '^([[:word:]-]+\/)+[[:word:]-]+\.[[:lower:]]{1,4}$'
-
-        # - name: current-user
-        #   optional: true
-        #   type: bool
-
-        - name: data
-          optional: true
-          type: list
-          items:
-            type: object
-            fields:
-            - name: "name"
-              type: "string"
-              regex: '^[[:alpha:]][[:word:]-]*$'
-            - name: "type"
-              type: "string"
-              regex: '^type\.modules\.[[:word:]-]+\.[[:word:]-]+$'
-            - name: query
-              optional: true
-              type: object
-              fields:
-                - name: type
-                  type: string
-                  regex: '^(view|list)$'
-                # - name: sync
-                #   optional: true
-                #   type: bool
-            - name: mutations
-              optional: true
-              type: list
-              items:
-                type: string
-                regex: '^(create|update|delete)$'
+      type: COMPONENT_SNIPPET
 
     # PAGES
     - name: pages
       optional: true
-      type: list
-      items:
-        type: object
-        fields:
-        - name: "name"
-          type: "string"
-          regex: '^[[:alpha:]][[:word:]-]*$'
-        - name: "route"
-          type: "string"
-          regex: '^(\/[[:alpha:]][[:word:]-]*)+$'
-
-        - name: style
-          optional: true
-          type: list
-          items:
-            type: string
-            regex: '^([[:word:]-]+\/)+[[:word:]-]+\.[[:lower:]]{1,4}$'
-
-        - name: content
-          optional: true
-          type: list
-          items:
-            type: string
-            regex: '^([[:word:]-]+\/)+[[:word:]-]+\.[[:lower:]]{1,4}$'
-
-
-        - name: components
-          optional: true
-          type: list
-          items:
-            type: object
-            fields:
-            - name: "name"
-              type: "string"
-              regex: '^[[:alpha:]][[:word:]-]*$'
-            - name: "component"
-              type: "string"
-              regex: '^(type|module)\.modules\.[[:word:]-]+\.components\.[[:word:]-]+$'
-
-            # - name: current-user
-            #   optional: true
-            #   type: bool
-
-            - name: data
-              optional: true
-              type: list
-              items:
-                type: object
-                fields:
-                - name: "name"
-                  type: "string"
-                  regex: '^[[:alpha:]][[:word:]-]*$'
-                - name: "type"
-                  type: "string"
-                  regex: '^type\.modules\.[[:word:]-]+\.[[:word:]-]+$'
-                - name: query
-                  optional: true
-                  type: object
-                  fields:
-                    - name: type
-                      type: string
-                      regex: '^(view|list)$'
-                    # - name: sync
-                    #   optional: true
-                    #   type: bool
-                - name: mutations
-                  optional: true
-                  type: list
-                  items:
-                    type: string
-                    regex: '^(create|update|delete)$'
-
-
-
+      type: PAGES_SNIPPET

@@ -11,9 +11,17 @@ spec:
 
 
 helper-types:
+  - name: SEMVER_REGEX
+    type: string
+    regex: '^[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+$'
+
   - name: NAME_REGEX
     type: string
     regex: '^[[:alpha:]][[:word:]-]*$'
+
+  - name: TEXT_REGEX
+    type: string
+    regex: '^[[:alpha:]][[:word:] -]*$'
 
   - name: NAME_BLACKLIST
     type: NAME_REGEX
@@ -32,19 +40,44 @@ helper-types:
       - "pageNotFound"
       - "pages"
 
-  - name: PAGE_ROUTE_REGEX
-    type: "string"
-    regex: '^(\/[[:alpha:]][[:word:]-]*)+$'
-
   - name: SEEDFILE_REGEX
     type: "string"
     # XXX TODO be more specific here, use multiple more specific?
     regex: '^([[:word:]-]+\/)+[[:word:]-]+\.json$'
 
+  - name: SEEDS_SNIPPET
+    type: "object"
+    fields:
+
+    - name: "file"
+      type: SEEDFILE_REGEX
+
+    - name: types
+      type: list
+      items:
+        type: object
+        fields:
+        - name: "name"
+          type: NAME_BLACKLIST
+        - name: "data"
+          type: NAME_REGEX
+        - name: "type"
+          type: TYPEPATH_REGEX
+
   - name: I18NFILE_REGEX
     type: "string"
     # XXX TODO be more specific here, use multiple more specific?
     regex: '^([[:word:]-]+\/)+[[:word:]-]+\.json$'
+
+  - name: I18N_SNIPPET
+    type: "list"
+    items:
+      type: "object"
+      fields:
+      - name: "name"
+        type: NAME_REGEX
+      - name: "file"
+        type: I18NFILE_REGEX
 
   - name: FILEPATH_REGEX
     type: "string"
@@ -86,6 +119,7 @@ helper-types:
         optional: true
         type: boolean
 
+
   - name: DATA_SNIPPET
     type: list
     items:
@@ -111,6 +145,7 @@ helper-types:
         items:
           type: string
           regex: '^(create|update|delete)$'
+
 
   - name: COMPONENT_SNIPPET
     type: list
@@ -141,6 +176,17 @@ helper-types:
         optional: true
         type: DATA_SNIPPET
 
+
+
+
+
+
+  - name: PAGE_ROUTE_REGEX
+    type: "string"
+    regex:
+      - '^(\/[[:alpha:]][[:word:]-]*)+$'
+      - '^\/$'
+
   - name: PAGE_COMPONENT_SNIPPET
     type: list
     items:
@@ -159,3 +205,42 @@ helper-types:
       - name: data
         optional: true
         type: DATA_SNIPPET
+
+  - name: PAGES_SNIPPET
+    type: list
+    items:
+      type: object
+      fields:
+      - name: "name"
+        type: NAME_BLACKLIST
+      - name: "route"
+        type: PAGE_ROUTE_REGEX
+
+      - name: style
+        optional: true
+        type: list
+        items:
+          type: FILEPATH_REGEX
+
+      - name: content
+        optional: true
+        type: list
+        items:
+          type: FILEPATH_REGEX
+
+      - name: current-user
+        optional: true
+        type: boolean
+
+      - name: data
+        optional: true
+        type: DATA_SNIPPET
+
+      - name: components
+        optional: true
+        type: PAGE_COMPONENT_SNIPPET
+
+      - name: translations
+        optional: true
+        type: I18N_SNIPPET
+

@@ -28,34 +28,12 @@ spec:
     # SEEDS
     - name: "seeds"
       optional: true
-      type: "object"
-      fields:
-
-      - name: "file"
-        type: SEEDFILE_REGEX
-
-      - name: types
-        type: list
-        items:
-          type: object
-          fields:
-          - name: "name"
-            type: NAME_BLACKLIST
-          - name: "data"
-            type: NAME_REGEX
-          - name: "type"
-            type: TYPEPATH_REGEX
+      type: SEEDS_SNIPPET
 
     # TRANSLATIONS
     - name: "translations"
-      type: "list"
-      items:
-        type: "object"
-        fields:
-        - name: "name"
-          type: NAME_REGEX
-        - name: "file"
-          type: I18NFILE_REGEX
+      optional: true
+      type: I18N_SNIPPET
 
     # COMPONENTs
     - name: components
@@ -65,38 +43,4 @@ spec:
     # PAGES
     - name: pages
       optional: true
-      type: list
-      items:
-        type: object
-        fields:
-        - name: "name"
-          type: NAME_BLACKLIST
-        - name: "route"
-          type: PAGE_ROUTE_REGEX
-
-        - name: style
-          optional: true
-          type: list
-          items:
-            type: FILEPATH_REGEX
-
-        - name: content
-          optional: true
-          type: list
-          items:
-            type: FILEPATH_REGEX
-
-        - name: current-user
-          optional: true
-          type: boolean
-
-        - name: data
-          optional: true
-          type: DATA_SNIPPET
-
-        - name: components
-          optional: true
-          type: PAGE_COMPONENT_SNIPPET
-
-
-
+      type: PAGES_SNIPPET
