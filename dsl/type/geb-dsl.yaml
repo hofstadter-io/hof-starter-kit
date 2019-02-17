@@ -9,7 +9,13 @@ helper-types:
 spec:
   type: "object"
   fields:
-    # NAME
+
+    # XXX TODO - VISIBILITY
+    # XXX TODO - RELATIONS
+    - name: hooks
+      optional: true
+      type: ignore
+
     - name: "name"
       type: NAME_BLACKLIST
 
@@ -17,7 +23,6 @@ spec:
       optional: true
       type: OWNED_SNIPPET
 
-    # XXX TODO - AUTH
     - name: auth
       type: variant
       variants:
@@ -52,38 +57,55 @@ spec:
               items:
                 type: AUTH_ROLE_REGEX
 
-
-
-    # XXX TODO - VISIBILITY
-    # XXX TODO - LOOKUP
-    # XXX TODO - RELATIONS
-
-    # original is below
     - name: fields
       type: list
       items:
-        type: object
-        fields:
-          #
-          - name: name
-            type: NAME_REGEX
+        type: variant
+        variants:
+          - type: object
+            fields:
+              - name: name
+                type: NAME_REGEX
+              - name: type
+                type: "string"
+                regex: '^(string)'
+              - name: default
+                optional: true
+                type: TEXT_REGEX
+              - name: length
+                optional: true
+                type: integer
+              - name: unique
+                optional: true
+                type: boolean
+              - name: nullable
+                optional: true
+                type: boolean
+              - name: notNullable
+                optional: true
+                type: boolean
 
-          - name: type
-            type: "string"
-            regex: '^(string|text|integer|decimal|boolean|date|time|datetime|json|jsonb)'
-          - name: default
-            optional: true
-            type: string
-            regex: '^[[:word:] -]+$'
-          # - name: unique
-          #   optional: true
-          #   type: boolean
-          # - name: nullable
-          #   optional: true
-          #   type: boolean
-          # - name: notNullable
-          #   optional: true
-          #   type: boolean
+          # XXX TODO default remaining
+          - type: object
+            fields:
+              - name: name
+                type: NAME_REGEX
+              - name: type
+                type: "string"
+                regex: '^(text|integer|decimal|boolean|date|time|datetime|json|jsonb)'
+              - name: default
+                optional: true
+                # XXX TODO ignored field
+                type: ignore
+              - name: unique
+                optional: true
+                type: boolean
+              - name: nullable
+                optional: true
+                type: boolean
+              - name: notNullable
+                optional: true
+                type: boolean
 
     - name: lookup
       optional: true

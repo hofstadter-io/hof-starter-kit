@@ -118,6 +118,9 @@ helper-types:
       - name: no-mutate
         optional: true
         type: boolean
+      - name: current-user-with
+        optional: true
+        type: boolean
 
 
   - name: DATA_SNIPPET
@@ -148,33 +151,39 @@ helper-types:
 
 
   - name: COMPONENT_SNIPPET
-    type: list
-    items:
-      type: object
-      fields:
-
-      - name: "name"
-        type: NAME_BLACKLIST
-
-      - name: style
-        optional: true
-        type: list
+    type: variant
+    variants:
+      - type: object
+        fields:
+          - name: default
+            type: boolean
+      - type: list
         items:
-          type: FILEPATH_REGEX
+          type: object
+          fields:
 
-      - name: content
-        optional: true
-        type: list
-        items:
-          type: FILEPATH_REGEX
+          - name: "name"
+            type: NAME_BLACKLIST
 
-      - name: current-user
-        optional: true
-        type: boolean
+          - name: style
+            optional: true
+            type: list
+            items:
+              type: FILEPATH_REGEX
 
-      - name: data
-        optional: true
-        type: DATA_SNIPPET
+          - name: content
+            optional: true
+            type: list
+            items:
+              type: FILEPATH_REGEX
+
+          - name: current-user
+            optional: true
+            type: boolean
+
+          - name: data
+            optional: true
+            type: DATA_SNIPPET
 
 
 
@@ -207,40 +216,52 @@ helper-types:
         type: DATA_SNIPPET
 
   - name: PAGES_SNIPPET
-    type: list
-    items:
-      type: object
-      fields:
-      - name: "name"
-        type: NAME_BLACKLIST
-      - name: "route"
-        type: PAGE_ROUTE_REGEX
+    type: variant
+    variants:
+      - type: object
+        fields:
+          - name: default
+            type: boolean
 
-      - name: style
-        optional: true
-        type: list
+      - type: list
         items:
-          type: FILEPATH_REGEX
+          type: object
+          fields:
+          - name: "name"
+            type: NAME_BLACKLIST
+          - name: "route"
+            type: PAGE_ROUTE_REGEX
 
-      - name: content
-        optional: true
-        type: list
-        items:
-          type: FILEPATH_REGEX
+          - name: style
+            optional: true
+            type: list
+            items:
+              type: FILEPATH_REGEX
 
-      - name: current-user
-        optional: true
-        type: boolean
+          - name: content
+            optional: true
+            type: list
+            items:
+              type: FILEPATH_REGEX
 
-      - name: data
-        optional: true
-        type: DATA_SNIPPET
+          - name: current-user
+            optional: true
+            type: boolean
 
-      - name: components
-        optional: true
-        type: PAGE_COMPONENT_SNIPPET
+          - name: data
+            optional: true
+            type: DATA_SNIPPET
 
-      - name: translations
-        optional: true
-        type: I18N_SNIPPET
+          - name: components
+            optional: true
+            type: PAGE_COMPONENT_SNIPPET
+
+          - name: translations
+            optional: true
+            type: I18N_SNIPPET
+
+          # XXX TODO ignored fields
+          - name: imports
+            optional: true
+            type: ignore
 
