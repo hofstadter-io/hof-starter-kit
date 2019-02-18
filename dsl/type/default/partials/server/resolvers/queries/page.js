@@ -1,75 +1,4 @@
 obj.Query.{{typeName}}Page = authSwitch([
-  {{#if TYPE.owned}}
-  // owner view
-  {
-    requiredScopes: (sources, args, context, info) => {
-      if (args.options && args.options.visibility && args.options.visibility.self === true) {
-        return ['owner:{{typeName}}/view'];
-      }
-      return ['skip']
-    },
-    providedScopes: (sources, args, context, info) => context.auth.scope,
-    callback: async (sources, args, context, info) => {
-      try {
-        args.userId = context.user.id;
-        {{#if TYPE.visibility.enabled}}
-        if (args.options && args.options.visibility && args.options.visibility.which) {
-          const which = args.options.visibility.which;
-          if (which === '{{TYPE.visibility.public}}') {
-            args.filters = [{
-              field: '{{TYPE.visibility.public}}',
-              compare: '=',
-              value: true
-            }]
-          } else if (which === '{{TYPE.visibility.private}}') {
-            args.filters = [{
-              field: '{{TYPE.visibility.public}}',
-              compare: '=',
-              value: false
-            }]
-          }
-        }
-        {{/if}}
-        const results = await context.{{TypeName}}.pagingFor(args);
-        const edgesArray = [];
-        const total = results.count;
-        const hasNextPage = total > args.after + args.limit;
-
-        results.results.map(({{typeName}}, index) => {
-          edgesArray.push({
-            cursor: args.after + index,
-            node: {{typeName}}
-          });
-        });
-        const endCursor = edgesArray.length > 0 ? edgesArray[edgesArray.length - 1].cursor : 0;
-
-        const ret = {
-          count: total,
-          edges: edgesArray,
-          pageInfo: {
-            endCursor,
-            hasNextPage
-          },
-          errors: null
-        };
-
-        console.log('Query.{{typeName}}Page - non-owner - ret', ret);
-        return ret;
-        return { results: results, count: -1, total: -1, errors: null};
-      } catch (e) {
-        console.error('Query.{{typeName}}Page - non-owner - ERROR', e);
-
-        const ret = {
-          count: -1,
-          edges: null,
-          pageInfo: null,
-          errors: [e]
-        };
-        return ret;
-      }
-    }
-  },
-  {{/if}}
 
   {{#if TYPE.visibility.enabled}}
   // private-visibility view
@@ -271,6 +200,80 @@ obj.Query.{{typeName}}Page = authSwitch([
         return ret;
       } catch (e) {
         console.error('Query.{{typeName}}Page - non-owner - ERROR', e);
+
+        const ret = {
+          count: -1,
+          edges: null,
+          pageInfo: null,
+          errors: [e]
+        };
+        return ret;
+      }
+    }
+  },
+  {{/if}}
+
+  {{#if TYPE.owned}}
+  // owner view
+  {
+    requiredScopes: (sources, args, context, info) => {
+      if (args.options && args.options.visibility && args.options.visibility.self === false) {
+        return ['skip']
+        // return ['owner:{{typeName}}/view'];
+      }
+      return ['owner:{{typeName}}/view'];
+    },
+    providedScopes: (sources, args, context, info) => context.auth.scope,
+    callback: async (sources, args, context, info) => {
+      console.log('Query.{{typeName}}Page - owner - args', args);
+      try {
+        args.userId = context.user.id;
+        {{#if TYPE.visibility.enabled}}
+        if (args.options && args.options.visibility && args.options.visibility.which) {
+          const which = args.options.visibility.which;
+          if (which === '{{TYPE.visibility.public}}') {
+            args.filters = [{
+              field: '{{TYPE.visibility.public}}',
+              compare: '=',
+              value: true
+            }]
+          } else if (which === '{{TYPE.visibility.private}}') {
+            args.filters = [{
+              field: '{{TYPE.visibility.public}}',
+              compare: '=',
+              value: false
+            }]
+          }
+        }
+        {{/if}}
+        const results = await context.{{TypeName}}.pagingFor(args);
+        const edgesArray = [];
+        const total = results.count;
+        const hasNextPage = total > args.after + args.limit;
+
+        results.results.map(({{typeName}}, index) => {
+          edgesArray.push({
+            cursor: args.after + index,
+            node: {{typeName}}
+          });
+        });
+        const endCursor = edgesArray.length > 0 ? edgesArray[edgesArray.length - 1].cursor : 0;
+
+        const ret = {
+          count: total,
+          edges: edgesArray,
+          pageInfo: {
+            endCursor,
+            hasNextPage
+          },
+          errors: null
+        };
+
+        console.log('Query.{{typeName}}Page - owner - ret', ret);
+        return ret;
+        return { results: results, count: -1, total: -1, errors: null};
+      } catch (e) {
+        console.error('Query.{{typeName}}Page - owner - ERROR', e);
 
         const ret = {
           count: -1,

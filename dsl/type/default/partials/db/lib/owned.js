@@ -31,10 +31,11 @@ getFor: getAdapter({
 getOneFor: getAdapter({
   printSQL: true,
   table: '{{snake TYPE.name}}',
-  idField: 'user_id'
+  idField: 'user_id',
 }),
 
 getManyFor: listAdapter({
+  printSQL: true,
   table: '{{snake TYPE.name}}',
   idField: 'user_id',
   filters: [{
@@ -44,7 +45,9 @@ getManyFor: listAdapter({
     valueExtractor: args => args.userId
   }]
 }),
+
 pagingFor: pagingAdapter({
+  printSQL: true,
   table: '{{snake TYPE.name}}',
   idField: 'user_id',
   filters: [{

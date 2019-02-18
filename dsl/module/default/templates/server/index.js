@@ -36,8 +36,10 @@ export default new ServerModule({
 {{{yaml TYPE.owned}}}
     */
     {{#if TYPE.owned}}{{#if TYPE.owned.current-user-with}}
-    user.{{camel TYPE.name}} = await Lib.{{camelT TYPE.name}}.getOneFor({id: user.id});
-    console.log("{{camelT TYPE.name}} - user", user)
+    if (user) {
+      user.{{camel TYPE.name}} = await Lib.{{camelT TYPE.name}}.getOneFor({id: user.id});
+      console.log("{{camelT TYPE.name}} - user", user)
+    }
     {{/if}}{{/if}}
     {{/with}}{{/gettype ~}}{{/each}}
 

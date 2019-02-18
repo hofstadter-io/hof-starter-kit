@@ -55,6 +55,7 @@ class Users extends React.Component {
   }
 
   render() {
+    console.log("USERS - props", this.props)
     return (
       <PageLayout>
         {this.renderMetaData()}

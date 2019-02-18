@@ -18,12 +18,6 @@ class UserEdit extends React.Component {
 
     let userValues = pick(values, ['username', 'email', 'role', 'isActive', 'password']);
 
-    userValues['profile'] = pick(values.profile, [
-      {{#each DslContext.user.profile.fields as |FIELD|}}
-      '{{camel FIELD.name}}'{{#unless @last}},{{/unless}}
-      {{/each}}
-    ]);
-
     userValues = UserFormatter.trimExtraSpaces(userValues);
 
     if (settings.user.auth.certificate.enabled) {
@@ -87,9 +81,11 @@ export default compose(
             return { errors: editUser.errors };
           }
           if (history) {
+            /*
             if (location && location.state && location.state.from === 'profile') {
               return history.push('/profile');
             }
+            */
             return history.push('/users');
           }
 
@@ -106,7 +102,7 @@ export default compose(
   graphql(GENERATE_APIKEY, {
 
     props: (input) => {
-      console.log("APIKEY - input", input)
+      // console.log("APIKEY - input", input)
       let { mutate } = input;
 
       let id = 0;
@@ -120,31 +116,19 @@ export default compose(
 
       return {
         generateApikey: async () => {
-          console.log("APIKEY - gen", id)
+          // console.log("APIKEY - gen", id)
           try {
             const {
               data: { generateApikey }
             } = await mutate({
               variables: { id }
             });
-            console.log("APIKEY - data", generateApikey)
+            // console.log("APIKEY - data", generateApikey)
             if (generateApikey.errors) {
               return { errors: generateApikey.errors };
             } else {
               return { user: generateApikey.user }
             }
-              /*
-            if (history) {
-              if (location && location.state && location.state.from === 'profile') {
-                return history.push('/profile');
-              }
-              return history.push('/users');
-            }
-
-            if (navigation) {
-              return navigation.goBack();
-            }
-            */
 
           } catch (e) {
             console.log(e.graphQLErrors);
