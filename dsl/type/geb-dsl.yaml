@@ -1,17 +1,12 @@
 name: "type"
 version: "0.0.1"
 
-helper-types:
-  - name: AUTH_ROLE_REGEX
-    type: string
-    regex: '^(user|admin)$'
-
 spec:
   type: "object"
   fields:
 
-    # XXX TODO - VISIBILITY
     # XXX TODO - RELATIONS
+
     - name: hooks
       optional: true
       type: ignore
@@ -118,6 +113,28 @@ spec:
           - name: field
             type: NAME_REGEX
 
+    # XXX TODO - VISIBILITY
+    - name: visibility
+      optional: true
+      type: variant
+      variants:
+        - type: object
+          fields:
+            - name: enable
+              type: boolean
+            - name: default
+              type: boolean
+        - type: object
+          fields:
+            - name: enable
+              type: boolean
+            - name: default
+              type: boolean
+            - name: public
+              type: NAME_REGEX
+            - name: private
+              type: NAME_REGEX
+
     # FILES
     - name: files
       optional: true
@@ -142,3 +159,27 @@ spec:
     - name: pages
       optional: true
       type: PAGES_SNIPPET
+
+
+
+helper-types:
+  - name: AUTH_ROLE_REGEX
+    type: string
+    regex: '^(user|admin)$'
+
+  - name: OWNED_SNIPPET
+    type: object
+    fields:
+      - name: type
+        type: string
+        regex: '^(has-one|has-many)$'
+      - name: name
+        optional: true
+        type: NAME_REGEX
+      - name: no-mutate
+        optional: true
+        type: boolean
+      - name: current-user-with
+        optional: true
+        type: boolean
+

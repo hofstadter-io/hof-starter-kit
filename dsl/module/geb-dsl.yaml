@@ -5,6 +5,10 @@ spec:
   type: "object"
   fields:
 
+    - name: forms
+      type: ignore
+      optional: true
+
     # NAME
     - name: "name"
       type: NAME_BLACKLIST

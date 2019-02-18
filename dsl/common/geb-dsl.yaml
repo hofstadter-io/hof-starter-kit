@@ -63,6 +63,10 @@ helper-types:
           type: NAME_REGEX
         - name: "type"
           type: TYPEPATH_REGEX
+        - name: lookup
+          # XXX TODO need to change this, it's using user def'd names as keys
+          type: ignore
+          optional: true
 
   - name: I18NFILE_REGEX
     type: "string"
@@ -102,25 +106,6 @@ helper-types:
   - name: COMPONENT_REGEX
     type: "string"
     regex: '^(type|module)\.modules\.([[:word:]-]+\.){1,2}components\.[[:word:]-]+$'
-
-  - name: OWNED_SNIPPET
-    # XXX Variants?
-    type: object
-    fields:
-      # XXX Variants?
-      - name: type
-        type: string
-        regex: '^(has-one|has-many)$'
-      - name: "name"
-        optional: true
-        type: "string"
-        regex: '^[[:alpha:]][[:word:]-]*$'
-      - name: no-mutate
-        optional: true
-        type: boolean
-      - name: current-user-with
-        optional: true
-        type: boolean
 
 
   - name: DATA_SNIPPET
@@ -193,8 +178,12 @@ helper-types:
   - name: PAGE_ROUTE_REGEX
     type: "string"
     regex:
-      - '^(\/[[:alpha:]][[:word:]-]*)+$'
+      # /
       - '^\/$'
+      # /word/word/...
+      - '^(\/[[:alpha:]][[:word:]-]*)+$'
+      # /word/word/:pathParam
+      - '^(\/[[:alpha:]][[:word:]-]*)+\/\:[[:alpha:]][[:word:]-]*$'
 
   - name: PAGE_COMPONENT_SNIPPET
     type: list
@@ -230,6 +219,7 @@ helper-types:
           - name: "name"
             type: NAME_BLACKLIST
           - name: "route"
+            optional: true
             type: PAGE_ROUTE_REGEX
 
           - name: style

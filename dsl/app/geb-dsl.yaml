@@ -62,6 +62,7 @@ spec:
 
         ### XXX TODO ignored fields
         - name: hooks
+          optional: true
           type: ignore
 
     - name: auth
@@ -128,6 +129,7 @@ spec:
     - name: builtin-pages
       type: ignore
     - name: hof-223--proxy-endpoints
+      optional: true
       type: ignore
 
 
