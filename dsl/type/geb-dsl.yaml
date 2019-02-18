@@ -120,13 +120,13 @@ spec:
       variants:
         - type: object
           fields:
-            - name: enable
+            - name: enabled
               type: boolean
             - name: default
               type: boolean
         - type: object
           fields:
-            - name: enable
+            - name: enabled
               type: boolean
             - name: default
               type: boolean
