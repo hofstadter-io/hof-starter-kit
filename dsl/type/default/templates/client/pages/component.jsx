@@ -64,7 +64,7 @@ class {{PageName}}PageComponent extends React.Component {
 
 
     let {
-      {{#if PAGE.currentUser}}
+      {{#if PAGE.current-user}}
       currentUser,
       {{/if}}
 

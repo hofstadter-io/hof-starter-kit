@@ -1,4 +1,4 @@
-{{#if THING.currentUser}}
+{{#if THING.current-user}}
 currentUser: PropTypes.object.isRequired,
 {{/if}}
 

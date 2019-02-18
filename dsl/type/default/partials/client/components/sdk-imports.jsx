@@ -1,4 +1,4 @@
-{{#if COMPONENT.currentUser}}
+{{#if COMPONENT.current-user}}
 import { withLoadedUser } from '../../../user/containers/Auth';
 {{/if}}
 

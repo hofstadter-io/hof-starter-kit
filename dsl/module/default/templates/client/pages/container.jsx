@@ -8,7 +8,6 @@ import PropTypes from 'prop-types';
 import { compose } from 'react-apollo';
 import update from 'immutability-helper';
 
-
 import {{PageName}} from './component';
 
 {{> client/pages/sdk-imports.jsx }}
