@@ -25,8 +25,9 @@ const { itemsNumber, type } = paginationConfig.web;
 import {{#if IMPORT.default}}{{IMPORT.default}}{{/if ~}}
 {{#if IMPORT.nested ~}}
 {{#if IMPORT.default}}, {{/if ~}}
-{ {{#each IMPORT.nested}}{{.}}{{#unless @last}}, {{/unless}}{{/each}} } from '{{IMPORT.library}}';
+{ {{#each IMPORT.nested}}{{.}}{{#unless @last}}, {{/unless}}{{/each}} } {{! ~}}
 {{/if}}
+ from '{{IMPORT.library}}';
 {{/each}}
 
 {{#each PAGE.components as |COMPONENT|}}

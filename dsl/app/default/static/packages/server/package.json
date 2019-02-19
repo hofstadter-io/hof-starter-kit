@@ -52,7 +52,7 @@
   "author": "SysGears INC",
   "license": "MIT",
   "dependencies": {
-    "@hofstadter-io/sofa-api": "^0.3.0",
+    "@hofstadter-io/sofa-api": "^0.3.1",
     "@babel/polyfill": "^7.0.0",
     "@babel/register": "^7.0.0",
     "@babel/preset-env": "^7.0.0",

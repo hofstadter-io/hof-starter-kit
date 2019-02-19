@@ -1,7 +1,7 @@
 {{#with MIG.value as |OWNED|}}
 
 {{#if OWNED.name}}
-table.integer('{{snake OWNED.name}}')
+table.integer('{{snake OWNED.name}}_id')
 {{else}}
 table.integer('user_id')
 {{/if}}

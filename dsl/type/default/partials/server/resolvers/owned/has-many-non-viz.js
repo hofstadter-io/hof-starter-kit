@@ -15,17 +15,17 @@
     return sources.map(s => context.auth.scope)
   },
   callback: async (sources, args, context, info) => {
-    var uids = sources.filter(s => s !== null).map(s => s.userId);
+    var uids = sources.filter(s => s !== null).map(s => s.{{ternary (camel TYPE.owned.name) "user"}}Id);
 
     args.filters = [{
-      field: 'user_id',
+      field: '{{ternary (snake TYPE.owned.name) "user"}}_id',
       compare: 'in',
       values: uids,
     }]
 
     const results = await context.{{TypeName}}.getMany(args);
-    const ordered = orderedFor(results, uids, 'userId', false);
-    const ret = reconcileBatchOneToMany(us, ordered, 'userId');
+    const ordered = orderedFor(results, uids, '{{ternary (camel TYPE.owned.name) "user"}}Id', false);
+    const ret = reconcileBatchOneToMany(us, ordered, '{{ternary (camel TYPE.owned.name) "user"}}Id');
 
     return ret.map(r => r.length > 0 ? r : null);
   }

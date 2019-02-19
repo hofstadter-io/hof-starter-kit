@@ -4,8 +4,6 @@ obj.User.{{typeName}}s = createBatchResolver(async (sources, args, context, info
 
   const blocks = [
 
-    {{> server/resolvers/owned/has-many-owner.js }}
-
     {{#if TYPE.visibility.enabled}}
 
     {{> server/resolvers/owned/has-many-viz-prv.js }}
@@ -14,6 +12,8 @@ obj.User.{{typeName}}s = createBatchResolver(async (sources, args, context, info
     {{else}}
 
     {{> server/resolvers/owned/has-many-non-viz.js }}
+
+    {{> server/resolvers/owned/has-many-owner.js }}
 
     {{/if}}
 
@@ -28,7 +28,7 @@ obj.User.{{typeName}}s = createBatchResolver(async (sources, args, context, info
 
   // Annotate the sources
   const us = sources.map(u => {
-    u.userId = u.id;
+    u.{{ternary (camel TYPE.owned.name) "user"}}Id = u.id;
     return u;
   });
 
@@ -39,16 +39,22 @@ obj.User.{{typeName}}s = createBatchResolver(async (sources, args, context, info
   return results.map(r => Array.isArray(r) ? r : [])
 });
 
-obj.{{TypeName}}.{{#if TYPE.owned.name}}{{camel TYPE.owned.name}}{{else}}user{{/if}} = createBatchResolver(async (sources, args, context, info) => {
+obj.{{TypeName}}.{{ternary (camel TYPE.owned.name) "user"}} = createBatchResolver(async (sources, args, context, info) => {
   // TODO auth batching
+  /*
+    {{TYPE.owned.name}}
+    {{camel TYPE.owned.name}}
+    {{ternary TYPE.owned.name "user"}}Id
+    {{ternary (camel TYPE.owned.name) "user"}}Id
+  */
 
   var us = await context.User.getUsers();
   us = us.map(u => {
-    u.userId = u.id;
+    u.{{ternary (camel TYPE.owned.name) "user"}}Id = u.id;
     return u;
   });
 
-  const ret = reconcileBatchOneToOne(sources, us, 'userId');
+  const ret = reconcileBatchOneToOne(sources, us, '{{ternary (camel TYPE.owned.name) "user"}}Id');
   // console.log("{{TypeName}}.User - batch resolver - users", ret)
 
   return ret;

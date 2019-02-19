@@ -37,7 +37,7 @@ export default async function seed(knex, Promise) {
   for (let data of datas) {
     var uid = await knex('user')
       .where({
-        username: data['{{#if TYPE.owned.name}}{{camel TYPE.owned.name}}{{else}}owner{{/if}}']
+        username: data['{{ternary TYPE.owned.name "owner"}}']
       })
       .first('id')
       .then(row => row.id)
@@ -45,11 +45,7 @@ export default async function seed(knex, Promise) {
     console.log("Create For", uid)
 
     var did = await Lib.{{camelT TYPE.name}}.createFor({
-      {{#if TYPE.owned.name}}
-      {{snake TYPE.owned.name}}: uid,
-      {{else}}
-      user_id: uid,
-      {{/if}}
+      {{snake (ternary TYPE.owned.name "user")}}_id: uid,
       {{#if TYPE.visibility.enabled}}
         {{snake TYPE.visibility.public}}: data['{{camel TYPE.visibility.public}}'] || {{TYPE.visibility.default}},
       {{/if}}
@@ -73,14 +69,14 @@ export default async function seed(knex, Promise) {
         {{#if REL_TYPE.owned}}
         var oid = await knex('user')
           .where({
-            username: rel['{{#if REL_TYPE.owned.name}}{{camel REL_TYPE.owned.name}}{{else}}owner{{/if}}']
+            username: rel['{{ternary REL_TYPE.owned.name "owner"}}']
           })
           .first('id')
           .then(row => row.id)
 
           {{#if (eq RELATION.relation "one-to-one")}}
         await Lib.{{camelT REL_TYPE.name}}.createFor({
-          user_id: oid,
+          {{snake (ternary TYPE.owned.name "user")}}_id: oid,
           {{#if REL_TYPE.visibility.enabled}}
             {{snake REL_TYPE.visibility.public}}: data['{{camel REL_TYPE.visibility.public}}'] || {{REL_TYPE.visibility.default}},
           {{/if}}
@@ -91,7 +87,7 @@ export default async function seed(knex, Promise) {
         })
           {{else if (eq RELATION.relation "one-to-many")}}
         await Lib.{{camelT REL_TYPE.name}}.createFor({
-          user_id: oid,
+          {{snake (ternary TYPE.owned.name "user")}}_id: oid,
           {{#if REL_TYPE.visibility.enabled}}
             {{snake REL_TYPE.visibility.public}}: data['{{camel REL_TYPE.visibility.public}}'] || {{REL_TYPE.visibility.default}},
           {{/if}}
