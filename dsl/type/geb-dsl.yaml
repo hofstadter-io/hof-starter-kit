@@ -36,9 +36,13 @@ spec:
                 - type: object
                   fields:
                     - name: public
-                      type: AUTH_ROLE_REGEX
+                      type: list
+                      items:
+                        type: AUTH_ROLE_REGEX
                     - name: private
-                      type: AUTH_ROLE_REGEX
+                      type: list
+                      items:
+                        type: AUTH_ROLE_REGEX
             - name: create
               type: list
               items:
@@ -101,6 +105,20 @@ spec:
               - name: notNullable
                 optional: true
                 type: boolean
+
+    - name: relations
+      optional: true
+      type: list
+      items:
+        type: object
+        fields:
+          - name: name
+            type: NAME_BLACKLIST
+          - name: type
+            type: TYPEPATH_REGEX
+          - name: relation
+            type: RELATION_TYPE_REGEX
+
 
     - name: lookup
       optional: true
@@ -166,6 +184,10 @@ helper-types:
   - name: AUTH_ROLE_REGEX
     type: string
     regex: '^(user|admin)$'
+
+  - name: RELATION_TYPE_REGEX
+    type: string
+    regex: '^(one-to-one|one-to-many|many-to-many|belongs-to-one|belongs-to-many)$'
 
   - name: OWNED_SNIPPET
     type: object

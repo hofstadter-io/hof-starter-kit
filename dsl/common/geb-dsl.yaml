@@ -131,6 +131,15 @@ helper-types:
           - name: sync
             optional: true
             type: boolean
+
+          # XXX TODO ignored fields
+          - name: filter
+            optional: true
+            type: ignore
+          - name: variables
+            optional: true
+            type: ignore
+
       - name: mutations
         optional: true
         type: list

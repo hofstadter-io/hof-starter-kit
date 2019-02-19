@@ -51,6 +51,10 @@ spec:
 
         ### XXX TODO ignored fields
         - name: oauth
+          optional: true
+          type: ignore
+        - name: mailer
+          optional: true
           type: ignore
 
     - name: user
