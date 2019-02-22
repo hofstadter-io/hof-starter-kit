@@ -37,8 +37,6 @@ dependencies:
     - name: once-files
       field: "."
       templates:
-        - in: mode.yaml
-          out: mode.yaml
         - in: migs.yaml
           out: migs.yaml
         - in: debug.txt
