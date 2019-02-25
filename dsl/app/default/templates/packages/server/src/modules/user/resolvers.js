@@ -99,7 +99,7 @@ export default pubsub => ({
 
           {{#if (eq APP.client "studios")}}
           const acct = {
-            userId: createdUsesId,
+            userId: createdUserId,
             name: user.username,
             type: "starter",
             state: "created",
