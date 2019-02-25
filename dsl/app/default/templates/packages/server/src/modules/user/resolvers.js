@@ -65,7 +65,7 @@ export default pubsub => ({
       (obj, args, { User, user }) => {
         return user.id !== args.input.id ? ['user:create'] : ['user:create:self'];
       },
-      async (obj, args, { User, user, req: { universalCookies }, mailer, req, req: { t } }) => {
+      async (obj, args, { Account, User, user, req: { universalCookies }, mailer, req, req: { t } }) => {
         try {
           let { input } = args;
           const e = new FieldError();
@@ -100,11 +100,12 @@ export default pubsub => ({
           {{#if (eq APP.client "studios")}}
           const acct = {
             userId: createdUserId,
-            name: user.username,
+            name: input.username,
             type: "starter",
             state: "created",
           }
-          await context.Account.create(acct);
+          console.log("Creating Account", acct)
+          await Account.create(acct);
           {{/if}}
 
           const user = await User.getUser(createdUserId);
