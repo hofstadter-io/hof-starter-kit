@@ -97,6 +97,16 @@ export default pubsub => ({
             await User.editAuthCertificate({ id: createdUserId, ...input });
           }
 
+          {{#if (eq APP.client "studios")}}
+          const acct = {
+            userId: createdUsesId,
+            name: user.username,
+            type: "starter",
+            state: "created",
+          }
+          await context.Account.create(acct);
+          {{/if}}
+
           const user = await User.getUser(createdUserId);
 
           {{#if APP.user.hooks.post-create}}
