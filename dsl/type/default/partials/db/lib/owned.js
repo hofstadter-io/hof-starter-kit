@@ -39,12 +39,14 @@ getFor: getAdapter({
 getOneFor: getAdapter({
   printSQL: true,
   table: '{{snake TYPE.name}}',
-  field: '{{ternary TYPE.owned.name "user_id"}}',
+  idField: '{{ternary TYPE.owned.name "user_id"}}',
+  // TODO idField or plain 'field'
 }),
 
 getManyFor: listAdapter({
   printSQL: true,
   table: '{{snake TYPE.name}}',
+  // TODO idField or plain 'field' or nothing at all
   field: '{{ternary TYPE.owned.name "user_id"}}',
   filters: [{
     bool: 'and',
@@ -57,6 +59,7 @@ getManyFor: listAdapter({
 pagingFor: pagingAdapter({
   printSQL: true,
   table: '{{snake TYPE.name}}',
+  // TODO idField or plain 'field' or nothing at all
   field: '{{ternary TYPE.owned.name "user_id"}}',
   filters: [{
     bool: 'and',

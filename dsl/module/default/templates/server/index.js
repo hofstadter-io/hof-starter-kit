@@ -24,21 +24,13 @@ export default new ServerModule({
     let { context } = req;
     let { user } = context;
 
-    /*
-{{{yaml MODULE.types}}}
-    */
     {{#each MODULE.types as |T|}}
-    /*
-{{{yaml T}}}
-    */
     {{#gettype T.type true}}{{#with . as |TYPE| ~}}
-    /*
-{{{yaml TYPE.owned}}}
-    */
     {{#if TYPE.owned}}{{#if TYPE.owned.current-user-with}}
     if (user) {
-      user.{{camel TYPE.name}} = await Lib.{{camelT TYPE.name}}.getOneFor({id: user.id});
-      console.log("{{camelT TYPE.name}} - user", user)
+      console.log("{{camelT TYPE.name}} - user - pre", user)
+      user.{{camel TYPE.name}} = await Lib.{{camelT TYPE.name}}.getOneFor({ id: user.id });
+      console.log("{{camelT TYPE.name}} - user - post", user)
     }
     {{/if}}{{/if}}
     {{/with}}{{/gettype ~}}{{/each}}
