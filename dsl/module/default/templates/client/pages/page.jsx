@@ -6,6 +6,7 @@ import { AuthRoute } from '../../../user/containers/Auth';
 import ClientModule from '../../../ClientModule';
 
 import Container from './container';
+import resources from '../../locales';
 
 const page = {
   {{#if PAGE.route}}
@@ -26,6 +27,7 @@ const page = {
     />
     {{/if}}
   ],
+  localization: [{ ns: '{{DslContext.name}}', resources }],
   {{/if}}
 }
 

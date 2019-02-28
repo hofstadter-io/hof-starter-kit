@@ -1,3 +1,4 @@
+{{#with DslContext as |TYPE|}}
 {{#with RepeatedContext as |PAGE|}}
 import React from 'react';
 import { Route } from 'react-router-dom';
@@ -6,6 +7,7 @@ import { AuthRoute } from '../../../../user/containers/Auth';
 import ClientModule from '../../../../ClientModule';
 
 import Container from './container';
+import resources from '../../../locales';
 
 const page = {
   // should have some backup checking for Type Auth
@@ -27,8 +29,10 @@ const page = {
     />
     {{/if}}
   ],
+  localization: [{ ns: '{{TYPE.name}}', resources }],
   {{/if}}
 }
 
 export default new ClientModule(page);
+{{/with}}
 {{/with}}

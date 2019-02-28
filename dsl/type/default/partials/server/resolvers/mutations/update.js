@@ -15,12 +15,12 @@ obj.Mutation.{{typeName}}Update = authSwitch([
         var id = args.id;
         args.values.updatedAt = new Date();
         var {{typeName}} = args.values;
-        var user_id = context.user.id;
+        var {{ternary (camel TYPE.owned.name) "user"}}_id = context.user.id;
         console.log('updating {{typeName}}:', args);
 
         // TODO validate...
 
-        var ret = await context.{{TypeName}}.updateFor({ id, user_id }, {{typeName}});
+        var ret = await context.{{TypeName}}.updateFor({ id, {{ternary (camel TYPE.owned.name) "user"}}_id }, {{typeName}});
         console.log("UPDATE ret", ret);
 
         if (ret) {

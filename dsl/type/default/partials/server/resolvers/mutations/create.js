@@ -1,5 +1,5 @@
 obj.Mutation.{{typeName}}Create = async (sources, args, context, info) => {
-  console.log("GOT HERE CREATE", args, context.auth)
+  console.log("GOT HERE CREATE", args, context.auth, context.user)
   let resolver = authSwitch([
     {
       requiredScopes: [
@@ -13,7 +13,7 @@ obj.Mutation.{{typeName}}Create = async (sources, args, context, info) => {
           const err = new FieldError();
 
           var {{typeName}} = args.input;
-          {{typeName}}.userId = context.user.id;
+          {{typeName}}.{{ternary (camel TYPE.owned.name) "user"}}Id = context.user.id;
 
           // TODO validate...
           var requestData = null;

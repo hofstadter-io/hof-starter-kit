@@ -1,5 +1,32 @@
 obj.Query.{{typeName}} = authSwitch([
 
+  {{#if TYPE.owned}}
+  // owner view
+  {
+    requiredScopes: async (sources, args, context, info) => {
+      args.id = args.{{typeName}}Id
+      const results = await context.{{TypeName}}.get(args);
+      if (results.userId === context.user.id) {
+        return ['owner:{{typeName}}/view'];
+      } else {
+        return ['skip']
+      }
+    },
+    providedScopes: (sources, args, context, info) => context.auth.scope,
+    callback: async (sources, args, context, info) => {
+      // Need to validate incoming filters...
+      args.id = args.{{typeName}}Id
+      args.filters = args.filters || [];
+      args.userId = context.user.id;
+      console.log("{{typeName}} - owner args", args)
+      const results = await context.{{TypeName}}.getFor(args);
+      console.log("{{typeName}} - owner results", results)
+      return { {{typeName}}: results, errors: null};
+    }
+  },
+  {{/if}}
+
+
   {{#if TYPE.visibility.enabled}}
   // non-owner public view
   {
@@ -14,6 +41,7 @@ obj.Query.{{typeName}} = authSwitch([
     },
     providedScopes: (sources, args, context, info) => context.auth.scope,
     callback: async (sources, args, context, info) => {
+      console.log("{{typeName}} - non-owner public callback", args)
       // Need to validate incoming filters...
       args.id = args.{{typeName}}Id
       args.filters = args.filters || [];
@@ -41,6 +69,7 @@ obj.Query.{{typeName}} = authSwitch([
     },
     providedScopes: (sources, args, context, info) => context.auth.scope,
     callback: async (sources, args, context, info) => {
+      console.log("{{typeName}} - non-owner private callback", args)
       // Need to validate incoming filters...
       args.id = args.{{typeName}}Id
       args.filters = args.filters || [];
@@ -68,6 +97,7 @@ obj.Query.{{typeName}} = authSwitch([
     },
     providedScopes: (sources, args, context, info) => context.auth.scope,
     callback: async (sources, args, context, info) => {
+      console.log("{{typeName}} - non-owner callback", args)
       // Need to validate incoming filters...
       args.id = args.{{typeName}}Id
       args.filters = args.filters || [];
@@ -80,32 +110,6 @@ obj.Query.{{typeName}} = authSwitch([
       {{/if}}
       console.log("{{typeName}} - non-owner args", args)
       const results = await context.{{TypeName}}.get(args);
-      return { {{typeName}}: results, errors: null};
-    }
-  },
-  {{/if}}
-
-  {{#if TYPE.owned}}
-  // owner view
-  {
-    requiredScopes: async (sources, args, context, info) => {
-      args.id = args.{{typeName}}Id
-      const results = await context.{{TypeName}}.get(args);
-      if (results.userId === context.user.id) {
-        return ['owner:{{typeName}}/view'];
-      } else {
-        return ['skip']
-      }
-    },
-    providedScopes: (sources, args, context, info) => context.auth.scope,
-    callback: async (sources, args, context, info) => {
-      // Need to validate incoming filters...
-      args.id = args.{{typeName}}Id
-      args.filters = args.filters || [];
-      args.userId = context.user.id;
-      console.log("{{typeName}} - owner args", args)
-      const results = await context.{{TypeName}}.getFor(args);
-      console.log("{{typeName}} - owner results", results)
       return { {{typeName}}: results, errors: null};
     }
   },

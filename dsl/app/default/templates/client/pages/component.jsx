@@ -116,7 +116,7 @@ class {{PageName}}PageComponent extends React.Component {
   }
 };
 
-export default translate('{{MODULE.name}}')({{PageName}}PageComponent);
+export default translate('{{PAGE.name}}')({{PageName}}PageComponent);
 {{/with}}
 {{/with}}
 {{/with}}

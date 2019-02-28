@@ -128,11 +128,8 @@ class {{PageName}}PageComponent extends React.Component {
   }
 };
 
-{{#if TYPE.translations}}
 export default translate('{{TYPE.name}}')({{PageName}}PageComponent);
-{{else}}
-export default {{PageName}}PageComponent;
-{{/if}}
+
 {{/with}}
 {{/with}}
 {{/with}}

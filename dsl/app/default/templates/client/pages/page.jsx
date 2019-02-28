@@ -6,6 +6,7 @@ import { AuthRoute } from '../../user/containers/Auth';
 import ClientModule from '../../ClientModule';
 
 import Container from './container';
+import resources from './locales';
 
 const page = {
   {{#if PAGE.route}}
@@ -27,6 +28,7 @@ const page = {
     {{/if}}
   ],
   {{/if}}
+  localization: [{ ns: '{{PAGE.name}}', resources }],
 }
 
 export default new ClientModule(page);

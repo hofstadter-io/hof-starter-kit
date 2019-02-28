@@ -9,9 +9,20 @@ template-configs:
       - in: client/index.jsx
         out: "packages/client/src/{{relPath}}/{{kebab name}}/index.js"
 
+      - in: client/locales/index.js
+        out: packages/client/src/{{relPath}}/{{kebab name}}/locales/index.js
+
+
   - name: type-files
     field: "files"
     templates:
 
       - in: client/files/file
         out: "packages/client/src/{{pkg_path}}/../{{dst}}"
+
+  - name: type-translations
+    field: "translations"
+    templates:
+
+      - in: client/locales/translations.json
+        out: packages/client/src/modules/{{relPath}}/{{kebab name}}/translations.json

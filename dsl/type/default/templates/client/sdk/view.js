@@ -13,19 +13,21 @@ export default graphql(SOLO, {
     console.log("{{TypeName}} - solo view query container PROPS", props)
     let id = 1;
     if (props.match) {
+      console.log("{{TypeName}} - props.match", props.match)
       id = props.match.params.{{typeName}}Id || props.match.params.id;
     } else if (props.navigation) {
+      console.log("{{TypeName}} - props.navigation", props.navigation)
       id = props.navigation.state.params.{{typeName}}Id || props.navigation.state.params.id;
     }
 
-    // console.log("{{TypeName}} - solo view query container", id)
+    console.log("{{TypeName}} - solo view query container ID", id)
 
     return {
       variables: { id }
     };
   },
   props({ data: { loading, error, {{typeName}}, subscribeToMore } }) {
-    // console.log("{{TypeName}} - solo view props container", loading, error, {{typeName}})
+    console.log("{{TypeName}} - solo view props container", loading, error, {{typeName}})
     if (error) throw new Error(error);
 
     if( {{typeName}} && {{typeName}}.{{typeName}} ) {

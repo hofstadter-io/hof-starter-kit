@@ -16,4 +16,6 @@
   {{camel Field.name}}: Time
 {{else if (eq Field.type "datetime")}}
   {{camel Field.name}}: String
+{{else}}
+  # {{camel Field.name}}: unknown type '{{Field.type}}'
 {{/if}}

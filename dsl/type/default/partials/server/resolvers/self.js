@@ -4,7 +4,7 @@ id: (obj, args, context, info) => {
 {{#if TYPE.owned}}
 {{#if TYPE.owned.name}}
 {{camel TYPE.owned.name}}Id: (obj, args, context, info) => {
-  return obj.userId || null;
+  return obj.{{camel TYPE.owned.name}}Id || null;
 },
 {{else}}
 userId: (obj, args, context, info) => {
