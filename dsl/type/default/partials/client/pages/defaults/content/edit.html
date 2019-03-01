@@ -1,8 +1,14 @@
-{ {{TYPE.name}} ? 
-  <Link to={ "{{APP.route}}{{MODULE.route}}/{{kebab TYPE.name}}/" + {{TYPE.name}}.id }> back </Link>
-  : ""
-}
-<b>{{TYPE.name}} - {{PAGE.name}} default content</b>
-<hr />
+<div className="container">
+  {{> type/default/client/pages/defaults/content/header.html}}
+  - <b className="btn btn-sm btn-danger"
+     onClick={ () => {
+     var doDelete = confirm("Are you sure you want to delete '" + {{camel TYPE.name}}.name + "'?")
+      if ( doDelete === true ) {
+        this.props.{{camel TYPE.name}}Delete({{camel TYPE.name}}.id)
+      }
+     } }
+  > delete </b>
+  <hr />
 
-<Form {...this.props} formMode="update"/>
+  <Form {...this.props} formMode="update"/>
+</div>

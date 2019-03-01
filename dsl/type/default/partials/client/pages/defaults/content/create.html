@@ -1,5 +1,6 @@
-<Link to="{{APP.route}}{{MODULE.route}}/{{kebab TYPE.name}}/toc"> back </Link> - 
-<b>{{TYPE.name}} - {{PAGE.name}} default content</b>
-<hr />
+<div className="container">
+  {{> type/default/client/pages/defaults/content/header.html}}
+  <hr />
 
-<Form {...this.props} formMode="create"/>
+  <Form {...this.props} formMode="create"/>
+</div>

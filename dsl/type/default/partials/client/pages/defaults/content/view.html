@@ -1,11 +1,6 @@
-<b> {{TYPE.name}} - {{PAGE.name}} default content </b>
-{ {{camel TYPE.name}} ? 
-  <i> - <Link to={ "{{APP.route}}{{MODULE.route}}/{{kebab TYPE.name}}/edit/" + {{TYPE.name}}.id }> edit </Link></i>
-  : ""
-}
-- <Link to="{{APP.route}}{{MODULE.route}}/{{kebab TYPE.name}}/list"> list </Link>
-- <Link to="{{APP.route}}{{MODULE.route}}/{{kebab TYPE.name}}/table"> table </Link>
-- <b style={ {
+<div className="container">
+  {{> type/default/client/pages/defaults/content/header.html}}
+  - <b style={ {
        color: "white",
        background: "red",
      } }
@@ -17,6 +12,7 @@
      } }
   > delete </b>
 
-<hr />
+  <hr />
 
-<View {...this.props} />
+  <View {...this.props} />
+</div>

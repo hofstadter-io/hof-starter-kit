@@ -14,10 +14,13 @@ render() {
   let { loading{{camelT TYPE.name}}, {{camel TYPE.name}} } = this.props;
 
   return (
-    <div>
-      <b>{{TYPE.name}} - {{COMPONENT.name}} component - default content </b>
-			<DefaultForm onSubmit={ this.onSubmit({{camel TYPE.name}}) } {...this.props} />
-      <pre>{ loading{{camelT TYPE.name}} ? "loading" : JSON.stringify({{camel TYPE.name}}, null, 2) }</pre>
+    <div className="container">
+      <div className="row align-items-center">
+        <div className="col-md-8 col-sm-11">
+          <b>{{TYPE.name}} - {{COMPONENT.name}} component - default content </b>
+          <DefaultForm onSubmit={ this.onSubmit({{camel TYPE.name}}) } {...this.props} />
+        </div>
+      </div>
     </div>
   )
 }

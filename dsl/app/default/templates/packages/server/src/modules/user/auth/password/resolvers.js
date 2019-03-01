@@ -39,9 +39,11 @@ export default () => ({
       { req }
     ) {
       try {
-        const user = await User.getUserByUsernameOrEmail(usernameOrEmail);
+        let user = await User.getUserByUsernameOrEmail(usernameOrEmail);
 
         await validateUserPassword(user, password, req.t);
+
+        user = await User.getUser(user.id)
 
         const tokens = await access.grantAccess(user, req);
 

@@ -51,8 +51,8 @@ class NavBar extends React.Component<{t: any}> {
     }
 
   public render() {
-    console.log("NavBar.props", this.props);
-    console.log("NavBar.state", this.state);
+    // console.log("NavBar.props", this.props);
+    // console.log("NavBar.state", this.state);
     const { t } = this.props;
     return (
       <NavBarStyled>

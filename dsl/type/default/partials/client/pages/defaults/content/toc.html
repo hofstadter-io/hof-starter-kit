@@ -1,7 +1,18 @@
-<b>{{TYPE.name}} default index</b>
+<div className="container">
+  {{> type/default/client/pages/defaults/content/header.html}}
+  <hr />
 
-<ol>
-  <li><Link to="{{APP.route}}{{MODULE.route}}/{{kebab TYPE.name}}/list">{{TYPE.name}} list</Link></li>
-  <li><Link to="{{APP.route}}{{MODULE.route}}/{{kebab TYPE.name}}/table">{{TYPE.name}} table</Link></li>
-  <li><Link to="{{APP.route}}{{MODULE.route}}/{{kebab TYPE.name}}/new">new {{TYPE.name}}</Link></li>
-</ol>
+  <div className="card" style={ { width: "18rem" } }>
+    <div className="card-body">
+      <Link to="{{APP.route}}{{MODULE.route}}/{{kebab TYPE.name}}/list">{{TYPE.name}} list</Link>
+    </div>
+  </div>
+
+  <div className="card" style={ { width: "18rem" } }>
+    <div className="card-body">
+      <Link to="{{APP.route}}{{MODULE.route}}/{{kebab TYPE.name}}/new">new {{TYPE.name}}</Link>
+    </div>
+  </div>
+
+</div>
+

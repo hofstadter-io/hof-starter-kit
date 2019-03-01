@@ -63,7 +63,7 @@ export default new Feature(access, {
     <AuthRoute exact path="/users/new" role={['admin']} component={UserAdd} />,
     <AuthRoute path="/users/:id" redirect="/profile" role={['user', 'admin']} component={UserEdit} />,
     {{#unless APP.auth.registration.disabled}}
-    <AuthRoute exact path="/register" redirectOnLoggedIn redirect="/profile" component={Register} />,
+    <AuthRoute exact path="/register" redirectOnLoggedIn redirect="{{ternary APP.auth.login-redirect '/profile' }}" component={Register} />,
     {{/unless}}
     <AuthRoute
       exact
@@ -71,11 +71,11 @@ export default new Feature(access, {
       redirectOnLoggedIn
       redirect="/"
       component={withRouter(({ history }) => (
-        <Login onLogin={() => history.push('/profile')} />
+        <Login onLogin={() => history.push('{{ternary APP.auth.login-redirect "/profile" }}')} />
       ))}
     />,
-    <AuthRoute exact path="/forgot-password" redirectOnLoggedIn redirect="/profile" component={ForgotPassword} />,
-    <AuthRoute exact path="/reset-password/:token" redirectOnLoggedIn redirect="/profile" component={ResetPassword} />
+    <AuthRoute exact path="/forgot-password" redirectOnLoggedIn redirect="{{ternary APP.auth.login-redirect '/profile' }}" component={ForgotPassword} />,
+    <AuthRoute exact path="/reset-password/:token" redirectOnLoggedIn redirect="{{ternary APP.auth.login-redirect '/profile' }}" component={ResetPassword} />
   ],
   navItem: [
     <IfLoggedIn key="/users" role="admin">
