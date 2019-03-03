@@ -131,17 +131,35 @@ export default pubsub => ({
             jwt.sign({ user: pick(user, 'id') }, settings.user.secret, { expiresIn: '1d' }, (err, emailToken) => {
               const encodedToken = Buffer.from(emailToken).toString('base64');
               const url = `${__WEBSITE_URL__}/confirmation/${encodedToken}`;
-              mailer.sendMail({
-                from: `${settings.app.name} <${process.env.EMAIL_USER}>`,
-                to: user.email,
-                subject: 'Your account has been created',
-                html: `<p>Hi, ${user.username}!</p>
+
+              {{#if (eq APP.name "studios")}}
+              var html = `<p>Hi, ${user.username}!</p>
+                <p>Welcome to Hofstadter Studios. Please click the following link to set your password:</p>
+                <p><a href="https://studios.studios.live.hofstadter.io/forgot-password">https://studios.studios.live.hofstadter.io/forgot-password</a></p>
+
+                <p>Follow along the steps at <a href="https://docs.hofstadter.io/getting-started/">https://docs.hofstadter.io/getting-started/</a> to start creating.</p>
+                <br>
+                <p>Thank You and Happy Hof'n,</p>
+
+                <p>the Hofstadter team</p>
+                <a href="mailto:support@hofstadter.io">support@hofstadter.io</a><br>
+                <a href="https://hofstadter.io">https://hofstadter.io</a>
+                `;
+              {{else}}
+              var html = `<p>Hi, ${user.username}!</p>
                 <p>Welcome to ${settings.app.name}. Please click the following link to confirm your email:</p>
                 <p><a href="${url}">${url}</a></p>
                 <br>
                 <p>Thanks!</p>
                 <p>the ${settings.app.name} team</p>
-                  `
+                `;
+              {{/if}}
+
+              mailer.sendMail({
+                from: `${settings.app.name} <${process.env.EMAIL_USER}>`,
+                to: user.email,
+                subject: 'Your account has been created',
+                html
               });
             });
           }

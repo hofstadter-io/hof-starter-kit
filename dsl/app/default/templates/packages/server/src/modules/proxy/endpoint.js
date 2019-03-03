@@ -22,6 +22,10 @@ const middleware = app => {
   {{/with}}{{/remove_hof_ctx}}
   {{/if}}
 
+  {{#if (eq "text" PROXY.parse-body)}}
+  app.use('{{PROXY.route}}', bodyParser.text());
+  {{/if}}
+
   app.use('{{PROXY.route}}', handler);
 };
 

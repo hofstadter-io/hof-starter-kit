@@ -1,5 +1,6 @@
 import { _ } from 'lodash';
 import request from 'request'
+import bodyParser from 'body-parser';
 {{#if PROXY.upload}}
 import multer from 'multer';
 {{/if}}
