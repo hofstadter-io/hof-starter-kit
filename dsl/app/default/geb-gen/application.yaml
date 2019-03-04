@@ -28,3 +28,5 @@ template-configs:
       out: packages/server/src/rest.js
     - in: packages/server/src/modules/index.ts
       out: packages/server/src/modules/index.ts
+    - in: packages/server/src/middleware/graphiql.ts
+      out: packages/server/src/middleware/graphiql.ts
