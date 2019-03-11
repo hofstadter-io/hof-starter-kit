@@ -32,6 +32,9 @@ export default async function seed(knex, Promise) {
   {{#each MODULE.seeds.types as |SEEDS|}}
   datas = allData['{{SEEDS.data}}'];
   console.log('{{SEEDS.name}}\n', datas);
+  if (!datas) {
+    return
+  }
   {{#gettype SEEDS.type true}}{{#with . as |TYPE|}}
   {{#if TYPE.owned}}
   for (let data of datas) {

@@ -6,7 +6,7 @@ obj.Query.{{typeName}} = authSwitch([
     requiredScopes: async (sources, args, context, info) => {
       args.id = args.{{typeName}}Id
       const results = await context.{{TypeName}}.get(args);
-      if (results.userId === context.user.id) {
+      if (results && results.userId === context.user.id) {
         return ['owner:{{typeName}}/view'];
       } else {
         return ['skip']

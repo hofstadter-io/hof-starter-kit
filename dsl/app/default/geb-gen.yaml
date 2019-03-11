@@ -25,6 +25,8 @@ user-files:
     unless: disabled
     prefix: "user-files"
     files:
+    - "design-vendor/**/*"
+    - "design/**/*"
     - "custom/**/*"
     - "pages/**/*"
     - "seeds/**/*"
