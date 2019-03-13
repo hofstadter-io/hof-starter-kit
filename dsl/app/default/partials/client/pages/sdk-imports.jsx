@@ -1,4 +1,4 @@
-{{#if PAGE.currentUser}}
+{{#if PAGE.current-user}}
 import { withLoadedUser } from '../../user/containers/Auth';
 {{/if}}
 
