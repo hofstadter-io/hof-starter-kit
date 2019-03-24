@@ -46,7 +46,7 @@ obj.Query.{{typeName}} = authSwitch([
       args.id = args.{{typeName}}Id
       args.filters = args.filters || [];
       args.filters.push({
-        field: '{{#if TYPE.visibility.public}}{{snake TYPE.visibility.public}}{{else}}public{{/if}}',
+        field: '{{#if TYPE.visibility.public}}{{snake TYPE.visibility.public}}{{else}}is_public{{/if}}',
         compare: '=',
         value: true
       })
@@ -103,7 +103,7 @@ obj.Query.{{typeName}} = authSwitch([
       args.filters = args.filters || [];
       {{#if TYPE.visibility.enabled}}
       args.filters.push({
-        field: '{{#if TYPE.visibility.public}}{{snake TYPE.visibility.public}}{{else}}public{{/if}}',
+        field: '{{#if TYPE.visibility.public}}{{snake TYPE.visibility.public}}{{else}}is_public{{/if}}',
         compare: '=',
         value: true
       })
