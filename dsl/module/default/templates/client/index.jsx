@@ -9,7 +9,7 @@ import ClientModule from "../ClientModule";
 
 import resources from './locales';
 
-{{#each MODULE.types as |T|}}{{#gettype T.type true}}{{#with . as |TYPE| ~}}
+{{#each MODULE.types as |T|}}{{#gettype T true}}{{#with . as |TYPE| ~}}
 import {{camelT TYPE.name}} from './{{kebab TYPE.name}}';
 {{/with}}{{/gettype ~}}{{/each}}
 

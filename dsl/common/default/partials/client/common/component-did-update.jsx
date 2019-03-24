@@ -23,8 +23,8 @@ componentDidUpdate(prevProps) {
   }
 {{else if (eq DATA.query.type "list")}}
   if (!this.props.loading{{camelT DATA.name}}) {
-    const endCursor = this.props.{{camel DATA.name}} ? this.props.{{camel DATA.name}}.pageInfo.endCursor : 0;
-    const prevEndCursor = prevProps.{{camel DATA.name}} ? prevProps.{{camel DATA.name}}.pageInfo.endCursor : null;
+    const endCursor = this.props.{{camel DATA.name}} && this.props.{{camel DATA.name}}.pageInfo ? this.props.{{camel DATA.name}}.pageInfo.endCursor : 0;
+    const prevEndCursor = prevProps.{{camel DATA.name}} && this.props.{{camel DATA.name}}.pageInfo ? prevProps.{{camel DATA.name}}.pageInfo.endCursor : null;
     // Check if props have changed and, if necessary, restart the subscription
     if (this.{{camel DATA.name}}Subscription && prevEndCursor !== endCursor) {
       this.{{camel DATA.name}}Subscription();

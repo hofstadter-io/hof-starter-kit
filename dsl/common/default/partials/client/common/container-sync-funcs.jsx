@@ -47,7 +47,7 @@
 
 {{else if (eq DATA.query.type "list")}}
   init{{camelT DATA.name}}Subscription() {
-    const endCursor = this.props.{{camel DATA.name}} ? this.props.{{camel DATA.name}}.pageInfo.endCursor : 0;
+    const endCursor = this.props.{{camel DATA.name}} && this.props.{{camel DATA.name}}.pageInfo ? this.props.{{camel DATA.name}}.pageInfo.endCursor : 0;
     {{#each DATA.query.variables as |VAR|}}
     if ( !this.{{trimfrom_last VAR.source "." false}} ) {
       return
