@@ -30,6 +30,9 @@ obj.Mutation.{{typeName}}Delete = authSwitch([
         {{> server/hooks/func.js UNIQ="PreDelete"}}
         {{/with}}
         // TODO check for error / status return
+        if (requestResult.error) {
+          return { {{typeName}}: null, message: null, errors: [requestResult.error] };
+        }
 
         {{typeName}} = requestResult.data && requestResult.data.{{typeName}} ?
           requestResult.data.{{typeName}} :
@@ -54,6 +57,9 @@ obj.Mutation.{{typeName}}Delete = authSwitch([
           {{> server/hooks/func.js UNIQ="PostDelete"}}
           {{/with}}
           // TODO check for error / status return
+          if (requestResult.error) {
+            return { {{typeName}}: null, message: null, errors: [requestResult.error] };
+          }
 
           {{typeName}} = requestResult.data && requestResult.data.{{typeName}} ?
             requestResult.data.{{typeName}} :
@@ -115,12 +121,13 @@ obj.Mutation.{{typeName}}Delete = authSwitch([
         args.{{ternary (camel TYPE.owned.name) "user"}}_id = context.user.id;
 
         console.log("ARRRRGS!!!", args)
+
+        var result = null;
         var requestData = null;
         var requestResult = null;
 
         var {{typeName}} = await context.{{TypeName}}.getFor(args);
         console.log("{{typeName}} DB", {{typeName}})
-        var result = null;
         if ({{typeName}}.userId === args.userId) {
 
           {{#if TYPE.hooks.pre-delete}}
@@ -134,6 +141,9 @@ obj.Mutation.{{typeName}}Delete = authSwitch([
           {{> server/hooks/func.js UNIQ="PreDelete"}}
           {{/with}}
           // TODO check for error / status return
+          if (requestResult.error) {
+            return { {{typeName}}: null, message: null, errors: [requestResult.error] };
+          }
 
           {{typeName}} = requestResult.data && requestResult.data.{{typeName}} ?
             requestResult.data.{{typeName}} :
@@ -160,6 +170,9 @@ obj.Mutation.{{typeName}}Delete = authSwitch([
           {{> server/hooks/func.js UNIQ="PostDelete"}}
           {{/with}}
           // TODO check for error / status return
+          if (requestResult.error) {
+            return { {{typeName}}: null, message: null, errors: [requestResult.error] };
+          }
 
           {{typeName}} = requestResult.data && requestResult.data.{{typeName}} ?
             requestResult.data.{{typeName}} :
