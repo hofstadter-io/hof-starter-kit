@@ -18,13 +18,13 @@ obj.Mutation.{{typeName}}Update = authSwitch([
         var {{ternary (camel TYPE.owned.name) "user"}}_id = context.user.id;
         console.log('updating {{typeName}}:', args);
 
-        const {{typeName}} = await context.{{TypeName}}.get({id: args.id});
+        const {{typeName}}Ret = await context.{{TypeName}}.get({id: args.id});
 
         {{#if TYPE.hooks.pre-update}}
         requestData = {
           hook: '{{typeName}}.pre-update',
           args,
-          {{typeName}}: {{typeName}},
+          {{typeName}}: {{typeName}}Ret,
           user: context.user
         }
         {{#with TYPE.hooks.pre-update as |HOOK|}}
@@ -41,7 +41,7 @@ obj.Mutation.{{typeName}}Update = authSwitch([
         console.log("UPDATE ret", ret);
 
         if (ret) {
-          var {{typeName}} = await context.{{TypeName}}.get({
+          var {{typeName}}Ret = await context.{{TypeName}}.get({
             id
           })
           console.log("UPDATE {{typeName}}Ret", {{typeName}}Ret);
@@ -50,7 +50,7 @@ obj.Mutation.{{typeName}}Update = authSwitch([
           requestData = {
             hook: '{{typeName}}.post-update',
             args,
-            {{typeName}}: {{typeName}},
+            {{typeName}}: {{typeName}}Ret,
             user: context.user
           }
 
@@ -59,7 +59,7 @@ obj.Mutation.{{typeName}}Update = authSwitch([
           {{/with}}
           // TODO check for error / status return
 
-          {{typeName}} = requestResult.data && requestResult.data.{{typeName}} ?
+          {{typeName}}Ret = requestResult.data && requestResult.data.{{typeName}} ?
             requestResult.data.{{typeName}} :
             {{typeName}};
 
