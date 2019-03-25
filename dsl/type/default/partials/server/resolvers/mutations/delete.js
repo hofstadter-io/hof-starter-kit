@@ -13,12 +13,52 @@ obj.Mutation.{{typeName}}Delete = authSwitch([
       try {
         // Need to validate incoming filters...
         args.filters = args.filters || [];
+        args.{{ternary (camel TYPE.owned.name) "user"}}_id = context.user.id;
+
         const {{typeName}} = await context.{{TypeName}}.get({id: args.id});
-        const result = await context.{{TypeName}}.delete(args.id);
+
+        {{#if TYPE.hooks.pre-delete}}
+        requestData = {
+          hook: '{{typeName}}.pre-delete',
+          args,
+          {{typeName}}: {{typeName}},
+          user: context.user
+        }
+        {{#with TYPE.hooks.pre-delete as |HOOK|}}
+        {{> server/hooks/func.js UNIQ="PreDelete"}}
+        {{/with}}
+        // TODO check for error / status return
+
+        {{typeName}} = requestResult.data && requestResult.data.{{typeName}} ?
+          requestResult.data.{{typeName}} :
+          {{typeName}}
+        {{/if}}
+
+        const result = await context.{{TypeName}}.deleteFor(args);
 
         var message = "failed"
         if (result) {
           message = "success"
+
+          {{#if TYPE.hooks.post-delete}}
+          requestData = {
+            hook: '{{typeName}}.post-delete',
+            args,
+            {{typeName}}: {{typeName}}Ret,
+            user: context.user
+          }
+
+          {{#with TYPE.hooks.post-delete as |HOOK|}}
+          {{> server/hooks/func.js UNIQ="PostDelete"}}
+          {{/with}}
+          // TODO check for error / status return
+
+          {{typeName}}Ret = requestResult.data && requestResult.data.{{typeName}} ?
+            requestResult.data.{{typeName}} :
+            {{typeName}};
+
+          {{/if}}
+
           // list view
           pubsub.publish('{{typeName}}sNotification', {
             {{typeName}}sNotification: {
