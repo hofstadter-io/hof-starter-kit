@@ -18,16 +18,53 @@ obj.Mutation.{{typeName}}Update = authSwitch([
         var {{ternary (camel TYPE.owned.name) "user"}}_id = context.user.id;
         console.log('updating {{typeName}}:', args);
 
-        // TODO validate...
+        const {{typeName}} = await context.{{TypeName}}.get({id: args.id});
+
+        {{#if TYPE.hooks.pre-update}}
+        requestData = {
+          hook: '{{typeName}}.pre-update',
+          args,
+          {{typeName}}: {{typeName}},
+          user: context.user
+        }
+        {{#with TYPE.hooks.pre-update as |HOOK|}}
+        {{> server/hooks/func.js UNIQ="PreUpdate"}}
+        {{/with}}
+        // TODO check for error / status return
+
+        {{typeName}} = requestResult.data && requestResult.data.{{typeName}} ?
+          requestResult.data.{{typeName}} :
+          {{typeName}}
+        {{/if}}
 
         var ret = await context.{{TypeName}}.updateFor({ id, {{ternary (camel TYPE.owned.name) "user"}}_id }, {{typeName}});
         console.log("UPDATE ret", ret);
 
         if (ret) {
-          var {{typeName}}Ret = await context.{{TypeName}}.get({
+          var {{typeName}} = await context.{{TypeName}}.get({
             id
           })
           console.log("UPDATE {{typeName}}Ret", {{typeName}}Ret);
+
+          {{#if TYPE.hooks.post-update}}
+          requestData = {
+            hook: '{{typeName}}.post-update',
+            args,
+            {{typeName}}: {{typeName}},
+            user: context.user
+          }
+
+          {{#with TYPE.hooks.post-update as |HOOK|}}
+          {{> server/hooks/func.js UNIQ="PostUpdate"}}
+          {{/with}}
+          // TODO check for error / status return
+
+          {{typeName}} = requestResult.data && requestResult.data.{{typeName}} ?
+            requestResult.data.{{typeName}} :
+            {{typeName}};
+
+          {{/if}}
+
           // list view
           pubsub.publish('{{typeName}}sNotification', {
             {{typeName}}sNotification: {
