@@ -16,9 +16,11 @@ obj.Mutation.{{typeName}}Delete = authSwitch([
         args.{{ternary (camel TYPE.owned.name) "user"}}_id = context.user.id;
 
         var {{typeName}} = await context.{{TypeName}}.get({id: args.id});
+        var requestData = null;
+        var requestResult = null;
 
         {{#if TYPE.hooks.pre-delete}}
-        var requestData = {
+        requestData = {
           hook: '{{typeName}}.pre-delete',
           args,
           {{typeName}}: {{typeName}},
@@ -113,6 +115,8 @@ obj.Mutation.{{typeName}}Delete = authSwitch([
         args.{{ternary (camel TYPE.owned.name) "user"}}_id = context.user.id;
 
         console.log("ARRRRGS!!!", args)
+        var requestData = null;
+        var requestResult = null;
 
         var {{typeName}} = await context.{{TypeName}}.getFor(args);
         console.log("{{typeName}} DB", {{typeName}})
@@ -120,7 +124,7 @@ obj.Mutation.{{typeName}}Delete = authSwitch([
         if ({{typeName}}.userId === args.userId) {
 
           {{#if TYPE.hooks.pre-delete}}
-          var requestData = {
+          requestData = {
             hook: '{{typeName}}.pre-delete',
             args,
             {{typeName}}: {{typeName}},

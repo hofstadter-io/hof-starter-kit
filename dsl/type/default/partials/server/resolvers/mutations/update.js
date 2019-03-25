@@ -18,6 +18,9 @@ obj.Mutation.{{typeName}}Update = authSwitch([
         var {{ternary (camel TYPE.owned.name) "user"}}_id = context.user.id;
         console.log('updating {{typeName}}:', args);
 
+        var requestData = null;
+        var requestResult = null;
+
         var {{typeName}}Ret = await context.{{TypeName}}.get({id: args.id});
 
         {{#if TYPE.hooks.pre-update}}
