@@ -15,7 +15,7 @@ obj.Mutation.{{typeName}}Delete = authSwitch([
         args.filters = args.filters || [];
         args.{{ternary (camel TYPE.owned.name) "user"}}_id = context.user.id;
 
-        const {{typeName}} = await context.{{TypeName}}.get({id: args.id});
+        var {{typeName}} = await context.{{TypeName}}.get({id: args.id});
 
         {{#if TYPE.hooks.pre-delete}}
         requestData = {
@@ -114,7 +114,7 @@ obj.Mutation.{{typeName}}Delete = authSwitch([
 
         console.log("ARRRRGS!!!", args)
 
-        const {{typeName}} = await context.{{TypeName}}.getFor(args);
+        var {{typeName}} = await context.{{TypeName}}.getFor(args);
         console.log("{{typeName}} DB", {{typeName}})
         var result = null;
         if ({{typeName}}.userId === args.userId) {

@@ -18,7 +18,7 @@ obj.Mutation.{{typeName}}Update = authSwitch([
         var {{ternary (camel TYPE.owned.name) "user"}}_id = context.user.id;
         console.log('updating {{typeName}}:', args);
 
-        const {{typeName}}Ret = await context.{{TypeName}}.get({id: args.id});
+        var {{typeName}}Ret = await context.{{TypeName}}.get({id: args.id});
 
         {{#if TYPE.hooks.pre-update}}
         requestData = {
@@ -41,7 +41,7 @@ obj.Mutation.{{typeName}}Update = authSwitch([
         console.log("UPDATE ret", ret);
 
         if (ret) {
-          var {{typeName}}Ret = await context.{{TypeName}}.get({
+          {{typeName}}Ret = await context.{{TypeName}}.get({
             id
           })
           console.log("UPDATE {{typeName}}Ret", {{typeName}}Ret);
