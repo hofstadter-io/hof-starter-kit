@@ -18,7 +18,7 @@ obj.Mutation.{{typeName}}Delete = authSwitch([
         var {{typeName}} = await context.{{TypeName}}.get({id: args.id});
 
         {{#if TYPE.hooks.pre-delete}}
-        requestData = {
+        var requestData = {
           hook: '{{typeName}}.pre-delete',
           args,
           {{typeName}}: {{typeName}},
@@ -120,7 +120,7 @@ obj.Mutation.{{typeName}}Delete = authSwitch([
         if ({{typeName}}.userId === args.userId) {
 
           {{#if TYPE.hooks.pre-delete}}
-          requestData = {
+          var requestData = {
             hook: '{{typeName}}.pre-delete',
             args,
             {{typeName}}: {{typeName}},
@@ -145,7 +145,7 @@ obj.Mutation.{{typeName}}Delete = authSwitch([
           message = "success"
 
           {{#if TYPE.hooks.post-delete}}
-          requestData = {
+          var requestData = {
             hook: '{{typeName}}.post-delete',
             args,
             {{typeName}}: {{typeName}},
