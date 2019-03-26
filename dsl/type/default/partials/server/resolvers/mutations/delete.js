@@ -150,7 +150,7 @@ obj.Mutation.{{typeName}}Delete = authSwitch([
             {{typeName}}
           {{/if}}
 
-          result = await context.{{TypeName}}.deleteFor(args);
+          result = await context.{{TypeName}}.delete({{typeName}}.id);
         }
         console.log("result DB", result)
 
