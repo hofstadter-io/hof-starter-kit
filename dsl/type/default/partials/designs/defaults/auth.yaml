@@ -8,7 +8,7 @@ auth:
   {{else}}
   view:   ['admin']
   {{/if}}
-  create: ['admin']
+  create: ['user', 'admin']
   update: ['admin']
   delete: ['admin']
 {{else}}
