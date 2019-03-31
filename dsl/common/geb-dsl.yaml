@@ -44,7 +44,7 @@ helper-types:
     type: "string"
     # XXX TODO be more specific here, use multiple more specific?
     regex: '^([[:word:]-]+\/)+[[:word:]-]+\.json$'
-    lookup-file: true
+    # lookup-file: true
 
   - name: SEEDS_SNIPPET
     type: "object"
@@ -73,7 +73,7 @@ helper-types:
     type: "string"
     # XXX TODO be more specific here, use multiple more specific?
     regex: '^([[:word:]-]+\/)+[[:word:]-]+\.json$'
-    lookup-file: true
+    # lookup-file: true
 
   - name: I18N_SNIPPET
     type: "list"
@@ -87,8 +87,8 @@ helper-types:
 
   - name: FILEPATH_REGEX
     type: "string"
-    regex: '^(design|custom|pages|seeds|translations)\/([[:word:]-]+\/)+[[:word:]-]+\.[[:lower:]]{1,4}$'
-    lookup-file: true
+    regex: '^(design|design-vendor|custom|pages|seeds|translations)\/([[:word:]-]+\/)+[[:word:]-]+\.[[:lower:]]{1,4}$'
+    # lookup-file: true
 
   - name: FILES_SNIPPET
     type: list
@@ -110,7 +110,7 @@ helper-types:
   - name: COMPONENT_REGEX
     type: "string"
     regex: '^(type|module)\.modules\.([[:word:]-]+\.){1,2}components\.[[:word:]-]+$'
-    lookup-design: true
+    # lookup-design: true
 
   - name: DATA_SNIPPET
     type: list
