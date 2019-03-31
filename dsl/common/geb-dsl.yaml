@@ -100,7 +100,8 @@ helper-types:
       - name: "src"
         type: FILEPATH_REGEX
       - name: "dst"
-        type: FILEPATH_REGEX
+        type: string
+        # type: FILEPATH_REGEX
 
   - name: TYPEPATH_REGEX
     type: "string"
