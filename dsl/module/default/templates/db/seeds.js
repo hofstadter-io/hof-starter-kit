@@ -53,7 +53,7 @@ export default async function seed(knex, Promise) {
       {{#if TYPE.visibility.public}}
         {{snake TYPE.visibility.public}}: data['{{camel TYPE.visibility.public}}'] || {{TYPE.visibility.default}},
       {{else}}
-        {{snake TYPE.name}}: data['{{camel TYPE.name}}'] || {{TYPE.visibility.default}},
+        is_public: data['is_public'] || {{TYPE.visibility.default}},
       {{/if}}
       {{/if}}
       {{#each TYPE.fields as |FIELD|}}
@@ -103,7 +103,7 @@ export default async function seed(knex, Promise) {
           {{#if REL_TYPE.visibility.public}}
             {{snake REL_TYPE.visibility.public}}: data['{{camel REL_TYPE.visibility.public}}'] || {{REL_TYPE.visibility.default}},
           {{else}}
-            {{snake REL_TYPE.name}}: data['{{camel REL_TYPE.name}}'] || {{REL_TYPE.visibility.default}},
+            is_public: data['is_public'] || {{TYPE.visibility.default}},
           {{/if}}
           {{/if}}
           {{#each REL_TYPE.fields as |FIELD|}}
@@ -133,7 +133,7 @@ export default async function seed(knex, Promise) {
           {{#if REL_TYPE.visibility.public}}
             {{snake REL_TYPE.visibility.public}}: data['{{camel REL_TYPE.visibility.public}}'] || {{REL_TYPE.visibility.default}},
           {{else}}
-            {{snake REL_TYPE.name}}: data['{{camel REL_TYPE.name}}'] || {{REL_TYPE.visibility.default}},
+            is_public: data['is_public'] || {{TYPE.visibility.default}},
           {{/if}}
           {{/if}}
           {{#each REL_TYPE.fields as |FIELD|}}
