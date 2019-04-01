@@ -1,3 +1,3 @@
-{{#remove_hof_ctx TMIG.migrations}}{{#with . as |CLEAN| ~}}
+{{#remove_hof_type_ctx TMIG.migrations}}{{#with . as |CLEAN| ~}}
 {{{yaml CLEAN}}}
-{{/with}}{{/remove_hof_ctx}}
+{{/with}}{{/remove_hof_type_ctx}}

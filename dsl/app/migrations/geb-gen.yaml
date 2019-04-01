@@ -15,4 +15,13 @@ template-configs:
         out: migs.yaml
 
 
+dependencies:
+
+  designs:
+
+    - name: once-files
+      field: "."
+      templates:
+        - in: verNext.yaml
+          out: verNext.yaml
 

@@ -1,8 +1,8 @@
 {{#if TYPE.history.long}}
 # previous-long
-{{#remove_hof_ctx TYPE.history.long}}{{#with . as |CLEAN|}}
+{{#remove_hof_type_ctx TYPE.history.long}}{{#with . as |CLEAN|}}
 {{{yaml CLEAN}}}
-{{/with}}{{/remove_hof_ctx}}
+{{/with}}{{/remove_hof_type_ctx}}
 {{/if}}
 
 {{! only add if there is a new diff}}
@@ -10,7 +10,7 @@
 {{#if .}}
 # last
 - appGeneration: {{APP.versionMig}}
-  ownGeneration: {{inc TYPE.version}}
+  ownGeneration: {{TYPE.version}}
   {{> history-last.yaml}}
 {{/if}}
 {{/typediff}}

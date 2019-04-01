@@ -2,7 +2,7 @@
 {{#if TYPE.history}}
 {{#typediff TYPE.history.last TYPE}}
 {{#if .}}{{#with . as |DIFF|}}
-# next migrations
+# NEXT migrations
 
 - appMigId: {{inc APP.versionMig}}
   ownMigId: {{inc TYPE.version}}

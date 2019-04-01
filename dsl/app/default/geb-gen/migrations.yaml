@@ -1,4 +1,4 @@
-name: "default"
+jame: "default"
 
 template-configs:
 
@@ -17,7 +17,7 @@ template-configs:
     # Next migrations
     - in: packages/server/src/database/migrations/next-migration.js
       out: 'packages/server/src/database/migrations/{{printf1 "%05d" versionNext}}_migrations.js'
-      when: modules
+      when: versionNext
 
   - name: app-migration-files
     field: migrations
