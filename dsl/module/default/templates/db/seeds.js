@@ -6,7 +6,6 @@ import allData from '../../../../../../user-files/{{MODULE.seeds.file}}';
 
 import Lib from './lib';
 
-console.log(Lib);
 
 export async function clear(knex, Promise) {
   var tables = [];
