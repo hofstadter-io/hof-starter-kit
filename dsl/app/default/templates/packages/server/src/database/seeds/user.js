@@ -10,7 +10,7 @@ import {{camelT MOD}}Seed, { clear as {{camelT MOD}}Clear } from '../../modules/
 {{/with}}{{/getdsl}}
 {{/each}}
 
-import data from '../../../../../user-files/seeds/users.json';
+import data from '../../../../../user-files/design/seeds/users.json';
 const users = data.users;
 
 export async function seed(knex, Promise) {

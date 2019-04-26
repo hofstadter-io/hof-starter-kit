@@ -27,10 +27,6 @@ user-files:
     files:
     - "design-vendor/**/*"
     - "design/**/*"
-    - "custom/**/*"
-    - "pages/**/*"
-    - "seeds/**/*"
-    - "translations/**/*"
 
 dependencies:
 
