@@ -1,0 +1,7 @@
+{{#with RepeatedContext as |COMPONENT|}}
+{{#each COMPONENT.style as |STYLE_FILE|}}
+// {{COMPONENT.name}} - {{STYLE_FILE}}
+{{{file STYLE_FILE}}}
+
+{{/each}}
+{{/with}}

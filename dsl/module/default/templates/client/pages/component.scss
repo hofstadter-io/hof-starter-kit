@@ -1,0 +1,7 @@
+{{#with RepeatedContext as |PAGE|}}
+{{#each PAGE.style as |STYLE_FILE|}}
+// {{PAGE.name}} - {{STYLE_FILE}}
+{{{file STYLE_FILE}}}
+
+{{/each}}
+{{/with}}

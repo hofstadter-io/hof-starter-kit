@@ -29,6 +29,8 @@ template-configs:
         out: packages/client/src/modules/{{parent}}/pages/{{name}}/index.jsx
       - in: client/pages/container.jsx
         out: packages/client/src/modules/{{parent}}/pages/{{name}}/container.jsx
+      - in: client/pages/component.scss
+        out: packages/client/src/modules/{{parent}}/pages/{{name}}/component.scss
       - in: client/pages/component.jsx
         out: packages/client/src/modules/{{parent}}/pages/{{name}}/component.jsx
 
@@ -38,6 +40,8 @@ template-configs:
 
       - in: client/components/container.jsx
         out: "packages/client/src/modules/{{parent}}/components/{{camelT name}}.jsx"
+      - in: client/components/component.scss
+        out: "packages/client/src/modules/{{parent}}/components/{{camelT name}}.scss"
       - in: client/components/component.jsx
         out: "packages/client/src/modules/{{parent}}/components/{{camelT name}}Component.jsx"
 

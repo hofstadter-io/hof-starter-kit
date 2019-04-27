@@ -12,6 +12,9 @@ template-configs:
     field: "components"
     templates:
 
+      # TODO change to dir based layout (like pages)
+      - in: client/components/component.scss
+        out: "packages/client/src/{{pkg_path}}/{{camelT name}}.scss"
       - in: client/components/container.jsx
         out: "packages/client/src/{{pkg_path}}/{{camelT name}}.jsx"
       - in: client/components/component.jsx

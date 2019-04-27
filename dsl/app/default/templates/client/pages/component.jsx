@@ -14,6 +14,8 @@ import settings from '../../../../../../settings';
 import { PageLayout } from '../../layout/page';
 import translate, { TranslateFunction } from '../../../i18n';
 
+import PageStyle from './component.scss';
+
 // TODO Pagenation should be conditionally included, also...
 //      there are possible multiple data paginations AND synchronizations
 import { Pagination } from '../../common/components/web';
@@ -40,11 +42,7 @@ import {{COMPONENT.name}} from '../../../{{replace (trimprefix COMPONENT.compone
 {{/if}}
 {{/each}}
 
-const PageStyled = styled.div`
-{{#each PAGE.style as |STYLE_FILE|}}
-{{{file STYLE_FILE}}}
-{{/each}}
-`
+const PageStyled = styled.div`${PageStyle}`
 
 class {{PageName}}PageComponent extends React.Component {
   static propTypes = {
