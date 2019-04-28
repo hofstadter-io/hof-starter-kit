@@ -1,26 +1,30 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { NavLink, withRouter } from 'react-router-dom';
 
 import translate, { TranslateFunction } from '../../../../i18n';
-import settings from '../../../../../../../settings';
 
-const DrawerStyled = styled.drawer`
+const DrawerStyled = styled.div`
 {{{file DslContext.layout.drawer.style}}}
 `
 
-class Drawer extends React.Component {
-  public static propTypes = {
-    t: PropTypes.func
-  };
-
+class Drawer extends React.Component<{t: any, showDrawer: any}> {
   public render() {
-    const { t } = this.props;
+    const { t, showDrawer } = this.props;
     return (
-      <DrawerStyled id="styled-drawer" className="d-flex flex-shrink-0 justify-content-center">
-        <span>
-          &copy; {new Date().getFullYear()}. {settings.app.name}. - {t('drawer.hello')}
-        </span>
+      <DrawerStyled>
+        <div id="app-drawer" className={ showDrawer ? "" : "d-none" }>
+          {{#each DslContext.layout.drawer.items as |ITEM|}}
+          <NavLink to="{{{ITEM.route}}}" className="nav-link">
+            <b>{t('{{ITEM.name}}')}</b>
+          </NavLink>
+          {{#if ITEM.items}}{{#each ITEM.items as |SUBITEM|}}
+          <NavLink to="{{{SUBITEM.route}}}" className="nav-link">
+            {t('{{SUBITEM.name}}')}
+          </NavLink>
+          {{/each}}{{/if}}
+          {{/each}}
+        </div>
       </DrawerStyled>
     );
   }

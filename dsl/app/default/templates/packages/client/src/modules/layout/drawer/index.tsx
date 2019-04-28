@@ -4,7 +4,7 @@ import ClientModule from '../../ClientModule';
 {{#if DslContext.layout.drawer.custom}}
 import Drawer from './containers/DrawerCustom';
 {{else}}
-import Drawer from './containers/DrawerStatic';
+import Drawer from './containers/DrawerDefault';
 {{/if}}
 
 export default new ClientModule({

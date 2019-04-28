@@ -39,16 +39,16 @@ const NavBarStyled = styled.nav`
 {{{file DslContext.layout.navbar.style}}}
 `
 
-class NavBar extends React.Component<{t: any}> {
-    state = {
-        userDropdownOpen: false
-    }
+class NavBar extends React.Component<{t: any, toggleDrawer?: any}> {
+  state = {
+      userDropdownOpen: false
+  }
 
-    toggle = () => {
-        this.setState({
-          userDropdownOpen: !this.state.userDropdownOpen
-        });
-    }
+  toggle = () => {
+      this.setState({
+        userDropdownOpen: !this.state.userDropdownOpen
+      });
+  }
 
   public render() {
     // console.log("NavBar.props", this.props);
@@ -61,7 +61,13 @@ class NavBar extends React.Component<{t: any}> {
             {{#with DslContext.layout.navbar as |NAVBAR|}}
             <Nav>
               {{#if DslContext.layout.drawer.enabled}}
-              <FontAwesomeIcon icon={['fas', 'bars']} size="lg" style={ {marginTop: '.25em', marginRight: '1em'} }/>
+              {{#if DslContext.layout.drawer.toggled}}
+              <div onClick={ this.props.toggleDrawer }>
+                <FontAwesomeIcon icon={['fas', 'bars']} size="lg" 
+                  style={ {marginTop: '.25em', marginRight: '1em'} }
+                />
+              </div>
+              {{/if}}
               {{/if}}
               <NavLink to="/" className="navbar-brand" id="brand-logo">
                 {{#if (eq NAVBAR.logo.type "image")}}

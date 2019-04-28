@@ -25,6 +25,13 @@ template-configs:
     - in: packages/client/src/modules/layout/navbar/containers/NavBarCustom.tsx
       out: packages/client/src/modules/layout/navbar/containers/NavBarCustom.tsx
 
+    - in: packages/client/src/modules/layout/drawer/index.tsx
+      out: packages/client/src/modules/layout/drawer/index.tsx
+    - in: packages/client/src/modules/layout/drawer/containers/DrawerDefault.tsx
+      out: packages/client/src/modules/layout/drawer/containers/DrawerDefault.tsx
+    - in: packages/client/src/modules/layout/drawer/containers/DrawerCustom.tsx
+      out: packages/client/src/modules/layout/drawer/containers/DrawerCustom.tsx
+
     - in: packages/client/src/modules/layout/footer/index.tsx
       out: packages/client/src/modules/layout/footer/index.tsx
     - in: packages/client/src/modules/layout/footer/containers/FooterDefault.tsx
@@ -35,6 +42,8 @@ template-configs:
     - in: pages/locales/index.js
       out: packages/client/src/modules/layout/navbar/locales/index.js
     - in: pages/locales/index.js
+      out: packages/client/src/modules/layout/drawer/locales/index.js
+    - in: pages/locales/index.js
       out: packages/client/src/modules/layout/footer/locales/index.js
 
 
@@ -43,6 +52,12 @@ template-configs:
     templates:
       - in: pages/locales/translations.json
         out: packages/client/src/modules/layout/navbar/locales/{{name}}/translations.json
+
+  - name: drawer-translations
+    field: "layout.drawer.translations"
+    templates:
+      - in: pages/locales/translations.json
+        out: packages/client/src/modules/layout/drawer/locales/{{name}}/translations.json
 
   - name: footer-translations
     field: "layout.footer.translations"
