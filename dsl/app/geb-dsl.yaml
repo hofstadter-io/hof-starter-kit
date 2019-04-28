@@ -115,6 +115,20 @@ spec:
           - name: version
             type: NPM_VERSION_REGEX
 
+    - name: layout
+      type: object
+      fields:
+        - name: site
+          type: ignore
+        - name: page
+          type: ignore
+        - name: navbar
+          type: ignore
+        - name: drawer
+          type: ignore
+        - name: footer
+          type: ignore
+
     - name: components
       optional: true
       type: COMPONENT_SNIPPET
@@ -127,8 +141,6 @@ spec:
     - name: secrets
       type: ignore
     - name: homepage
-      type: ignore
-    - name: layout
       type: ignore
     - name: builtin-pages
       type: ignore
