@@ -100,13 +100,13 @@ class NavBar extends React.Component<{t: any, toggleDrawer?: any}> {
                   <DropdownToggle nav caret>
                     <ProfileName />
                   </DropdownToggle>
-                  <DropdownMenu id="user-dropdown-menu">
+                  <DropdownMenu id="user-dropdown-menu" className="dropdown-menu-right">
                     {{#if NAVBAR.userItems}}
                     {{#each NAVBAR.userItems as |ITEM|}}
                     {{#if ITEM.roles}}
                     <IfLoggedIn key="{{{ITEM.href}}}" role={[{{#each ITEM.roles as |R|}}"{{R}}"{{#unless @last}}, {{/unless}}{{/each}}]}>
                       <NavLink to="{{{ITEM.href}}}" className="nav-link">
-                          {t('{{ITEM.name}}')}
+                        {t('{{ITEM.name}}')}
                       </NavLink>
                     </IfLoggedIn>
                     {{else}}
@@ -115,9 +115,6 @@ class NavBar extends React.Component<{t: any, toggleDrawer?: any}> {
                     </NavLink>
                     {{/if}}
                     {{/each}}
-                    <IfLoggedIn key="/logout">
-                      <LogoutLink t={t}/>
-                    </IfLoggedIn>
 
                     {{else}}
 
@@ -126,10 +123,12 @@ class NavBar extends React.Component<{t: any, toggleDrawer?: any}> {
                         <ProfileName />
                       </NavLink>
                     </IfLoggedIn>
+                    {{/if}}
+
+                    <div class="dropdown-divider"></div>
                     <IfLoggedIn key="/logout">
                       <LogoutLink t={t}/>
                     </IfLoggedIn>
-                    {{/if}}
                   </DropdownMenu>
                 </Dropdown>
               </IfLoggedIn>
@@ -140,7 +139,9 @@ class NavBar extends React.Component<{t: any, toggleDrawer?: any}> {
                 </NavLink>
               </IfNotLoggedIn>
 
+              {{#if DslContext.config.multilang.picker}}
               <LanguagePicker i18n={i18n} />
+              {{/if}}
             </Nav>
 
             {{/with}}

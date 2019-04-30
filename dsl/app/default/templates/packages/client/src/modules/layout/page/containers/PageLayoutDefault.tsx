@@ -23,12 +23,12 @@ class PageLayout extends React.Component<{children: any}> {
     return (
       <section className="d-flex flex-column flex-grow-1">
         <section className="d-flex flex-column flex-grow-1 flex-shrink-0">
-          <section className="d-flex flex-column">
+          <section className="d-flex flex-column shadow-sm">
             <NavBar toggleDrawer={this.toggleDrawer} />
           </section>
-          <section className="d-flex flex-row">
+          <section className="d-flex flex-row flex-grow-1">
             {{#if DslContext.layout.drawer.enabled}}
-            <section id="app-drawer" className="d-flex flex-column">
+            <section id="app-drawer" className="d-flex flex-column border-right">
               <Drawer showDrawer={ this.state.showDrawer } />
             </section>
             {{/if}}

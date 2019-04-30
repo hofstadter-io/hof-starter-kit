@@ -15,10 +15,10 @@ template-configs:
 
       - in: client/pages/page.jsx
         out: "packages/client/src/{{pkg_path}}/{{kebab name}}/index.jsx"
-      - in: client/pages/container.scss
-        out: "packages/client/src/{{pkg_path}}/{{kebab name}}/container.scss"
       - in: client/pages/container.jsx
         out: "packages/client/src/{{pkg_path}}/{{kebab name}}/container.jsx"
+      - in: client/pages/component.scss
+        out: "packages/client/src/{{pkg_path}}/{{kebab name}}/component.scss"
       - in: client/pages/component.jsx
         out: "packages/client/src/{{pkg_path}}/{{kebab name}}/component.jsx"
 

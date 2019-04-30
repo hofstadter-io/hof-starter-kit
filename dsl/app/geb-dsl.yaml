@@ -72,6 +72,10 @@ spec:
     - name: auth
       type: object
       fields:
+        - name: login-redirect
+          type: string
+          optional: true
+
         - name: password
           type: object
           fields:
