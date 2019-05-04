@@ -20,6 +20,10 @@ spec:
       items:
         type: TEXT_REGEX
 
+    - name: t4Ge6h-custom-domain
+      optional: true
+      type: ignore
+
     - name: modules
       type: list
       items:

@@ -54,11 +54,19 @@ const config = {
 
     {{#if (eq env.MINIKUBE "yes")}}
       webpackDevProtocol: "http",
+      {{#if APP.t4Ge6h-custom-domain}}
+      webpackDevHost: "{{APP.t4Ge6h-custom-domain}}",
+      {{else}}
       webpackDevHost: "{{APP.name}}.{{APP.client}}.live.hof.io",
+      {{/if}}
       webpackDevPort: 80,
     {{else if (eq APP.mode "live")}}
       webpackDevProtocol: "https",
+      {{#if APP.t4Ge6h-custom-domain}}
+      webpackDevHost: "{{APP.t4Ge6h-custom-domain}}",
+      {{else}}
       webpackDevHost: "{{APP.name}}.{{APP.client}}.live.hofstadter.io",
+      {{/if}}
       webpackDevPort: 443,
     {{else if (eq APP.mode "prod")}}
     {{else}}
@@ -107,13 +115,25 @@ const config = {
 
     {{#if (eq env.MINIKUBE "yes")}}
       __DEV__: true,
+      {{#if APP.t4Ge6h-custom-domain}}
+      __API_URL__: '"http://{{APP.t4Ge6h-custom-domain}}/graphql"'
+      {{else}}
       __API_URL__: '"http://{{APP.name}}.{{APP.client}}.live.hof.io/graphql"'
+      {{/if}}
     {{else if (eq APP.mode "live")}}
       __DEV__: true,
+      {{#if APP.t4Ge6h-custom-domain}}
+      __API_URL__: '"https://{{APP.t4Ge6h-custom-domain}}/graphql"'
+      {{else}}
       __API_URL__: '"https://{{APP.name}}.{{APP.client}}.live.hofstadter.io/graphql"'
+      {{/if}}
     {{else if (eq APP.mode "prod")}}
       __DEV__: false,
+      {{#if APP.t4Ge6h-custom-domain}}
+      __API_URL__: '"https://{{APP.t4Ge6h-custom-domain}}/graphql"'
+      {{else}}
       __API_URL__: '"https://{{APP.name}}.{{APP.client}}.hofstadter.io/graphql"'
+      {{/if}}
     {{else}}
       __DEV__: process.env.NODE_ENV !== 'production',
       __API_URL__: `"http://${hostIP}:8081/graphql"`

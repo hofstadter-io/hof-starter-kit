@@ -125,7 +125,7 @@ class NavBar extends React.Component<{t: any, toggleDrawer?: any}> {
                     </IfLoggedIn>
                     {{/if}}
 
-                    <div class="dropdown-divider"></div>
+                    <div className="dropdown-divider"></div>
                     <IfLoggedIn key="/logout">
                       <LogoutLink t={t}/>
                     </IfLoggedIn>
