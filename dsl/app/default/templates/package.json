@@ -117,6 +117,7 @@
     "shelljs": "^0.8.1",
     "source-list-map": "^2.0.0",
     "style-loader": "^0.23.0",
+    "terser-webpack-plugin": "~1.2",
     "ts-loader": "^4.5.0",
     "tslint": "^5.11.0",
     "tslint-config-prettier": "^1.5.0",
