@@ -8,7 +8,7 @@ process.on("uncaughtException", ex => {
 });
 
 process.on("unhandledRejection", reason => {
-  console.log("GOT HERE");
+  console.log("GOT HERE unhandledRejection");
   log.error(reason);
 });
 
