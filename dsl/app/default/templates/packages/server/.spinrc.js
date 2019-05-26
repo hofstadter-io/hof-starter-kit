@@ -93,16 +93,28 @@ const config = {
     {{#if (eq env.MINIKUBE "yes")}}
       __DEV__: true,
       __API_URL__: '"/graphql"', // Use full URL if API is external, e.g. https://example.com/graphql
+      {{#if APP.t4Ge6h-custom-domain}}
+      __WEBSITE_URL__: '"http://{{APP.t4Ge6h-custom-domain}}"'
+      {{else}}
       __WEBSITE_URL__: '"http://{{APP.name}}.{{APP.client}}.live.hof.io"'
+      {{/if}}
       // __WEBSITE_URL__: `"http://localhost:3000"`
     {{else if (eq APP.mode "live")}}
       __DEV__: true,
       __API_URL__: '"/graphql"', // Use full URL if API is external, e.g. https://example.com/graphql
+      {{#if APP.t4Ge6h-custom-domain}}
+      __WEBSITE_URL__: '"https://{{APP.t4Ge6h-custom-domain}}"'
+      {{else}}
       __WEBSITE_URL__: '"https://{{APP.name}}.{{APP.client}}.live.hofstadter.io"'
+      {{/if}}
     {{else if (eq APP.mode "prod")}}
       __DEV__: false,
       __API_URL__: '"/graphql"', // Use full URL if API is external, e.g. https://example.com/graphql
+      {{#if APP.t4Ge6h-custom-domain}}
+      __WEBSITE_URL__: '"https://{{APP.t4Ge6h-custom-domain}}"'
+      {{else}}
       __WEBSITE_URL__: '"https://{{APP.name}}.{{APP.client}}.hofstadter.io"'
+      {{/if}}
     {{else}}
       __DEV__: process.env.NODE_ENV !== 'production',
       __API_URL__: `"/graphql"`, // Use full URL if API is external, e.g. https://example.com/graphql

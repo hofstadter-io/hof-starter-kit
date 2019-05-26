@@ -5,7 +5,7 @@ import sofa, { OpenAPI } from '@hofstadter-io/sofa-api';
 
 import settings from '../../../settings';
 
-console.log(settings)
+// console.log(settings)
 
 const createRestAPI = (app, schema, modules) => {
   // need to enable explicitly
@@ -29,7 +29,7 @@ const createRestAPI = (app, schema, modules) => {
       sofa({
         schema,
         onRoute: info => {
-          console.log(info)
+          // console.log(info)
           openApi.addRoute(info, {
             basePath: settings.rest.basePath
           });

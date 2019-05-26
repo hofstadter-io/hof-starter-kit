@@ -20,6 +20,10 @@ spec:
       items:
         type: TEXT_REGEX
 
+    - name: t4Ge6h-custom-domain
+      optional: true
+      type: ignore
+
     - name: modules
       type: list
       items:
@@ -72,6 +76,10 @@ spec:
     - name: auth
       type: object
       fields:
+        - name: login-redirect
+          type: string
+          optional: true
+
         - name: password
           type: object
           fields:
@@ -115,6 +123,25 @@ spec:
           - name: version
             type: NPM_VERSION_REGEX
 
+    - name: layout
+      type: object
+      fields:
+        - name: site
+          optional: true
+          type: ignore
+        - name: page
+          optional: true
+          type: ignore
+        - name: navbar
+          optional: true
+          type: ignore
+        - name: drawer
+          optional: true
+          type: ignore
+        - name: footer
+          optional: true
+          type: ignore
+
     - name: components
       optional: true
       type: COMPONENT_SNIPPET
@@ -127,8 +154,6 @@ spec:
     - name: secrets
       type: ignore
     - name: homepage
-      type: ignore
-    - name: layout
       type: ignore
     - name: builtin-pages
       type: ignore

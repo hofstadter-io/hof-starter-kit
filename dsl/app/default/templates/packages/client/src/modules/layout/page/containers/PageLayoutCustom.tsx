@@ -6,6 +6,11 @@ import * as RS from 'reactstrap';
 
 // import { Drawer } from '../../drawer';
 import { NavBar } from '../../navbar';
+
+{{#if DslContext.layout.drawer.enabled}}
+import { Drawer } from '../../drawer';
+{{/if}}
+
 import { Footer } from '../../footer';
 
 const LayoutStyled = styled.div`

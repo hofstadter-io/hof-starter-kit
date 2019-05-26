@@ -37,7 +37,7 @@ const handler = async (req, res, next) => {
 
   {{> app/default/proxy/context-enrich.js}}
 
-  // console.log(context);
+  console.log(context.user, context.auth, context.account, context.app);
 
   {{> app/default/proxy/auth-checks.js}}
 

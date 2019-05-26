@@ -12,12 +12,7 @@ const DrawerStyled = styled.div`
 {{{file DslContext.layout.drawer.style}}}
 `
 
-class Drawer extends React.Component {
-  public static propTypes = {
-    t: PropTypes.func,
-    showDrawer: PropTypes.bool
-  };
-
+class Drawer extends React.Component<{t: any, showDrawer?: any}> {
   public render() {
     const { t, showDrawer } = this.props;
     return (

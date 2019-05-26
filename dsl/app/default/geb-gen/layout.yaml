@@ -15,29 +15,46 @@ template-configs:
       out: packages/client/src/modules/layout/page/index.tsx
     - in: packages/client/src/modules/layout/page/containers/PageLayoutDefault.tsx
       out: packages/client/src/modules/layout/page/containers/PageLayoutDefault.tsx
+      unless: layout.page.custom
     - in: packages/client/src/modules/layout/page/containers/PageLayoutCustom.tsx
       out: packages/client/src/modules/layout/page/containers/PageLayoutCustom.tsx
+      when: layout.page.custom
 
     - in: packages/client/src/modules/layout/navbar/index.tsx
       out: packages/client/src/modules/layout/navbar/index.tsx
     - in: packages/client/src/modules/layout/navbar/containers/NavBarDefault.tsx
       out: packages/client/src/modules/layout/navbar/containers/NavBarDefault.tsx
+      unless: layout.navbar.custom
     - in: packages/client/src/modules/layout/navbar/containers/NavBarCustom.tsx
       out: packages/client/src/modules/layout/navbar/containers/NavBarCustom.tsx
+      when: layout.navbar.custom
+    - in: client/pages/component.scss
+      out: packages/client/src/modules/layout/navbar/containers/style.scss
+      when: layout.navbar.style
 
     - in: packages/client/src/modules/layout/drawer/index.tsx
       out: packages/client/src/modules/layout/drawer/index.tsx
     - in: packages/client/src/modules/layout/drawer/containers/DrawerDefault.tsx
       out: packages/client/src/modules/layout/drawer/containers/DrawerDefault.tsx
+      unless: layout.drawer.custom
     - in: packages/client/src/modules/layout/drawer/containers/DrawerCustom.tsx
       out: packages/client/src/modules/layout/drawer/containers/DrawerCustom.tsx
+      when: layout.drawer.custom
+    - in: client/pages/component.scss
+      out: packages/client/src/modules/layout/drawer/containers/style.scss
+      when: layout.drawer.style
 
     - in: packages/client/src/modules/layout/footer/index.tsx
       out: packages/client/src/modules/layout/footer/index.tsx
     - in: packages/client/src/modules/layout/footer/containers/FooterDefault.tsx
       out: packages/client/src/modules/layout/footer/containers/FooterDefault.tsx
+      unless: layout.footer.custom
     - in: packages/client/src/modules/layout/footer/containers/FooterCustom.tsx
       out: packages/client/src/modules/layout/footer/containers/FooterCustom.tsx
+      when: layout.footer.custom
+    - in: client/pages/component.scss
+      out: packages/client/src/modules/layout/footer/containers/style.scss
+      when: layout.footer.style
 
     - in: pages/locales/index.js
       out: packages/client/src/modules/layout/navbar/locales/index.js
