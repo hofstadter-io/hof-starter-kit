@@ -22,6 +22,7 @@ if (!fail && !pass &&{{! ~}}
 ) {
   console.log("  {{upper CHECK.result}} {{CHECK.name}}")
   {{CHECK.result}} = true
+
   {{#if CHECK.return}}
   console.log("Returning from {{CHECK.name}}")
   res.status({{CHECK.return.code}}).send("{{CHECK.return.message}}");
@@ -32,7 +33,7 @@ if (!fail && !pass &&{{! ~}}
 {{/each}}
 
 console.log("FINAL CHECK", !fail, !pass, "-", !fail && !pass)
-if (!fail && !pass) {
+if (fail || !pass) {
   console.log("  FAILED")
   res.status(401).send("Unauthorized");
   return
